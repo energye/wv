@@ -1,1 +1,1 @@
-Go WebView2, Go Webkit
+Go WebView2
