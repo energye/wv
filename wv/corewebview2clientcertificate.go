@@ -112,13 +112,13 @@ func (m *TCoreWebView2ClientCertificate) Issuer() string {
 }
 
 func (m *TCoreWebView2ClientCertificate) ValidFrom() (resultDateTime float64) {
-	r1 := coreWebView2ClientCertificateImportAPI().SysCallN(10, m.Instance())
-	return *(*float64)(unsafePointer(&r1))
+	coreWebView2ClientCertificateImportAPI().SysCallN(10, m.Instance(), uintptr(unsafePointer(&resultDateTime)))
+	return
 }
 
 func (m *TCoreWebView2ClientCertificate) ValidTo() (resultDateTime float64) {
-	r1 := coreWebView2ClientCertificateImportAPI().SysCallN(11, m.Instance())
-	return *(*float64)(unsafePointer(&r1))
+	coreWebView2ClientCertificateImportAPI().SysCallN(11, m.Instance(), uintptr(unsafePointer(&resultDateTime)))
+	return
 }
 
 func (m *TCoreWebView2ClientCertificate) DerEncodedSerialNumber() string {

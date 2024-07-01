@@ -157,12 +157,12 @@ func (m *TCoreWebView2Cookie) SetExpires(AValue float64) {
 }
 
 func (m *TCoreWebView2Cookie) ExpiresDate() (resultDateTime float64) {
-	r1 := coreWebView2CookieImportAPI().SysCallN(4, 0, m.Instance(), 0)
-	return *(*float64)(unsafePointer(&r1))
+	coreWebView2CookieImportAPI().SysCallN(4, 0, m.Instance(), uintptr(unsafePointer(&resultDateTime)), uintptr(unsafePointer(&resultDateTime)))
+	return
 }
 
 func (m *TCoreWebView2Cookie) SetExpiresDate(AValue float64) {
-	coreWebView2CookieImportAPI().SysCallN(4, 1, m.Instance(), uintptr(unsafePointer(&AValue)))
+	coreWebView2CookieImportAPI().SysCallN(4, 1, m.Instance(), uintptr(unsafePointer(&AValue)), uintptr(unsafePointer(&AValue)))
 }
 
 func (m *TCoreWebView2Cookie) IsHttpOnly() bool {

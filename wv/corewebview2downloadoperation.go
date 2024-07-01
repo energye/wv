@@ -162,8 +162,8 @@ func (m *TCoreWebView2DownloadOperation) BytesReceived() (resultInt64 int64) {
 }
 
 func (m *TCoreWebView2DownloadOperation) EstimatedEndTime() (resultDateTime float64) {
-	r1 := coreWebView2DownloadOperationImportAPI().SysCallN(8, m.Instance())
-	return *(*float64)(unsafePointer(&r1))
+	coreWebView2DownloadOperationImportAPI().SysCallN(8, m.Instance(), uintptr(unsafePointer(&resultDateTime)))
+	return
 }
 
 func (m *TCoreWebView2DownloadOperation) ResultFilePath() string {
