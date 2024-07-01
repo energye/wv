@@ -8,10 +8,6 @@
 
 package wv
 
-import (
-	. "github.com/energye/lcl/api"
-)
-
 // AddHostObjectToScript
 //
 //	Add the provided host object to script running in the WebView with the
@@ -111,6 +107,8 @@ import (
 //	Synchronous object property set property synchronously blocks until the
 //	property is set.
 func (m *TCoreWebView2) AddHostObjectToScript(name string, object OleVariant) bool {
-	r1 := predefImportAPI().SysCallN(-1, m.Instance())
-	return GoBool(r1)
+	//r1 := predefImportAPI().SysCallN(-1, m.Instance())
+	//return GoBool(r1)
+	// TODO no impl
+	return false
 }

@@ -8,10 +8,6 @@
 
 package wv
 
-import (
-	. "github.com/energye/lcl/api"
-)
-
 // AddHostObjectToScript
 //
 //	Add the provided host object to script running in the WebView with the
@@ -25,6 +21,8 @@ import (
 //	property or method on the object or parameters are not valid.
 //	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#addhostobjecttoscript">See the ICoreWebView2 article.</a>
 func (m *TWVBrowserBase) AddHostObjectToScript(name string, object OleVariant) bool {
-	r1 := predefImportAPI().SysCallN(-1, m.Instance())
-	return GoBool(r1)
+	//r1 := predefImportAPI().SysCallN(-1, m.Instance())
+	//return GoBool(r1)
+	// TODO no impl
+	return false
 }

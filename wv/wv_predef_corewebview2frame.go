@@ -8,10 +8,6 @@
 
 package wv
 
-import (
-	. "github.com/energye/lcl/api"
-)
-
 // AddHostObjectToScriptWithOrigins
 //
 //	Add the provided host object to script running in the iframe with the
@@ -42,6 +38,8 @@ import (
 //	For more information about host objects navigate to
 //	ICoreWebView2::AddHostObjectToScript.
 func (m *TCoreWebView2Frame) AddHostObjectToScriptWithOrigins(name string, object OleVariant, originsCount uint32, origins string) bool {
-	r1 := predefImportAPI().SysCallN(-1, m.Instance())
-	return GoBool(r1)
+	//r1 := predefImportAPI().SysCallN(-1, m.Instance())
+	//return GoBool(r1)
+	// TODO no impl
+	return false
 }
