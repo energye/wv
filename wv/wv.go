@@ -6,8 +6,8 @@
 //
 //----------------------------------------
 
-// Package wv Webview2 实现模块
-// 包含所有 Webview2 API 实现
+// Package wv Webview2 Implementation module
+// Includes all Webview2 API implementations
 package wv
 
 import (
