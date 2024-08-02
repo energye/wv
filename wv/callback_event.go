@@ -401,7 +401,7 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 
 		case TOnCompMsgEvent:
 			message := (*types.TMessage)(getPtr(1))
-			handled := GoBool(getVal(2))
+			handled := (*bool)(getPtr(2))
 			fn.(TOnCompMsgEvent)(lcl.AsObject(getPtr(0)), message, handled)
 
 		case TDragDropEvent:

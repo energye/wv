@@ -101,7 +101,7 @@ type TOnExecuteScriptWithResultCompletedEvent func(sender IObject, errorCode int
 
 // Custom events
 
-type TOnCompMsgEvent func(sender IObject, message *types.TMessage, handled bool)
+type TOnCompMsgEvent func(sender IObject, message *types.TMessage, handled *bool)
 
 type TDragDropEvent = lcl.TDragDropEvent
 type TDragOverEvent = lcl.TDragOverEvent
