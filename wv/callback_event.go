@@ -9,7 +9,6 @@
 package wv
 
 import (
-	"fmt"
 	. "github.com/energye/lcl/api"
 	"github.com/energye/lcl/emfs"
 	"github.com/energye/lcl/inits"
@@ -134,19 +133,29 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			fn.(TOnProcessFailedEvent)(lcl.AsObject(getPtr(0)), webView, args)
 
 		case TOnWebMessageReceivedEvent:
-			fn.(TOnWebMessageReceivedEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2(getVal(1)), AsCoreWebView2WebMessageReceivedEventArgs(getVal(2)))
+			webView := AsCoreWebView2(getVal(1))
+			args := AsCoreWebView2WebMessageReceivedEventArgs(getVal(2))
+			fn.(TOnWebMessageReceivedEvent)(lcl.AsObject(getPtr(0)), webView, args)
 
 		case TOnDevToolsProtocolEventReceivedEvent:
-			fn.(TOnDevToolsProtocolEventReceivedEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2(getVal(1)), AsCoreWebView2DevToolsProtocolEventReceivedEventArgs(getVal(2)), GoStr(getVal(3)), int32(getVal(4)))
+			webView := AsCoreWebView2(getVal(1))
+			args := AsCoreWebView2DevToolsProtocolEventReceivedEventArgs(getVal(2))
+			fn.(TOnDevToolsProtocolEventReceivedEvent)(lcl.AsObject(getPtr(0)), webView, args, GoStr(getVal(3)), int32(getVal(4)))
 
 		case TOnWebResourceResponseReceivedEvent:
-			fn.(TOnWebResourceResponseReceivedEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2(getVal(1)), AsCoreWebView2WebResourceResponseReceivedEventArgs(getVal(2)))
+			webView := AsCoreWebView2(getVal(1))
+			args := AsCoreWebView2WebResourceResponseReceivedEventArgs(getVal(2))
+			fn.(TOnWebResourceResponseReceivedEvent)(lcl.AsObject(getPtr(0)), webView, args)
 
 		case TOnDOMContentLoadedEvent:
-			fn.(TOnDOMContentLoadedEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2(getVal(1)), AsCoreWebView2DOMContentLoadedEventArgs(getVal(2)))
+			webView := AsCoreWebView2(getVal(1))
+			args := AsCoreWebView2DOMContentLoadedEventArgs(getVal(2))
+			fn.(TOnDOMContentLoadedEvent)(lcl.AsObject(getPtr(0)), webView, args)
 
 		case TOnFrameCreatedEvent:
-			fn.(TOnFrameCreatedEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2(getVal(1)), AsCoreWebView2FrameCreatedEventArgs(getVal(2)))
+			webView := AsCoreWebView2(getVal(1))
+			args := AsCoreWebView2FrameCreatedEventArgs(getVal(2))
+			fn.(TOnFrameCreatedEvent)(lcl.AsObject(getPtr(0)), webView, args)
 
 		case TOnDownloadStartingEvent:
 			webView := AsCoreWebView2(getVal(1))
@@ -425,7 +434,6 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			fn.(TOnLoaderNotifyEvent)(lcl.AsObject(getPtr(0)))
 
 		case TOnLoaderGetCustomSchemesEvent:
-			fmt.Println("TOnLoaderGetCustomSchemesEvent")
 			var data = (*uintptr)(getPtr(1))
 			var size = (*int32)(getPtr(2))
 			var customSchemes TWVCustomSchemeInfoArray
@@ -445,13 +453,17 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 				*data = uintptr(unsafe.Pointer(&dataPtr[0]))
 			}
 		case TOnLoaderNewBrowserVersionAvailableEvent:
-			fn.(TOnLoaderNewBrowserVersionAvailableEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2Environment(getVal(1)))
+			env := AsCoreWebView2Environment(getVal(1))
+			fn.(TOnLoaderNewBrowserVersionAvailableEvent)(lcl.AsObject(getPtr(0)), env)
 
 		case TOnLoaderBrowserProcessExitedEvent:
-			fn.(TOnLoaderBrowserProcessExitedEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2Environment(getVal(1)), AsCoreWebView2BrowserProcessExitedEventArgs(getVal(2)))
+			env := AsCoreWebView2Environment(getVal(1))
+			args := AsCoreWebView2BrowserProcessExitedEventArgs(getVal(2))
+			fn.(TOnLoaderBrowserProcessExitedEvent)(lcl.AsObject(getPtr(0)), env, args)
 
 		case TOnLoaderProcessInfosChangedEvent:
-			fn.(TOnLoaderProcessInfosChangedEvent)(lcl.AsObject(getPtr(0)), AsCoreWebView2Environment(getVal(1)))
+			env := AsCoreWebView2Environment(getVal(1))
+			fn.(TOnLoaderProcessInfosChangedEvent)(lcl.AsObject(getPtr(0)), env)
 
 		default:
 		}
