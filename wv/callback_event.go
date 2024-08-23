@@ -88,84 +88,86 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			fn.(TOnBrowserProcessExitedEvent)(lcl.AsObject(getPtr(0)), environment, args)
 
 		case TOnNavigationStartingEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2NavigationStartingEventArgs(getVal(2))
-			fn.(TOnNavigationStartingEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnNavigationStartingEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnNavigationCompletedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2NavigationCompletedEventArgs(getVal(2))
-			fn.(TOnNavigationCompletedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnNavigationCompletedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnSourceChangedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2SourceChangedEventArgs(getVal(2))
-			fn.(TOnSourceChangedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnSourceChangedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnContentLoadingEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2ContentLoadingEventArgs(getVal(2))
-			fn.(TOnContentLoadingEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnContentLoadingEvent)(lcl.AsObject(getPtr(0)), webview, args)
+			webview.Nil()
+			args.Nil()
 
 		case TOnNewWindowRequestedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2NewWindowRequestedEventArgs(getVal(2))
-			fn.(TOnNewWindowRequestedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnNewWindowRequestedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnWebResourceRequestedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2WebResourceRequestedEventArgs(getVal(2))
-			fn.(TOnWebResourceRequestedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnWebResourceRequestedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnScriptDialogOpeningEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2ScriptDialogOpeningEventArgs(getVal(2))
-			fn.(TOnScriptDialogOpeningEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnScriptDialogOpeningEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnPermissionRequestedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2PermissionRequestedEventArgs(getVal(2))
-			fn.(TOnPermissionRequestedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnPermissionRequestedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnProcessFailedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2ProcessFailedEventArgs(getVal(2))
-			fn.(TOnProcessFailedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnProcessFailedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnWebMessageReceivedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2WebMessageReceivedEventArgs(getVal(2))
-			fn.(TOnWebMessageReceivedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnWebMessageReceivedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnDevToolsProtocolEventReceivedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2DevToolsProtocolEventReceivedEventArgs(getVal(2))
-			fn.(TOnDevToolsProtocolEventReceivedEvent)(lcl.AsObject(getPtr(0)), webView, args, GoStr(getVal(3)), int32(getVal(4)))
+			fn.(TOnDevToolsProtocolEventReceivedEvent)(lcl.AsObject(getPtr(0)), webview, args, GoStr(getVal(3)), int32(getVal(4)))
 
 		case TOnWebResourceResponseReceivedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2WebResourceResponseReceivedEventArgs(getVal(2))
-			fn.(TOnWebResourceResponseReceivedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnWebResourceResponseReceivedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnDOMContentLoadedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2DOMContentLoadedEventArgs(getVal(2))
-			fn.(TOnDOMContentLoadedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnDOMContentLoadedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnFrameCreatedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2FrameCreatedEventArgs(getVal(2))
-			fn.(TOnFrameCreatedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnFrameCreatedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnDownloadStartingEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2DownloadStartingEventArgs(getVal(2))
-			fn.(TOnDownloadStartingEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnDownloadStartingEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnClientCertificateRequestedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2ClientCertificateRequestedEventArgs(getVal(2))
-			fn.(TOnClientCertificateRequestedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnClientCertificateRequestedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnBytesReceivedChangedEvent:
 			downloadID := int32(getVal(2))
@@ -243,16 +245,16 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			fn.(TOnSimulateKeyEventCompletedEvent)(lcl.AsObject(getPtr(0)), result)
 
 		case TOnIsMutedChangedEvent:
-			webView := AsCoreWebView2(getVal(1))
-			fn.(TOnIsMutedChangedEvent)(lcl.AsObject(getPtr(0)), webView)
+			webview := AsCoreWebView2(getVal(1))
+			fn.(TOnIsMutedChangedEvent)(lcl.AsObject(getPtr(0)), webview)
 
 		case TOnIsDocumentPlayingAudioChangedEvent:
-			webView := AsCoreWebView2(getVal(1))
-			fn.(TOnIsDocumentPlayingAudioChangedEvent)(lcl.AsObject(getPtr(0)), webView)
+			webview := AsCoreWebView2(getVal(1))
+			fn.(TOnIsDocumentPlayingAudioChangedEvent)(lcl.AsObject(getPtr(0)), webview)
 
 		case TOnIsDefaultDownloadDialogOpenChangedEvent:
-			webView := AsCoreWebView2(getVal(1))
-			fn.(TOnIsDefaultDownloadDialogOpenChangedEvent)(lcl.AsObject(getPtr(0)), webView)
+			webview := AsCoreWebView2(getVal(1))
+			fn.(TOnIsDefaultDownloadDialogOpenChangedEvent)(lcl.AsObject(getPtr(0)), webview)
 
 		case TOnProcessInfosChangedEvent:
 			environment := AsCoreWebView2Environment(getVal(1))
@@ -294,17 +296,17 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			fn.(TOnBasicAuthenticationRequestedEvent)(lcl.AsObject(getPtr(0)), frame, args)
 
 		case TOnContextMenuRequestedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2ContextMenuRequestedEventArgs(getVal(2))
-			fn.(TOnContextMenuRequestedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnContextMenuRequestedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnCustomItemSelectedEvent:
 			menuItem := AsCoreWebView2ContextMenuItem(getVal(1))
 			fn.(TOnCustomItemSelectedEvent)(lcl.AsObject(getPtr(0)), menuItem)
 
 		case TOnStatusBarTextChangedEvent:
-			webView := AsCoreWebView2(getVal(1))
-			fn.(TOnStatusBarTextChangedEvent)(lcl.AsObject(getPtr(0)), webView)
+			webview := AsCoreWebView2(getVal(1))
+			fn.(TOnStatusBarTextChangedEvent)(lcl.AsObject(getPtr(0)), webview)
 
 		case TOnFramePermissionRequestedEvent:
 			frame := AsCoreWebView2Frame(getVal(1))
@@ -321,14 +323,14 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			fn.(TOnServerCertificateErrorActionsCompletedEvent)(lcl.AsObject(getPtr(0)), errorCode)
 
 		case TOnServerCertificateErrorDetectedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2ServerCertificateErrorDetectedEventArgs(getVal(2))
-			fn.(TOnServerCertificateErrorDetectedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnServerCertificateErrorDetectedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnFaviconChangedEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsUnknown(getVal(2))
-			fn.(TOnFaviconChangedEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnFaviconChangedEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnGetFaviconCompletedEvent:
 			errorCode := int32(getVal(1))
@@ -369,9 +371,9 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			fn.(TOnSetPermissionStateCompletedEvent)(lcl.AsObject(getPtr(0)), errorCode)
 
 		case TOnLaunchingExternalUriSchemeEvent:
-			webView := AsCoreWebView2(getVal(1))
+			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2LaunchingExternalUriSchemeEventArgs(getVal(2))
-			fn.(TOnLaunchingExternalUriSchemeEvent)(lcl.AsObject(getPtr(0)), webView, args)
+			fn.(TOnLaunchingExternalUriSchemeEvent)(lcl.AsObject(getPtr(0)), webview, args)
 
 		case TOnGetProcessExtendedInfosCompletedEvent:
 			errorCode := int32(getVal(1))
