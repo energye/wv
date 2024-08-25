@@ -106,8 +106,6 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 			webview := AsCoreWebView2(getVal(1))
 			args := AsCoreWebView2ContentLoadingEventArgs(getVal(2))
 			fn.(TOnContentLoadingEvent)(lcl.AsObject(getPtr(0)), webview, args)
-			webview.Nil()
-			args.Nil()
 
 		case TOnNewWindowRequestedEvent:
 			webview := AsCoreWebView2(getVal(1))
