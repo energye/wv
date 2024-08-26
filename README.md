@@ -61,6 +61,8 @@
 > - Golang >= 1.20
 > - 动态链接库 `WebView2Loader.dll` `liblcl.dll`
 
+#### [示例](https://github.com/energye/examples/tree/main/wv)
+
 #### 开发环境
 
 1. 安装 [Golang](https://golang.google.cn/dl/), Windows版本, 仅支持intel架构 [https://golang.google.cn/dl](https://golang.google.cn/dl)
