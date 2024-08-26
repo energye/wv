@@ -8,9 +8,6 @@
     </strong>
 </p>
 
-中文 |
-[English](README.md)
-
 ---
 ![go-version](https://img.shields.io/github/go-mod/go-version/energye/wv?logo=git&logoColor=green)
 [![github](https://img.shields.io/github/last-commit/energye/wv/main.svg?logo=github&logoColor=green&label=commit)](https://github.com/energye/wv)
