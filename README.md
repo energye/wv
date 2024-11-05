@@ -4,7 +4,7 @@
 
 <p align="center" style="font-size: 24px;">
     <strong>
-        是Go基于 LCL & Webview2 构建桌面应用的框架
+        是Go基于 LCL & Webview2, Webkit2 构建桌面应用的框架
     </strong>
 </p>
 
@@ -23,12 +23,18 @@
 > [Go Webview2(wv)](https://github.com/energye/wv) 
 > 是 Go 基于
 > [LCL](https://www.lazarus-ide.org/)、
-> [Webview2](https://learn.microsoft.com/en-us/microsoft-edge/webview2/)
+> [Windows-Webview2](https://learn.microsoft.com/en-us/microsoft-edge/webview2)
+> [Linux-Webkit2](https://www.webkitgtk.org)
+> [MacOS-Webkit2](https://developer.apple.com/documentation/webkit)
 > 开发的框架
 >
 >> LCL - 基础库, 图形用户界面(GUI)组件库, 提供了非常丰富的系统原生控件
 >> 
->> Webview2 - 浏览器组件库 [WebView4Delphi](https://github.com/salvadordf/WebView4Delphi), 在LCL基础上封装的Webview2库
+>> Windows-Webview2 - 浏览器组件库 [WebView4Delphi](https://github.com/salvadordf/WebView4Delphi), 在LCL基础上封装的Webview2库
+>> 
+>> Linux-Webkit2 - 浏览器组件库 Webkit2GTK, 在LCL基础上封装的Webkit2库
+>> 
+>> MacOS-Webkit2 - 浏览器组件库 Webkit2Cocoa, 在LCL基础上封装的Webkit2库
 >> 
 >> 使用 Go 和 Web 端技术 ( HTML + CSS + JavaScript ) 构建支持Windows平台桌面应用。
 >>
@@ -38,14 +44,14 @@
 > 
 >> LCL 单独使用, 开发原生图形用户界面(GUI)应用. 轻量级, 丰富的系统原生控件
 >
->> LCL + Webview2 混合使用, 开发原生图形用户界面(GUI)和浏览器应用. 轻量级, 全量webview2 API
+>> LCL + Webview 混合使用, 开发原生图形用户界面(GUI)和浏览器应用. 轻量级, 全量webview2 API, 轻量级 Webkit2 API
 
 
 
 ### 特点
 
 > - 依赖 `microsoft-edge` 运行时环境
-> - 具有完整的 Webview2 API 和 LCL 系统原生控件
+> - 具有完整的 Webview2 API 轻量级 Webkit2 API 和 LCL 系统原生控件
 > - 开发环境简单, 编译速度快, 仅需Go和Webview2所需的动态链接库
 > - 前端技术: 支持主流前端框架。例如：Vue、React、Angular 和 原生HTML+CSS+JS等
 > - 事件驱动: 高性能事件驱动, 基于IPC通信，实现Go和Web端快速调用及数据交互
@@ -54,7 +60,9 @@
 ### 内置依赖&集成
 
 - [![LCL](https://img.shields.io/badge/LCL-green)](https://github.com/energye/lcl)
-- [![WebView4Delphi](https://img.shields.io/badge/Webview2%20-green)](https://github.com/salvadordf/WebView4Delphi)
+- [![WebView4Delphi](https://img.shields.io/badge/Windows-Webview2%20-green)](https://github.com/salvadordf/WebView4Delphi)
+- [![Linux-Webkit2](https://img.shields.io/badge/Linux-Webkit2%20-green)](https://www.webkitgtk.org)
+- [![MacOS-Webkit2](https://img.shields.io/badge/MacOS-Webkit2%20-green)](https://developer.apple.com/documentation/webkit)
 
 #### 基本需求
 
