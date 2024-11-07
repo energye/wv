@@ -26,13 +26,8 @@ type TNSHTTPURLResponse struct {
 	TNSURLResponse
 }
 
-func NewNSHTTPURLResponse() INSHTTPURLResponse {
-	r1 := nSHTTPURLResponseImportAPI().SysCallN(1)
-	return AsNSHTTPURLResponse(r1)
-}
-
-func NewNSHTTPURLResponse1(aData NSHTTPURLResponse) INSHTTPURLResponse {
-	r1 := nSHTTPURLResponseImportAPI().SysCallN(2, uintptr(aData))
+func NewNSHTTPURLResponse(aData NSHTTPURLResponse) INSHTTPURLResponse {
+	r1 := nSHTTPURLResponseImportAPI().SysCallN(1, uintptr(aData))
 	return AsNSHTTPURLResponse(r1)
 }
 
@@ -42,16 +37,21 @@ var NSHTTPURLResponseRef nSHTTPURLResponse
 // nSHTTPURLResponse TNSHTTPURLResponse Ref
 type nSHTTPURLResponse uintptr
 
+func (m *nSHTTPURLResponse) New() INSHTTPURLResponse {
+	r1 := nSHTTPURLResponseImportAPI().SysCallN(4)
+	return AsNSHTTPURLResponse(r1)
+}
+
 // LocalizedStringForStatusCode
 //
 //	statusCode: https://www.ietf.org/rfc/rfc2616.txt
 func (m *nSHTTPURLResponse) LocalizedStringForStatusCode(statusCode int32) string {
-	r1 := nSHTTPURLResponseImportAPI().SysCallN(4, uintptr(statusCode))
+	r1 := nSHTTPURLResponseImportAPI().SysCallN(3, uintptr(statusCode))
 	return GoStr(r1)
 }
 
 func (m *TNSHTTPURLResponse) InitWithURLStatusCodeHTTPVersionHeaderFields(url NSURL, statusCode int32, hTTPVersion string, headerFieldsJSONString string) INSHTTPURLResponse {
-	r1 := nSHTTPURLResponseImportAPI().SysCallN(3, m.Instance(), uintptr(url), uintptr(statusCode), PascalStr(hTTPVersion), PascalStr(headerFieldsJSONString))
+	r1 := nSHTTPURLResponseImportAPI().SysCallN(2, m.Instance(), uintptr(url), uintptr(statusCode), PascalStr(hTTPVersion), PascalStr(headerFieldsJSONString))
 	return AsNSHTTPURLResponse(r1)
 }
 
@@ -70,9 +70,9 @@ var (
 	nSHTTPURLResponseImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("NSHTTPURLResponse_AllHeaderFields", 0),
 		/*1*/ imports.NewTable("NSHTTPURLResponse_Create", 0),
-		/*2*/ imports.NewTable("NSHTTPURLResponse_Create1", 0),
-		/*3*/ imports.NewTable("NSHTTPURLResponse_InitWithURLStatusCodeHTTPVersionHeaderFields", 0),
-		/*4*/ imports.NewTable("NSHTTPURLResponse_LocalizedStringForStatusCode", 0),
+		/*2*/ imports.NewTable("NSHTTPURLResponse_InitWithURLStatusCodeHTTPVersionHeaderFields", 0),
+		/*3*/ imports.NewTable("NSHTTPURLResponse_LocalizedStringForStatusCode", 0),
+		/*4*/ imports.NewTable("NSHTTPURLResponse_New", 0),
 		/*5*/ imports.NewTable("NSHTTPURLResponse_StatusCode", 0),
 	}
 )

@@ -29,18 +29,24 @@ type TWKUserContentController struct {
 	TObject
 }
 
-func NewWKUserContentController() IWKUserContentController {
-	r1 := wKUserContentControllerImportAPI().SysCallN(2)
+func NewWKUserContentController(aData WKUserContentController) IWKUserContentController {
+	r1 := wKUserContentControllerImportAPI().SysCallN(2, uintptr(aData))
 	return AsWKUserContentController(r1)
 }
 
-func NewWKUserContentController1(aData WKUserContentController) IWKUserContentController {
-	r1 := wKUserContentControllerImportAPI().SysCallN(3, uintptr(aData))
+// WKUserContentControllerRef -> IWKUserContentController
+var WKUserContentControllerRef wKUserContentController
+
+// wKUserContentController TWKUserContentController Ref
+type wKUserContentController uintptr
+
+func (m *wKUserContentController) New() IWKUserContentController {
+	r1 := wKUserContentControllerImportAPI().SysCallN(4)
 	return AsWKUserContentController(r1)
 }
 
 func (m *TWKUserContentController) Data() WKUserContentController {
-	r1 := wKUserContentControllerImportAPI().SysCallN(4, m.Instance())
+	r1 := wKUserContentControllerImportAPI().SysCallN(3, m.Instance())
 	return WKUserContentController(r1)
 }
 
@@ -72,8 +78,8 @@ var (
 		/*0*/ imports.NewTable("WKUserContentController_AddScriptMessageHandlerName", 0),
 		/*1*/ imports.NewTable("WKUserContentController_AddUserScript", 0),
 		/*2*/ imports.NewTable("WKUserContentController_Create", 0),
-		/*3*/ imports.NewTable("WKUserContentController_Create1", 0),
-		/*4*/ imports.NewTable("WKUserContentController_Data", 0),
+		/*3*/ imports.NewTable("WKUserContentController_Data", 0),
+		/*4*/ imports.NewTable("WKUserContentController_New", 0),
 		/*5*/ imports.NewTable("WKUserContentController_RemoveAllUserScripts", 0),
 		/*6*/ imports.NewTable("WKUserContentController_RemoveScriptMessageHandlerForName", 0),
 		/*7*/ imports.NewTable("WKUserContentController_UserScripts", 0),

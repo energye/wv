@@ -40,38 +40,44 @@ type TWKPreferences struct {
 	TObject
 }
 
-func NewWKPreferences() IWKPreferences {
-	r1 := wKPreferencesImportAPI().SysCallN(0)
+func NewWKPreferences(aData WKPreferences) IWKPreferences {
+	r1 := wKPreferencesImportAPI().SysCallN(0, uintptr(aData))
 	return AsWKPreferences(r1)
 }
 
-func NewWKPreferences1(aData WKPreferences) IWKPreferences {
-	r1 := wKPreferencesImportAPI().SysCallN(1, uintptr(aData))
+// WKPreferencesRef -> IWKPreferences
+var WKPreferencesRef wKPreferences
+
+// wKPreferences TWKPreferences Ref
+type wKPreferences uintptr
+
+func (m *wKPreferences) New() IWKPreferences {
+	r1 := wKPreferencesImportAPI().SysCallN(6)
 	return AsWKPreferences(r1)
 }
 
 func (m *TWKPreferences) Data() WKPreferences {
-	r1 := wKPreferencesImportAPI().SysCallN(2, m.Instance())
+	r1 := wKPreferencesImportAPI().SysCallN(1, m.Instance())
 	return WKPreferences(r1)
 }
 
 func (m *TWKPreferences) MinimumFontSize() (resultFloat64 float64) {
-	wKPreferencesImportAPI().SysCallN(6, m.Instance(), uintptr(unsafePointer(&resultFloat64)))
+	wKPreferencesImportAPI().SysCallN(5, m.Instance(), uintptr(unsafePointer(&resultFloat64)))
 	return
 }
 
 func (m *TWKPreferences) JavaScriptEnabled() bool {
-	r1 := wKPreferencesImportAPI().SysCallN(5, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKPreferences) JavaScriptCanOpenWindowsAutomatically() bool {
 	r1 := wKPreferencesImportAPI().SysCallN(4, m.Instance())
 	return GoBool(r1)
 }
 
-func (m *TWKPreferences) JavaEnabled() bool {
+func (m *TWKPreferences) JavaScriptCanOpenWindowsAutomatically() bool {
 	r1 := wKPreferencesImportAPI().SysCallN(3, m.Instance())
+	return GoBool(r1)
+}
+
+func (m *TWKPreferences) JavaEnabled() bool {
+	r1 := wKPreferencesImportAPI().SysCallN(2, m.Instance())
 	return GoBool(r1)
 }
 
@@ -116,12 +122,12 @@ var (
 	wKPreferencesImport       *imports.Imports = nil
 	wKPreferencesImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKPreferences_Create", 0),
-		/*1*/ imports.NewTable("WKPreferences_Create1", 0),
-		/*2*/ imports.NewTable("WKPreferences_Data", 0),
-		/*3*/ imports.NewTable("WKPreferences_JavaEnabled", 0),
-		/*4*/ imports.NewTable("WKPreferences_JavaScriptCanOpenWindowsAutomatically", 0),
-		/*5*/ imports.NewTable("WKPreferences_JavaScriptEnabled", 0),
-		/*6*/ imports.NewTable("WKPreferences_MinimumFontSize", 0),
+		/*1*/ imports.NewTable("WKPreferences_Data", 0),
+		/*2*/ imports.NewTable("WKPreferences_JavaEnabled", 0),
+		/*3*/ imports.NewTable("WKPreferences_JavaScriptCanOpenWindowsAutomatically", 0),
+		/*4*/ imports.NewTable("WKPreferences_JavaScriptEnabled", 0),
+		/*5*/ imports.NewTable("WKPreferences_MinimumFontSize", 0),
+		/*6*/ imports.NewTable("WKPreferences_New", 0),
 		/*7*/ imports.NewTable("WKPreferences_PlugInsEnabled", 0),
 		/*8*/ imports.NewTable("WKPreferences_SetFraudulentWebsiteWarningEnabled", 0),
 		/*9*/ imports.NewTable("WKPreferences_SetJavaEnabled", 0),

@@ -37,13 +37,8 @@ type TNSURL struct {
 	TObject
 }
 
-func NewNSURL() INSURL {
-	r1 := nSURLImportAPI().SysCallN(3)
-	return AsNSURL(r1)
-}
-
-func NewNSURL1(aData NSURL) INSURL {
-	r1 := nSURLImportAPI().SysCallN(4, uintptr(aData))
+func NewNSURL(aData NSURL) INSURL {
+	r1 := nSURLImportAPI().SysCallN(3, uintptr(aData))
 	return AsNSURL(r1)
 }
 
@@ -52,6 +47,11 @@ var NSURLRef nSURL
 
 // nSURL TNSURL Ref
 type nSURL uintptr
+
+func (m *nSURL) New() INSURL {
+	r1 := nSURLImportAPI().SysCallN(7)
+	return AsNSURL(r1)
+}
 
 func (m *nSURL) URLWithString(uRLString string) INSURL {
 	r1 := nSURLImportAPI().SysCallN(15, PascalStr(uRLString))
@@ -64,7 +64,7 @@ func (m *nSURL) URLWithStringRelativeToURL(uRLString string, baseURL NSURL) INSU
 }
 
 func (m *TNSURL) Data() NSURL {
-	r1 := nSURLImportAPI().SysCallN(5, m.Instance())
+	r1 := nSURLImportAPI().SysCallN(4, m.Instance())
 	return NSURL(r1)
 }
 
@@ -94,7 +94,7 @@ func (m *TNSURL) Scheme() string {
 }
 
 func (m *TNSURL) Host() string {
-	r1 := nSURLImportAPI().SysCallN(7, m.Instance())
+	r1 := nSURLImportAPI().SysCallN(6, m.Instance())
 	return GoStr(r1)
 }
 
@@ -119,7 +119,7 @@ func (m *TNSURL) Path() string {
 }
 
 func (m *TNSURL) Fragment() string {
-	r1 := nSURLImportAPI().SysCallN(6, m.Instance())
+	r1 := nSURLImportAPI().SysCallN(5, m.Instance())
 	return GoStr(r1)
 }
 
@@ -140,10 +140,10 @@ var (
 		/*1*/ imports.NewTable("NSURL_AbsoluteURL", 0),
 		/*2*/ imports.NewTable("NSURL_BaseURL", 0),
 		/*3*/ imports.NewTable("NSURL_Create", 0),
-		/*4*/ imports.NewTable("NSURL_Create1", 0),
-		/*5*/ imports.NewTable("NSURL_Data", 0),
-		/*6*/ imports.NewTable("NSURL_Fragment", 0),
-		/*7*/ imports.NewTable("NSURL_Host", 0),
+		/*4*/ imports.NewTable("NSURL_Data", 0),
+		/*5*/ imports.NewTable("NSURL_Fragment", 0),
+		/*6*/ imports.NewTable("NSURL_Host", 0),
+		/*7*/ imports.NewTable("NSURL_New", 0),
 		/*8*/ imports.NewTable("NSURL_ParameterString", 0),
 		/*9*/ imports.NewTable("NSURL_Password", 0),
 		/*10*/ imports.NewTable("NSURL_Path", 0),

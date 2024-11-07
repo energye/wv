@@ -27,13 +27,19 @@ type TNSMutableURLRequest struct {
 	TObject
 }
 
-func NewNSMutableURLRequest() INSMutableURLRequest {
-	r1 := nSMutableURLRequestImportAPI().SysCallN(1)
+func NewNSMutableURLRequest(aData NSMutableURLRequest) INSMutableURLRequest {
+	r1 := nSMutableURLRequestImportAPI().SysCallN(1, uintptr(aData))
 	return AsNSMutableURLRequest(r1)
 }
 
-func NewNSMutableURLRequest1(aData NSMutableURLRequest) INSMutableURLRequest {
-	r1 := nSMutableURLRequestImportAPI().SysCallN(2, uintptr(aData))
+// NSMutableURLRequestRef -> INSMutableURLRequest
+var NSMutableURLRequestRef nSMutableURLRequest
+
+// nSMutableURLRequest TNSMutableURLRequest Ref
+type nSMutableURLRequest uintptr
+
+func (m *nSMutableURLRequest) New() INSMutableURLRequest {
+	r1 := nSMutableURLRequestImportAPI().SysCallN(2)
 	return AsNSMutableURLRequest(r1)
 }
 
@@ -58,7 +64,7 @@ var (
 	nSMutableURLRequestImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("NSMutableURLRequest_AddValueForHTTPHeaderField", 0),
 		/*1*/ imports.NewTable("NSMutableURLRequest_Create", 0),
-		/*2*/ imports.NewTable("NSMutableURLRequest_Create1", 0),
+		/*2*/ imports.NewTable("NSMutableURLRequest_New", 0),
 		/*3*/ imports.NewTable("NSMutableURLRequest_SetAllHTTPHeaderFields", 0),
 		/*4*/ imports.NewTable("NSMutableURLRequest_SetHTTPMethod", 0),
 		/*5*/ imports.NewTable("NSMutableURLRequest_SetValueForHTTPHeaderField", 0),

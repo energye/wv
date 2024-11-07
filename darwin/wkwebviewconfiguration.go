@@ -33,13 +33,19 @@ type TWKWebViewConfiguration struct {
 	TObject
 }
 
-func NewWKWebViewConfiguration(aData WKWebViewConfiguration) IWKWebViewConfiguration {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(1, uintptr(aData))
+// WKWebViewConfigurationRef -> IWKWebViewConfiguration
+var WKWebViewConfigurationRef wKWebViewConfiguration
+
+// wKWebViewConfiguration TWKWebViewConfiguration Ref
+type wKWebViewConfiguration uintptr
+
+func (m *wKWebViewConfiguration) New() IWKWebViewConfiguration {
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(2)
 	return AsWKWebViewConfiguration(r1)
 }
 
 func (m *TWKWebViewConfiguration) Data() WKWebViewConfiguration {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(2, m.Instance())
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(1, m.Instance())
 	return WKWebViewConfiguration(r1)
 }
 
@@ -87,8 +93,8 @@ var (
 	wKWebViewConfigurationImport       *imports.Imports = nil
 	wKWebViewConfigurationImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKWebViewConfiguration_ApplicationNameForUserAgent", 0),
-		/*1*/ imports.NewTable("WKWebViewConfiguration_Create", 0),
-		/*2*/ imports.NewTable("WKWebViewConfiguration_Data", 0),
+		/*1*/ imports.NewTable("WKWebViewConfiguration_Data", 0),
+		/*2*/ imports.NewTable("WKWebViewConfiguration_New", 0),
 		/*3*/ imports.NewTable("WKWebViewConfiguration_Preferences", 0),
 		/*4*/ imports.NewTable("WKWebViewConfiguration_SetApplicationNameForUserAgent", 0),
 		/*5*/ imports.NewTable("WKWebViewConfiguration_SetPreferences", 0),

@@ -27,23 +27,29 @@ type TWKNavigationResponse struct {
 	TObject
 }
 
-func NewWKNavigationResponse() IWKNavigationResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(1)
+func NewWKNavigationResponse(aData WKNavigationResponse) IWKNavigationResponse {
+	r1 := wKNavigationResponseImportAPI().SysCallN(1, uintptr(aData))
 	return AsWKNavigationResponse(r1)
 }
 
-func NewWKNavigationResponse1(aData WKNavigationResponse) IWKNavigationResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(2, uintptr(aData))
+// WKNavigationResponseRef -> IWKNavigationResponse
+var WKNavigationResponseRef wKNavigationResponse
+
+// wKNavigationResponse TWKNavigationResponse Ref
+type wKNavigationResponse uintptr
+
+func (m *wKNavigationResponse) New() IWKNavigationResponse {
+	r1 := wKNavigationResponseImportAPI().SysCallN(4)
 	return AsWKNavigationResponse(r1)
 }
 
 func (m *TWKNavigationResponse) Data() WKNavigationResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(3, m.Instance())
+	r1 := wKNavigationResponseImportAPI().SysCallN(2, m.Instance())
 	return WKNavigationResponse(r1)
 }
 
 func (m *TWKNavigationResponse) IsForMainFrame() bool {
-	r1 := wKNavigationResponseImportAPI().SysCallN(4, m.Instance())
+	r1 := wKNavigationResponseImportAPI().SysCallN(3, m.Instance())
 	return GoBool(r1)
 }
 
@@ -62,9 +68,9 @@ var (
 	wKNavigationResponseImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKNavigationResponse_CanShowMIMEType", 0),
 		/*1*/ imports.NewTable("WKNavigationResponse_Create", 0),
-		/*2*/ imports.NewTable("WKNavigationResponse_Create1", 0),
-		/*3*/ imports.NewTable("WKNavigationResponse_Data", 0),
-		/*4*/ imports.NewTable("WKNavigationResponse_IsForMainFrame", 0),
+		/*2*/ imports.NewTable("WKNavigationResponse_Data", 0),
+		/*3*/ imports.NewTable("WKNavigationResponse_IsForMainFrame", 0),
+		/*4*/ imports.NewTable("WKNavigationResponse_New", 0),
 		/*5*/ imports.NewTable("WKNavigationResponse_Response", 0),
 	}
 )

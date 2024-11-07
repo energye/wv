@@ -28,18 +28,24 @@ type TWKWebpagePreferences struct {
 	TObject
 }
 
-func NewWKWebpagePreferences() IWKWebpagePreferences {
-	r1 := wKWebpagePreferencesImportAPI().SysCallN(1)
+func NewWKWebpagePreferences(aData WKWebpagePreferences) IWKWebpagePreferences {
+	r1 := wKWebpagePreferencesImportAPI().SysCallN(1, uintptr(aData))
 	return AsWKWebpagePreferences(r1)
 }
 
-func NewWKWebpagePreferences1(aData WKWebpagePreferences) IWKWebpagePreferences {
-	r1 := wKWebpagePreferencesImportAPI().SysCallN(2, uintptr(aData))
+// WKWebpagePreferencesRef -> IWKWebpagePreferences
+var WKWebpagePreferencesRef wKWebpagePreferences
+
+// wKWebpagePreferences TWKWebpagePreferences Ref
+type wKWebpagePreferences uintptr
+
+func (m *wKWebpagePreferences) New() IWKWebpagePreferences {
+	r1 := wKWebpagePreferencesImportAPI().SysCallN(3)
 	return AsWKWebpagePreferences(r1)
 }
 
 func (m *TWKWebpagePreferences) Data() WKWebpagePreferences {
-	r1 := wKWebpagePreferencesImportAPI().SysCallN(3, m.Instance())
+	r1 := wKWebpagePreferencesImportAPI().SysCallN(2, m.Instance())
 	return WKWebpagePreferences(r1)
 }
 
@@ -66,8 +72,8 @@ var (
 	wKWebpagePreferencesImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKWebpagePreferences_AllowsContentJavaScript", 0),
 		/*1*/ imports.NewTable("WKWebpagePreferences_Create", 0),
-		/*2*/ imports.NewTable("WKWebpagePreferences_Create1", 0),
-		/*3*/ imports.NewTable("WKWebpagePreferences_Data", 0),
+		/*2*/ imports.NewTable("WKWebpagePreferences_Data", 0),
+		/*3*/ imports.NewTable("WKWebpagePreferences_New", 0),
 		/*4*/ imports.NewTable("WKWebpagePreferences_PreferredContentMode", 0),
 		/*5*/ imports.NewTable("WKWebpagePreferences_SetAllowsContentJavaScript", 0),
 		/*6*/ imports.NewTable("WKWebpagePreferences_SetPreferredContentMode", 0),

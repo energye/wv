@@ -33,13 +33,8 @@ type TNSURLRequest struct {
 	TObject
 }
 
-func NewNSURLRequest() INSURLRequest {
-	r1 := nSURLRequestImportAPI().SysCallN(3)
-	return AsNSURLRequest(r1)
-}
-
-func NewNSURLRequest1(aData NSURLRequest) INSURLRequest {
-	r1 := nSURLRequestImportAPI().SysCallN(4, uintptr(aData))
+func NewNSURLRequest(aData NSURLRequest) INSURLRequest {
+	r1 := nSURLRequestImportAPI().SysCallN(3, uintptr(aData))
 	return AsNSURLRequest(r1)
 }
 
@@ -48,6 +43,11 @@ var NSURLRequestRef nSURLRequest
 
 // nSURLRequest TNSURLRequest Ref
 type nSURLRequest uintptr
+
+func (m *nSURLRequest) New() INSURLRequest {
+	r1 := nSURLRequestImportAPI().SysCallN(8)
+	return AsNSURLRequest(r1)
+}
 
 func (m *nSURLRequest) RequestWithURL(uRL NSURL) INSURLRequest {
 	r1 := nSURLRequestImportAPI().SysCallN(9, uintptr(uRL))
@@ -65,7 +65,7 @@ func (m *nSURLRequest) RequestWithURLCachePolicyTimeoutInterval(uRL NSURL, cache
 }
 
 func (m *TNSURLRequest) Data() NSURLRequest {
-	r1 := nSURLRequestImportAPI().SysCallN(5, m.Instance())
+	r1 := nSURLRequestImportAPI().SysCallN(4, m.Instance())
 	return NSURLRequest(r1)
 }
 
@@ -85,12 +85,12 @@ func (m *TNSURLRequest) TimeoutInterval() (resultFloat64 float64) {
 }
 
 func (m *TNSURLRequest) MainDocumentURL() NSURL {
-	r1 := nSURLRequestImportAPI().SysCallN(7, m.Instance())
+	r1 := nSURLRequestImportAPI().SysCallN(6, m.Instance())
 	return NSURL(r1)
 }
 
 func (m *TNSURLRequest) NetworkServiceType() NSURLRequestNetworkServiceType {
-	r1 := nSURLRequestImportAPI().SysCallN(8, m.Instance())
+	r1 := nSURLRequestImportAPI().SysCallN(7, m.Instance())
 	return NSURLRequestNetworkServiceType(r1)
 }
 
@@ -100,7 +100,7 @@ func (m *TNSURLRequest) AllowsCellularAccess() bool {
 }
 
 func (m *TNSURLRequest) HTTPMethod() string {
-	r1 := nSURLRequestImportAPI().SysCallN(6, m.Instance())
+	r1 := nSURLRequestImportAPI().SysCallN(5, m.Instance())
 	return GoStr(r1)
 }
 
@@ -121,11 +121,11 @@ var (
 		/*1*/ imports.NewTable("NSURLRequest_AllowsCellularAccess", 0),
 		/*2*/ imports.NewTable("NSURLRequest_CachePolicy", 0),
 		/*3*/ imports.NewTable("NSURLRequest_Create", 0),
-		/*4*/ imports.NewTable("NSURLRequest_Create1", 0),
-		/*5*/ imports.NewTable("NSURLRequest_Data", 0),
-		/*6*/ imports.NewTable("NSURLRequest_HTTPMethod", 0),
-		/*7*/ imports.NewTable("NSURLRequest_MainDocumentURL", 0),
-		/*8*/ imports.NewTable("NSURLRequest_NetworkServiceType", 0),
+		/*4*/ imports.NewTable("NSURLRequest_Data", 0),
+		/*5*/ imports.NewTable("NSURLRequest_HTTPMethod", 0),
+		/*6*/ imports.NewTable("NSURLRequest_MainDocumentURL", 0),
+		/*7*/ imports.NewTable("NSURLRequest_NetworkServiceType", 0),
+		/*8*/ imports.NewTable("NSURLRequest_New", 0),
 		/*9*/ imports.NewTable("NSURLRequest_RequestWithURL", 0),
 		/*10*/ imports.NewTable("NSURLRequest_RequestWithURLCachePolicyTimeoutInterval", 0),
 		/*11*/ imports.NewTable("NSURLRequest_SupportsSecureCoding", 0),
