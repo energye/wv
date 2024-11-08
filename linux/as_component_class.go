@@ -206,17 +206,6 @@ func AsWkWebContext(obj interface{}) IWkWebContext {
 	return wkWebContext
 }
 
-// AsWkWebViewParent Convert a pointer object to an existing class object
-func AsWkWebViewParent(obj interface{}) IWkWebViewParent {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wkWebViewParent := new(TWkWebViewParent)
-	SetObjectInstance(wkWebViewParent, instance)
-	return wkWebViewParent
-}
-
 // AsWkWebsitePolicies Convert a pointer object to an existing class object
 func AsWkWebsitePolicies(obj interface{}) IWkWebsitePolicies {
 	instance := GetInstance(obj)
@@ -237,4 +226,15 @@ func AsWkWebview(obj interface{}) IWkWebview {
 	wkWebview := new(TWkWebview)
 	SetObjectInstance(wkWebview, instance)
 	return wkWebview
+}
+
+// AsWkWebviewParent Convert a pointer object to an existing class object
+func AsWkWebviewParent(obj interface{}) IWkWebviewParent {
+	instance := GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	wkWebviewParent := new(TWkWebviewParent)
+	SetObjectInstance(wkWebviewParent, instance)
+	return wkWebviewParent
 }
