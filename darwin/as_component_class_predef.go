@@ -8,6 +8,8 @@
 
 package wv
 
+import "github.com/energye/lcl/lcl"
+
 // AsStrings Convert a pointer object to an existing class object
 func AsStrings(obj uintptr) IStrings {
 	instance := GetInstance(obj)
@@ -17,4 +19,9 @@ func AsStrings(obj uintptr) IStrings {
 	stream := new(TStrings)
 	SetObjectInstance(stream, instance)
 	return stream
+}
+
+// AsObject Convert a pointer object to an existing class object
+func AsObject(obj interface{}) IObject {
+	return lcl.AsObject(obj)
 }
