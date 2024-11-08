@@ -24,7 +24,7 @@ type TWKScriptMessageHandler struct {
 	TObject
 }
 
-func NewWKScriptMessageHandler(event IReceiveScriptMessageEvent) IWKScriptMessageHandler {
+func NewWKScriptMessageHandler(event IReceiveScriptMessageDelegateEvent) IWKScriptMessageHandler {
 	r1 := wKScriptMessageHandlerImportAPI().SysCallN(0, GetObjectUintptr(event))
 	return AsWKScriptMessageHandler(r1)
 }

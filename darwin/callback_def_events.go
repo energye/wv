@@ -8,19 +8,43 @@
 
 package wv
 
-type IWKDownloadEvent interface {
+type IReceiveScriptMessageDelegateEvent interface {
+	SetOnProcessMessage(fn TWkProcessMessageEvent)
 }
 
 type IWKNavigationDelegateEvent interface {
+	SetOnDecidePolicyForNavigationActionPreferences(fn TWKDecidePolicyForNavigationActionPreferences)       // property event
+	SetOnDecidePolicyForNavigationResponse(fn TWKDecidePolicyForNavigationResponse)                         // property event
+	SetOnStartProvisionalNavigation(fn TWkStartProvisionalNavigation)                                       // property event
+	SetOnReceiveServerRedirectForProvisionalNavigation(fn TWkReceiveServerRedirectForProvisionalNavigation) // property event
+	SetOnFailProvisionalNavigationWithError(fn TWkFailProvisionalNavigationWithError)                       // property event
+	SetOnCommitNavigation(fn TWkCommitNavigation)                                                           // property event
+	SetOnFinishNavigation(fn TWkFinishNavigation)                                                           // property event
+	SetOnFailNavigationWithError(fn TWkFailNavigationWithError)                                             // property event
+	SetOnWebContentProcessDidTerminate(fn TWkWebContentProcessDidTerminate)                                 // property event
+	SetOnNavigationActionDidBecomeDownload(fn TWkNavigationActionDidBecomeDownload)                         // property event
+	SetOnNavigationResponseDidBecomeDownload(fn TWkNavigationResponseDidBecomeDownload)                     // property event
 }
 
-type IReceiveScriptMessageEvent interface {
+type IWKURLSchemeHandlerDelegateEvent interface {
+	SetOnStartURLSchemeTask(fn TWKStartURLSchemeTask) // property event
+	SetOnStopURLSchemeTask(fn TWKStopURLSchemeTask)   // property event
 }
 
 type IWKUIDelegateEvent interface {
+	SetOnCreateWebView(fn TWKCreateWebView)                                       // property event
+	SetOnRunJavaScriptAlert(fn TWKRunJavaScriptAlert)                             // property event
+	SetOnRunJavaScriptConfirmCompletion(fn TWKRunJavaScriptConfirmCompletion)     // property event
+	SetOnRunJavaScriptTextInputCompletion(fn TWKRunJavaScriptTextInputCompletion) // property event
+	SetOnWebViewDidClose(fn TWKWebViewDidClose)                                   // property event
 }
 
-type IWKURLSchemeHandlerEvent interface {
+type IWKDownloadDelegateEvent interface {
+	SetOnDownloadCancelCompletionHandler(fn TWKDownloadCancelCompletionHandler)                                                 // property event
+	SetOnDownloadDecideDestinationUsingResponseSuggestedFilename(fn TWKDownloadDecideDestinationUsingResponseSuggestedFilename) // property event
+	SetOnDownloadWillPerformHTTPRedirectionNewRequest(fn TWKDownloadWillPerformHTTPRedirectionNewRequest)                       // property event
+	SetOnDownloadFinish(fn TWKDownloadFinish)                                                                                   // property event
+	SetOnDownloadFailWithError(fn TWKDownloadFailWithError)                                                                     // property event
 }
 
 // WKScriptMessageHandlerProtocol

@@ -20,21 +20,9 @@ func AsStrings(obj uintptr) IStrings {
 }
 
 func AsWkCookieManagerDelegateEvent(obj uintptr) IWkCookieManagerDelegateEvent {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	delegate := new(TWkWebview)
-	SetObjectInstance(delegate, instance)
-	return delegate
+	return AsWkWebview(obj)
 }
 
 func AsWkSchemeRequestDelegateEvent(obj uintptr) IWkSchemeRequestDelegateEvent {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	delegate := new(TWkWebview)
-	SetObjectInstance(delegate, instance)
-	return delegate
+	return AsWkWebview(obj)
 }

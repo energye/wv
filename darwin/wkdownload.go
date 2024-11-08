@@ -28,7 +28,7 @@ type TWKDownload struct {
 	TObject
 }
 
-func NewWKDownload(aData WKDownload, aWebViewDelegate IWKDownloadEvent) IWKDownload {
+func NewWKDownload(aData WKDownload, aWebViewDelegate IWKDownloadDelegateEvent) IWKDownload {
 	r1 := wKDownloadImportAPI().SysCallN(1, uintptr(aData), GetObjectUintptr(aWebViewDelegate))
 	return AsWKDownload(r1)
 }

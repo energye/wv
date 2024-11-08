@@ -24,7 +24,7 @@ type TWKDownloadDelegate struct {
 	TObject
 }
 
-func NewWKDownloadDelegate(event IWKDownloadEvent) IWKDownloadDelegate {
+func NewWKDownloadDelegate(event IWKDownloadDelegateEvent) IWKDownloadDelegate {
 	r1 := wKDownloadDelegateImportAPI().SysCallN(0, GetObjectUintptr(event))
 	return AsWKDownloadDelegate(r1)
 }

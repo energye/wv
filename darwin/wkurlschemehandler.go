@@ -24,7 +24,7 @@ type TWKURLSchemeHandler struct {
 	TObject
 }
 
-func NewWKURLSchemeHandler(event IWKURLSchemeHandlerEvent) IWKURLSchemeHandler {
+func NewWKURLSchemeHandler(event IWKURLSchemeHandlerDelegateEvent) IWKURLSchemeHandler {
 	r1 := wKURLSchemeHandlerImportAPI().SysCallN(0, GetObjectUintptr(event))
 	return AsWKURLSchemeHandler(r1)
 }
