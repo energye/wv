@@ -76,7 +76,7 @@ func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
 		case TWKStopURLSchemeTask:
 			fn.(TWKStopURLSchemeTask)(AsObject(getPtr(0)), WKURLSchemeTask(getVal(1)))
 		case TWKCreateWebView:
-			webview := (*WKWebView)(getPtr(4))
+			webview := (*WkWebview)(getPtr(4))
 			*webview = fn.(TWKCreateWebView)(AsObject(getPtr(0)), WKWebViewConfiguration(getVal(1)), WKNavigationAction(getVal(2)),
 				WKWindowFeatures(getVal(3)))
 		case TWKRunJavaScriptAlert:
