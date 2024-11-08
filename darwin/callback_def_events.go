@@ -25,48 +25,48 @@ type IWKURLSchemeHandlerEvent interface {
 
 // WKScriptMessageHandlerProtocol
 
-type TWkProcessMessageEvent func(sender TWKUserContentController, name, data string)
+type TWkProcessMessageEvent func(sender IObject, userContentController WKUserContentController, name, data string)
 
 // WKNavigationDelegateProtocol
 
-type TWKDecidePolicyForNavigationActionPreferences func(webView IWkWebview, navigationAction TWKNavigationAction, actionPolicy *WKNavigationActionPolicy, preferences *TWKWebpagePreferences)
-type TWKDecidePolicyForNavigationResponse func(webView IWkWebview, navigationResponse TWKNavigationResponse, responsePolicy *WKNavigationResponsePolicy)
-type TWkStartProvisionalNavigation func(webView IWkWebview, navigation TWKNavigation)
-type TWkReceiveServerRedirectForProvisionalNavigation func(webView IWkWebview, navigation TWKNavigation)
-type TWkFailProvisionalNavigationWithError func(webView IWkWebview, navigation TWKNavigation, error string)
-type TWkCommitNavigation func(webView IWkWebview, navigation TWKNavigation)
-type TWkFinishNavigation func(webView IWkWebview, navigation TWKNavigation)
-type TWkFailNavigationWithError func(webView IWkWebview, navigation TWKNavigation, error string)
+type TWKDecidePolicyForNavigationActionPreferences func(sender IObject, navigationAction WKNavigationAction, actionPolicy *WKNavigationActionPolicy, preferences *WKWebpagePreferences)
+type TWKDecidePolicyForNavigationResponse func(sender IObject, navigationResponse WKNavigationResponse, responsePolicy *WKNavigationResponsePolicy)
+type TWkStartProvisionalNavigation func(sender IObject, navigation WKNavigation)
+type TWkReceiveServerRedirectForProvisionalNavigation func(sender IObject, navigation WKNavigation)
+type TWkFailProvisionalNavigationWithError func(sender IObject, navigation WKNavigation, error string)
+type TWkCommitNavigation func(sender IObject, navigation WKNavigation)
+type TWkFinishNavigation func(sender IObject, navigation WKNavigation)
+type TWkFailNavigationWithError func(sender IObject, navigation WKNavigation, error string)
 
-// TWkReceiveAuthenticationChallenge func(webView IWkWebview, challenge NSURLAuthenticationChallenge, var disposition NSURLSessionAuthChallengeDisposition, var credential INSURLCredential)
+// TWkReceiveAuthenticationChallenge func(sender IObject, challenge NSURLAuthenticationChallenge, var disposition NSURLSessionAuthChallengeDisposition, var credential INSURLCredential)
 
-type TWkWebContentProcessDidTerminate func(webView IWkWebview)
+type TWkWebContentProcessDidTerminate func(sender IObject)
 
-// TWkAuthenticationChallengeShouldAllowDeprecatedTLS func(webView IWkWebview, challenge NSURLAuthenticationChallenge) Boolean
+// TWkAuthenticationChallengeShouldAllowDeprecatedTLS func(sender IObject, challenge NSURLAuthenticationChallenge) Boolean
 
-type TWkNavigationActionDidBecomeDownload func(webView IWkWebview, navigationAction TWKNavigationAction, download TWKDownload)
-type TWkNavigationResponseDidBecomeDownload func(webView IWkWebview, navigationResponse TWKNavigationResponse, download TWKDownload)
+type TWkNavigationActionDidBecomeDownload func(sender IObject, navigationAction WKNavigationAction, download WKDownload)
+type TWkNavigationResponseDidBecomeDownload func(sender IObject, navigationResponse WKNavigationResponse, download WKDownload)
 
 // WKURLSchemeHandlerProtocol
 
-type TWKStartURLSchemeTask func(webView IWkWebview, urlSchemeTask TWKURLSchemeTask)
-type TWKStopURLSchemeTask func(webView IWkWebview, urlSchemeTask TWKURLSchemeTask)
+type TWKStartURLSchemeTask func(sender IObject, urlSchemeTask WKURLSchemeTask)
+type TWKStopURLSchemeTask func(sender IObject, urlSchemeTask WKURLSchemeTask)
 
 // WKUIDelegateProtocol
 
-type TWKCreateWebView func(webView IWkWebview, configuration_ TWKWebViewConfiguration, navigationAction TWKNavigationAction, windowFeatures TWKWindowFeatures) IWkWebview
-type TWKRunJavaScriptAlert func(webView IWkWebview, message_ string, frame TWKFrameInfo)
-type TWKRunJavaScriptConfirmCompletion func(webView IWkWebview, message_ string, frame TWKFrameInfo) bool
-type TWKRunJavaScriptTextInputCompletion func(webView IWkWebview, prompt string, defaultText string, frame TWKFrameInfo) string
-type TWKWebViewDidClose func(webView IWkWebview)
+type TWKCreateWebView func(sender IObject, configuration WKWebViewConfiguration, navigationAction WKNavigationAction, windowFeatures WKWindowFeatures) WKWebView
+type TWKRunJavaScriptAlert func(sender IObject, message_ string, frame WKFrameInfo)
+type TWKRunJavaScriptConfirmCompletion func(sender IObject, message_ string, frame WKFrameInfo) bool
+type TWKRunJavaScriptTextInputCompletion func(sender IObject, prompt string, defaultText string, frame WKFrameInfo) string
+type TWKWebViewDidClose func(sender IObject)
 
 // WKDownload
 
-type TWKDownloadCancelCompletionHandler func(webView IWkWebview, download TWKDownload, aData uintptr, aLength int32 /*NSData*/)
-type TWKDownloadDecideDestinationUsingResponseSuggestedFilename func(webView IWkWebview, download TWKDownload, response TNSURLResponse, suggestedFilename string)
-type TWKDownloadWillPerformHTTPRedirectionNewRequest func(webView IWkWebview, download TWKDownload, response TNSHTTPURLResponse, request TNSURLRequest)
+type TWKDownloadCancelCompletionHandler func(sender IObject, download WKDownload, aData uintptr, aLength int32 /*NSData*/)
+type TWKDownloadDecideDestinationUsingResponseSuggestedFilename func(sender IObject, download WKDownload, response NSURLResponse, suggestedFilename string)
+type TWKDownloadWillPerformHTTPRedirectionNewRequest func(sender IObject, download WKDownload, response NSHTTPURLResponse, request NSURLRequest)
 
-// TWKDownloadReceiveAuthenticationChallenge func(webView IWkWebview, download IWKDownload, challenge NSURLAuthenticationChallenge)
+// TWKDownloadReceiveAuthenticationChallenge func(sender IObject, download IWKDownload, challenge NSURLAuthenticationChallenge)
 
-type TWKDownloadFinish func(webView IWkWebview, download TWKDownload)
-type TWKDownloadFailWithError func(webView IWkWebview, download TWKDownload, error string, aData uintptr, aLength int32 /*NSData*/)
+type TWKDownloadFinish func(sender IObject, download WKDownload)
+type TWKDownloadFailWithError func(sender IObject, download WKDownload, error string, aData uintptr, aLength int32 /*NSData*/)
