@@ -30,6 +30,17 @@ func AsNSMutableURLRequest(obj interface{}) INSMutableURLRequest {
 	return nSMutableURLRequest
 }
 
+// AsNSProgress Convert a pointer object to an existing class object
+func AsNSProgress(obj interface{}) INSProgress {
+	instance := GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	nSProgress := new(TNSProgress)
+	SetObjectInstance(nSProgress, instance)
+	return nSProgress
+}
+
 // AsNSURL Convert a pointer object to an existing class object
 func AsNSURL(obj interface{}) INSURL {
 	instance := GetInstance(obj)

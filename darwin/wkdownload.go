@@ -18,6 +18,7 @@ type IWKDownload interface {
 	IObject
 	Data() WKDownload                                 // function
 	OriginalRequest() NSURLRequest                    // function
+	Progress() NSProgress                             // function
 	SetDelegate(downloadDelegate IWKDownloadDelegate) // procedure
 	Cancel()                                          // procedure
 }
@@ -42,8 +43,13 @@ func (m *TWKDownload) OriginalRequest() NSURLRequest {
 	return NSURLRequest(r1)
 }
 
+func (m *TWKDownload) Progress() NSProgress {
+	r1 := wKDownloadImportAPI().SysCallN(4, m.Instance())
+	return NSProgress(r1)
+}
+
 func (m *TWKDownload) SetDelegate(downloadDelegate IWKDownloadDelegate) {
-	wKDownloadImportAPI().SysCallN(4, m.Instance(), GetObjectUintptr(downloadDelegate))
+	wKDownloadImportAPI().SysCallN(5, m.Instance(), GetObjectUintptr(downloadDelegate))
 }
 
 func (m *TWKDownload) Cancel() {
@@ -57,7 +63,8 @@ var (
 		/*1*/ imports.NewTable("WKDownload_Create", 0),
 		/*2*/ imports.NewTable("WKDownload_Data", 0),
 		/*3*/ imports.NewTable("WKDownload_OriginalRequest", 0),
-		/*4*/ imports.NewTable("WKDownload_SetDelegate", 0),
+		/*4*/ imports.NewTable("WKDownload_Progress", 0),
+		/*5*/ imports.NewTable("WKDownload_SetDelegate", 0),
 	}
 )
 

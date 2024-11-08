@@ -36,6 +36,7 @@ type WKURLSchemeHandler uintptr
 type WKWindowFeatures uintptr
 type WKUIDelegate uintptr
 type WKNavigationDelegate uintptr
+type NSProgress uintptr
 
 type NSURLCredentialPersistence = int32
 
