@@ -33,6 +33,11 @@ type TWKWebViewConfiguration struct {
 	TObject
 }
 
+func NewWKWebViewConfiguration(aData WKWebViewConfiguration) IWKWebViewConfiguration {
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(1, uintptr(aData))
+	return AsWKWebViewConfiguration(r1)
+}
+
 // WKWebViewConfigurationRef -> IWKWebViewConfiguration
 var WKWebViewConfigurationRef wKWebViewConfiguration
 
@@ -40,27 +45,27 @@ var WKWebViewConfigurationRef wKWebViewConfiguration
 type wKWebViewConfiguration uintptr
 
 func (m *wKWebViewConfiguration) New() IWKWebViewConfiguration {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(2)
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(3)
 	return AsWKWebViewConfiguration(r1)
 }
 
 func (m *TWKWebViewConfiguration) Data() WKWebViewConfiguration {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(1, m.Instance())
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(2, m.Instance())
 	return WKWebViewConfiguration(r1)
 }
 
 func (m *TWKWebViewConfiguration) Preferences() WKPreferences {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(3, m.Instance())
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(4, m.Instance())
 	return WKPreferences(r1)
 }
 
 func (m *TWKWebViewConfiguration) UserContentController() WKUserContentController {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(10, m.Instance())
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(11, m.Instance())
 	return WKUserContentController(r1)
 }
 
 func (m *TWKWebViewConfiguration) SuppressesIncrementalRendering() bool {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(9, m.Instance())
+	r1 := wKWebViewConfigurationImportAPI().SysCallN(10, m.Instance())
 	return GoBool(r1)
 }
 
@@ -70,39 +75,40 @@ func (m *TWKWebViewConfiguration) ApplicationNameForUserAgent() string {
 }
 
 func (m *TWKWebViewConfiguration) SetPreferences(preferences WKPreferences) {
-	wKWebViewConfigurationImportAPI().SysCallN(5, m.Instance(), uintptr(preferences))
+	wKWebViewConfigurationImportAPI().SysCallN(6, m.Instance(), uintptr(preferences))
 }
 
 func (m *TWKWebViewConfiguration) SetUserContentController(userContentController WKUserContentController) {
-	wKWebViewConfigurationImportAPI().SysCallN(8, m.Instance(), uintptr(userContentController))
+	wKWebViewConfigurationImportAPI().SysCallN(9, m.Instance(), uintptr(userContentController))
 }
 
 func (m *TWKWebViewConfiguration) SetSuppressesIncrementalRendering(newValue bool) {
-	wKWebViewConfigurationImportAPI().SysCallN(6, m.Instance(), PascalBool(newValue))
+	wKWebViewConfigurationImportAPI().SysCallN(7, m.Instance(), PascalBool(newValue))
 }
 
 func (m *TWKWebViewConfiguration) SetApplicationNameForUserAgent(newValue string) {
-	wKWebViewConfigurationImportAPI().SysCallN(4, m.Instance(), PascalStr(newValue))
+	wKWebViewConfigurationImportAPI().SysCallN(5, m.Instance(), PascalStr(newValue))
 }
 
 func (m *TWKWebViewConfiguration) SetURLSchemeHandlerForURLScheme(urlSchemeHandler WKURLSchemeHandler, urlScheme string) {
-	wKWebViewConfigurationImportAPI().SysCallN(7, m.Instance(), uintptr(urlSchemeHandler), PascalStr(urlScheme))
+	wKWebViewConfigurationImportAPI().SysCallN(8, m.Instance(), uintptr(urlSchemeHandler), PascalStr(urlScheme))
 }
 
 var (
 	wKWebViewConfigurationImport       *imports.Imports = nil
 	wKWebViewConfigurationImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKWebViewConfiguration_ApplicationNameForUserAgent", 0),
-		/*1*/ imports.NewTable("WKWebViewConfiguration_Data", 0),
-		/*2*/ imports.NewTable("WKWebViewConfiguration_New", 0),
-		/*3*/ imports.NewTable("WKWebViewConfiguration_Preferences", 0),
-		/*4*/ imports.NewTable("WKWebViewConfiguration_SetApplicationNameForUserAgent", 0),
-		/*5*/ imports.NewTable("WKWebViewConfiguration_SetPreferences", 0),
-		/*6*/ imports.NewTable("WKWebViewConfiguration_SetSuppressesIncrementalRendering", 0),
-		/*7*/ imports.NewTable("WKWebViewConfiguration_SetURLSchemeHandlerForURLScheme", 0),
-		/*8*/ imports.NewTable("WKWebViewConfiguration_SetUserContentController", 0),
-		/*9*/ imports.NewTable("WKWebViewConfiguration_SuppressesIncrementalRendering", 0),
-		/*10*/ imports.NewTable("WKWebViewConfiguration_UserContentController", 0),
+		/*1*/ imports.NewTable("WKWebViewConfiguration_Create", 0),
+		/*2*/ imports.NewTable("WKWebViewConfiguration_Data", 0),
+		/*3*/ imports.NewTable("WKWebViewConfiguration_New", 0),
+		/*4*/ imports.NewTable("WKWebViewConfiguration_Preferences", 0),
+		/*5*/ imports.NewTable("WKWebViewConfiguration_SetApplicationNameForUserAgent", 0),
+		/*6*/ imports.NewTable("WKWebViewConfiguration_SetPreferences", 0),
+		/*7*/ imports.NewTable("WKWebViewConfiguration_SetSuppressesIncrementalRendering", 0),
+		/*8*/ imports.NewTable("WKWebViewConfiguration_SetURLSchemeHandlerForURLScheme", 0),
+		/*9*/ imports.NewTable("WKWebViewConfiguration_SetUserContentController", 0),
+		/*10*/ imports.NewTable("WKWebViewConfiguration_SuppressesIncrementalRendering", 0),
+		/*11*/ imports.NewTable("WKWebViewConfiguration_UserContentController", 0),
 	}
 )
 
