@@ -16,9 +16,9 @@ import (
 // IWkWebviewParent Parent: ICustomControl
 type IWkWebviewParent interface {
 	ICustomControl
-	UpdateBounds()                  // procedure
-	Resize()                        // procedure
-	SetWebview(aWebview IWkWebview) // procedure
+	UpdateBounds()                 // procedure
+	Resize()                       // procedure
+	SetWebview(aWebview WkWebview) // procedure
 }
 
 // TWkWebviewParent Parent: TCustomControl
@@ -39,8 +39,8 @@ func (m *TWkWebviewParent) Resize() {
 	wkWebviewParentImportAPI().SysCallN(1, m.Instance())
 }
 
-func (m *TWkWebviewParent) SetWebview(aWebview IWkWebview) {
-	wkWebviewParentImportAPI().SysCallN(2, m.Instance(), GetObjectUintptr(aWebview))
+func (m *TWkWebviewParent) SetWebview(aWebview WkWebview) {
+	wkWebviewParentImportAPI().SysCallN(2, m.Instance(), uintptr(aWebview))
 }
 
 var (

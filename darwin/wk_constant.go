@@ -30,7 +30,7 @@ type WKURLSchemeTask uintptr
 type WKUserContentController uintptr
 type WKUserScript uintptr
 type WKWebpagePreferences uintptr
-type WKWebView uintptr
+type WkWebview uintptr
 type WKWebViewConfiguration uintptr
 type WKURLSchemeHandler uintptr
 type WKWindowFeatures uintptr

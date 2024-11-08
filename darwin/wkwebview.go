@@ -16,7 +16,7 @@ import (
 // IWkWebview Root Interface
 type IWkWebview interface {
 	IComponent
-	Data() WKWebView                               // function
+	Data() WkWebview                               // function
 	Configuration() WKWebViewConfiguration         // function
 	LoadRequest(request NSURLRequest) WKNavigation // function
 	Title() string                                 // function
@@ -119,9 +119,9 @@ type TWkWebview struct {
 	downloadFailWithErrorPtr                                   uintptr
 }
 
-func (m *TWkWebview) Data() WKWebView {
+func (m *TWkWebview) Data() WkWebview {
 	r1 := wkWebviewImportAPI().SysCallN(5, m.Instance())
-	return WKWebView(r1)
+	return WkWebview(r1)
 }
 
 func (m *TWkWebview) Configuration() WKWebViewConfiguration {
