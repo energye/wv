@@ -55,8 +55,8 @@ type TWKStopURLSchemeTask func(sender IObject, urlSchemeTask WKURLSchemeTask)
 // WKUIDelegateProtocol
 
 type TWKCreateWebView func(sender IObject, configuration WKWebViewConfiguration, navigationAction WKNavigationAction, windowFeatures WKWindowFeatures) WKWebView
-type TWKRunJavaScriptAlert func(sender IObject, message_ string, frame WKFrameInfo)
-type TWKRunJavaScriptConfirmCompletion func(sender IObject, message_ string, frame WKFrameInfo) bool
+type TWKRunJavaScriptAlert func(sender IObject, message string, frame WKFrameInfo)
+type TWKRunJavaScriptConfirmCompletion func(sender IObject, message string, frame WKFrameInfo) bool
 type TWKRunJavaScriptTextInputCompletion func(sender IObject, prompt string, defaultText string, frame WKFrameInfo) string
 type TWKWebViewDidClose func(sender IObject)
 
