@@ -32,10 +32,10 @@ type WKUserScript uintptr
 type WKWebpagePreferences uintptr
 type WkWebview uintptr
 type WKWebViewConfiguration uintptr
-type WKURLSchemeHandler uintptr
+type WKURLSchemeHandler = WKURLSchemeHandlerProtocol
 type WKWindowFeatures uintptr
-type WKUIDelegate uintptr
-type WKNavigationDelegate uintptr
+type WKUIDelegate = WKUIDelegateProtocol
+type WKNavigationDelegate = WKNavigationDelegateProtocol
 type NSProgress uintptr
 
 type NSURLCredentialPersistence = int32
