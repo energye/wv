@@ -18,8 +18,8 @@ type IWkWebviewParent interface {
 	ICustomPanel
 	ScrolledWindow() TScrolledWindow          // property
 	SetScrolledWindow(AValue TScrolledWindow) // property
-	WebView() IWkWebview                      // property
-	SetWebView(AValue IWkWebview)             // property
+	Resize()                                  // procedure
+	SetWebview(aValue IWkWebview)             // procedure
 	FreeChild()                               // procedure
 }
 
@@ -34,21 +34,20 @@ func NewWkWebviewParent(aOwner IComponent) IWkWebviewParent {
 }
 
 func (m *TWkWebviewParent) ScrolledWindow() TScrolledWindow {
-	r1 := wkWebviewParentImportAPI().SysCallN(2, 0, m.Instance(), 0)
+	r1 := wkWebviewParentImportAPI().SysCallN(3, 0, m.Instance(), 0)
 	return TScrolledWindow(r1)
 }
 
 func (m *TWkWebviewParent) SetScrolledWindow(AValue TScrolledWindow) {
-	wkWebviewParentImportAPI().SysCallN(2, 1, m.Instance(), uintptr(AValue))
+	wkWebviewParentImportAPI().SysCallN(3, 1, m.Instance(), uintptr(AValue))
 }
 
-func (m *TWkWebviewParent) WebView() IWkWebview {
-	r1 := wkWebviewParentImportAPI().SysCallN(3, 0, m.Instance(), 0)
-	return AsWkWebview(r1)
+func (m *TWkWebviewParent) Resize() {
+	wkWebviewParentImportAPI().SysCallN(2, m.Instance())
 }
 
-func (m *TWkWebviewParent) SetWebView(AValue IWkWebview) {
-	wkWebviewParentImportAPI().SysCallN(3, 1, m.Instance(), GetObjectUintptr(AValue))
+func (m *TWkWebviewParent) SetWebview(aValue IWkWebview) {
+	wkWebviewParentImportAPI().SysCallN(4, m.Instance(), GetObjectUintptr(aValue))
 }
 
 func (m *TWkWebviewParent) FreeChild() {
@@ -60,8 +59,9 @@ var (
 	wkWebviewParentImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WkWebviewParent_Create", 0),
 		/*1*/ imports.NewTable("WkWebviewParent_FreeChild", 0),
-		/*2*/ imports.NewTable("WkWebviewParent_ScrolledWindow", 0),
-		/*3*/ imports.NewTable("WkWebviewParent_WebView", 0),
+		/*2*/ imports.NewTable("WkWebviewParent_Resize", 0),
+		/*3*/ imports.NewTable("WkWebviewParent_ScrolledWindow", 0),
+		/*4*/ imports.NewTable("WkWebviewParent_SetWebview", 0),
 	}
 )
 
