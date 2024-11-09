@@ -53,6 +53,8 @@ type IWkWebview interface {
 	SetAllowsMagnification(newValue bool)                                            // procedure
 	SetMagnification(newValue float64)                                               // procedure
 	SetMagnificationCenteredAtPoint(magnification float64, point *TPoint)            // procedure
+	RemoveFromSuperview()
+	RemoveAllSubviews()
 	// SetOnProcessMessage
 	//  WKScriptMessageHandlerProtocol
 	SetOnProcessMessage(fn TWkProcessMessageEvent) // property event
@@ -286,6 +288,12 @@ func (m *TWkWebview) SetMagnification(newValue float64) {
 
 func (m *TWkWebview) SetMagnificationCenteredAtPoint(magnification float64, point *TPoint) {
 	wkWebviewImportAPI().SysCallN(28, m.Instance(), uintptr(unsafePointer(&magnification)), uintptr(unsafePointer(point)))
+}
+func (m *TWkWebview) RemoveFromSuperview() {
+	wkWebviewImportAPI().SysCallN(58, m.Instance())
+}
+func (m *TWkWebview) RemoveAllSubviews() {
+	wkWebviewImportAPI().SysCallN(59, m.Instance())
 }
 
 func (m *TWkWebview) SetOnProcessMessage(fn TWkProcessMessageEvent) {
@@ -541,6 +549,8 @@ var (
 		/*55*/ imports.NewTable("WkWebview_StopLoading", 0),
 		/*56*/ imports.NewTable("WkWebview_Title", 0),
 		/*57*/ imports.NewTable("WkWebview_URL", 0),
+		imports.NewTable("WkWebview_RemoveFromSuperview", 0),
+		imports.NewTable("WkWebview_RemoveAllSubviews", 0),
 	}
 )
 
