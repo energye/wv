@@ -18,6 +18,7 @@ type INSURLCredential interface {
 	IObject
 	Data() NSURLCredential                   // function
 	Persistence() NSURLCredentialPersistence // function
+	Release()                                // procedure
 }
 
 // TNSURLCredential Root Object
@@ -40,12 +41,17 @@ func (m *TNSURLCredential) Persistence() NSURLCredentialPersistence {
 	return NSURLCredentialPersistence(r1)
 }
 
+func (m *TNSURLCredential) Release() {
+	nSURLCredentialImportAPI().SysCallN(3, m.Instance())
+}
+
 var (
 	nSURLCredentialImport       *imports.Imports = nil
 	nSURLCredentialImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("NSURLCredential_Create", 0),
 		/*1*/ imports.NewTable("NSURLCredential_Data", 0),
 		/*2*/ imports.NewTable("NSURLCredential_Persistence", 0),
+		/*3*/ imports.NewTable("NSURLCredential_Release", 0),
 	}
 )
 

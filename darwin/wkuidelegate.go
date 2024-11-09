@@ -17,6 +17,7 @@ import (
 type IWKUIDelegate interface {
 	IObject
 	Data() WKUIDelegateProtocol // function
+	Release()                   // procedure
 }
 
 // TWKUIDelegate Root Object
@@ -34,11 +35,16 @@ func (m *TWKUIDelegate) Data() WKUIDelegateProtocol {
 	return WKUIDelegateProtocol(r1)
 }
 
+func (m *TWKUIDelegate) Release() {
+	wKUIDelegateImportAPI().SysCallN(2, m.Instance())
+}
+
 var (
 	wKUIDelegateImport       *imports.Imports = nil
 	wKUIDelegateImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKUIDelegate_Create", 0),
 		/*1*/ imports.NewTable("WKUIDelegate_Data", 0),
+		/*2*/ imports.NewTable("WKUIDelegate_Release", 0),
 	}
 )
 

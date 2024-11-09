@@ -19,6 +19,7 @@ type IWKFrameInfo interface {
 	Data() WKFrameInfo     // function
 	IsMainFrame() bool     // function
 	Request() NSURLRequest // function
+	Release()              // procedure
 }
 
 // TWKFrameInfo Root Object
@@ -42,8 +43,12 @@ func (m *TWKFrameInfo) IsMainFrame() bool {
 }
 
 func (m *TWKFrameInfo) Request() NSURLRequest {
-	r1 := wKFrameInfoImportAPI().SysCallN(3, m.Instance())
+	r1 := wKFrameInfoImportAPI().SysCallN(4, m.Instance())
 	return NSURLRequest(r1)
+}
+
+func (m *TWKFrameInfo) Release() {
+	wKFrameInfoImportAPI().SysCallN(3, m.Instance())
 }
 
 var (
@@ -52,7 +57,8 @@ var (
 		/*0*/ imports.NewTable("WKFrameInfo_Create", 0),
 		/*1*/ imports.NewTable("WKFrameInfo_Data", 0),
 		/*2*/ imports.NewTable("WKFrameInfo_IsMainFrame", 0),
-		/*3*/ imports.NewTable("WKFrameInfo_Request", 0),
+		/*3*/ imports.NewTable("WKFrameInfo_Release", 0),
+		/*4*/ imports.NewTable("WKFrameInfo_Request", 0),
 	}
 )
 

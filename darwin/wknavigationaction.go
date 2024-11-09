@@ -23,6 +23,7 @@ type IWKNavigationAction interface {
 	Request() NSURLRequest               // function
 	ModifierFlags() NSEventModifierFlags // function
 	ButtonNumber() int32                 // function
+	Release()                            // procedure
 }
 
 // TWKNavigationAction Root Object
@@ -41,12 +42,12 @@ func (m *TWKNavigationAction) Data() WKNavigationAction {
 }
 
 func (m *TWKNavigationAction) SourceFrame() WKFrameInfo {
-	r1 := wKNavigationActionImportAPI().SysCallN(6, m.Instance())
+	r1 := wKNavigationActionImportAPI().SysCallN(7, m.Instance())
 	return WKFrameInfo(r1)
 }
 
 func (m *TWKNavigationAction) TargetFrame() WKFrameInfo {
-	r1 := wKNavigationActionImportAPI().SysCallN(7, m.Instance())
+	r1 := wKNavigationActionImportAPI().SysCallN(8, m.Instance())
 	return WKFrameInfo(r1)
 }
 
@@ -56,7 +57,7 @@ func (m *TWKNavigationAction) NavigationType() WKNavigationType {
 }
 
 func (m *TWKNavigationAction) Request() NSURLRequest {
-	r1 := wKNavigationActionImportAPI().SysCallN(5, m.Instance())
+	r1 := wKNavigationActionImportAPI().SysCallN(6, m.Instance())
 	return NSURLRequest(r1)
 }
 
@@ -70,6 +71,10 @@ func (m *TWKNavigationAction) ButtonNumber() int32 {
 	return int32(r1)
 }
 
+func (m *TWKNavigationAction) Release() {
+	wKNavigationActionImportAPI().SysCallN(5, m.Instance())
+}
+
 var (
 	wKNavigationActionImport       *imports.Imports = nil
 	wKNavigationActionImportTables                  = []*imports.Table{
@@ -78,9 +83,10 @@ var (
 		/*2*/ imports.NewTable("WKNavigationAction_Data", 0),
 		/*3*/ imports.NewTable("WKNavigationAction_ModifierFlags", 0),
 		/*4*/ imports.NewTable("WKNavigationAction_NavigationType", 0),
-		/*5*/ imports.NewTable("WKNavigationAction_Request", 0),
-		/*6*/ imports.NewTable("WKNavigationAction_SourceFrame", 0),
-		/*7*/ imports.NewTable("WKNavigationAction_TargetFrame", 0),
+		/*5*/ imports.NewTable("WKNavigationAction_Release", 0),
+		/*6*/ imports.NewTable("WKNavigationAction_Request", 0),
+		/*7*/ imports.NewTable("WKNavigationAction_SourceFrame", 0),
+		/*8*/ imports.NewTable("WKNavigationAction_TargetFrame", 0),
 	}
 )
 

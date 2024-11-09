@@ -19,6 +19,7 @@ type IWKWebpagePreferences interface {
 	Data() WKWebpagePreferences                   // function
 	PreferredContentMode() WKContentMode          // function
 	AllowsContentJavaScript() bool                // function
+	Release()                                     // procedure
 	SetPreferredContentMode(aValue WKContentMode) // procedure
 	SetAllowsContentJavaScript(aValue bool)       // procedure
 }
@@ -59,12 +60,16 @@ func (m *TWKWebpagePreferences) AllowsContentJavaScript() bool {
 	return GoBool(r1)
 }
 
+func (m *TWKWebpagePreferences) Release() {
+	wKWebpagePreferencesImportAPI().SysCallN(5, m.Instance())
+}
+
 func (m *TWKWebpagePreferences) SetPreferredContentMode(aValue WKContentMode) {
-	wKWebpagePreferencesImportAPI().SysCallN(6, m.Instance(), uintptr(aValue))
+	wKWebpagePreferencesImportAPI().SysCallN(7, m.Instance(), uintptr(aValue))
 }
 
 func (m *TWKWebpagePreferences) SetAllowsContentJavaScript(aValue bool) {
-	wKWebpagePreferencesImportAPI().SysCallN(5, m.Instance(), PascalBool(aValue))
+	wKWebpagePreferencesImportAPI().SysCallN(6, m.Instance(), PascalBool(aValue))
 }
 
 var (
@@ -75,8 +80,9 @@ var (
 		/*2*/ imports.NewTable("WKWebpagePreferences_Data", 0),
 		/*3*/ imports.NewTable("WKWebpagePreferences_New", 0),
 		/*4*/ imports.NewTable("WKWebpagePreferences_PreferredContentMode", 0),
-		/*5*/ imports.NewTable("WKWebpagePreferences_SetAllowsContentJavaScript", 0),
-		/*6*/ imports.NewTable("WKWebpagePreferences_SetPreferredContentMode", 0),
+		/*5*/ imports.NewTable("WKWebpagePreferences_Release", 0),
+		/*6*/ imports.NewTable("WKWebpagePreferences_SetAllowsContentJavaScript", 0),
+		/*7*/ imports.NewTable("WKWebpagePreferences_SetPreferredContentMode", 0),
 	}
 )
 

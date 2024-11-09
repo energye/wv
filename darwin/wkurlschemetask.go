@@ -18,6 +18,7 @@ type IWKURLSchemeTask interface {
 	IObject
 	Data() WKURLSchemeTask                  // function
 	Request() NSURLRequest                  // function
+	Release()                               // procedure
 	ReceiveResponse(response NSURLResponse) // procedure
 	// ReceiveData
 	//  NSData
@@ -44,8 +45,12 @@ func (m *TWKURLSchemeTask) Data() WKURLSchemeTask {
 }
 
 func (m *TWKURLSchemeTask) Request() NSURLRequest {
-	r1 := wKURLSchemeTaskImportAPI().SysCallN(6, m.Instance())
+	r1 := wKURLSchemeTaskImportAPI().SysCallN(7, m.Instance())
 	return NSURLRequest(r1)
+}
+
+func (m *TWKURLSchemeTask) Release() {
+	wKURLSchemeTaskImportAPI().SysCallN(6, m.Instance())
 }
 
 func (m *TWKURLSchemeTask) ReceiveResponse(response NSURLResponse) {
@@ -73,7 +78,8 @@ var (
 		/*3*/ imports.NewTable("WKURLSchemeTask_Finish", 0),
 		/*4*/ imports.NewTable("WKURLSchemeTask_ReceiveData", 0),
 		/*5*/ imports.NewTable("WKURLSchemeTask_ReceiveResponse", 0),
-		/*6*/ imports.NewTable("WKURLSchemeTask_Request", 0),
+		/*6*/ imports.NewTable("WKURLSchemeTask_Release", 0),
+		/*7*/ imports.NewTable("WKURLSchemeTask_Request", 0),
 	}
 )
 

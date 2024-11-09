@@ -20,6 +20,7 @@ type IWKNavigationResponse interface {
 	IsForMainFrame() bool       // function
 	Response() NSURLResponse    // function
 	CanShowMIMEType() bool      // function
+	Release()                   // procedure
 }
 
 // TWKNavigationResponse Root Object
@@ -54,13 +55,17 @@ func (m *TWKNavigationResponse) IsForMainFrame() bool {
 }
 
 func (m *TWKNavigationResponse) Response() NSURLResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(5, m.Instance())
+	r1 := wKNavigationResponseImportAPI().SysCallN(6, m.Instance())
 	return NSURLResponse(r1)
 }
 
 func (m *TWKNavigationResponse) CanShowMIMEType() bool {
 	r1 := wKNavigationResponseImportAPI().SysCallN(0, m.Instance())
 	return GoBool(r1)
+}
+
+func (m *TWKNavigationResponse) Release() {
+	wKNavigationResponseImportAPI().SysCallN(5, m.Instance())
 }
 
 var (
@@ -71,7 +76,8 @@ var (
 		/*2*/ imports.NewTable("WKNavigationResponse_Data", 0),
 		/*3*/ imports.NewTable("WKNavigationResponse_IsForMainFrame", 0),
 		/*4*/ imports.NewTable("WKNavigationResponse_New", 0),
-		/*5*/ imports.NewTable("WKNavigationResponse_Response", 0),
+		/*5*/ imports.NewTable("WKNavigationResponse_Release", 0),
+		/*6*/ imports.NewTable("WKNavigationResponse_Response", 0),
 	}
 )
 

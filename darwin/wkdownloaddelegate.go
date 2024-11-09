@@ -17,6 +17,7 @@ import (
 type IWKDownloadDelegate interface {
 	IObject
 	Data() WKDownloadDelegateProtocol // function
+	Release()                         // procedure
 }
 
 // TWKDownloadDelegate Root Object
@@ -34,11 +35,16 @@ func (m *TWKDownloadDelegate) Data() WKDownloadDelegateProtocol {
 	return WKDownloadDelegateProtocol(r1)
 }
 
+func (m *TWKDownloadDelegate) Release() {
+	wKDownloadDelegateImportAPI().SysCallN(2, m.Instance())
+}
+
 var (
 	wKDownloadDelegateImport       *imports.Imports = nil
 	wKDownloadDelegateImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKDownloadDelegate_Create", 0),
 		/*1*/ imports.NewTable("WKDownloadDelegate_Data", 0),
+		/*2*/ imports.NewTable("WKDownloadDelegate_Release", 0),
 	}
 )
 

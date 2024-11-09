@@ -17,6 +17,7 @@ import (
 type IWKScriptMessageHandler interface {
 	IObject
 	Data() WKScriptMessageHandlerProtocol // function
+	Release()                             // procedure
 }
 
 // TWKScriptMessageHandler Root Object
@@ -34,11 +35,16 @@ func (m *TWKScriptMessageHandler) Data() WKScriptMessageHandlerProtocol {
 	return WKScriptMessageHandlerProtocol(r1)
 }
 
+func (m *TWKScriptMessageHandler) Release() {
+	wKScriptMessageHandlerImportAPI().SysCallN(2, m.Instance())
+}
+
 var (
 	wKScriptMessageHandlerImport       *imports.Imports = nil
 	wKScriptMessageHandlerImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKScriptMessageHandler_Create", 0),
 		/*1*/ imports.NewTable("WKScriptMessageHandler_Data", 0),
+		/*2*/ imports.NewTable("WKScriptMessageHandler_Release", 0),
 	}
 )
 

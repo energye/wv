@@ -25,6 +25,7 @@ type IWKWindowFeatures interface {
 	Y() int32                  // function
 	Width() int32              // function
 	Height() int32             // function
+	Release()                  // procedure
 }
 
 // TWKWindowFeatures Root Object
@@ -48,12 +49,12 @@ func (m *TWKWindowFeatures) MenuBarVisibility() bool {
 }
 
 func (m *TWKWindowFeatures) StatusBarVisibility() bool {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(5, m.Instance())
+	r1 := wKWindowFeaturesImportAPI().SysCallN(6, m.Instance())
 	return GoBool(r1)
 }
 
 func (m *TWKWindowFeatures) ToolbarsVisibility() bool {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(6, m.Instance())
+	r1 := wKWindowFeaturesImportAPI().SysCallN(7, m.Instance())
 	return GoBool(r1)
 }
 
@@ -63,23 +64,27 @@ func (m *TWKWindowFeatures) AllowsResizing() bool {
 }
 
 func (m *TWKWindowFeatures) X() int32 {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(8, m.Instance())
-	return int32(r1)
-}
-
-func (m *TWKWindowFeatures) Y() int32 {
 	r1 := wKWindowFeaturesImportAPI().SysCallN(9, m.Instance())
 	return int32(r1)
 }
 
+func (m *TWKWindowFeatures) Y() int32 {
+	r1 := wKWindowFeaturesImportAPI().SysCallN(10, m.Instance())
+	return int32(r1)
+}
+
 func (m *TWKWindowFeatures) Width() int32 {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(7, m.Instance())
+	r1 := wKWindowFeaturesImportAPI().SysCallN(8, m.Instance())
 	return int32(r1)
 }
 
 func (m *TWKWindowFeatures) Height() int32 {
 	r1 := wKWindowFeaturesImportAPI().SysCallN(3, m.Instance())
 	return int32(r1)
+}
+
+func (m *TWKWindowFeatures) Release() {
+	wKWindowFeaturesImportAPI().SysCallN(5, m.Instance())
 }
 
 var (
@@ -90,11 +95,12 @@ var (
 		/*2*/ imports.NewTable("WKWindowFeatures_Data", 0),
 		/*3*/ imports.NewTable("WKWindowFeatures_Height", 0),
 		/*4*/ imports.NewTable("WKWindowFeatures_MenuBarVisibility", 0),
-		/*5*/ imports.NewTable("WKWindowFeatures_StatusBarVisibility", 0),
-		/*6*/ imports.NewTable("WKWindowFeatures_ToolbarsVisibility", 0),
-		/*7*/ imports.NewTable("WKWindowFeatures_Width", 0),
-		/*8*/ imports.NewTable("WKWindowFeatures_X", 0),
-		/*9*/ imports.NewTable("WKWindowFeatures_Y", 0),
+		/*5*/ imports.NewTable("WKWindowFeatures_Release", 0),
+		/*6*/ imports.NewTable("WKWindowFeatures_StatusBarVisibility", 0),
+		/*7*/ imports.NewTable("WKWindowFeatures_ToolbarsVisibility", 0),
+		/*8*/ imports.NewTable("WKWindowFeatures_Width", 0),
+		/*9*/ imports.NewTable("WKWindowFeatures_X", 0),
+		/*10*/ imports.NewTable("WKWindowFeatures_Y", 0),
 	}
 )
 

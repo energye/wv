@@ -18,6 +18,7 @@ type IWKUserContentController interface {
 	IObject
 	Data() WKUserContentController                                                         // function
 	UserScripts() IStrings                                                                 // function
+	Release()                                                                              // procedure
 	AddUserScript(userScript WKUserScript)                                                 // procedure
 	RemoveAllUserScripts()                                                                 // procedure
 	AddScriptMessageHandlerName(scriptMessageHandler IWKScriptMessageHandler, name string) // procedure
@@ -52,8 +53,12 @@ func (m *TWKUserContentController) Data() WKUserContentController {
 
 func (m *TWKUserContentController) UserScripts() IStrings {
 	var resultStrings uintptr
-	wKUserContentControllerImportAPI().SysCallN(7, m.Instance(), uintptr(unsafePointer(&resultStrings)))
+	wKUserContentControllerImportAPI().SysCallN(8, m.Instance(), uintptr(unsafePointer(&resultStrings)))
 	return AsStrings(resultStrings)
+}
+
+func (m *TWKUserContentController) Release() {
+	wKUserContentControllerImportAPI().SysCallN(5, m.Instance())
 }
 
 func (m *TWKUserContentController) AddUserScript(userScript WKUserScript) {
@@ -61,7 +66,7 @@ func (m *TWKUserContentController) AddUserScript(userScript WKUserScript) {
 }
 
 func (m *TWKUserContentController) RemoveAllUserScripts() {
-	wKUserContentControllerImportAPI().SysCallN(5, m.Instance())
+	wKUserContentControllerImportAPI().SysCallN(6, m.Instance())
 }
 
 func (m *TWKUserContentController) AddScriptMessageHandlerName(scriptMessageHandler IWKScriptMessageHandler, name string) {
@@ -69,7 +74,7 @@ func (m *TWKUserContentController) AddScriptMessageHandlerName(scriptMessageHand
 }
 
 func (m *TWKUserContentController) RemoveScriptMessageHandlerForName(name string) {
-	wKUserContentControllerImportAPI().SysCallN(6, m.Instance(), PascalStr(name))
+	wKUserContentControllerImportAPI().SysCallN(7, m.Instance(), PascalStr(name))
 }
 
 var (
@@ -80,9 +85,10 @@ var (
 		/*2*/ imports.NewTable("WKUserContentController_Create", 0),
 		/*3*/ imports.NewTable("WKUserContentController_Data", 0),
 		/*4*/ imports.NewTable("WKUserContentController_New", 0),
-		/*5*/ imports.NewTable("WKUserContentController_RemoveAllUserScripts", 0),
-		/*6*/ imports.NewTable("WKUserContentController_RemoveScriptMessageHandlerForName", 0),
-		/*7*/ imports.NewTable("WKUserContentController_UserScripts", 0),
+		/*5*/ imports.NewTable("WKUserContentController_Release", 0),
+		/*6*/ imports.NewTable("WKUserContentController_RemoveAllUserScripts", 0),
+		/*7*/ imports.NewTable("WKUserContentController_RemoveScriptMessageHandlerForName", 0),
+		/*8*/ imports.NewTable("WKUserContentController_UserScripts", 0),
 	}
 )
 

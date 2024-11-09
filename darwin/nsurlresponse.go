@@ -23,6 +23,7 @@ type INSURLResponse interface {
 	ExpectedContentLength() (resultInt64 int64)                                                                                    // function
 	TextEncodingName() string                                                                                                      // function
 	SuggestedFilename() string                                                                                                     // function
+	Release()                                                                                                                      // procedure
 }
 
 // TNSURLResponse Root Object
@@ -57,7 +58,7 @@ func (m *TNSURLResponse) InitWithURLMIMETypeExpectedContentLengthTextEncodingNam
 }
 
 func (m *TNSURLResponse) URL() NSURL {
-	r1 := nSURLResponseImportAPI().SysCallN(8, m.Instance())
+	r1 := nSURLResponseImportAPI().SysCallN(9, m.Instance())
 	return NSURL(r1)
 }
 
@@ -72,13 +73,17 @@ func (m *TNSURLResponse) ExpectedContentLength() (resultInt64 int64) {
 }
 
 func (m *TNSURLResponse) TextEncodingName() string {
-	r1 := nSURLResponseImportAPI().SysCallN(7, m.Instance())
+	r1 := nSURLResponseImportAPI().SysCallN(8, m.Instance())
 	return GoStr(r1)
 }
 
 func (m *TNSURLResponse) SuggestedFilename() string {
-	r1 := nSURLResponseImportAPI().SysCallN(6, m.Instance())
+	r1 := nSURLResponseImportAPI().SysCallN(7, m.Instance())
 	return GoStr(r1)
+}
+
+func (m *TNSURLResponse) Release() {
+	nSURLResponseImportAPI().SysCallN(6, m.Instance())
 }
 
 var (
@@ -90,9 +95,10 @@ var (
 		/*3*/ imports.NewTable("NSURLResponse_InitWithURLMIMETypeExpectedContentLengthTextEncodingName", 0),
 		/*4*/ imports.NewTable("NSURLResponse_MIMEType", 0),
 		/*5*/ imports.NewTable("NSURLResponse_New", 0),
-		/*6*/ imports.NewTable("NSURLResponse_SuggestedFilename", 0),
-		/*7*/ imports.NewTable("NSURLResponse_TextEncodingName", 0),
-		/*8*/ imports.NewTable("NSURLResponse_URL", 0),
+		/*6*/ imports.NewTable("NSURLResponse_Release", 0),
+		/*7*/ imports.NewTable("NSURLResponse_SuggestedFilename", 0),
+		/*8*/ imports.NewTable("NSURLResponse_TextEncodingName", 0),
+		/*9*/ imports.NewTable("NSURLResponse_URL", 0),
 	}
 )
 

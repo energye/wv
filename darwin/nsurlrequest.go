@@ -26,6 +26,7 @@ type INSURLRequest interface {
 	HTTPMethod() string                                 // function
 	AllHTTPHeaderFields() string                        // function
 	ValueForHTTPHeaderField(aField string) string       // function
+	Release()                                           // procedure
 }
 
 // TNSURLRequest Root Object
@@ -50,17 +51,17 @@ func (m *nSURLRequest) New() INSURLRequest {
 }
 
 func (m *nSURLRequest) RequestWithURL(uRL NSURL) INSURLRequest {
-	r1 := nSURLRequestImportAPI().SysCallN(9, uintptr(uRL))
+	r1 := nSURLRequestImportAPI().SysCallN(10, uintptr(uRL))
 	return AsNSURLRequest(r1)
 }
 
 func (m *nSURLRequest) SupportsSecureCoding() bool {
-	r1 := nSURLRequestImportAPI().SysCallN(11)
+	r1 := nSURLRequestImportAPI().SysCallN(12)
 	return GoBool(r1)
 }
 
 func (m *nSURLRequest) RequestWithURLCachePolicyTimeoutInterval(uRL NSURL, cachePolicy NSURLRequestCachePolicy, timeoutInterval NSTimeInterval) INSURLRequest {
-	r1 := nSURLRequestImportAPI().SysCallN(10, uintptr(uRL), uintptr(cachePolicy), uintptr(unsafePointer(&timeoutInterval)))
+	r1 := nSURLRequestImportAPI().SysCallN(11, uintptr(uRL), uintptr(cachePolicy), uintptr(unsafePointer(&timeoutInterval)))
 	return AsNSURLRequest(r1)
 }
 
@@ -70,7 +71,7 @@ func (m *TNSURLRequest) Data() NSURLRequest {
 }
 
 func (m *TNSURLRequest) URL() NSURL {
-	r1 := nSURLRequestImportAPI().SysCallN(13, m.Instance())
+	r1 := nSURLRequestImportAPI().SysCallN(14, m.Instance())
 	return NSURL(r1)
 }
 
@@ -80,7 +81,7 @@ func (m *TNSURLRequest) CachePolicy() NSURLRequestCachePolicy {
 }
 
 func (m *TNSURLRequest) TimeoutInterval() (resultFloat64 float64) {
-	nSURLRequestImportAPI().SysCallN(12, m.Instance(), uintptr(unsafePointer(&resultFloat64)))
+	nSURLRequestImportAPI().SysCallN(13, m.Instance(), uintptr(unsafePointer(&resultFloat64)))
 	return
 }
 
@@ -110,8 +111,12 @@ func (m *TNSURLRequest) AllHTTPHeaderFields() string {
 }
 
 func (m *TNSURLRequest) ValueForHTTPHeaderField(aField string) string {
-	r1 := nSURLRequestImportAPI().SysCallN(14, m.Instance(), PascalStr(aField))
+	r1 := nSURLRequestImportAPI().SysCallN(15, m.Instance(), PascalStr(aField))
 	return GoStr(r1)
+}
+
+func (m *TNSURLRequest) Release() {
+	nSURLRequestImportAPI().SysCallN(9, m.Instance())
 }
 
 var (
@@ -126,12 +131,13 @@ var (
 		/*6*/ imports.NewTable("NSURLRequest_MainDocumentURL", 0),
 		/*7*/ imports.NewTable("NSURLRequest_NetworkServiceType", 0),
 		/*8*/ imports.NewTable("NSURLRequest_New", 0),
-		/*9*/ imports.NewTable("NSURLRequest_RequestWithURL", 0),
-		/*10*/ imports.NewTable("NSURLRequest_RequestWithURLCachePolicyTimeoutInterval", 0),
-		/*11*/ imports.NewTable("NSURLRequest_SupportsSecureCoding", 0),
-		/*12*/ imports.NewTable("NSURLRequest_TimeoutInterval", 0),
-		/*13*/ imports.NewTable("NSURLRequest_URL", 0),
-		/*14*/ imports.NewTable("NSURLRequest_ValueForHTTPHeaderField", 0),
+		/*9*/ imports.NewTable("NSURLRequest_Release", 0),
+		/*10*/ imports.NewTable("NSURLRequest_RequestWithURL", 0),
+		/*11*/ imports.NewTable("NSURLRequest_RequestWithURLCachePolicyTimeoutInterval", 0),
+		/*12*/ imports.NewTable("NSURLRequest_SupportsSecureCoding", 0),
+		/*13*/ imports.NewTable("NSURLRequest_TimeoutInterval", 0),
+		/*14*/ imports.NewTable("NSURLRequest_URL", 0),
+		/*15*/ imports.NewTable("NSURLRequest_ValueForHTTPHeaderField", 0),
 	}
 )
 

@@ -30,6 +30,7 @@ type INSURL interface {
 	Fragment() string        // function
 	ParameterString() string // function
 	Query() string           // function
+	Release()                // procedure
 }
 
 // TNSURL Root Object
@@ -54,12 +55,12 @@ func (m *nSURL) New() INSURL {
 }
 
 func (m *nSURL) URLWithString(uRLString string) INSURL {
-	r1 := nSURLImportAPI().SysCallN(15, PascalStr(uRLString))
+	r1 := nSURLImportAPI().SysCallN(16, PascalStr(uRLString))
 	return AsNSURL(r1)
 }
 
 func (m *nSURL) URLWithStringRelativeToURL(uRLString string, baseURL NSURL) INSURL {
-	r1 := nSURLImportAPI().SysCallN(16, PascalStr(uRLString), uintptr(baseURL))
+	r1 := nSURLImportAPI().SysCallN(17, PascalStr(uRLString), uintptr(baseURL))
 	return AsNSURL(r1)
 }
 
@@ -89,7 +90,7 @@ func (m *TNSURL) AbsoluteURL() INSURL {
 }
 
 func (m *TNSURL) Scheme() string {
-	r1 := nSURLImportAPI().SysCallN(14, m.Instance())
+	r1 := nSURLImportAPI().SysCallN(15, m.Instance())
 	return GoStr(r1)
 }
 
@@ -104,7 +105,7 @@ func (m *TNSURL) Port() int32 {
 }
 
 func (m *TNSURL) User() string {
-	r1 := nSURLImportAPI().SysCallN(17, m.Instance())
+	r1 := nSURLImportAPI().SysCallN(18, m.Instance())
 	return GoStr(r1)
 }
 
@@ -133,6 +134,10 @@ func (m *TNSURL) Query() string {
 	return GoStr(r1)
 }
 
+func (m *TNSURL) Release() {
+	nSURLImportAPI().SysCallN(14, m.Instance())
+}
+
 var (
 	nSURLImport       *imports.Imports = nil
 	nSURLImportTables                  = []*imports.Table{
@@ -150,10 +155,11 @@ var (
 		/*11*/ imports.NewTable("NSURL_Port", 0),
 		/*12*/ imports.NewTable("NSURL_Query", 0),
 		/*13*/ imports.NewTable("NSURL_RelativeString", 0),
-		/*14*/ imports.NewTable("NSURL_Scheme", 0),
-		/*15*/ imports.NewTable("NSURL_URLWithString", 0),
-		/*16*/ imports.NewTable("NSURL_URLWithStringRelativeToURL", 0),
-		/*17*/ imports.NewTable("NSURL_User", 0),
+		/*14*/ imports.NewTable("NSURL_Release", 0),
+		/*15*/ imports.NewTable("NSURL_Scheme", 0),
+		/*16*/ imports.NewTable("NSURL_URLWithString", 0),
+		/*17*/ imports.NewTable("NSURL_URLWithStringRelativeToURL", 0),
+		/*18*/ imports.NewTable("NSURL_User", 0),
 	}
 )
 

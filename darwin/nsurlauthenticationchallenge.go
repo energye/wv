@@ -17,6 +17,7 @@ import (
 type INSURLAuthenticationChallenge interface {
 	IObject
 	Data() NSURLAuthenticationChallenge // function
+	Release()                           // procedure
 }
 
 // TNSURLAuthenticationChallenge Root Object
@@ -34,11 +35,16 @@ func (m *TNSURLAuthenticationChallenge) Data() NSURLAuthenticationChallenge {
 	return NSURLAuthenticationChallenge(r1)
 }
 
+func (m *TNSURLAuthenticationChallenge) Release() {
+	nSURLAuthenticationChallengeImportAPI().SysCallN(2, m.Instance())
+}
+
 var (
 	nSURLAuthenticationChallengeImport       *imports.Imports = nil
 	nSURLAuthenticationChallengeImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("NSURLAuthenticationChallenge_Create", 0),
 		/*1*/ imports.NewTable("NSURLAuthenticationChallenge_Data", 0),
+		/*2*/ imports.NewTable("NSURLAuthenticationChallenge_Release", 0),
 	}
 )
 

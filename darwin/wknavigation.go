@@ -18,6 +18,7 @@ type IWKNavigation interface {
 	IObject
 	Data() WKNavigation                  // function
 	EffectiveContentMode() WKContentMode // function
+	Release()                            // procedure
 }
 
 // TWKNavigation Root Object
@@ -40,12 +41,17 @@ func (m *TWKNavigation) EffectiveContentMode() WKContentMode {
 	return WKContentMode(r1)
 }
 
+func (m *TWKNavigation) Release() {
+	wKNavigationImportAPI().SysCallN(3, m.Instance())
+}
+
 var (
 	wKNavigationImport       *imports.Imports = nil
 	wKNavigationImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKNavigation_Create", 0),
 		/*1*/ imports.NewTable("WKNavigation_Data", 0),
 		/*2*/ imports.NewTable("WKNavigation_EffectiveContentMode", 0),
+		/*3*/ imports.NewTable("WKNavigation_Release", 0),
 	}
 )
 

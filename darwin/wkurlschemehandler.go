@@ -17,6 +17,7 @@ import (
 type IWKURLSchemeHandler interface {
 	IObject
 	Data() WKURLSchemeHandlerProtocol // function
+	Release()                         // procedure
 }
 
 // TWKURLSchemeHandler Root Object
@@ -34,11 +35,16 @@ func (m *TWKURLSchemeHandler) Data() WKURLSchemeHandlerProtocol {
 	return WKURLSchemeHandlerProtocol(r1)
 }
 
+func (m *TWKURLSchemeHandler) Release() {
+	wKURLSchemeHandlerImportAPI().SysCallN(2, m.Instance())
+}
+
 var (
 	wKURLSchemeHandlerImport       *imports.Imports = nil
 	wKURLSchemeHandlerImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKURLSchemeHandler_Create", 0),
 		/*1*/ imports.NewTable("WKURLSchemeHandler_Data", 0),
+		/*2*/ imports.NewTable("WKURLSchemeHandler_Release", 0),
 	}
 )
 

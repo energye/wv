@@ -22,6 +22,7 @@ type IWKPreferences interface {
 	JavaScriptCanOpenWindowsAutomatically() bool            // function
 	JavaEnabled() bool                                      // function
 	PlugInsEnabled() bool                                   // function
+	Release()                                               // procedure
 	SetMinimumFontSize(newValue float64)                    // procedure
 	SetJavaScriptEnabled(newValue bool)                     // procedure
 	SetJavaScriptCanOpenWindowsAutomatically(newValue bool) // procedure
@@ -86,36 +87,40 @@ func (m *TWKPreferences) PlugInsEnabled() bool {
 	return GoBool(r1)
 }
 
+func (m *TWKPreferences) Release() {
+	wKPreferencesImportAPI().SysCallN(8, m.Instance())
+}
+
 func (m *TWKPreferences) SetMinimumFontSize(newValue float64) {
-	wKPreferencesImportAPI().SysCallN(12, m.Instance(), uintptr(unsafePointer(&newValue)))
+	wKPreferencesImportAPI().SysCallN(13, m.Instance(), uintptr(unsafePointer(&newValue)))
 }
 
 func (m *TWKPreferences) SetJavaScriptEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(11, m.Instance(), PascalBool(newValue))
+	wKPreferencesImportAPI().SysCallN(12, m.Instance(), PascalBool(newValue))
 }
 
 func (m *TWKPreferences) SetJavaScriptCanOpenWindowsAutomatically(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(10, m.Instance(), PascalBool(newValue))
+	wKPreferencesImportAPI().SysCallN(11, m.Instance(), PascalBool(newValue))
 }
 
 func (m *TWKPreferences) SetJavaEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(9, m.Instance(), PascalBool(newValue))
+	wKPreferencesImportAPI().SysCallN(10, m.Instance(), PascalBool(newValue))
 }
 
 func (m *TWKPreferences) SetPlugInsEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(13, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetTabFocusesLinks(newValue bool) {
 	wKPreferencesImportAPI().SysCallN(14, m.Instance(), PascalBool(newValue))
 }
 
+func (m *TWKPreferences) SetTabFocusesLinks(newValue bool) {
+	wKPreferencesImportAPI().SysCallN(15, m.Instance(), PascalBool(newValue))
+}
+
 func (m *TWKPreferences) SetFraudulentWebsiteWarningEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(8, m.Instance(), PascalBool(newValue))
+	wKPreferencesImportAPI().SysCallN(9, m.Instance(), PascalBool(newValue))
 }
 
 func (m *TWKPreferences) SetValueForKey(value bool, key string) {
-	wKPreferencesImportAPI().SysCallN(15, m.Instance(), PascalBool(value), PascalStr(key))
+	wKPreferencesImportAPI().SysCallN(16, m.Instance(), PascalBool(value), PascalStr(key))
 }
 
 var (
@@ -129,14 +134,15 @@ var (
 		/*5*/ imports.NewTable("WKPreferences_MinimumFontSize", 0),
 		/*6*/ imports.NewTable("WKPreferences_New", 0),
 		/*7*/ imports.NewTable("WKPreferences_PlugInsEnabled", 0),
-		/*8*/ imports.NewTable("WKPreferences_SetFraudulentWebsiteWarningEnabled", 0),
-		/*9*/ imports.NewTable("WKPreferences_SetJavaEnabled", 0),
-		/*10*/ imports.NewTable("WKPreferences_SetJavaScriptCanOpenWindowsAutomatically", 0),
-		/*11*/ imports.NewTable("WKPreferences_SetJavaScriptEnabled", 0),
-		/*12*/ imports.NewTable("WKPreferences_SetMinimumFontSize", 0),
-		/*13*/ imports.NewTable("WKPreferences_SetPlugInsEnabled", 0),
-		/*14*/ imports.NewTable("WKPreferences_SetTabFocusesLinks", 0),
-		/*15*/ imports.NewTable("WKPreferences_SetValueForKey", 0),
+		/*8*/ imports.NewTable("WKPreferences_Release", 0),
+		/*9*/ imports.NewTable("WKPreferences_SetFraudulentWebsiteWarningEnabled", 0),
+		/*10*/ imports.NewTable("WKPreferences_SetJavaEnabled", 0),
+		/*11*/ imports.NewTable("WKPreferences_SetJavaScriptCanOpenWindowsAutomatically", 0),
+		/*12*/ imports.NewTable("WKPreferences_SetJavaScriptEnabled", 0),
+		/*13*/ imports.NewTable("WKPreferences_SetMinimumFontSize", 0),
+		/*14*/ imports.NewTable("WKPreferences_SetPlugInsEnabled", 0),
+		/*15*/ imports.NewTable("WKPreferences_SetTabFocusesLinks", 0),
+		/*16*/ imports.NewTable("WKPreferences_SetValueForKey", 0),
 	}
 )
 

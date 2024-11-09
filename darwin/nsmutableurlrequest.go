@@ -13,18 +13,18 @@ import (
 	"github.com/energye/lcl/api/imports"
 )
 
-// INSMutableURLRequest Root Interface
+// INSMutableURLRequest Parent: INSURLRequest
 type INSMutableURLRequest interface {
-	IObject
+	INSURLRequest
 	SetHTTPMethod(aMethod string)                            // procedure
 	SetAllHTTPHeaderFields(headerFieldsJSONString string)    // procedure
 	SetValueForHTTPHeaderField(aValue string, aField string) // procedure
 	AddValueForHTTPHeaderField(aValue string, aField string) // procedure
 }
 
-// TNSMutableURLRequest Root Object
+// TNSMutableURLRequest Parent: TNSURLRequest
 type TNSMutableURLRequest struct {
-	TObject
+	TNSURLRequest
 }
 
 func NewNSMutableURLRequest(aData NSMutableURLRequest) INSMutableURLRequest {

@@ -17,6 +17,7 @@ import (
 type IWKNavigationDelegate interface {
 	IObject
 	Data() WKNavigationDelegateProtocol // function
+	Release()                           // procedure
 }
 
 // TWKNavigationDelegate Root Object
@@ -34,11 +35,16 @@ func (m *TWKNavigationDelegate) Data() WKNavigationDelegateProtocol {
 	return WKNavigationDelegateProtocol(r1)
 }
 
+func (m *TWKNavigationDelegate) Release() {
+	wKNavigationDelegateImportAPI().SysCallN(2, m.Instance())
+}
+
 var (
 	wKNavigationDelegateImport       *imports.Imports = nil
 	wKNavigationDelegateImportTables                  = []*imports.Table{
 		/*0*/ imports.NewTable("WKNavigationDelegate_Create", 0),
 		/*1*/ imports.NewTable("WKNavigationDelegate_Data", 0),
+		/*2*/ imports.NewTable("WKNavigationDelegate_Release", 0),
 	}
 )
 

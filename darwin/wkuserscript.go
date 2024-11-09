@@ -20,6 +20,7 @@ type IWKUserScript interface {
 	Source() string                     // function
 	InjectionTime() (resultInt64 int64) // function
 	IsForMainFrameOnly() bool           // function
+	Release()                           // procedure
 }
 
 // TWKUserScript Root Object
@@ -54,7 +55,7 @@ func (m *TWKUserScript) Data() WKUserScript {
 }
 
 func (m *TWKUserScript) Source() string {
-	r1 := wKUserScriptImportAPI().SysCallN(6, m.Instance())
+	r1 := wKUserScriptImportAPI().SysCallN(7, m.Instance())
 	return GoStr(r1)
 }
 
@@ -68,6 +69,10 @@ func (m *TWKUserScript) IsForMainFrameOnly() bool {
 	return GoBool(r1)
 }
 
+func (m *TWKUserScript) Release() {
+	wKUserScriptImportAPI().SysCallN(6, m.Instance())
+}
+
 var (
 	wKUserScriptImport       *imports.Imports = nil
 	wKUserScriptImportTables                  = []*imports.Table{
@@ -77,7 +82,8 @@ var (
 		/*3*/ imports.NewTable("WKUserScript_InjectionTime", 0),
 		/*4*/ imports.NewTable("WKUserScript_IsForMainFrameOnly", 0),
 		/*5*/ imports.NewTable("WKUserScript_New", 0),
-		/*6*/ imports.NewTable("WKUserScript_Source", 0),
+		/*6*/ imports.NewTable("WKUserScript_Release", 0),
+		/*7*/ imports.NewTable("WKUserScript_Source", 0),
 	}
 )
 

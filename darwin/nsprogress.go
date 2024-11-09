@@ -29,6 +29,7 @@ type INSProgress interface {
 	PausingHandler() uintptr                         // function
 	IsIndeterminate() bool                           // function
 	FractionCompleted() (resultFloat64 float64)      // function
+	Release()                                        // procedure
 	SetTotalUnitCount(aValue int64)                  // procedure
 	SetCompletedUnitCount(aValue int64)              // procedure
 	SetLocalizedDescription(aValue string)           // procedure
@@ -75,7 +76,7 @@ func (m *TNSProgress) Data() NSProgress {
 }
 
 func (m *TNSProgress) TotalUnitCount() (resultInt64 int64) {
-	nSProgressImportAPI().SysCallN(26, m.Instance(), uintptr(unsafePointer(&resultInt64)))
+	nSProgressImportAPI().SysCallN(27, m.Instance(), uintptr(unsafePointer(&resultInt64)))
 	return
 }
 
@@ -134,36 +135,40 @@ func (m *TNSProgress) FractionCompleted() (resultFloat64 float64) {
 	return
 }
 
+func (m *TNSProgress) Release() {
+	nSProgressImportAPI().SysCallN(18, m.Instance())
+}
+
 func (m *TNSProgress) SetTotalUnitCount(aValue int64) {
-	nSProgressImportAPI().SysCallN(25, m.Instance(), uintptr(unsafePointer(&aValue)))
+	nSProgressImportAPI().SysCallN(26, m.Instance(), uintptr(unsafePointer(&aValue)))
 }
 
 func (m *TNSProgress) SetCompletedUnitCount(aValue int64) {
-	nSProgressImportAPI().SysCallN(20, m.Instance(), uintptr(unsafePointer(&aValue)))
+	nSProgressImportAPI().SysCallN(21, m.Instance(), uintptr(unsafePointer(&aValue)))
 }
 
 func (m *TNSProgress) SetLocalizedDescription(aValue string) {
-	nSProgressImportAPI().SysCallN(22, m.Instance(), PascalStr(aValue))
+	nSProgressImportAPI().SysCallN(23, m.Instance(), PascalStr(aValue))
 }
 
 func (m *TNSProgress) SetLocalizedAdditionalDescription(aValue string) {
-	nSProgressImportAPI().SysCallN(21, m.Instance(), PascalStr(aValue))
+	nSProgressImportAPI().SysCallN(22, m.Instance(), PascalStr(aValue))
 }
 
 func (m *TNSProgress) SetCancellable(aValue bool) {
-	nSProgressImportAPI().SysCallN(18, m.Instance(), PascalBool(aValue))
+	nSProgressImportAPI().SysCallN(19, m.Instance(), PascalBool(aValue))
 }
 
 func (m *TNSProgress) SetPausable(aValue bool) {
-	nSProgressImportAPI().SysCallN(23, m.Instance(), PascalBool(aValue))
+	nSProgressImportAPI().SysCallN(24, m.Instance(), PascalBool(aValue))
 }
 
 func (m *TNSProgress) SetCancellationHandler(aValue uintptr) {
-	nSProgressImportAPI().SysCallN(19, m.Instance(), uintptr(aValue))
+	nSProgressImportAPI().SysCallN(20, m.Instance(), uintptr(aValue))
 }
 
 func (m *TNSProgress) SetPausingHandler(aValue uintptr) {
-	nSProgressImportAPI().SysCallN(24, m.Instance(), uintptr(aValue))
+	nSProgressImportAPI().SysCallN(25, m.Instance(), uintptr(aValue))
 }
 
 func (m *TNSProgress) Cancel() {
@@ -179,7 +184,7 @@ func (m *TNSProgress) Publish() {
 }
 
 func (m *TNSProgress) Unpublish() {
-	nSProgressImportAPI().SysCallN(27, m.Instance())
+	nSProgressImportAPI().SysCallN(28, m.Instance())
 }
 
 var (
@@ -203,16 +208,17 @@ var (
 		/*15*/ imports.NewTable("NSProgress_PausingHandler", 0),
 		/*16*/ imports.NewTable("NSProgress_ProgressWithTotalUnitCount", 0),
 		/*17*/ imports.NewTable("NSProgress_Publish", 0),
-		/*18*/ imports.NewTable("NSProgress_SetCancellable", 0),
-		/*19*/ imports.NewTable("NSProgress_SetCancellationHandler", 0),
-		/*20*/ imports.NewTable("NSProgress_SetCompletedUnitCount", 0),
-		/*21*/ imports.NewTable("NSProgress_SetLocalizedAdditionalDescription", 0),
-		/*22*/ imports.NewTable("NSProgress_SetLocalizedDescription", 0),
-		/*23*/ imports.NewTable("NSProgress_SetPausable", 0),
-		/*24*/ imports.NewTable("NSProgress_SetPausingHandler", 0),
-		/*25*/ imports.NewTable("NSProgress_SetTotalUnitCount", 0),
-		/*26*/ imports.NewTable("NSProgress_TotalUnitCount", 0),
-		/*27*/ imports.NewTable("NSProgress_Unpublish", 0),
+		/*18*/ imports.NewTable("NSProgress_Release", 0),
+		/*19*/ imports.NewTable("NSProgress_SetCancellable", 0),
+		/*20*/ imports.NewTable("NSProgress_SetCancellationHandler", 0),
+		/*21*/ imports.NewTable("NSProgress_SetCompletedUnitCount", 0),
+		/*22*/ imports.NewTable("NSProgress_SetLocalizedAdditionalDescription", 0),
+		/*23*/ imports.NewTable("NSProgress_SetLocalizedDescription", 0),
+		/*24*/ imports.NewTable("NSProgress_SetPausable", 0),
+		/*25*/ imports.NewTable("NSProgress_SetPausingHandler", 0),
+		/*26*/ imports.NewTable("NSProgress_SetTotalUnitCount", 0),
+		/*27*/ imports.NewTable("NSProgress_TotalUnitCount", 0),
+		/*28*/ imports.NewTable("NSProgress_Unpublish", 0),
 	}
 )
 
