@@ -14,12 +14,19 @@ import (
 )
 
 // IWKFrameInfo Root Interface
+//
+//	An object that contains information about a frame on a webpage.
+//	https://developer.apple.com/documentation/webkit/wkframeinfo?language=objc
 type IWKFrameInfo interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKFrameInfo     // function
-	IsMainFrame() bool     // function
+	Data() WKFrameInfo // function
+	// IsMainFrame
+	//  A Boolean value indicating whether the frame is the web site's main frame or a subframe.
+	IsMainFrame() bool // function
+	// Request
+	//  The frame’s current request.
 	Request() NSURLRequest // function
 	// Release
 	//  Freeing the class and the objects it implements.
@@ -27,6 +34,9 @@ type IWKFrameInfo interface {
 }
 
 // TWKFrameInfo Root Object
+//
+//	An object that contains information about a frame on a webpage.
+//	https://developer.apple.com/documentation/webkit/wkframeinfo?language=objc
 type TWKFrameInfo struct {
 	TObject
 }

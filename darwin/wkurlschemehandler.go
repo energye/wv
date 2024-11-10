@@ -14,6 +14,9 @@ import (
 )
 
 // IWKURLSchemeHandler Root Interface
+//
+//	A protocol for loading resources with URL schemes that WebKit doesn't handle.
+//	https://developer.apple.com/documentation/webkit/wkurlschemehandler?language=objc
 type IWKURLSchemeHandler interface {
 	IObject
 	// Data
@@ -25,6 +28,9 @@ type IWKURLSchemeHandler interface {
 }
 
 // TWKURLSchemeHandler Root Object
+//
+//	A protocol for loading resources with URL schemes that WebKit doesn't handle.
+//	https://developer.apple.com/documentation/webkit/wkurlschemehandler?language=objc
 type TWKURLSchemeHandler struct {
 	TObject
 }

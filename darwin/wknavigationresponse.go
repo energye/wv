@@ -14,20 +14,32 @@ import (
 )
 
 // IWKNavigationResponse Root Interface
+//
+//	An object that contains the response to a navigation request, and which you use to make navigation-related policy decisions.
+//	https://developer.apple.com/documentation/webkit/wknavigationresponse?language=objc
 type IWKNavigationResponse interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() WKNavigationResponse // function
-	IsForMainFrame() bool       // function
-	Response() NSURLResponse    // function
-	CanShowMIMEType() bool      // function
+	// IsForMainFrame
+	//  A Boolean value that indicates whether the response targets the web view’s main frame.
+	IsForMainFrame() bool // function
+	// Response
+	//  The frame’s response.
+	Response() NSURLResponse // function
+	// CanShowMIMEType
+	//  A Boolean value that indicates whether WebKit is capable of displaying the response’s MIME type natively.
+	CanShowMIMEType() bool // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
 // TWKNavigationResponse Root Object
+//
+//	An object that contains the response to a navigation request, and which you use to make navigation-related policy decisions.
+//	https://developer.apple.com/documentation/webkit/wknavigationresponse?language=objc
 type TWKNavigationResponse struct {
 	TObject
 }
@@ -43,6 +55,9 @@ var WKNavigationResponseRef wKNavigationResponse
 // wKNavigationResponse TWKNavigationResponse Ref
 type wKNavigationResponse uintptr
 
+// New
+//
+//	Creates and returns an WKNavigationResponse object.
 func (m *wKNavigationResponse) New() IWKNavigationResponse {
 	r1 := wKNavigationResponseImportAPI().SysCallN(4)
 	return AsWKNavigationResponse(r1)

@@ -14,26 +14,40 @@ import (
 )
 
 // IWKURLSchemeTask Root Interface
+//
+//	An interface that WebKit uses to request custom resources from your app.
+//	https://developer.apple.com/documentation/webkit/wkurlschemetask?language=objc
 type IWKURLSchemeTask interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() WKURLSchemeTask // function
+	// Request
+	//  Information about the resource to load.
 	Request() NSURLRequest // function
 	// Release
 	//  Freeing the class and the objects it implements.
-	Release()                               // procedure
+	Release() // procedure
+	// ReceiveResponse
+	//  Returns a URL response to WebKit with information about the requested resource.
 	ReceiveResponse(response NSURLResponse) // procedure
 	// ReceiveData
+	//  Sends some or all of the resource data to WebKit.
 	//  NSData
 	ReceiveData(aDataBytes uintptr, aLength int32) // procedure
-	Finish()                                       // procedure
+	// Finish
+	//  Signals the successful completion of the task.
+	Finish() // procedure
 	// FailWithError
+	//  Completes the task and reports the specified error back to WebKit.
 	//  NSError
 	FailWithError(error string) // procedure
 }
 
 // TWKURLSchemeTask Root Object
+//
+//	An interface that WebKit uses to request custom resources from your app.
+//	https://developer.apple.com/documentation/webkit/wkurlschemetask?language=objc
 type TWKURLSchemeTask struct {
 	TObject
 }

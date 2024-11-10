@@ -14,6 +14,9 @@ import (
 )
 
 // IWKUIDelegate Root Interface
+//
+//	The methods for presenting native user interface elements on behalf of a webpage.
+//	https://developer.apple.com/documentation/webkit/wkuidelegate?language=objc
 type IWKUIDelegate interface {
 	IObject
 	// Data
@@ -25,6 +28,9 @@ type IWKUIDelegate interface {
 }
 
 // TWKUIDelegate Root Object
+//
+//	The methods for presenting native user interface elements on behalf of a webpage.
+//	https://developer.apple.com/documentation/webkit/wkuidelegate?language=objc
 type TWKUIDelegate struct {
 	TObject
 }

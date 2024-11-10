@@ -14,23 +14,41 @@ import (
 )
 
 // IWKNavigationAction Root Interface
+//
+//	An object that contains information about an action that causes navigation to occur.
+//	https://developer.apple.com/documentation/webkit/wknavigationaction?language=objc
 type IWKNavigationAction interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKNavigationAction            // function
-	SourceFrame() WKFrameInfo            // function
-	TargetFrame() WKFrameInfo            // function
-	NavigationType() WKNavigationType    // function
-	Request() NSURLRequest               // function
+	Data() WKNavigationAction // function
+	// SourceFrame
+	//  The frame that requested the navigation.
+	SourceFrame() WKFrameInfo // function
+	// TargetFrame
+	//  The frame in which to display the new content.
+	TargetFrame() WKFrameInfo // function
+	// NavigationType
+	//  The type of action that triggered the navigation.
+	NavigationType() WKNavigationType // function
+	// Request
+	//  The URL request object associated with the navigation action.
+	Request() NSURLRequest // function
+	// ModifierFlags
+	//  The modifier keys that were pressed at the time of the navigation request.
 	ModifierFlags() NSEventModifierFlags // function
-	ButtonNumber() int32                 // function
+	// ButtonNumber
+	//  The number of the mouse button that caused the navigation request.
+	ButtonNumber() int32 // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
 // TWKNavigationAction Root Object
+//
+//	An object that contains information about an action that causes navigation to occur.
+//	https://developer.apple.com/documentation/webkit/wknavigationaction?language=objc
 type TWKNavigationAction struct {
 	TObject
 }

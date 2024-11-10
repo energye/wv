@@ -14,6 +14,9 @@ import (
 )
 
 // IWKScriptMessageHandler Root Interface
+//
+//	An interface for receiving messages from JavaScript code running in a webpage.
+//	https://developer.apple.com/documentation/webkit/wkscriptmessagehandler?language=objc
 type IWKScriptMessageHandler interface {
 	IObject
 	// Data
@@ -25,6 +28,9 @@ type IWKScriptMessageHandler interface {
 }
 
 // TWKScriptMessageHandler Root Object
+//
+//	An interface for receiving messages from JavaScript code running in a webpage.
+//	https://developer.apple.com/documentation/webkit/wkscriptmessagehandler?language=objc
 type TWKScriptMessageHandler struct {
 	TObject
 }

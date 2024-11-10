@@ -14,22 +14,38 @@ import (
 )
 
 // IWKUserContentController Root Interface
+//
+//	An object for managing interactions between JavaScript code and your web view, and for filtering content in your web view.
+//	https://developer.apple.com/documentation/webkit/wkusercontentcontroller?language=objc
 type IWKUserContentController interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() WKUserContentController // function
-	UserScripts() IStrings         // function
+	// UserScripts
+	//  The user scripts associated with the user content controller.
+	UserScripts() IStrings // function
 	// Release
 	//  Freeing the class and the objects it implements.
-	Release()                                                                              // procedure
-	AddUserScript(userScript WKUserScript)                                                 // procedure
-	RemoveAllUserScripts()                                                                 // procedure
+	Release() // procedure
+	// AddUserScript
+	//  Injects the specified script into the webpage’s content.
+	AddUserScript(userScript WKUserScript) // procedure
+	// RemoveAllUserScripts
+	//  Removes all user scripts from the web view.
+	RemoveAllUserScripts() // procedure
+	// AddScriptMessageHandlerName
+	//  Installs a message handler that you can call from your JavaScript code.
 	AddScriptMessageHandlerName(scriptMessageHandler IWKScriptMessageHandler, name string) // procedure
-	RemoveScriptMessageHandlerForName(name string)                                         // procedure
+	// RemoveScriptMessageHandlerForName
+	//  Uninstalls the custom message handler with the specified name from your JavaScript code.
+	RemoveScriptMessageHandlerForName(name string) // procedure
 }
 
 // TWKUserContentController Root Object
+//
+//	An object for managing interactions between JavaScript code and your web view, and for filtering content in your web view.
+//	https://developer.apple.com/documentation/webkit/wkusercontentcontroller?language=objc
 type TWKUserContentController struct {
 	TObject
 }
@@ -45,6 +61,9 @@ var WKUserContentControllerRef wKUserContentController
 // wKUserContentController TWKUserContentController Ref
 type wKUserContentController uintptr
 
+// New
+//
+//	Creates and returns an WKUserContentController object.
 func (m *wKUserContentController) New() IWKUserContentController {
 	r1 := wKUserContentControllerImportAPI().SysCallN(4)
 	return AsWKUserContentController(r1)

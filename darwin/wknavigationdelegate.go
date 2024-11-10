@@ -14,6 +14,9 @@ import (
 )
 
 // IWKNavigationDelegate Root Interface
+//
+//	https://developer.apple.com/documentation/webkit/wknavigationdelegate?language=objc
+//	Methods for accepting or rejecting navigation changes, and for tracking the progress of navigation requests.
 type IWKNavigationDelegate interface {
 	IObject
 	// Data
@@ -25,6 +28,9 @@ type IWKNavigationDelegate interface {
 }
 
 // TWKNavigationDelegate Root Object
+//
+//	https://developer.apple.com/documentation/webkit/wknavigationdelegate?language=objc
+//	Methods for accepting or rejecting navigation changes, and for tracking the progress of navigation requests.
 type TWKNavigationDelegate struct {
 	TObject
 }

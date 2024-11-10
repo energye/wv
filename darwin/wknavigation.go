@@ -14,11 +14,16 @@ import (
 )
 
 // IWKNavigation Root Interface
+//
+//	An object that tracks the loading progress of a webpage.
+//	https://developer.apple.com/documentation/webkit/wknavigation?language=objc
 type IWKNavigation interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKNavigation                  // function
+	Data() WKNavigation // function
+	// EffectiveContentMode
+	//  The content mode WebKit uses to load the webpage.
 	EffectiveContentMode() WKContentMode // function
 	// Release
 	//  Freeing the class and the objects it implements.
@@ -26,6 +31,9 @@ type IWKNavigation interface {
 }
 
 // TWKNavigation Root Object
+//
+//	An object that tracks the loading progress of a webpage.
+//	https://developer.apple.com/documentation/webkit/wknavigation?language=objc
 type TWKNavigation struct {
 	TObject
 }
