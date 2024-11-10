@@ -14,25 +14,47 @@ import (
 )
 
 // IWKWindowFeatures Root Interface
+//
+//	Display-related attributes that a webpage requests for its window.
+//	https://developer.apple.com/documentation/webkit/wkwindowfeatures?language=objc
 type IWKWindowFeatures interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKWindowFeatures    // function
-	MenuBarVisibility() bool   // function
+	Data() WKWindowFeatures // function
+	// MenuBarVisibility
+	//  A Boolean value that indicates whether the webpage requests a visible menu bar.
+	MenuBarVisibility() bool // function
+	// StatusBarVisibility
+	//  A Boolean value that indicates whether the webpage requested a visible status bar.
 	StatusBarVisibility() bool // function
-	ToolbarsVisibility() bool  // function
-	AllowsResizing() bool      // function
-	X() int32                  // function
-	Y() int32                  // function
-	Width() int32              // function
-	Height() int32             // function
+	// ToolbarsVisibility
+	//  A Boolean value that indicates whether the webpage requested a visible toolbar.
+	ToolbarsVisibility() bool // function
+	// AllowsResizing
+	//  A Boolean value that indicates whether to make the containing window window resizable.
+	AllowsResizing() bool // function
+	// X
+	//  The requested x-coordinate of the containing window.
+	X() int32 // function
+	// Y
+	//  The requested y-coordinate of the containing window.
+	Y() int32 // function
+	// Width
+	//  The requested width of the containing window.
+	Width() int32 // function
+	// Height
+	//  The requested height of the containing window.
+	Height() int32 // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
 // TWKWindowFeatures Root Object
+//
+//	Display-related attributes that a webpage requests for its window.
+//	https://developer.apple.com/documentation/webkit/wkwindowfeatures?language=objc
 type TWKWindowFeatures struct {
 	TObject
 }

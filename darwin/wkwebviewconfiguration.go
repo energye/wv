@@ -14,26 +14,50 @@ import (
 )
 
 // IWKWebViewConfiguration Root Interface
+//
+//	A collection of properties that you use to initialize a web view.
+//	https://developer.apple.com/documentation/webkit/wkwebviewconfiguration?language=objc
 type IWKWebViewConfiguration interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKWebViewConfiguration                   // function
-	Preferences() WKPreferences                     // function
+	Data() WKWebViewConfiguration // function
+	// Preferences
+	//  Returns The object that manages the preference-related settings for the web view.
+	Preferences() WKPreferences // function
+	// UserContentController
+	//  Returns The object that coordinates interactions between your app’s native code and the webpage’s scripts and other content.
 	UserContentController() WKUserContentController // function
-	SuppressesIncrementalRendering() bool           // function
-	ApplicationNameForUserAgent() string            // function
+	// SuppressesIncrementalRendering
+	//  Returns A Boolean value that indicates whether the web view suppresses content rendering until the content is fully loaded into memory.
+	SuppressesIncrementalRendering() bool // function
+	// ApplicationNameForUserAgent
+	//  Returns The app name that appears in the user agent string.
+	ApplicationNameForUserAgent() string // function
 	// Release
 	//  Freeing the class and the objects it implements.
-	Release()                                                                              // procedure
-	SetPreferences(preferences WKPreferences)                                              // procedure
-	SetUserContentController(userContentController WKUserContentController)                // procedure
-	SetSuppressesIncrementalRendering(newValue bool)                                       // procedure
-	SetApplicationNameForUserAgent(newValue string)                                        // procedure
+	Release() // procedure
+	// SetPreferences
+	//  Sets The object that manages the preference-related settings for the web view.
+	SetPreferences(preferences WKPreferences) // procedure
+	// SetUserContentController
+	//  Sets The object that coordinates interactions between your app’s native code and the webpage’s scripts and other content.
+	SetUserContentController(userContentController WKUserContentController) // procedure
+	// SetSuppressesIncrementalRendering
+	//  Sets A Boolean value that indicates whether the web view suppresses content rendering until the content is fully loaded into memory.
+	SetSuppressesIncrementalRendering(newValue bool) // procedure
+	// SetApplicationNameForUserAgent
+	//  Sets The app name that appears in the user agent string.
+	SetApplicationNameForUserAgent(newValue string) // procedure
+	// SetURLSchemeHandlerForURLScheme
+	//  Sets Registers an object to load resources associated with the specified URL scheme.
 	SetURLSchemeHandlerForURLScheme(urlSchemeHandler WKURLSchemeHandler, urlScheme string) // procedure
 }
 
 // TWKWebViewConfiguration Root Object
+//
+//	A collection of properties that you use to initialize a web view.
+//	https://developer.apple.com/documentation/webkit/wkwebviewconfiguration?language=objc
 type TWKWebViewConfiguration struct {
 	TObject
 }
@@ -49,6 +73,9 @@ var WKWebViewConfigurationRef wKWebViewConfiguration
 // wKWebViewConfiguration TWKWebViewConfiguration Ref
 type wKWebViewConfiguration uintptr
 
+// New
+//
+//	Creates and returns an NSMutableURLRequest object.
 func (m *wKWebViewConfiguration) New() IWKWebViewConfiguration {
 	r1 := wKWebViewConfigurationImportAPI().SysCallN(3)
 	return AsWKWebViewConfiguration(r1)

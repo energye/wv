@@ -14,20 +14,32 @@ import (
 )
 
 // IWKUserScript Root Interface
+//
+//	A script that the web view injects into a webpage.
+//	https://developer.apple.com/documentation/webkit/wkuserscript?language=objc
 type IWKUserScript interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKUserScript                 // function
-	Source() string                     // function
+	Data() WKUserScript // function
+	// Source
+	//  The script’s source code.
+	Source() string // function
+	// InjectionTime
+	//  The time at which to inject the script into the webpage.
 	InjectionTime() (resultInt64 int64) // function
-	IsForMainFrameOnly() bool           // function
+	// IsForMainFrameOnly
+	//  A Boolean value that indicates whether to inject the script into the main frame or all frames.
+	IsForMainFrameOnly() bool // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
 // TWKUserScript Root Object
+//
+//	A script that the web view injects into a webpage.
+//	https://developer.apple.com/documentation/webkit/wkuserscript?language=objc
 type TWKUserScript struct {
 	TObject
 }
@@ -43,11 +55,17 @@ var WKUserScriptRef wKUserScript
 // wKUserScript TWKUserScript Ref
 type wKUserScript uintptr
 
+// New
+//
+//	Creates and returns an WKUserScript object.
 func (m *wKUserScript) New() IWKUserScript {
 	r1 := wKUserScriptImportAPI().SysCallN(5)
 	return AsWKUserScript(r1)
 }
 
+// InitWithSourceInjectionTimeForMainFrameOnly
+//
+//	Creates a user script object that contains the specified source code and attributes.
 func (m *wKUserScript) InitWithSourceInjectionTimeForMainFrameOnly(aSource string, aInjectionTime int64, aForMainFrameOnly bool) IWKUserScript {
 	r1 := wKUserScriptImportAPI().SysCallN(2, PascalStr(aSource), uintptr(unsafePointer(&aInjectionTime)), PascalBool(aForMainFrameOnly))
 	return AsWKUserScript(r1)

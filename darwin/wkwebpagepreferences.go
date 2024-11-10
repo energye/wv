@@ -14,21 +14,35 @@ import (
 )
 
 // IWKWebpagePreferences Root Interface
+//
+//	An object that specifies the behaviors to use when loading and rendering page content.
+//	https://developer.apple.com/documentation/webkit/wkwebpagepreferences?language=objc
 type IWKWebpagePreferences interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKWebpagePreferences          // function
+	Data() WKWebpagePreferences // function
+	// PreferredContentMode
+	//  Returns The content mode for the web view to use when it loads and renders a webpage.
 	PreferredContentMode() WKContentMode // function
-	AllowsContentJavaScript() bool       // function
+	// AllowsContentJavaScript
+	//  Returns A Boolean value that indicates whether JavaScript from web content is allowed to run.
+	AllowsContentJavaScript() bool // function
 	// Release
 	//  Freeing the class and the objects it implements.
-	Release()                                     // procedure
+	Release() // procedure
+	// SetPreferredContentMode
+	//  Sets The content mode for the web view to use when it loads and renders a webpage.
 	SetPreferredContentMode(aValue WKContentMode) // procedure
-	SetAllowsContentJavaScript(aValue bool)       // procedure
+	// SetAllowsContentJavaScript
+	//  Sets A Boolean value that indicates whether JavaScript from web content is allowed to run.
+	SetAllowsContentJavaScript(aValue bool) // procedure
 }
 
 // TWKWebpagePreferences Root Object
+//
+//	An object that specifies the behaviors to use when loading and rendering page content.
+//	https://developer.apple.com/documentation/webkit/wkwebpagepreferences?language=objc
 type TWKWebpagePreferences struct {
 	TObject
 }
@@ -44,6 +58,9 @@ var WKWebpagePreferencesRef wKWebpagePreferences
 // wKWebpagePreferences TWKWebpagePreferences Ref
 type wKWebpagePreferences uintptr
 
+// New
+//
+//	Creates and returns an WKUserScript object.
 func (m *wKWebpagePreferences) New() IWKWebpagePreferences {
 	r1 := wKWebpagePreferencesImportAPI().SysCallN(3)
 	return AsWKWebpagePreferences(r1)

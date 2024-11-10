@@ -18,71 +18,164 @@ type IWkWebview interface {
 	IComponent
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WkWebview                               // function
-	Configuration() WKWebViewConfiguration         // function
+	Data() WkWebview // function
+	// Configuration
+	//  The object that contains the configuration details for the web view.
+	Configuration() WKWebViewConfiguration // function
+	// LoadRequest
+	//  Loads the web content that the specified URL request object references and navigates to that content.
 	LoadRequest(request NSURLRequest) WKNavigation // function
-	Title() string                                 // function
-	URL() NSURL                                    // function
-	IsLoading() bool                               // function
+	// Title
+	//  The page title
+	Title() string // function
+	// URL
+	//  The URL for the current webpage.
+	URL() NSURL // function
+	// IsLoading
+	//  A Boolean value that indicates whether the view is currently loading content.
+	IsLoading() bool // function
 	// EstimatedProgress
-	//  根据接收到的总字节数，此值的范围为0.0到1.0，包括主文档及其所有潜在的子资源。
-	//  导航加载完成后，估计进度值保持在1.0，直到新的导航开始，此时估计进度值重置为0.0。
-	//  WKWebView类符合此属性的键值观察（KVO）标准。
-	EstimatedProgress() (resultFloat64 float64)                         // function
-	HasOnlySecureContent() bool                                         // function
-	CanGoBack() bool                                                    // function
-	CanGoForward() bool                                                 // function
-	GoBack() WKNavigation                                               // function
-	GoForward() WKNavigation                                            // function
-	Reload() WKNavigation                                               // function
-	ReloadFromOrigin() WKNavigation                                     // function
-	AllowsBackForwardNavigationGestures() bool                          // function
-	AllowsMagnification() bool                                          // function
-	Magnification() (resultFloat64 float64)                             // function
+	//  This value ranges from 0.0 to 1.0 based on the total number of bytes received,
+	//  including the main document and all of its potential subresources.
+	//  After navigation loading completes, the estimatedProgress value remains at 1.0 until a new navigation starts,
+	//  at which point the estimatedProgress value resets to 0.0. The WKWebView class
+	//  is key-value observing(KVO) compliant for this property.
+	EstimatedProgress() (resultFloat64 float64) // function
+	// HasOnlySecureContent
+	//  A Boolean value that indicates whether the web view loaded all resources on the page through securely encrypted connections.
+	HasOnlySecureContent() bool // function
+	// CanGoBack
+	//  A Boolean value that indicates whether there is a valid back item in the back-forward list.
+	CanGoBack() bool // function
+	// CanGoForward
+	//  A Boolean value that indicates whether there is a valid forward item in the back-forward list.
+	CanGoForward() bool // function
+	// GoBack
+	//  Navigates to the back item in the back-forward list.
+	GoBack() WKNavigation // function
+	// GoForward
+	//  Navigates to the forward item in the back-forward list.
+	GoForward() WKNavigation // function
+	// Reload
+	//  Reloads the current webpage.
+	Reload() WKNavigation // function
+	// ReloadFromOrigin
+	//  Reloads the current webpage, and performs end-to-end revalidation of the content using cache-validating conditionals, if possible.
+	ReloadFromOrigin() WKNavigation // function
+	// AllowsBackForwardNavigationGestures
+	//  Returns A Boolean value that indicates whether horizontal swipe gestures trigger backward and forward page navigation.
+	AllowsBackForwardNavigationGestures() bool // function
+	// AllowsMagnification
+	//  Returns A Boolean value that indicates whether magnify gestures change the web view’s magnification.
+	AllowsMagnification() bool // function
+	// Magnification
+	//  Returns The factor by which the page content is currently scaled.
+	Magnification() (resultFloat64 float64) // function
+	// AsReceiveScriptMessageDelegate
+	//  Must display conversion to interface type
 	AsReceiveScriptMessageDelegate() IReceiveScriptMessageDelegateEvent // function
-	AsWKNavigationDelegate() IWKNavigationDelegateEvent                 // function
-	AsWKURLSchemeHandlerDelegate() IWKURLSchemeHandlerDelegateEvent     // function
-	AsWKUIDelegate() IWKUIDelegateEvent                                 // function
-	AsWKDownloadDelegate() IWKDownloadDelegateEvent                     // function
+	// AsWKNavigationDelegate
+	//  Must display conversion to interface type
+	AsWKNavigationDelegate() IWKNavigationDelegateEvent // function
+	// AsWKURLSchemeHandlerDelegate
+	//  Must display conversion to interface type
+	AsWKURLSchemeHandlerDelegate() IWKURLSchemeHandlerDelegateEvent // function
+	// AsWKUIDelegate
+	//  Must display conversion to interface type
+	AsWKUIDelegate() IWKUIDelegateEvent // function
+	// AsWKDownloadDelegate
+	//  Must display conversion to interface type
+	AsWKDownloadDelegate() IWKDownloadDelegateEvent // function
 	// Release
 	//  Freeing the class and the objects it implements.
-	Release()                                                                        // procedure
-	LoadHTML(aHtml, aBaseURL string)                                                 // procedure
-	LoadURL(aURL string)                                                             // procedure
-	SetNavigationDelegate(navigationDelegate WKNavigationDelegate)                   // procedure
-	SetUIDelegate(uiDelegate WKUIDelegate)                                           // procedure
+	Release() // procedure
+	// LoadHTML
+	//  Loads the contents of the specified HTML string and navigates to it.
+	LoadHTML(aHtml, aBaseURL string) // procedure
+	// LoadURL
+	//  Load the specified url
+	LoadURL(aURL string) // procedure
+	// SetNavigationDelegate
+	//  The object you use to manage navigation behavior for the web view.
+	SetNavigationDelegate(navigationDelegate WKNavigationDelegate) // procedure
+	// SetUIDelegate
+	//  The object you use to integrate custom user interface elements, such as contextual menus or panels, into web view interactions.
+	SetUIDelegate(uiDelegate WKUIDelegate) // procedure
+	// InitWithFrameConfiguration
+	//  Creates a web view and initializes it with the specified frame and configuration data.
 	InitWithFrameConfiguration(aFrame *TRect, aConfiguration WKWebViewConfiguration) // procedure
-	StopLoading()                                                                    // procedure
-	EvaluateJavaScript(javaScriptString string)                                      // procedure
-	SetAllowsBackForwardNavigationGestures(newValue bool)                            // procedure
-	SetAllowsMagnification(newValue bool)                                            // procedure
-	SetMagnification(newValue float64)                                               // procedure
-	SetMagnificationCenteredAtPoint(magnification float64, point *TPoint)            // procedure
-	RemoveFromSuperview()                                                            // procedure
+	// StopLoading
+	//  Stops loading all resources on the current page.
+	StopLoading() // procedure
+	// EvaluateJavaScript
+	//  Evaluates the specified JavaScript string.
+	EvaluateJavaScript(javaScriptString string) // procedure
+	// SetAllowsBackForwardNavigationGestures
+	//  Sets A Boolean value that indicates whether horizontal swipe gestures trigger backward and forward page navigation.
+	SetAllowsBackForwardNavigationGestures(newValue bool) // procedure
+	// SetAllowsMagnification
+	//  Sets A Boolean value that indicates whether magnify gestures change the web view’s magnification.
+	SetAllowsMagnification(newValue bool) // procedure
+	// SetMagnification
+	//  Sets The factor by which the page content is currently scaled.
+	SetMagnification(newValue float64) // procedure
+	// SetMagnificationCenteredAtPoint
+	//  Scales the page content and centers the result on the specified point.
+	SetMagnificationCenteredAtPoint(magnification float64, point *TPoint) // procedure
+	// RemoveFromSuperview
+	//  Called when closing the window properly closes the webview
+	RemoveFromSuperview() // procedure
 	// SetOnProcessMessage
 	//  WKScriptMessageHandlerProtocol
+	//  Tells the handler that a webpage sent a script message.
 	SetOnProcessMessage(fn TWkProcessMessageEvent) // property event
 	// SetOnDecidePolicyForNavigationActionPreferences
 	//  WKNavigationDelegateProtocol
-	SetOnDecidePolicyForNavigationActionPreferences(fn TWKDecidePolicyForNavigationActionPreferences)       // property event
-	SetOnDecidePolicyForNavigationResponse(fn TWKDecidePolicyForNavigationResponse)                         // property event
-	SetOnStartProvisionalNavigation(fn TWkStartProvisionalNavigation)                                       // property event
+	//  Asks the delegate for permission to navigate to new content based on the specified preferences and action information.
+	//  Use this method to allow or deny a navigation request that originated with the specified action.
+	//  The web view calls this method after the interaction occurs but before it attempts to load any content.
+	SetOnDecidePolicyForNavigationActionPreferences(fn TWKDecidePolicyForNavigationActionPreferences) // property event
+	// SetOnDecidePolicyForNavigationResponse
+	//  Asks the delegate for permission to navigate to new content after the response to the navigation request is known.
+	//  Use this method to allow or deny a navigation request after the web view receives the response to its original URL request.
+	//  The navigationResponse parameter contains the details of the response, including the type of data that the response contains.
+	SetOnDecidePolicyForNavigationResponse(fn TWKDecidePolicyForNavigationResponse) // property event
+	// SetOnStartProvisionalNavigation
+	//  Tells the delegate that navigation from the main frame has started.
+	//  The web view calls this method after it receives provisional approval to process a navigation request, but before it receives a response to that request.
+	SetOnStartProvisionalNavigation(fn TWkStartProvisionalNavigation) // property event
+	// SetOnReceiveServerRedirectForProvisionalNavigation
+	//  Tells the delegate that the web view received a server redirect for a request.
 	SetOnReceiveServerRedirectForProvisionalNavigation(fn TWkReceiveServerRedirectForProvisionalNavigation) // property event
-	SetOnFailProvisionalNavigationWithError(fn TWkFailProvisionalNavigationWithError)                       // property event
-	SetOnCommitNavigation(fn TWkCommitNavigation)                                                           // property event
-	SetOnFinishNavigation(fn TWkFinishNavigation)                                                           // property event
-	SetOnFailNavigationWithError(fn TWkFailNavigationWithError)                                             // property event
+	// SetOnFailProvisionalNavigationWithError
+	//  Tells the delegate that an error occurred during the early navigation process.
+	SetOnFailProvisionalNavigationWithError(fn TWkFailProvisionalNavigationWithError) // property event
+	// SetOnCommitNavigation
+	//  Tells the delegate that the web view has started to receive content for the main frame.
+	SetOnCommitNavigation(fn TWkCommitNavigation) // property event
+	// SetOnFinishNavigation
+	//  Tells the delegate that navigation is complete.
+	SetOnFinishNavigation(fn TWkFinishNavigation) // property event
+	// SetOnFailNavigationWithError
+	//  Tells the delegate that an error occurred during navigation.
+	SetOnFailNavigationWithError(fn TWkFailNavigationWithError) // property event
 	// SetOnWebContentProcessDidTerminate
+	//  Asks the delegate to respond to an authentication challenge.
 	//  property OnReceiveAuthenticationChallenge: TWkReceiveAuthenticationChallenge read FOnReceiveAuthenticationChallenge write FOnReceiveAuthenticationChallenge;
+	//  Tells the delegate that the web view’s content process was terminated.
 	SetOnWebContentProcessDidTerminate(fn TWkWebContentProcessDidTerminate) // property event
-	// SetOnNavigationActionDidBecomeDownload
-	//  property OnAuthenticationChallengeShouldAllowDeprecatedTLS: TWkAuthenticationChallengeShouldAllowDeprecatedTLS read FOnAuthenticationChallengeShouldAllowDeprecatedTLS write FOnAuthenticationChallengeShouldAllowDeprecatedTLS;
-	SetOnNavigationActionDidBecomeDownload(fn TWkNavigationActionDidBecomeDownload)     // property event
+	// SetOnNavigationResponseDidBecomeDownload
+	//  Asks the delegate whether to continue with a connection that uses a deprecated version of TLS.
+	//  property OnAuthenticationChallengeShouldAllowDeprecatedTLS: TWkAuthenticationChallengeShouldAllowDeprecatedTLS read FOnAuthenticationChallengeShouldAllowDeprecatedTLS write FOnAuthenticationChallengeShouldAllowDeprecatedTLS; Tells the delegate that a navigation action became a download. property OnNavigationActionDidBecomeDownload: TWkNavigationActionDidBecomeDownload read FOnNavigationActionDidBecomeDownload write FOnNavigationActionDidBecomeDownload;
+	//  Tells the delegate that a navigation response became a download.
 	SetOnNavigationResponseDidBecomeDownload(fn TWkNavigationResponseDidBecomeDownload) // property event
 	// SetOnStartURLSchemeTask
 	//  WKURLSchemeHandlerProtocol
+	//  Asks your handler to begin loading the data for the specified resource.
 	SetOnStartURLSchemeTask(fn TWKStartURLSchemeTask) // property event
-	SetOnStopURLSchemeTask(fn TWKStopURLSchemeTask)   // property event
+	// SetOnStopURLSchemeTask
+	//  Asks your handler to stop loading the data for the specified resource.
+	SetOnStopURLSchemeTask(fn TWKStopURLSchemeTask) // property event
 	// SetOnCreateWebView
 	//  WKUIDelegateProtocol
 	SetOnCreateWebView(fn TWKCreateWebView)                                       // property event
@@ -114,7 +207,6 @@ type TWkWebview struct {
 	finishNavigationPtr                                        uintptr
 	failNavigationWithErrorPtr                                 uintptr
 	webContentProcessDidTerminatePtr                           uintptr
-	navigationActionDidBecomeDownloadPtr                       uintptr
 	navigationResponseDidBecomeDownloadPtr                     uintptr
 	startURLSchemeTaskPtr                                      uintptr
 	stopURLSchemeTaskPtr                                       uintptr
@@ -151,12 +243,12 @@ func (m *TWkWebview) LoadRequest(request NSURLRequest) WKNavigation {
 }
 
 func (m *TWkWebview) Title() string {
-	r1 := wkWebviewImportAPI().SysCallN(58, m.Instance())
+	r1 := wkWebviewImportAPI().SysCallN(57, m.Instance())
 	return GoStr(r1)
 }
 
 func (m *TWkWebview) URL() NSURL {
-	r1 := wkWebviewImportAPI().SysCallN(59, m.Instance())
+	r1 := wkWebviewImportAPI().SysCallN(58, m.Instance())
 	return NSURL(r1)
 }
 
@@ -267,7 +359,7 @@ func (m *TWkWebview) SetNavigationDelegate(navigationDelegate WKNavigationDelega
 }
 
 func (m *TWkWebview) SetUIDelegate(uiDelegate WKUIDelegate) {
-	wkWebviewImportAPI().SysCallN(56, m.Instance(), uintptr(uiDelegate))
+	wkWebviewImportAPI().SysCallN(55, m.Instance(), uintptr(uiDelegate))
 }
 
 func (m *TWkWebview) InitWithFrameConfiguration(aFrame *TRect, aConfiguration WKWebViewConfiguration) {
@@ -275,7 +367,7 @@ func (m *TWkWebview) InitWithFrameConfiguration(aFrame *TRect, aConfiguration WK
 }
 
 func (m *TWkWebview) StopLoading() {
-	wkWebviewImportAPI().SysCallN(57, m.Instance())
+	wkWebviewImportAPI().SysCallN(56, m.Instance())
 }
 
 func (m *TWkWebview) EvaluateJavaScript(javaScriptString string) {
@@ -307,7 +399,7 @@ func (m *TWkWebview) SetOnProcessMessage(fn TWkProcessMessageEvent) {
 		RemoveEventElement(m.processMessagePtr)
 	}
 	m.processMessagePtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(46, m.Instance(), m.processMessagePtr)
+	wkWebviewImportAPI().SysCallN(45, m.Instance(), m.processMessagePtr)
 }
 
 func (m *TWkWebview) SetOnDecidePolicyForNavigationActionPreferences(fn TWKDecidePolicyForNavigationActionPreferences) {
@@ -331,7 +423,7 @@ func (m *TWkWebview) SetOnStartProvisionalNavigation(fn TWkStartProvisionalNavig
 		RemoveEventElement(m.startProvisionalNavigationPtr)
 	}
 	m.startProvisionalNavigationPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(51, m.Instance(), m.startProvisionalNavigationPtr)
+	wkWebviewImportAPI().SysCallN(50, m.Instance(), m.startProvisionalNavigationPtr)
 }
 
 func (m *TWkWebview) SetOnReceiveServerRedirectForProvisionalNavigation(fn TWkReceiveServerRedirectForProvisionalNavigation) {
@@ -339,7 +431,7 @@ func (m *TWkWebview) SetOnReceiveServerRedirectForProvisionalNavigation(fn TWkRe
 		RemoveEventElement(m.receiveServerRedirectForProvisionalNavigationPtr)
 	}
 	m.receiveServerRedirectForProvisionalNavigationPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(47, m.Instance(), m.receiveServerRedirectForProvisionalNavigationPtr)
+	wkWebviewImportAPI().SysCallN(46, m.Instance(), m.receiveServerRedirectForProvisionalNavigationPtr)
 }
 
 func (m *TWkWebview) SetOnFailProvisionalNavigationWithError(fn TWkFailProvisionalNavigationWithError) {
@@ -379,15 +471,7 @@ func (m *TWkWebview) SetOnWebContentProcessDidTerminate(fn TWkWebContentProcessD
 		RemoveEventElement(m.webContentProcessDidTerminatePtr)
 	}
 	m.webContentProcessDidTerminatePtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(54, m.Instance(), m.webContentProcessDidTerminatePtr)
-}
-
-func (m *TWkWebview) SetOnNavigationActionDidBecomeDownload(fn TWkNavigationActionDidBecomeDownload) {
-	if m.navigationActionDidBecomeDownloadPtr != 0 {
-		RemoveEventElement(m.navigationActionDidBecomeDownloadPtr)
-	}
-	m.navigationActionDidBecomeDownloadPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(44, m.Instance(), m.navigationActionDidBecomeDownloadPtr)
+	wkWebviewImportAPI().SysCallN(53, m.Instance(), m.webContentProcessDidTerminatePtr)
 }
 
 func (m *TWkWebview) SetOnNavigationResponseDidBecomeDownload(fn TWkNavigationResponseDidBecomeDownload) {
@@ -395,7 +479,7 @@ func (m *TWkWebview) SetOnNavigationResponseDidBecomeDownload(fn TWkNavigationRe
 		RemoveEventElement(m.navigationResponseDidBecomeDownloadPtr)
 	}
 	m.navigationResponseDidBecomeDownloadPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(45, m.Instance(), m.navigationResponseDidBecomeDownloadPtr)
+	wkWebviewImportAPI().SysCallN(44, m.Instance(), m.navigationResponseDidBecomeDownloadPtr)
 }
 
 func (m *TWkWebview) SetOnStartURLSchemeTask(fn TWKStartURLSchemeTask) {
@@ -403,7 +487,7 @@ func (m *TWkWebview) SetOnStartURLSchemeTask(fn TWKStartURLSchemeTask) {
 		RemoveEventElement(m.startURLSchemeTaskPtr)
 	}
 	m.startURLSchemeTaskPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(52, m.Instance(), m.startURLSchemeTaskPtr)
+	wkWebviewImportAPI().SysCallN(51, m.Instance(), m.startURLSchemeTaskPtr)
 }
 
 func (m *TWkWebview) SetOnStopURLSchemeTask(fn TWKStopURLSchemeTask) {
@@ -411,7 +495,7 @@ func (m *TWkWebview) SetOnStopURLSchemeTask(fn TWKStopURLSchemeTask) {
 		RemoveEventElement(m.stopURLSchemeTaskPtr)
 	}
 	m.stopURLSchemeTaskPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(53, m.Instance(), m.stopURLSchemeTaskPtr)
+	wkWebviewImportAPI().SysCallN(52, m.Instance(), m.stopURLSchemeTaskPtr)
 }
 
 func (m *TWkWebview) SetOnCreateWebView(fn TWKCreateWebView) {
@@ -427,7 +511,7 @@ func (m *TWkWebview) SetOnRunJavaScriptAlert(fn TWKRunJavaScriptAlert) {
 		RemoveEventElement(m.runJavaScriptAlertPtr)
 	}
 	m.runJavaScriptAlertPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(48, m.Instance(), m.runJavaScriptAlertPtr)
+	wkWebviewImportAPI().SysCallN(47, m.Instance(), m.runJavaScriptAlertPtr)
 }
 
 func (m *TWkWebview) SetOnRunJavaScriptConfirmCompletion(fn TWKRunJavaScriptConfirmCompletion) {
@@ -435,7 +519,7 @@ func (m *TWkWebview) SetOnRunJavaScriptConfirmCompletion(fn TWKRunJavaScriptConf
 		RemoveEventElement(m.runJavaScriptConfirmCompletionPtr)
 	}
 	m.runJavaScriptConfirmCompletionPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(49, m.Instance(), m.runJavaScriptConfirmCompletionPtr)
+	wkWebviewImportAPI().SysCallN(48, m.Instance(), m.runJavaScriptConfirmCompletionPtr)
 }
 
 func (m *TWkWebview) SetOnRunJavaScriptTextInputCompletion(fn TWKRunJavaScriptTextInputCompletion) {
@@ -443,7 +527,7 @@ func (m *TWkWebview) SetOnRunJavaScriptTextInputCompletion(fn TWKRunJavaScriptTe
 		RemoveEventElement(m.runJavaScriptTextInputCompletionPtr)
 	}
 	m.runJavaScriptTextInputCompletionPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(50, m.Instance(), m.runJavaScriptTextInputCompletionPtr)
+	wkWebviewImportAPI().SysCallN(49, m.Instance(), m.runJavaScriptTextInputCompletionPtr)
 }
 
 func (m *TWkWebview) SetOnWebViewDidClose(fn TWKWebViewDidClose) {
@@ -451,7 +535,7 @@ func (m *TWkWebview) SetOnWebViewDidClose(fn TWKWebViewDidClose) {
 		RemoveEventElement(m.webViewDidClosePtr)
 	}
 	m.webViewDidClosePtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(55, m.Instance(), m.webViewDidClosePtr)
+	wkWebviewImportAPI().SysCallN(54, m.Instance(), m.webViewDidClosePtr)
 }
 
 func (m *TWkWebview) SetOnDownloadCancelCompletionHandler(fn TWKDownloadCancelCompletionHandler) {
@@ -541,22 +625,21 @@ var (
 		/*41*/ imports.NewTable("WkWebview_SetOnFailNavigationWithError", 0),
 		/*42*/ imports.NewTable("WkWebview_SetOnFailProvisionalNavigationWithError", 0),
 		/*43*/ imports.NewTable("WkWebview_SetOnFinishNavigation", 0),
-		/*44*/ imports.NewTable("WkWebview_SetOnNavigationActionDidBecomeDownload", 0),
-		/*45*/ imports.NewTable("WkWebview_SetOnNavigationResponseDidBecomeDownload", 0),
-		/*46*/ imports.NewTable("WkWebview_SetOnProcessMessage", 0),
-		/*47*/ imports.NewTable("WkWebview_SetOnReceiveServerRedirectForProvisionalNavigation", 0),
-		/*48*/ imports.NewTable("WkWebview_SetOnRunJavaScriptAlert", 0),
-		/*49*/ imports.NewTable("WkWebview_SetOnRunJavaScriptConfirmCompletion", 0),
-		/*50*/ imports.NewTable("WkWebview_SetOnRunJavaScriptTextInputCompletion", 0),
-		/*51*/ imports.NewTable("WkWebview_SetOnStartProvisionalNavigation", 0),
-		/*52*/ imports.NewTable("WkWebview_SetOnStartURLSchemeTask", 0),
-		/*53*/ imports.NewTable("WkWebview_SetOnStopURLSchemeTask", 0),
-		/*54*/ imports.NewTable("WkWebview_SetOnWebContentProcessDidTerminate", 0),
-		/*55*/ imports.NewTable("WkWebview_SetOnWebViewDidClose", 0),
-		/*56*/ imports.NewTable("WkWebview_SetUIDelegate", 0),
-		/*57*/ imports.NewTable("WkWebview_StopLoading", 0),
-		/*58*/ imports.NewTable("WkWebview_Title", 0),
-		/*59*/ imports.NewTable("WkWebview_URL", 0),
+		/*44*/ imports.NewTable("WkWebview_SetOnNavigationResponseDidBecomeDownload", 0),
+		/*45*/ imports.NewTable("WkWebview_SetOnProcessMessage", 0),
+		/*46*/ imports.NewTable("WkWebview_SetOnReceiveServerRedirectForProvisionalNavigation", 0),
+		/*47*/ imports.NewTable("WkWebview_SetOnRunJavaScriptAlert", 0),
+		/*48*/ imports.NewTable("WkWebview_SetOnRunJavaScriptConfirmCompletion", 0),
+		/*49*/ imports.NewTable("WkWebview_SetOnRunJavaScriptTextInputCompletion", 0),
+		/*50*/ imports.NewTable("WkWebview_SetOnStartProvisionalNavigation", 0),
+		/*51*/ imports.NewTable("WkWebview_SetOnStartURLSchemeTask", 0),
+		/*52*/ imports.NewTable("WkWebview_SetOnStopURLSchemeTask", 0),
+		/*53*/ imports.NewTable("WkWebview_SetOnWebContentProcessDidTerminate", 0),
+		/*54*/ imports.NewTable("WkWebview_SetOnWebViewDidClose", 0),
+		/*55*/ imports.NewTable("WkWebview_SetUIDelegate", 0),
+		/*56*/ imports.NewTable("WkWebview_StopLoading", 0),
+		/*57*/ imports.NewTable("WkWebview_Title", 0),
+		/*58*/ imports.NewTable("WkWebview_URL", 0),
 	}
 )
 
