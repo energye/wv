@@ -14,15 +14,29 @@ import (
 )
 
 // INSMutableURLRequest Parent: INSURLRequest
+//
+//	A mutable URL load request that is independent of protocol or URL scheme.
+//	https://developer.apple.com/documentation/foundation/nsmutableurlrequest?language=objc
 type INSMutableURLRequest interface {
 	INSURLRequest
-	SetHTTPMethod(aMethod string)                            // procedure
-	SetAllHTTPHeaderFields(headerFieldsJSONString string)    // procedure
+	// SetHTTPMethod
+	//  The HTTP request method.
+	SetHTTPMethod(aMethod string) // procedure
+	// SetAllHTTPHeaderFields
+	//  A dictionary containing all of the HTTP header fields for a request.
+	SetAllHTTPHeaderFields(headerFieldsJSONString string) // procedure
+	// SetValueForHTTPHeaderField
+	//  Sets a value for the header field.
 	SetValueForHTTPHeaderField(aValue string, aField string) // procedure
+	// AddValueForHTTPHeaderField
+	//  Adds a value to the header field.
 	AddValueForHTTPHeaderField(aValue string, aField string) // procedure
 }
 
 // TNSMutableURLRequest Parent: TNSURLRequest
+//
+//	A mutable URL load request that is independent of protocol or URL scheme.
+//	https://developer.apple.com/documentation/foundation/nsmutableurlrequest?language=objc
 type TNSMutableURLRequest struct {
 	TNSURLRequest
 }
@@ -38,6 +52,9 @@ var NSMutableURLRequestRef nSMutableURLRequest
 // nSMutableURLRequest TNSMutableURLRequest Ref
 type nSMutableURLRequest uintptr
 
+// New
+//
+//	Creates and returns an NSMutableURLRequest object.
 func (m *nSMutableURLRequest) New() INSMutableURLRequest {
 	r1 := nSMutableURLRequestImportAPI().SysCallN(2)
 	return AsNSMutableURLRequest(r1)

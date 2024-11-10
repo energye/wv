@@ -14,26 +14,50 @@ import (
 )
 
 // INSURLRequest Root Interface
+//
+//	A URL load request that is independent of protocol or URL scheme.
+//	https://developer.apple.com/documentation/foundation/nsurlrequest?language=objc
 type INSURLRequest interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() NSURLRequest                                 // function
-	URL() NSURL                                         // function
-	CachePolicy() NSURLRequestCachePolicy               // function
-	TimeoutInterval() (resultFloat64 float64)           // function
-	MainDocumentURL() NSURL                             // function
+	Data() NSURLRequest // function
+	// URL
+	//  The URL being requested.
+	URL() NSURL // function
+	// CachePolicy
+	//  The request’s cache policy.
+	CachePolicy() NSURLRequestCachePolicy // function
+	// TimeoutInterval
+	//  The request’s timeout interval, in seconds.
+	TimeoutInterval() (resultFloat64 float64) // function
+	// MainDocumentURL
+	//  The main document URL associated with the request.
+	MainDocumentURL() NSURL // function
+	// NetworkServiceType
+	//  The network service type of the request.
 	NetworkServiceType() NSURLRequestNetworkServiceType // function
-	AllowsCellularAccess() bool                         // function
-	HTTPMethod() string                                 // function
-	AllHTTPHeaderFields() string                        // function
-	ValueForHTTPHeaderField(aField string) string       // function
+	// AllowsCellularAccess
+	//  A Boolean value that indicates whether the request is allowed to use the cellular radio(if present).
+	AllowsCellularAccess() bool // function
+	// HTTPMethod
+	//  The HTTP request method.
+	HTTPMethod() string // function
+	// AllHTTPHeaderFields
+	//  A dictionary containing all of the HTTP header fields for a request. JSON string.
+	AllHTTPHeaderFields() string // function
+	// ValueForHTTPHeaderField
+	//  Returns the value of the specified HTTP header field.
+	ValueForHTTPHeaderField(aField string) string // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
 // TNSURLRequest Root Object
+//
+//	A URL load request that is independent of protocol or URL scheme.
+//	https://developer.apple.com/documentation/foundation/nsurlrequest?language=objc
 type TNSURLRequest struct {
 	TObject
 }
@@ -49,21 +73,33 @@ var NSURLRequestRef nSURLRequest
 // nSURLRequest TNSURLRequest Ref
 type nSURLRequest uintptr
 
+// New
+//
+//	Creates and returns an NSURLRequest object.
 func (m *nSURLRequest) New() INSURLRequest {
 	r1 := nSURLRequestImportAPI().SysCallN(8)
 	return AsNSURLRequest(r1)
 }
 
+// RequestWithURL
+//
+//	Creates and returns a URL request for a specified URL.
 func (m *nSURLRequest) RequestWithURL(uRL NSURL) INSURLRequest {
 	r1 := nSURLRequestImportAPI().SysCallN(10, uintptr(uRL))
 	return AsNSURLRequest(r1)
 }
 
+// SupportsSecureCoding
+//
+//	A Boolean value indicating whether the NSURLRequest implements the NSSecureCoding protocol.
 func (m *nSURLRequest) SupportsSecureCoding() bool {
 	r1 := nSURLRequestImportAPI().SysCallN(12)
 	return GoBool(r1)
 }
 
+// RequestWithURLCachePolicyTimeoutInterval
+//
+//	Creates and returns an initialized URL request with specified URL, cache policy, and timeout values.
 func (m *nSURLRequest) RequestWithURLCachePolicyTimeoutInterval(uRL NSURL, cachePolicy NSURLRequestCachePolicy, timeoutInterval NSTimeInterval) INSURLRequest {
 	r1 := nSURLRequestImportAPI().SysCallN(11, uintptr(uRL), uintptr(cachePolicy), uintptr(unsafePointer(&timeoutInterval)))
 	return AsNSURLRequest(r1)

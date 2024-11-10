@@ -14,6 +14,9 @@ import (
 )
 
 // IWKDownloadDelegate Root Interface
+//
+//	A protocol you implement to track download progress and handle redirects, authentication challenges, and failures.
+//	https://developer.apple.com/documentation/webkit/wkdownloaddelegate?language=objc
 type IWKDownloadDelegate interface {
 	IObject
 	// Data
@@ -25,6 +28,9 @@ type IWKDownloadDelegate interface {
 }
 
 // TWKDownloadDelegate Root Object
+//
+//	A protocol you implement to track download progress and handle redirects, authentication challenges, and failures.
+//	https://developer.apple.com/documentation/webkit/wkdownloaddelegate?language=objc
 type TWKDownloadDelegate struct {
 	TObject
 }

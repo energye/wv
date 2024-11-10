@@ -14,15 +14,25 @@ import (
 )
 
 // INSURLAuthenticationChallenge Root Interface
+//
+//	A challenge from a server requiring authentication from the client.
+//	https://developer.apple.com/documentation/foundation/nsurlauthenticationchallenge?language=objc
+//	No Impl
 type INSURLAuthenticationChallenge interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() NSURLAuthenticationChallenge // function
-	Release()                           // procedure
+	// Release
+	//  Freeing the class and the objects it implements.
+	Release() // procedure
 }
 
 // TNSURLAuthenticationChallenge Root Object
+//
+//	A challenge from a server requiring authentication from the client.
+//	https://developer.apple.com/documentation/foundation/nsurlauthenticationchallenge?language=objc
+//	No Impl
 type TNSURLAuthenticationChallenge struct {
 	TObject
 }

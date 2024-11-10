@@ -14,14 +14,26 @@ import (
 )
 
 // INSHTTPURLResponse Parent: INSURLResponse
+//
+//	The metadata associated with the response to an HTTP protocol URL load request.
+//	https://developer.apple.com/documentation/foundation/nshttpurlresponse?language=objc
 type INSHTTPURLResponse interface {
 	INSURLResponse
+	// InitWithURLStatusCodeHTTPVersionHeaderFields
+	//  Initializes an HTTP URL response object with a status code, protocol version, and response headers.
 	InitWithURLStatusCodeHTTPVersionHeaderFields(url NSURL, statusCode int32, hTTPVersion string, headerFieldsJSONString string) INSHTTPURLResponse // function
-	StatusCode() int32                                                                                                                              // function
-	AllHeaderFields() string                                                                                                                        // function
+	// StatusCode
+	//  The response’s HTTP status code.
+	StatusCode() int32 // function
+	// AllHeaderFields
+	//  All HTTP header fields of the response.
+	AllHeaderFields() string // function
 }
 
 // TNSHTTPURLResponse Parent: TNSURLResponse
+//
+//	The metadata associated with the response to an HTTP protocol URL load request.
+//	https://developer.apple.com/documentation/foundation/nshttpurlresponse?language=objc
 type TNSHTTPURLResponse struct {
 	TNSURLResponse
 }
@@ -37,6 +49,9 @@ var NSHTTPURLResponseRef nSHTTPURLResponse
 // nSHTTPURLResponse TNSHTTPURLResponse Ref
 type nSHTTPURLResponse uintptr
 
+// New
+//
+//	Creates and returns an TNSHTTPURLResponse object.
 func (m *nSHTTPURLResponse) New() INSHTTPURLResponse {
 	r1 := nSHTTPURLResponseImportAPI().SysCallN(4)
 	return AsNSHTTPURLResponse(r1)
@@ -44,6 +59,7 @@ func (m *nSHTTPURLResponse) New() INSHTTPURLResponse {
 
 // LocalizedStringForStatusCode
 //
+//	Returns a localized string corresponding to a specified HTTP status code.
 //	statusCode: https://www.ietf.org/rfc/rfc2616.txt
 func (m *nSHTTPURLResponse) LocalizedStringForStatusCode(statusCode int32) string {
 	r1 := nSHTTPURLResponseImportAPI().SysCallN(3, uintptr(statusCode))

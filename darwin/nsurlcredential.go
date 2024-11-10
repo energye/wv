@@ -14,11 +14,16 @@ import (
 )
 
 // INSURLCredential Root Interface
+//
+//	An authentication credential consisting of information specific to the type of credential and the type of persistent storage to use, if any.
+//	https://developer.apple.com/documentation/foundation/nsurlcredential?language=objc
 type INSURLCredential interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() NSURLCredential                   // function
+	Data() NSURLCredential // function
+	// Persistence
+	//  The credential’s persistence setting.
 	Persistence() NSURLCredentialPersistence // function
 	// Release
 	//  Freeing the class and the objects it implements.
@@ -26,6 +31,9 @@ type INSURLCredential interface {
 }
 
 // TNSURLCredential Root Object
+//
+//	An authentication credential consisting of information specific to the type of credential and the type of persistent storage to use, if any.
+//	https://developer.apple.com/documentation/foundation/nsurlcredential?language=objc
 type TNSURLCredential struct {
 	TObject
 }

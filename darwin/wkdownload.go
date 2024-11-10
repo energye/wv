@@ -14,21 +14,36 @@ import (
 )
 
 // IWKDownload Root Interface
+//
+//	An object that represents the download of a web resource.
+//	https://developer.apple.com/documentation/webkit/wkdownload?language=objc
 type IWKDownload interface {
 	IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKDownload              // function
+	Data() WKDownload // function
+	// OriginalRequest
+	//  An object that represents the request that initiated the download.
 	OriginalRequest() NSURLRequest // function
-	Progress() NSProgress          // function
+	// Progress
+	//  An object that conveys ongoing progress to the user for a specified task.
+	//  https://developer.apple.com/documentation/foundation/nsprogress?language=objc
+	Progress() NSProgress // function
 	// Release
 	//  Freeing the class and the objects it implements.
-	Release()                                         // procedure
+	Release() // procedure
+	// SetDelegate
+	//  An object you use to track download progress and handle redirects, authentication challenges, and failures.
 	SetDelegate(downloadDelegate IWKDownloadDelegate) // procedure
-	Cancel()                                          // procedure
+	// Cancel
+	//  Cancels the download, and optionally captures data so that you can resume the download later.
+	Cancel() // procedure
 }
 
 // TWKDownload Root Object
+//
+//	An object that represents the download of a web resource.
+//	https://developer.apple.com/documentation/webkit/wkdownload?language=objc
 type TWKDownload struct {
 	TObject
 }
