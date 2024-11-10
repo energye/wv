@@ -17,7 +17,9 @@ import (
 type INSURLAuthenticationChallenge interface {
 	IObject
 	Data() NSURLAuthenticationChallenge // function
-	Release()                           // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TNSURLAuthenticationChallenge Root Object

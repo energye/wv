@@ -20,7 +20,9 @@ type IWKUserScript interface {
 	Source() string                     // function
 	InjectionTime() (resultInt64 int64) // function
 	IsForMainFrameOnly() bool           // function
-	Release()                           // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKUserScript Root Object

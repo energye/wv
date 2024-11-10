@@ -26,22 +26,24 @@ type IWkWebview interface {
 	//  根据接收到的总字节数，此值的范围为0.0到1.0，包括主文档及其所有潜在的子资源。
 	//  导航加载完成后，估计进度值保持在1.0，直到新的导航开始，此时估计进度值重置为0.0。
 	//  WKWebView类符合此属性的键值观察（KVO）标准。
-	EstimatedProgress() (resultFloat64 float64)                                      // function
-	HasOnlySecureContent() bool                                                      // function
-	CanGoBack() bool                                                                 // function
-	CanGoForward() bool                                                              // function
-	GoBack() WKNavigation                                                            // function
-	GoForward() WKNavigation                                                         // function
-	Reload() WKNavigation                                                            // function
-	ReloadFromOrigin() WKNavigation                                                  // function
-	AllowsBackForwardNavigationGestures() bool                                       // function
-	AllowsMagnification() bool                                                       // function
-	Magnification() (resultFloat64 float64)                                          // function
-	AsReceiveScriptMessageDelegate() IReceiveScriptMessageDelegateEvent              // function
-	AsWKNavigationDelegate() IWKNavigationDelegateEvent                              // function
-	AsWKURLSchemeHandlerDelegate() IWKURLSchemeHandlerDelegateEvent                  // function
-	AsWKUIDelegate() IWKUIDelegateEvent                                              // function
-	AsWKDownloadDelegate() IWKDownloadDelegateEvent                                  // function
+	EstimatedProgress() (resultFloat64 float64)                         // function
+	HasOnlySecureContent() bool                                         // function
+	CanGoBack() bool                                                    // function
+	CanGoForward() bool                                                 // function
+	GoBack() WKNavigation                                               // function
+	GoForward() WKNavigation                                            // function
+	Reload() WKNavigation                                               // function
+	ReloadFromOrigin() WKNavigation                                     // function
+	AllowsBackForwardNavigationGestures() bool                          // function
+	AllowsMagnification() bool                                          // function
+	Magnification() (resultFloat64 float64)                             // function
+	AsReceiveScriptMessageDelegate() IReceiveScriptMessageDelegateEvent // function
+	AsWKNavigationDelegate() IWKNavigationDelegateEvent                 // function
+	AsWKURLSchemeHandlerDelegate() IWKURLSchemeHandlerDelegateEvent     // function
+	AsWKUIDelegate() IWKUIDelegateEvent                                 // function
+	AsWKDownloadDelegate() IWKDownloadDelegateEvent                     // function
+	// Release
+	//  Release the current object and Data pointer
 	Release()                                                                        // procedure
 	LoadHTML(aHtml, aBaseURL string)                                                 // procedure
 	LoadURL(aURL string)                                                             // procedure

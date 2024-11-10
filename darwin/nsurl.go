@@ -30,7 +30,9 @@ type INSURL interface {
 	Fragment() string        // function
 	ParameterString() string // function
 	Query() string           // function
-	Release()                // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TNSURL Root Object

@@ -16,12 +16,14 @@ import (
 // IWKPreferences Root Interface
 type IWKPreferences interface {
 	IObject
-	Data() WKPreferences                                    // function
-	MinimumFontSize() (resultFloat64 float64)               // function
-	JavaScriptEnabled() bool                                // function
-	JavaScriptCanOpenWindowsAutomatically() bool            // function
-	JavaEnabled() bool                                      // function
-	PlugInsEnabled() bool                                   // function
+	Data() WKPreferences                         // function
+	MinimumFontSize() (resultFloat64 float64)    // function
+	JavaScriptEnabled() bool                     // function
+	JavaScriptCanOpenWindowsAutomatically() bool // function
+	JavaEnabled() bool                           // function
+	PlugInsEnabled() bool                        // function
+	// Release
+	//  Release the current object and Data pointer
 	Release()                                               // procedure
 	SetMinimumFontSize(newValue float64)                    // procedure
 	SetJavaScriptEnabled(newValue bool)                     // procedure

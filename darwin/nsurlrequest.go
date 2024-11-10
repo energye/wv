@@ -26,7 +26,9 @@ type INSURLRequest interface {
 	HTTPMethod() string                                 // function
 	AllHTTPHeaderFields() string                        // function
 	ValueForHTTPHeaderField(aField string) string       // function
-	Release()                                           // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TNSURLRequest Root Object

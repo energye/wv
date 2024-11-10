@@ -17,7 +17,9 @@ import (
 type IWKScriptMessageHandler interface {
 	IObject
 	Data() WKScriptMessageHandlerProtocol // function
-	Release()                             // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKScriptMessageHandler Root Object

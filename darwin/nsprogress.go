@@ -16,19 +16,21 @@ import (
 // INSProgress Root Interface
 type INSProgress interface {
 	IObject
-	Data() NSProgress                                // function
-	TotalUnitCount() (resultInt64 int64)             // function
-	CompletedUnitCount() (resultInt64 int64)         // function
-	LocalizedDescription() string                    // function
-	LocalizedAdditionalDescription() string          // function
-	IsCancellable() bool                             // function
-	IsPausable() bool                                // function
-	IsCancelled() bool                               // function
-	IsPaused() bool                                  // function
-	CancellationHandler() uintptr                    // function
-	PausingHandler() uintptr                         // function
-	IsIndeterminate() bool                           // function
-	FractionCompleted() (resultFloat64 float64)      // function
+	Data() NSProgress                           // function
+	TotalUnitCount() (resultInt64 int64)        // function
+	CompletedUnitCount() (resultInt64 int64)    // function
+	LocalizedDescription() string               // function
+	LocalizedAdditionalDescription() string     // function
+	IsCancellable() bool                        // function
+	IsPausable() bool                           // function
+	IsCancelled() bool                          // function
+	IsPaused() bool                             // function
+	CancellationHandler() uintptr               // function
+	PausingHandler() uintptr                    // function
+	IsIndeterminate() bool                      // function
+	FractionCompleted() (resultFloat64 float64) // function
+	// Release
+	//  Release the current object and Data pointer
 	Release()                                        // procedure
 	SetTotalUnitCount(aValue int64)                  // procedure
 	SetCompletedUnitCount(aValue int64)              // procedure

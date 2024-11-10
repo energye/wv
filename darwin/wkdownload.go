@@ -16,9 +16,11 @@ import (
 // IWKDownload Root Interface
 type IWKDownload interface {
 	IObject
-	Data() WKDownload                                 // function
-	OriginalRequest() NSURLRequest                    // function
-	Progress() NSProgress                             // function
+	Data() WKDownload              // function
+	OriginalRequest() NSURLRequest // function
+	Progress() NSProgress          // function
+	// Release
+	//  Release the current object and Data pointer
 	Release()                                         // procedure
 	SetDelegate(downloadDelegate IWKDownloadDelegate) // procedure
 	Cancel()                                          // procedure

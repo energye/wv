@@ -16,8 +16,10 @@ import (
 // IWKUserContentController Root Interface
 type IWKUserContentController interface {
 	IObject
-	Data() WKUserContentController                                                         // function
-	UserScripts() IStrings                                                                 // function
+	Data() WKUserContentController // function
+	UserScripts() IStrings         // function
+	// Release
+	//  Release the current object and Data pointer
 	Release()                                                                              // procedure
 	AddUserScript(userScript WKUserScript)                                                 // procedure
 	RemoveAllUserScripts()                                                                 // procedure

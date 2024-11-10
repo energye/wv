@@ -16,9 +16,11 @@ import (
 // IWKWebpagePreferences Root Interface
 type IWKWebpagePreferences interface {
 	IObject
-	Data() WKWebpagePreferences                   // function
-	PreferredContentMode() WKContentMode          // function
-	AllowsContentJavaScript() bool                // function
+	Data() WKWebpagePreferences          // function
+	PreferredContentMode() WKContentMode // function
+	AllowsContentJavaScript() bool       // function
+	// Release
+	//  Release the current object and Data pointer
 	Release()                                     // procedure
 	SetPreferredContentMode(aValue WKContentMode) // procedure
 	SetAllowsContentJavaScript(aValue bool)       // procedure

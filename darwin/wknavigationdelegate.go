@@ -17,7 +17,9 @@ import (
 type IWKNavigationDelegate interface {
 	IObject
 	Data() WKNavigationDelegateProtocol // function
-	Release()                           // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKNavigationDelegate Root Object

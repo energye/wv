@@ -17,7 +17,9 @@ import (
 type IWKUIDelegate interface {
 	IObject
 	Data() WKUIDelegateProtocol // function
-	Release()                   // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKUIDelegate Root Object

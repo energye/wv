@@ -18,7 +18,9 @@ type IWKNavigation interface {
 	IObject
 	Data() WKNavigation                  // function
 	EffectiveContentMode() WKContentMode // function
-	Release()                            // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKNavigation Root Object

@@ -16,11 +16,13 @@ import (
 // IWKWebViewConfiguration Root Interface
 type IWKWebViewConfiguration interface {
 	IObject
-	Data() WKWebViewConfiguration                                                          // function
-	Preferences() WKPreferences                                                            // function
-	UserContentController() WKUserContentController                                        // function
-	SuppressesIncrementalRendering() bool                                                  // function
-	ApplicationNameForUserAgent() string                                                   // function
+	Data() WKWebViewConfiguration                   // function
+	Preferences() WKPreferences                     // function
+	UserContentController() WKUserContentController // function
+	SuppressesIncrementalRendering() bool           // function
+	ApplicationNameForUserAgent() string            // function
+	// Release
+	//  Release the current object and Data pointer
 	Release()                                                                              // procedure
 	SetPreferences(preferences WKPreferences)                                              // procedure
 	SetUserContentController(userContentController WKUserContentController)                // procedure

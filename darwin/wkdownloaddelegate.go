@@ -17,7 +17,9 @@ import (
 type IWKDownloadDelegate interface {
 	IObject
 	Data() WKDownloadDelegateProtocol // function
-	Release()                         // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKDownloadDelegate Root Object

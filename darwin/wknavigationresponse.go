@@ -20,7 +20,9 @@ type IWKNavigationResponse interface {
 	IsForMainFrame() bool       // function
 	Response() NSURLResponse    // function
 	CanShowMIMEType() bool      // function
-	Release()                   // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKNavigationResponse Root Object

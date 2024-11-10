@@ -17,7 +17,9 @@ import (
 type IWKURLSchemeHandler interface {
 	IObject
 	Data() WKURLSchemeHandlerProtocol // function
-	Release()                         // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKURLSchemeHandler Root Object

@@ -19,7 +19,9 @@ type IWKFrameInfo interface {
 	Data() WKFrameInfo     // function
 	IsMainFrame() bool     // function
 	Request() NSURLRequest // function
-	Release()              // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKFrameInfo Root Object

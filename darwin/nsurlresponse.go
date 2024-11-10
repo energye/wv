@@ -23,7 +23,9 @@ type INSURLResponse interface {
 	ExpectedContentLength() (resultInt64 int64)                                                                                    // function
 	TextEncodingName() string                                                                                                      // function
 	SuggestedFilename() string                                                                                                     // function
-	Release()                                                                                                                      // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TNSURLResponse Root Object

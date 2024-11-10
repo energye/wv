@@ -25,7 +25,9 @@ type IWKWindowFeatures interface {
 	Y() int32                  // function
 	Width() int32              // function
 	Height() int32             // function
-	Release()                  // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKWindowFeatures Root Object

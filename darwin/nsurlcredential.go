@@ -18,7 +18,9 @@ type INSURLCredential interface {
 	IObject
 	Data() NSURLCredential                   // function
 	Persistence() NSURLCredentialPersistence // function
-	Release()                                // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TNSURLCredential Root Object

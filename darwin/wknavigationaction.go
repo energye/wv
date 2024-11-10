@@ -23,7 +23,9 @@ type IWKNavigationAction interface {
 	Request() NSURLRequest               // function
 	ModifierFlags() NSEventModifierFlags // function
 	ButtonNumber() int32                 // function
-	Release()                            // procedure
+	// Release
+	//  Release the current object and Data pointer
+	Release() // procedure
 }
 
 // TWKNavigationAction Root Object
