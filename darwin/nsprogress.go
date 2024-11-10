@@ -14,39 +14,103 @@ import (
 )
 
 // INSProgress Root Interface
+//
+//	The NSProgress class provides a self-contained mechanism for progress reporting.
+//	It makes it easy for code that performs work to report the progress of that work,
+//	and for user interface code to observe that progress for presentation to the user.
+//	Specifically, you can use a progress object to show the user a progress bar and
+//	explanatory text that update as you do work. It also allows the user to cancel or pause work.
+//	https://developer.apple.com/documentation/foundation/nsprogress?language=objc
 type INSProgress interface {
 	IObject
-	Data() NSProgress                           // function
-	TotalUnitCount() (resultInt64 int64)        // function
-	CompletedUnitCount() (resultInt64 int64)    // function
-	LocalizedDescription() string               // function
-	LocalizedAdditionalDescription() string     // function
-	IsCancellable() bool                        // function
-	IsPausable() bool                           // function
-	IsCancelled() bool                          // function
-	IsPaused() bool                             // function
-	CancellationHandler() uintptr               // function
-	PausingHandler() uintptr                    // function
-	IsIndeterminate() bool                      // function
+	// Data
+	//  Returns the object implemented by this class.
+	Data() NSProgress // function
+	// TotalUnitCount
+	//  Returns The total number of tracked units of work for the current progress.
+	TotalUnitCount() (resultInt64 int64) // function
+	// CompletedUnitCount
+	//  Returns The number of completed units of work for the current job.
+	CompletedUnitCount() (resultInt64 int64) // function
+	// LocalizedDescription
+	//  Returns A localized description of tracked progress for the receiver.
+	LocalizedDescription() string // function
+	// LocalizedAdditionalDescription
+	//  Returns A more specific localized description of tracked progress for the receiver.
+	LocalizedAdditionalDescription() string // function
+	// IsCancellable
+	//  Returns A Boolean value that indicates whether the receiver is tracking work that you can cancel.
+	IsCancellable() bool // function
+	// IsPausable
+	//  Returns A Boolean value that indicates whether the receiver is tracking work that you can pause.
+	IsPausable() bool // function
+	// IsCancelled
+	//  A Boolean value that Indicates whether the receiver is tracking canceled work.
+	IsCancelled() bool // function
+	// IsPaused
+	//  A Boolean value that indicates whether the receiver is tracking paused work.
+	IsPaused() bool // function
+	// CancellationHandler
+	//  Returns The block to invoke when canceling progress.
+	CancellationHandler() uintptr // function
+	// PausingHandler
+	//  Returns The block to invoke when pausing progress.
+	PausingHandler() uintptr // function
+	// IsIndeterminate
+	//  A Boolean value that indicates whether the tracked progress is indeterminate.
+	IsIndeterminate() bool // function
+	// FractionCompleted
+	//  The fraction of the overall work that the progress object completes, including work from its suboperations.
 	FractionCompleted() (resultFloat64 float64) // function
 	// Release
-	//  Release the current object and Data pointer
-	Release()                                        // procedure
-	SetTotalUnitCount(aValue int64)                  // procedure
-	SetCompletedUnitCount(aValue int64)              // procedure
-	SetLocalizedDescription(aValue string)           // procedure
+	//  Freeing the class and the objects it implements.
+	Release() // procedure
+	// SetTotalUnitCount
+	//  Sets The total number of tracked units of work for the current progress.
+	SetTotalUnitCount(aValue int64) // procedure
+	// SetCompletedUnitCount
+	//  Sets The number of completed units of work for the current job.
+	SetCompletedUnitCount(aValue int64) // procedure
+	// SetLocalizedDescription
+	//  Sets A localized description of tracked progress for the receiver.
+	SetLocalizedDescription(aValue string) // procedure
+	// SetLocalizedAdditionalDescription
+	//  Sets A more specific localized description of tracked progress for the receiver.
 	SetLocalizedAdditionalDescription(aValue string) // procedure
-	SetCancellable(aValue bool)                      // procedure
-	SetPausable(aValue bool)                         // procedure
-	SetCancellationHandler(aValue uintptr)           // procedure
-	SetPausingHandler(aValue uintptr)                // procedure
-	Cancel()                                         // procedure
-	Pause()                                          // procedure
-	Publish()                                        // procedure
-	Unpublish()                                      // procedure
+	// SetCancellable
+	//  Sets A Boolean value that indicates whether the receiver is tracking work that you can cancel.
+	SetCancellable(aValue bool) // procedure
+	// SetPausable
+	//  Sets A Boolean value that indicates whether the receiver is tracking work that you can pause.
+	SetPausable(aValue bool) // procedure
+	// SetCancellationHandler
+	//  Sets The block to invoke when canceling progress.
+	SetCancellationHandler(aValue uintptr) // procedure
+	// SetPausingHandler
+	//  Sets The block to invoke when pausing progress.
+	SetPausingHandler(aValue uintptr) // procedure
+	// Cancel
+	//  Cancels progress tracking.
+	Cancel() // procedure
+	// Pause
+	//  Pauses progress tracking.
+	Pause() // procedure
+	// Publish
+	//  Publishes the progress object for other processes to observe it.
+	Publish() // procedure
+	// Unpublish
+	//  Removes a progress object from publication, making it unobservable by other processes.
+	Unpublish() // procedure
 }
 
 // TNSProgress Root Object
+//
+//	The NSProgress class provides a self-contained mechanism for progress reporting.
+//	It makes it easy for code that performs work to report the progress of that work,
+//	and for user interface code to observe that progress for presentation to the user.
+//	Specifically, you can use a progress object to show the user a progress bar and
+//	explanatory text that update as you do work. It also allows the user to cancel or pause work.
+//	https://developer.apple.com/documentation/foundation/nsprogress?language=objc
 type TNSProgress struct {
 	TObject
 }
@@ -62,11 +126,17 @@ var NSProgressRef nSProgress
 // nSProgress TNSProgress Ref
 type nSProgress uintptr
 
+// CurrentProgress
+//
+//	Returns the progress instance, if any.
 func (m *nSProgress) CurrentProgress() INSProgress {
 	r1 := nSProgressImportAPI().SysCallN(4)
 	return AsNSProgress(r1)
 }
 
+// ProgressWithTotalUnitCount
+//
+//	Sets the progress object as the current object of the current thread, and assigns the amount of work for the next suboperation progress object to perform.
 func (m *nSProgress) ProgressWithTotalUnitCount(aCount int64) INSProgress {
 	r1 := nSProgressImportAPI().SysCallN(16, uintptr(unsafePointer(&aCount)))
 	return AsNSProgress(r1)

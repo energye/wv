@@ -16,6 +16,8 @@ import (
 // INSURLResponse Root Interface
 type INSURLResponse interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() NSURLResponse                                                                                                           // function
 	InitWithURLMIMETypeExpectedContentLengthTextEncodingName(uRL NSURL, mIMEType string, length int32, name string) INSURLResponse // function
 	URL() NSURL                                                                                                                    // function
@@ -24,7 +26,7 @@ type INSURLResponse interface {
 	TextEncodingName() string                                                                                                      // function
 	SuggestedFilename() string                                                                                                     // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

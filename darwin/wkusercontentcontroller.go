@@ -16,10 +16,12 @@ import (
 // IWKUserContentController Root Interface
 type IWKUserContentController interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKUserContentController // function
 	UserScripts() IStrings         // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release()                                                                              // procedure
 	AddUserScript(userScript WKUserScript)                                                 // procedure
 	RemoveAllUserScripts()                                                                 // procedure

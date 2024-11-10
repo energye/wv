@@ -16,11 +16,13 @@ import (
 // IWKFrameInfo Root Interface
 type IWKFrameInfo interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKFrameInfo     // function
 	IsMainFrame() bool     // function
 	Request() NSURLRequest // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

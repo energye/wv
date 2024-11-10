@@ -16,13 +16,15 @@ import (
 // IWKWebViewConfiguration Root Interface
 type IWKWebViewConfiguration interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKWebViewConfiguration                   // function
 	Preferences() WKPreferences                     // function
 	UserContentController() WKUserContentController // function
 	SuppressesIncrementalRendering() bool           // function
 	ApplicationNameForUserAgent() string            // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release()                                                                              // procedure
 	SetPreferences(preferences WKPreferences)                                              // procedure
 	SetUserContentController(userContentController WKUserContentController)                // procedure

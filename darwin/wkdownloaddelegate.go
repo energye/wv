@@ -16,9 +16,11 @@ import (
 // IWKDownloadDelegate Root Interface
 type IWKDownloadDelegate interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKDownloadDelegateProtocol // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

@@ -16,6 +16,8 @@ import (
 // INSURLRequest Root Interface
 type INSURLRequest interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() NSURLRequest                                 // function
 	URL() NSURL                                         // function
 	CachePolicy() NSURLRequestCachePolicy               // function
@@ -27,7 +29,7 @@ type INSURLRequest interface {
 	AllHTTPHeaderFields() string                        // function
 	ValueForHTTPHeaderField(aField string) string       // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

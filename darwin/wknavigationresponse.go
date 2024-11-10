@@ -16,12 +16,14 @@ import (
 // IWKNavigationResponse Root Interface
 type IWKNavigationResponse interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKNavigationResponse // function
 	IsForMainFrame() bool       // function
 	Response() NSURLResponse    // function
 	CanShowMIMEType() bool      // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

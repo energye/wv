@@ -16,11 +16,13 @@ import (
 // IWKWebpagePreferences Root Interface
 type IWKWebpagePreferences interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKWebpagePreferences          // function
 	PreferredContentMode() WKContentMode // function
 	AllowsContentJavaScript() bool       // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release()                                     // procedure
 	SetPreferredContentMode(aValue WKContentMode) // procedure
 	SetAllowsContentJavaScript(aValue bool)       // procedure

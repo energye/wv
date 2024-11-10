@@ -16,6 +16,8 @@ import (
 // IWKWindowFeatures Root Interface
 type IWKWindowFeatures interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKWindowFeatures    // function
 	MenuBarVisibility() bool   // function
 	StatusBarVisibility() bool // function
@@ -26,7 +28,7 @@ type IWKWindowFeatures interface {
 	Width() int32              // function
 	Height() int32             // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

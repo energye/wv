@@ -16,10 +16,10 @@ import (
 // INSURLAuthenticationChallenge Root Interface
 type INSURLAuthenticationChallenge interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() NSURLAuthenticationChallenge // function
-	// Release
-	//  Release the current object and Data pointer
-	Release() // procedure
+	Release()                           // procedure
 }
 
 // TNSURLAuthenticationChallenge Root Object

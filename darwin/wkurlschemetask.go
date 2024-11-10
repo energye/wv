@@ -16,10 +16,12 @@ import (
 // IWKURLSchemeTask Root Interface
 type IWKURLSchemeTask interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKURLSchemeTask // function
 	Request() NSURLRequest // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release()                               // procedure
 	ReceiveResponse(response NSURLResponse) // procedure
 	// ReceiveData

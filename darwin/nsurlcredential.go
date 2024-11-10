@@ -16,10 +16,12 @@ import (
 // INSURLCredential Root Interface
 type INSURLCredential interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() NSURLCredential                   // function
 	Persistence() NSURLCredentialPersistence // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

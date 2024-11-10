@@ -16,6 +16,8 @@ import (
 // IWKNavigationAction Root Interface
 type IWKNavigationAction interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKNavigationAction            // function
 	SourceFrame() WKFrameInfo            // function
 	TargetFrame() WKFrameInfo            // function
@@ -24,7 +26,7 @@ type IWKNavigationAction interface {
 	ModifierFlags() NSEventModifierFlags // function
 	ButtonNumber() int32                 // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

@@ -16,12 +16,14 @@ import (
 // IWKUserScript Root Interface
 type IWKUserScript interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKUserScript                 // function
 	Source() string                     // function
 	InjectionTime() (resultInt64 int64) // function
 	IsForMainFrameOnly() bool           // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

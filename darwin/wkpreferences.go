@@ -16,6 +16,8 @@ import (
 // IWKPreferences Root Interface
 type IWKPreferences interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKPreferences                         // function
 	MinimumFontSize() (resultFloat64 float64)    // function
 	JavaScriptEnabled() bool                     // function
@@ -23,7 +25,7 @@ type IWKPreferences interface {
 	JavaEnabled() bool                           // function
 	PlugInsEnabled() bool                        // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release()                                               // procedure
 	SetMinimumFontSize(newValue float64)                    // procedure
 	SetJavaScriptEnabled(newValue bool)                     // procedure

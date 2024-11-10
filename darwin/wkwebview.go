@@ -16,6 +16,8 @@ import (
 // IWkWebview Root Interface
 type IWkWebview interface {
 	IComponent
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WkWebview                               // function
 	Configuration() WKWebViewConfiguration         // function
 	LoadRequest(request NSURLRequest) WKNavigation // function
@@ -43,7 +45,7 @@ type IWkWebview interface {
 	AsWKUIDelegate() IWKUIDelegateEvent                                 // function
 	AsWKDownloadDelegate() IWKDownloadDelegateEvent                     // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release()                                                                        // procedure
 	LoadHTML(aHtml, aBaseURL string)                                                 // procedure
 	LoadURL(aURL string)                                                             // procedure

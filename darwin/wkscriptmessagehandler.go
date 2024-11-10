@@ -16,9 +16,11 @@ import (
 // IWKScriptMessageHandler Root Interface
 type IWKScriptMessageHandler interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKScriptMessageHandlerProtocol // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

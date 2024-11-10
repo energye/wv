@@ -16,9 +16,11 @@ import (
 // IWKUIDelegate Root Interface
 type IWKUIDelegate interface {
 	IObject
+	// Data
+	//  Returns the object implemented by this class.
 	Data() WKUIDelegateProtocol // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 

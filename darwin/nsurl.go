@@ -14,28 +14,63 @@ import (
 )
 
 // INSURL Root Interface
+//
+//	An object that represents the location of a resource, such as an item on a remote server or the path to a local file.
+//	https://developer.apple.com/documentation/foundation/nsurl?language=objc
 type INSURL interface {
 	IObject
-	Data() NSURL             // function
-	AbsoluteString() string  // function
-	RelativeString() string  // function
-	BaseURL() INSURL         // function
-	AbsoluteURL() INSURL     // function
-	Scheme() string          // function
-	Host() string            // function
-	Port() int32             // function
-	User() string            // function
-	Password() string        // function
-	Path() string            // function
-	Fragment() string        // function
+	// Data
+	//  Returns the object implemented by this class.
+	Data() NSURL // function
+	// AbsoluteString
+	//  The URL string for the receiver as an absolute URL.(read-only)
+	AbsoluteString() string // function
+	// RelativeString
+	//  A string representation of the relative portion of the URL.(read-only)
+	RelativeString() string // function
+	// BaseURL
+	//  The base URL.(read-only)
+	BaseURL() INSURL // function
+	// AbsoluteURL
+	//  An absolute URL that refers to the same resource as the receiver.(read-only)
+	AbsoluteURL() INSURL // function
+	// Scheme
+	//  The scheme.(read-only)
+	Scheme() string // function
+	// Host
+	//  The host, conforming to RFC 1808.(read-only)
+	Host() string // function
+	// Port
+	//  The port, conforming to RFC 1808.
+	Port() int32 // function
+	// User
+	//  The user name, conforming to RFC 1808.
+	User() string // function
+	// Password
+	//  The password conforming to RFC 1808.(read-only)
+	Password() string // function
+	// Path
+	//  The path, conforming to RFC 1808.(read-only)
+	Path() string // function
+	// Fragment
+	//  The fragment identifier, conforming to RFC 1808.(read-only)
+	Fragment() string // function
+	// ParameterString
+	//  The parameter string conforming to RFC 1808.(read-only)
+	//  Deprecated
 	ParameterString() string // function
-	Query() string           // function
+	// Query
+	//  The query string, conforming to RFC 1808.
+	Query() string // function
 	// Release
-	//  Release the current object and Data pointer
+	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
 // TNSURL Root Object
+//
+//	An object that represents the location of a resource, such as an item on a remote server or the path to a local file.
+//	https://developer.apple.com/documentation/foundation/nsurl?language=objc
 type TNSURL struct {
 	TObject
 }
@@ -51,16 +86,25 @@ var NSURLRef nSURL
 // nSURL TNSURL Ref
 type nSURL uintptr
 
+// New
+//
+//	Creates and returns an NSURL object.
 func (m *nSURL) New() INSURL {
 	r1 := nSURLImportAPI().SysCallN(7)
 	return AsNSURL(r1)
 }
 
+// URLWithString
+//
+//	Creates and returns an NSURL object initialized with a provided URL string.
 func (m *nSURL) URLWithString(uRLString string) INSURL {
 	r1 := nSURLImportAPI().SysCallN(16, PascalStr(uRLString))
 	return AsNSURL(r1)
 }
 
+// URLWithStringRelativeToURL
+//
+//	Creates and returns an NSURL object initialized with a base URL and a relative string.
 func (m *nSURL) URLWithStringRelativeToURL(uRLString string, baseURL NSURL) INSURL {
 	r1 := nSURLImportAPI().SysCallN(17, PascalStr(uRLString), uintptr(baseURL))
 	return AsNSURL(r1)
