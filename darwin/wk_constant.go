@@ -116,6 +116,9 @@ type WKUIDelegate = WKUIDelegateProtocol
 type WKNavigationDelegateProtocol uintptr
 type WKNavigationDelegate = WKNavigationDelegateProtocol
 
+type NSEventModifierFlags = int32
+type NSTimeInterval = float64
+
 // Constants that specify how long the credential will be kept.
 // https://developer.apple.com/documentation/foundation/nsurlcredentialpersistence?language=objc
 type NSURLCredentialPersistence = int32
@@ -189,8 +192,47 @@ const (
 	WKContentModeMobile
 )
 
+// The type of action that triggered the navigation.
+// https://developer.apple.com/documentation/webkit/wknavigationtype?language=objc
 type WKNavigationType = int32
-type NSEventModifierFlags = int32
+
+const (
+	// A link activation.
+	WKNavigationTypeLinkActivated WKNavigationType = iota
+	// A request to submit a form.
+	WKNavigationTypeFormSubmitted
+	// A request for the frame’s next or previous item.
+	WKNavigationTypeBackForward
+	// A request to reload the webpage.
+	WKNavigationTypeReload
+	// A request to resubmit a form.
+	WKNavigationTypeFormResubmitted
+	// A navigation request that originates for some other reason.
+	WKNavigationTypeOther
+)
+
+// Constants that indicate whether to allow or cancel navigation to a webpage from an action.
+// https://developer.apple.com/documentation/webkit/wknavigationactionpolicy?language=objc
 type WKNavigationActionPolicy = int32
+
+const (
+	// Cancel the navigation.
+	WKNavigationActionPolicyCancel WKNavigationActionPolicy = iota
+	// Allow the navigation to continue.
+	WKNavigationActionPolicyAllow
+	// Allow the download to proceed.
+	WKNavigationActionPolicyDownload
+)
+
+// Constants that indicate whether to allow or cancel navigation to a webpage from a response.
+// https://developer.apple.com/documentation/webkit/wknavigationresponsepolicy?language=objc
 type WKNavigationResponsePolicy = int32
-type NSTimeInterval = float64
+
+const (
+	// Cancel the navigation.
+	WKNavigationResponsePolicyCancel WKNavigationResponsePolicy = iota
+	// Allow the navigation to continue.
+	WKNavigationResponsePolicyAllow
+	// Allow the download to proceed.
+	WKNavigationResponsePolicyDownload
+)
