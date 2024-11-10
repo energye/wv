@@ -178,19 +178,36 @@ type IWkWebview interface {
 	SetOnStopURLSchemeTask(fn TWKStopURLSchemeTask) // property event
 	// SetOnCreateWebView
 	//  WKUIDelegateProtocol
-	SetOnCreateWebView(fn TWKCreateWebView)                                       // property event
-	SetOnRunJavaScriptAlert(fn TWKRunJavaScriptAlert)                             // property event
-	SetOnRunJavaScriptConfirmCompletion(fn TWKRunJavaScriptConfirmCompletion)     // property event
+	//  Creates a new web view.
+	SetOnCreateWebView(fn TWKCreateWebView) // property event
+	// SetOnRunJavaScriptAlert
+	//  Displays a JavaScript alert panel.
+	SetOnRunJavaScriptAlert(fn TWKRunJavaScriptAlert) // property event
+	// SetOnRunJavaScriptConfirmCompletion
+	//  Displays a JavaScript confirm panel.
+	SetOnRunJavaScriptConfirmCompletion(fn TWKRunJavaScriptConfirmCompletion) // property event
+	// SetOnRunJavaScriptTextInputCompletion
+	//  Displays a JavaScript text input panel.
 	SetOnRunJavaScriptTextInputCompletion(fn TWKRunJavaScriptTextInputCompletion) // property event
-	SetOnWebViewDidClose(fn TWKWebViewDidClose)                                   // property event
+	// SetOnWebViewDidClose
+	//  Notifies your app that the DOM window closed successfully.
+	SetOnWebViewDidClose(fn TWKWebViewDidClose) // property event
 	// SetOnDownloadCancelCompletionHandler
 	//  WKDownload
-	SetOnDownloadCancelCompletionHandler(fn TWKDownloadCancelCompletionHandler)                                                 // property event
+	SetOnDownloadCancelCompletionHandler(fn TWKDownloadCancelCompletionHandler) // property event
+	// SetOnDownloadDecideDestinationUsingResponseSuggestedFilename
+	//  Asks the delegate to provide a file destination where the system should write the download data.
 	SetOnDownloadDecideDestinationUsingResponseSuggestedFilename(fn TWKDownloadDecideDestinationUsingResponseSuggestedFilename) // property event
-	SetOnDownloadWillPerformHTTPRedirectionNewRequest(fn TWKDownloadWillPerformHTTPRedirectionNewRequest)                       // property event
+	// SetOnDownloadWillPerformHTTPRedirectionNewRequest
+	//  Asks the delegate to respond to the download’s redirect response.
+	SetOnDownloadWillPerformHTTPRedirectionNewRequest(fn TWKDownloadWillPerformHTTPRedirectionNewRequest) // property event
 	// SetOnDownloadFinish
+	//  Asks the delegate to respond to an authentication challenge.
 	//  property OnDownloadReceiveAuthenticationChallenge: TWKDownloadReceiveAuthenticationChallenge read FOnDownloadReceiveAuthenticationChallenge write FOnDownloadReceiveAuthenticationChallenge;
-	SetOnDownloadFinish(fn TWKDownloadFinish)               // property event
+	//  Tells the delegate that the download finished.
+	SetOnDownloadFinish(fn TWKDownloadFinish) // property event
+	// SetOnDownloadFailWithError
+	//  Tells the delegate that the download failed, with error information and data you can use to restart the download.
 	SetOnDownloadFailWithError(fn TWKDownloadFailWithError) // property event
 }
 
