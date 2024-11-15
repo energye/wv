@@ -74,9 +74,35 @@
 #### 开发环境
 
 1. 安装 [Golang](https://golang.google.cn/dl/), Windows版本, 仅支持intel架构 [https://golang.google.cn/dl](https://golang.google.cn/dl)
-2. 下载 `Webview2` 和 `LCL` 控件库动态链接库, 两个动态链接库必须同时使用, [下载地址](https://github.com/energye/lcl/tree/main/bins/webview2/windows)
+2. 下载 `Webview2` 和 `LCL` 控件库动态链接库, 两个动态链接库必须同时使用
 3. 将两个动态链接库配置到环境变量 `ENERGY_HOME` 目录下, 或放置到和执行文件 `exe` 同一目录
 4. 创建Go项目开始使用` Webview2` 和 `LCL` 构建桌面应用, 参考 `Go Webview2` 示例 [Webview2 examples](https://github.com/energye/examples/tree/main/wv)
+
+##### Windows
+
+- LCL+Webview2:
+
+  - [Windows32](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wv2_binary_windows32.zip/download)
+  - [Windows64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wv2_binary_windows64.zip/download)
+
+- WebView2Loader 1.0.2277.86:
+
+  - [Windows32](https://sourceforge.net/projects/liblcl/files/v3.0.0/WebView2Loader_32_1.0.2277.86.zip/download)
+  - [Windows64](https://sourceforge.net/projects/liblcl/files/v3.0.0/WebView2Loader_64_1.0.2277.86.zip/download)
+
+##### MacOS LCL + Webkit2
+
+  - [MacOSx64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_macosx64.zip/download)
+  - [MacOSARM64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_macosarm64.zip/download)
+
+##### Linux LCL + Webkit2 GTK3
+  - [Linux64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linux64.zip/download)
+  - [LinuxARM64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linuxarm64.zip/download)
+ 
+  `GTK >= 3.24.24 and Glib2.0 >= 2.66`
+
+##### Linux LCL + Webkit1 GTK2
+ - To be added
 
 ### 相关项目
 * [Go LCL](https://github.com/energye/lcl)
