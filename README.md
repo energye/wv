@@ -20,7 +20,7 @@
 
 ### 项目简介
 
-> [Go Webview2(wv)](https://github.com/energye/wv) 
+> [Go Webview](https://github.com/energye/wv) 
 > 是 Go 基于
 > [LCL](https://www.lazarus-ide.org/)、
 > [Windows-Webview2](https://learn.microsoft.com/en-us/microsoft-edge/webview2)
