@@ -67,7 +67,9 @@
 #### 基本需求
 
 > - Golang >= 1.20
-> - 动态链接库 `WebView2Loader.dll` `liblcl.dll`
+> - 动态链接库 
+>> - Windows: `WebView2Loader.dll` `liblcl`
+>> - MacOS Linux: `liblcl
 
 #### [示例](https://github.com/energye/examples/tree/main/wv)
 
