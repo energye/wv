@@ -1,5 +1,5 @@
 <p align="center">
-   <span style="color: #2ba9f1;font-size: 24px;font-weight: bold;">Go Webview2</span>
+   <span style="color: #2ba9f1;font-size: 24px;font-weight: bold;">Go Webview</span>
 </p>
 
 <p align="center" style="font-size: 24px;">
