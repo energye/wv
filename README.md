@@ -98,12 +98,16 @@
   - [MacOSARM64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_macosarm64.zip/download)
 
 ##### Linux LCL + Webkit2 GTK3
+Build Debian 11
+  - [Linux32 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linux64.zip/download)
   - [Linux64 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linux64.zip/download)
+  - [LinuxARM32 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linuxarm32.zip/download)
   - [LinuxARM64 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linuxarm64.zip/download)
  
   `GTK >= 3.24.24 and Glib2.0 >= 2.66`
 
 ##### Linux LCL + Webkit1 GTK2
+Build Ubuntu 11
  - To be added
 
 ### 相关项目
