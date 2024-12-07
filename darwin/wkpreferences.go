@@ -70,6 +70,7 @@ type IWKPreferences interface {
 	// SetValueForKey
 	//  Writes a custom value to a field
 	SetValueForKey(value bool, key string) // procedure
+	EnableDevtools()
 }
 
 // TWKPreferences Root Object
