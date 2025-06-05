@@ -106,8 +106,10 @@ Build Debian 11
  
   `GTK >= 3.24.24 and Glib2.0 >= 2.66`
 
-Webkit2 Install:
-`sudo apt install libwebkit2gtk-4.0-dev`
+Webkit2
+
+- install: `sudo apt install libwebkit2gtk-4.0-dev`
+- verify: `pkg-config --libs webkit2gtk-4.0`
 
 
 ##### Linux LCL + Webkit1 GTK2
