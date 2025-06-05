@@ -106,6 +106,10 @@ Build Debian 11
  
   `GTK >= 3.24.24 and Glib2.0 >= 2.66`
 
+Webkit2 Install:
+`sudo apt install libwebkit2gtk-4.0-dev`
+
+
 ##### Linux LCL + Webkit1 GTK2
 Build Ubuntu 18.04
  - To be added
