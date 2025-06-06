@@ -111,6 +111,10 @@ Webkit2
 - install: `sudo apt install libwebkit2gtk-4.0-dev`
 - verify: `pkg-config --libs webkit2gtk-4.0`
 
+音视频
+
+- `sudo apt-get install gstreamer1.0-libav gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-fdk`
+
 
 ##### Linux LCL + Webkit1 GTK2
 Build Ubuntu 18.04
