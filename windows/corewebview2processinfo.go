@@ -6,101 +6,116 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ProcessInfo Parent: IObject
-//
-//	Provides a set of properties for a process in the ICoreWebView2Environment.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo">See the ICoreWebView2ProcessInfo article.</a>
+// ICoreWebView2ProcessInfo Parent: lcl.IObject
 type ICoreWebView2ProcessInfo interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2ProcessInfo // property
-	// SetBaseIntf Set BaseIntf
-	SetBaseIntf(AValue ICoreWebView2ProcessInfo) // property
+	BaseIntf() ICoreWebView2ProcessInfo         // property BaseIntf Getter
+	SetBaseIntf(value ICoreWebView2ProcessInfo) // property BaseIntf Setter
 	// Kind
 	//  The kind of the process.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo#get_kind">See the ICoreWebView2ProcessInfo article.</a>
-	Kind() TWVProcessKind // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo#get_kind">See the ICoreWebView2ProcessInfo article.</see>
+	Kind() wvTypes.TWVProcessKind // property Kind Getter
 	// KindStr
 	//  The kind of the process in string format.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo#get_kind">See the ICoreWebView2ProcessInfo article.</a>
-	KindStr() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo#get_kind">See the ICoreWebView2ProcessInfo article.</see>
+	KindStr() string // property KindStr Getter
 	// ProcessId
 	//  The process id of the process.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo#get_processid">See the ICoreWebView2ProcessInfo article.</a>
-	ProcessId() int32 // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo#get_processid">See the ICoreWebView2ProcessInfo article.</see>
+	ProcessId() int32 // property ProcessId Getter
 }
 
-// TCoreWebView2ProcessInfo Parent: TObject
-//
-//	Provides a set of properties for a process in the ICoreWebView2Environment.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processinfo">See the ICoreWebView2ProcessInfo article.</a>
 type TCoreWebView2ProcessInfo struct {
-	TObject
-}
-
-func NewCoreWebView2ProcessInfo(aBaseIntf ICoreWebView2ProcessInfo) ICoreWebView2ProcessInfo {
-	r1 := coreWebView2ProcessInfoImportAPI().SysCallN(1, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2ProcessInfo(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2ProcessInfo) Initialized() bool {
-	r1 := coreWebView2ProcessInfoImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ProcessInfoAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ProcessInfo) BaseIntf() ICoreWebView2ProcessInfo {
-	var resultCoreWebView2ProcessInfo uintptr
-	coreWebView2ProcessInfoImportAPI().SysCallN(0, 0, m.Instance(), 0, uintptr(unsafePointer(&resultCoreWebView2ProcessInfo)))
-	return AsCoreWebView2ProcessInfo(resultCoreWebView2ProcessInfo)
+func (m *TCoreWebView2ProcessInfo) BaseIntf() (result ICoreWebView2ProcessInfo) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ProcessInfoAPI().SysCallN(2, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ProcessInfo(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ProcessInfo) SetBaseIntf(AValue ICoreWebView2ProcessInfo) {
-	coreWebView2ProcessInfoImportAPI().SysCallN(0, 1, m.Instance(), GetObjectUintptr(AValue), GetObjectUintptr(AValue))
+func (m *TCoreWebView2ProcessInfo) SetBaseIntf(value ICoreWebView2ProcessInfo) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ProcessInfoAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2ProcessInfo) Kind() TWVProcessKind {
-	r1 := coreWebView2ProcessInfoImportAPI().SysCallN(3, m.Instance())
-	return TWVProcessKind(r1)
+func (m *TCoreWebView2ProcessInfo) Kind() wvTypes.TWVProcessKind {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ProcessInfoAPI().SysCallN(3, m.Instance())
+	return wvTypes.TWVProcessKind(r)
 }
 
 func (m *TCoreWebView2ProcessInfo) KindStr() string {
-	r1 := coreWebView2ProcessInfoImportAPI().SysCallN(4, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ProcessInfoAPI().SysCallN(4, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2ProcessInfo) ProcessId() int32 {
-	r1 := coreWebView2ProcessInfoImportAPI().SysCallN(5, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ProcessInfoAPI().SysCallN(5, m.Instance())
+	return int32(r)
+}
+
+// NewCoreWebView2ProcessInfo class constructor
+func NewCoreWebView2ProcessInfo(baseIntf ICoreWebView2ProcessInfo) ICoreWebView2ProcessInfo {
+	r := coreWebView2ProcessInfoAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2ProcessInfo(r)
 }
 
 var (
-	coreWebView2ProcessInfoImport       *imports.Imports = nil
-	coreWebView2ProcessInfoImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2ProcessInfo_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2ProcessInfo_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2ProcessInfo_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2ProcessInfo_Kind", 0),
-		/*4*/ imports.NewTable("CoreWebView2ProcessInfo_KindStr", 0),
-		/*5*/ imports.NewTable("CoreWebView2ProcessInfo_ProcessId", 0),
-	}
+	coreWebView2ProcessInfoOnce   base.Once
+	coreWebView2ProcessInfoImport *imports.Imports = nil
 )
 
-func coreWebView2ProcessInfoImportAPI() *imports.Imports {
-	if coreWebView2ProcessInfoImport == nil {
-		coreWebView2ProcessInfoImport = NewDefaultImports()
-		coreWebView2ProcessInfoImport.SetImportTable(coreWebView2ProcessInfoImportTables)
-		coreWebView2ProcessInfoImportTables = nil
-	}
+func coreWebView2ProcessInfoAPI() *imports.Imports {
+	coreWebView2ProcessInfoOnce.Do(func() {
+		coreWebView2ProcessInfoImport = api.NewDefaultImports()
+		coreWebView2ProcessInfoImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2ProcessInfo_Create", 0), // constructor NewCoreWebView2ProcessInfo
+			/* 1 */ imports.NewTable("TCoreWebView2ProcessInfo_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2ProcessInfo_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2ProcessInfo_Kind", 0), // property Kind
+			/* 4 */ imports.NewTable("TCoreWebView2ProcessInfo_KindStr", 0), // property KindStr
+			/* 5 */ imports.NewTable("TCoreWebView2ProcessInfo_ProcessId", 0), // property ProcessId
+		}
+	})
 	return coreWebView2ProcessInfoImport
 }

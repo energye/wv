@@ -6,301 +6,303 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
-// AsNSHTTPURLResponse Convert a pointer object to an existing class object
-func AsNSHTTPURLResponse(obj interface{}) INSHTTPURLResponse {
-	instance := GetInstance(obj)
+import "github.com/energye/lcl/base"
+
+// AsWkNSURL Convert a pointer object to an existing class object
+func AsWkNSURL(obj any) IWkNSURL {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSHTTPURLResponse := new(TNSHTTPURLResponse)
-	SetObjectInstance(nSHTTPURLResponse, instance)
-	return nSHTTPURLResponse
+	result := new(TWkNSURL)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsNSMutableURLRequest Convert a pointer object to an existing class object
-func AsNSMutableURLRequest(obj interface{}) INSMutableURLRequest {
-	instance := GetInstance(obj)
+// AsWkNSURLAuthenticationChallenge Convert a pointer object to an existing class object
+func AsWkNSURLAuthenticationChallenge(obj any) IWkNSURLAuthenticationChallenge {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSMutableURLRequest := new(TNSMutableURLRequest)
-	SetObjectInstance(nSMutableURLRequest, instance)
-	return nSMutableURLRequest
+	result := new(TWkNSURLAuthenticationChallenge)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsNSProgress Convert a pointer object to an existing class object
-func AsNSProgress(obj interface{}) INSProgress {
-	instance := GetInstance(obj)
+// AsWkNSURLCredential Convert a pointer object to an existing class object
+func AsWkNSURLCredential(obj any) IWkNSURLCredential {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSProgress := new(TNSProgress)
-	SetObjectInstance(nSProgress, instance)
-	return nSProgress
+	result := new(TWkNSURLCredential)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsNSURL Convert a pointer object to an existing class object
-func AsNSURL(obj interface{}) INSURL {
-	instance := GetInstance(obj)
+// AsWkNSURLRequest Convert a pointer object to an existing class object
+func AsWkNSURLRequest(obj any) IWkNSURLRequest {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSURL := new(TNSURL)
-	SetObjectInstance(nSURL, instance)
-	return nSURL
+	result := new(TWkNSURLRequest)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsNSURLAuthenticationChallenge Convert a pointer object to an existing class object
-func AsNSURLAuthenticationChallenge(obj interface{}) INSURLAuthenticationChallenge {
-	instance := GetInstance(obj)
+// AsWkNSMutableURLRequest Convert a pointer object to an existing class object
+func AsWkNSMutableURLRequest(obj any) IWkNSMutableURLRequest {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSURLAuthenticationChallenge := new(TNSURLAuthenticationChallenge)
-	SetObjectInstance(nSURLAuthenticationChallenge, instance)
-	return nSURLAuthenticationChallenge
+	result := new(TWkNSMutableURLRequest)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsNSURLCredential Convert a pointer object to an existing class object
-func AsNSURLCredential(obj interface{}) INSURLCredential {
-	instance := GetInstance(obj)
+// AsWkNSURLResponse Convert a pointer object to an existing class object
+func AsWkNSURLResponse(obj any) IWkNSURLResponse {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSURLCredential := new(TNSURLCredential)
-	SetObjectInstance(nSURLCredential, instance)
-	return nSURLCredential
+	result := new(TWkNSURLResponse)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsNSURLRequest Convert a pointer object to an existing class object
-func AsNSURLRequest(obj interface{}) INSURLRequest {
-	instance := GetInstance(obj)
+// AsWkNSHTTPURLResponse Convert a pointer object to an existing class object
+func AsWkNSHTTPURLResponse(obj any) IWkNSHTTPURLResponse {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSURLRequest := new(TNSURLRequest)
-	SetObjectInstance(nSURLRequest, instance)
-	return nSURLRequest
+	result := new(TWkNSHTTPURLResponse)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsNSURLResponse Convert a pointer object to an existing class object
-func AsNSURLResponse(obj interface{}) INSURLResponse {
-	instance := GetInstance(obj)
+// AsWkDownload Convert a pointer object to an existing class object
+func AsWkDownload(obj any) IWkDownload {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	nSURLResponse := new(TNSURLResponse)
-	SetObjectInstance(nSURLResponse, instance)
-	return nSURLResponse
+	result := new(TWkDownload)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKDownload Convert a pointer object to an existing class object
-func AsWKDownload(obj interface{}) IWKDownload {
-	instance := GetInstance(obj)
+// AsWkDownloadDelegate Convert a pointer object to an existing class object
+func AsWkDownloadDelegate(obj any) IWkDownloadDelegate {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKDownload := new(TWKDownload)
-	SetObjectInstance(wKDownload, instance)
-	return wKDownload
+	result := new(TWkDownloadDelegate)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKDownloadDelegate Convert a pointer object to an existing class object
-func AsWKDownloadDelegate(obj interface{}) IWKDownloadDelegate {
-	instance := GetInstance(obj)
+// AsWkFrameInfo Convert a pointer object to an existing class object
+func AsWkFrameInfo(obj any) IWkFrameInfo {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKDownloadDelegate := new(TWKDownloadDelegate)
-	SetObjectInstance(wKDownloadDelegate, instance)
-	return wKDownloadDelegate
+	result := new(TWkFrameInfo)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKFrameInfo Convert a pointer object to an existing class object
-func AsWKFrameInfo(obj interface{}) IWKFrameInfo {
-	instance := GetInstance(obj)
+// AsWkNavigation Convert a pointer object to an existing class object
+func AsWkNavigation(obj any) IWkNavigation {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKFrameInfo := new(TWKFrameInfo)
-	SetObjectInstance(wKFrameInfo, instance)
-	return wKFrameInfo
+	result := new(TWkNavigation)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKNavigation Convert a pointer object to an existing class object
-func AsWKNavigation(obj interface{}) IWKNavigation {
-	instance := GetInstance(obj)
+// AsWkNavigationAction Convert a pointer object to an existing class object
+func AsWkNavigationAction(obj any) IWkNavigationAction {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKNavigation := new(TWKNavigation)
-	SetObjectInstance(wKNavigation, instance)
-	return wKNavigation
+	result := new(TWkNavigationAction)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKNavigationAction Convert a pointer object to an existing class object
-func AsWKNavigationAction(obj interface{}) IWKNavigationAction {
-	instance := GetInstance(obj)
+// AsWkNavigationDelegate Convert a pointer object to an existing class object
+func AsWkNavigationDelegate(obj any) IWkNavigationDelegate {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKNavigationAction := new(TWKNavigationAction)
-	SetObjectInstance(wKNavigationAction, instance)
-	return wKNavigationAction
+	result := new(TWkNavigationDelegate)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKNavigationDelegate Convert a pointer object to an existing class object
-func AsWKNavigationDelegate(obj interface{}) IWKNavigationDelegate {
-	instance := GetInstance(obj)
+// AsWkNavigationResponse Convert a pointer object to an existing class object
+func AsWkNavigationResponse(obj any) IWkNavigationResponse {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKNavigationDelegate := new(TWKNavigationDelegate)
-	SetObjectInstance(wKNavigationDelegate, instance)
-	return wKNavigationDelegate
+	result := new(TWkNavigationResponse)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKNavigationResponse Convert a pointer object to an existing class object
-func AsWKNavigationResponse(obj interface{}) IWKNavigationResponse {
-	instance := GetInstance(obj)
+// AsWkPreferences Convert a pointer object to an existing class object
+func AsWkPreferences(obj any) IWkPreferences {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKNavigationResponse := new(TWKNavigationResponse)
-	SetObjectInstance(wKNavigationResponse, instance)
-	return wKNavigationResponse
+	result := new(TWkPreferences)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKPreferences Convert a pointer object to an existing class object
-func AsWKPreferences(obj interface{}) IWKPreferences {
-	instance := GetInstance(obj)
+// AsWkScriptMessageHandler Convert a pointer object to an existing class object
+func AsWkScriptMessageHandler(obj any) IWkScriptMessageHandler {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKPreferences := new(TWKPreferences)
-	SetObjectInstance(wKPreferences, instance)
-	return wKPreferences
+	result := new(TWkScriptMessageHandler)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKScriptMessageHandler Convert a pointer object to an existing class object
-func AsWKScriptMessageHandler(obj interface{}) IWKScriptMessageHandler {
-	instance := GetInstance(obj)
+// AsWkUIDelegate Convert a pointer object to an existing class object
+func AsWkUIDelegate(obj any) IWkUIDelegate {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKScriptMessageHandler := new(TWKScriptMessageHandler)
-	SetObjectInstance(wKScriptMessageHandler, instance)
-	return wKScriptMessageHandler
+	result := new(TWkUIDelegate)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKUIDelegate Convert a pointer object to an existing class object
-func AsWKUIDelegate(obj interface{}) IWKUIDelegate {
-	instance := GetInstance(obj)
+// AsWkURLSchemeHandler Convert a pointer object to an existing class object
+func AsWkURLSchemeHandler(obj any) IWkURLSchemeHandler {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKUIDelegate := new(TWKUIDelegate)
-	SetObjectInstance(wKUIDelegate, instance)
-	return wKUIDelegate
+	result := new(TWkURLSchemeHandler)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKURLSchemeHandler Convert a pointer object to an existing class object
-func AsWKURLSchemeHandler(obj interface{}) IWKURLSchemeHandler {
-	instance := GetInstance(obj)
+// AsWkURLSchemeTask Convert a pointer object to an existing class object
+func AsWkURLSchemeTask(obj any) IWkURLSchemeTask {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKURLSchemeHandler := new(TWKURLSchemeHandler)
-	SetObjectInstance(wKURLSchemeHandler, instance)
-	return wKURLSchemeHandler
+	result := new(TWkURLSchemeTask)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKURLSchemeTask Convert a pointer object to an existing class object
-func AsWKURLSchemeTask(obj interface{}) IWKURLSchemeTask {
-	instance := GetInstance(obj)
+// AsWkUserContentController Convert a pointer object to an existing class object
+func AsWkUserContentController(obj any) IWkUserContentController {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKURLSchemeTask := new(TWKURLSchemeTask)
-	SetObjectInstance(wKURLSchemeTask, instance)
-	return wKURLSchemeTask
+	result := new(TWkUserContentController)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKUserContentController Convert a pointer object to an existing class object
-func AsWKUserContentController(obj interface{}) IWKUserContentController {
-	instance := GetInstance(obj)
+// AsWkUserScript Convert a pointer object to an existing class object
+func AsWkUserScript(obj any) IWkUserScript {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKUserContentController := new(TWKUserContentController)
-	SetObjectInstance(wKUserContentController, instance)
-	return wKUserContentController
+	result := new(TWkUserScript)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
-// AsWKUserScript Convert a pointer object to an existing class object
-func AsWKUserScript(obj interface{}) IWKUserScript {
-	instance := GetInstance(obj)
+// AsWkWebpagePreferences Convert a pointer object to an existing class object
+func AsWkWebpagePreferences(obj any) IWkWebpagePreferences {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wKUserScript := new(TWKUserScript)
-	SetObjectInstance(wKUserScript, instance)
-	return wKUserScript
-}
-
-// AsWKWebViewConfiguration Convert a pointer object to an existing class object
-func AsWKWebViewConfiguration(obj interface{}) IWKWebViewConfiguration {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wKWebViewConfiguration := new(TWKWebViewConfiguration)
-	SetObjectInstance(wKWebViewConfiguration, instance)
-	return wKWebViewConfiguration
-}
-
-// AsWKWebpagePreferences Convert a pointer object to an existing class object
-func AsWKWebpagePreferences(obj interface{}) IWKWebpagePreferences {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wKWebpagePreferences := new(TWKWebpagePreferences)
-	SetObjectInstance(wKWebpagePreferences, instance)
-	return wKWebpagePreferences
-}
-
-// AsWKWindowFeatures Convert a pointer object to an existing class object
-func AsWKWindowFeatures(obj interface{}) IWKWindowFeatures {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wKWindowFeatures := new(TWKWindowFeatures)
-	SetObjectInstance(wKWindowFeatures, instance)
-	return wKWindowFeatures
+	result := new(TWkWebpagePreferences)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkWebview Convert a pointer object to an existing class object
-func AsWkWebview(obj interface{}) IWkWebview {
-	instance := GetInstance(obj)
+func AsWkWebview(obj any) IWkWebview {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkWebview := new(TWkWebview)
-	SetObjectInstance(wkWebview, instance)
-	return wkWebview
+	result := new(TWkWebview)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkWebViewConfiguration Convert a pointer object to an existing class object
+func AsWkWebViewConfiguration(obj any) IWkWebViewConfiguration {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkWebViewConfiguration)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkWebviewParent Convert a pointer object to an existing class object
-func AsWkWebviewParent(obj interface{}) IWkWebviewParent {
-	instance := GetInstance(obj)
+func AsWkWebviewParent(obj any) IWkWebviewParent {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkWebviewParent := new(TWkWebviewParent)
-	SetObjectInstance(wkWebviewParent, instance)
-	return wkWebviewParent
+	result := new(TWkWebviewParent)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkWindowFeatures Convert a pointer object to an existing class object
+func AsWkWindowFeatures(obj any) IWkWindowFeatures {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkWindowFeatures)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkNSProgress Convert a pointer object to an existing class object
+func AsWkNSProgress(obj any) IWkNSProgress {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkNSProgress)
+	base.SetObjectInstance(result, instance)
+	return result
 }

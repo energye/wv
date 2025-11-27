@@ -6,25 +6,26 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKPreferences Root Interface
-//
-//	An object that encapsulates the standard behaviors to apply to websites.
-//	https://developer.apple.com/documentation/webkit/wkpreferences?language=objc
-type IWKPreferences interface {
-	IObject
+// IWkPreferences Parent: lcl.IObject
+type IWkPreferences interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKPreferences // function
+	Data() wvTypes.WKPreferences // function
 	// MinimumFontSize
 	//  Returns The minimum font size, in points.
-	MinimumFontSize() (resultFloat64 float64) // function
+	MinimumFontSize() float64 // function
 	// JavaScriptEnabled
 	//  Returns A Boolean value that indicates whether JavaScript is enabled.
 	JavaScriptEnabled() bool // function
@@ -70,140 +71,186 @@ type IWKPreferences interface {
 	// SetValueForKey
 	//  Writes a custom value to a field
 	SetValueForKey(value bool, key string) // procedure
-	EnableDevtools()
 }
 
-// TWKPreferences Root Object
-//
-//	An object that encapsulates the standard behaviors to apply to websites.
-//	https://developer.apple.com/documentation/webkit/wkpreferences?language=objc
-type TWKPreferences struct {
-	TObject
+type TWkPreferences struct {
+	lcl.TObject
 }
 
-func NewWKPreferences(aData WKPreferences) IWKPreferences {
-	r1 := wKPreferencesImportAPI().SysCallN(0, uintptr(aData))
-	return AsWKPreferences(r1)
+func (m *TWkPreferences) Data() wvTypes.WKPreferences {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkPreferencesAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKPreferences(r)
 }
 
-// WKPreferencesRef -> IWKPreferences
-var WKPreferencesRef wKPreferences
+func (m *TWkPreferences) MinimumFontSize() (result float64) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&result)))
+	return
+}
 
-// wKPreferences TWKPreferences Ref
-type wKPreferences uintptr
+func (m *TWkPreferences) JavaScriptEnabled() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkPreferencesAPI().SysCallN(4, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TWkPreferences) JavaScriptCanOpenWindowsAutomatically() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkPreferencesAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TWkPreferences) JavaEnabled() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkPreferencesAPI().SysCallN(6, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TWkPreferences) PlugInsEnabled() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkPreferencesAPI().SysCallN(7, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TWkPreferences) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(8, m.Instance())
+}
+
+func (m *TWkPreferences) SetMinimumFontSize(newValue float64) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&newValue)))
+}
+
+func (m *TWkPreferences) SetJavaScriptEnabled(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(10, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetJavaScriptCanOpenWindowsAutomatically(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(11, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetJavaEnabled(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(12, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetPlugInsEnabled(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(13, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetTabFocusesLinks(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(14, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetFraudulentWebsiteWarningEnabled(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(15, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetTextInteractionEnabled(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(16, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetElementFullscreenEnabled(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(17, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkPreferences) SetValueForKey(value bool, key string) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(18, m.Instance(), api.PasBool(value), api.PasStr(key))
+}
+
+// Preferences  is static instance
+var Preferences _PreferencesClass
+
+// _PreferencesClass is class type defined by TWkPreferences
+type _PreferencesClass uintptr
 
 // New
 //
 //	Creates and returns an WKPreferences object.
-func (m *wKPreferences) New() IWKPreferences {
-	r1 := wKPreferencesImportAPI().SysCallN(6)
-	return AsWKPreferences(r1)
+func (_PreferencesClass) New() IWkPreferences {
+	r := wkPreferencesAPI().SysCallN(2)
+	return AsWkPreferences(r)
 }
 
-func (m *TWKPreferences) Data() WKPreferences {
-	r1 := wKPreferencesImportAPI().SysCallN(1, m.Instance())
-	return WKPreferences(r1)
-}
-
-func (m *TWKPreferences) MinimumFontSize() (resultFloat64 float64) {
-	wKPreferencesImportAPI().SysCallN(5, m.Instance(), uintptr(unsafePointer(&resultFloat64)))
-	return
-}
-
-func (m *TWKPreferences) JavaScriptEnabled() bool {
-	r1 := wKPreferencesImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKPreferences) JavaScriptCanOpenWindowsAutomatically() bool {
-	r1 := wKPreferencesImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKPreferences) JavaEnabled() bool {
-	r1 := wKPreferencesImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKPreferences) PlugInsEnabled() bool {
-	r1 := wKPreferencesImportAPI().SysCallN(7, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKPreferences) Release() {
-	wKPreferencesImportAPI().SysCallN(8, m.Instance())
-}
-
-func (m *TWKPreferences) SetMinimumFontSize(newValue float64) {
-	wKPreferencesImportAPI().SysCallN(14, m.Instance(), uintptr(unsafePointer(&newValue)))
-}
-
-func (m *TWKPreferences) SetJavaScriptEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(13, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetJavaScriptCanOpenWindowsAutomatically(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(12, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetJavaEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(11, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetPlugInsEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(15, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetTabFocusesLinks(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(16, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetFraudulentWebsiteWarningEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(10, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetTextInteractionEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(17, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetElementFullscreenEnabled(newValue bool) {
-	wKPreferencesImportAPI().SysCallN(9, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKPreferences) SetValueForKey(value bool, key string) {
-	wKPreferencesImportAPI().SysCallN(18, m.Instance(), PascalBool(value), PascalStr(key))
+// NewPreferences class constructor
+func NewPreferences(data wvTypes.WKPreferences) IWkPreferences {
+	r := wkPreferencesAPI().SysCallN(0, uintptr(data))
+	return AsWkPreferences(r)
 }
 
 var (
-	wKPreferencesImport       *imports.Imports = nil
-	wKPreferencesImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKPreferences_Create", 0),
-		/*1*/ imports.NewTable("WKPreferences_Data", 0),
-		/*2*/ imports.NewTable("WKPreferences_JavaEnabled", 0),
-		/*3*/ imports.NewTable("WKPreferences_JavaScriptCanOpenWindowsAutomatically", 0),
-		/*4*/ imports.NewTable("WKPreferences_JavaScriptEnabled", 0),
-		/*5*/ imports.NewTable("WKPreferences_MinimumFontSize", 0),
-		/*6*/ imports.NewTable("WKPreferences_New", 0),
-		/*7*/ imports.NewTable("WKPreferences_PlugInsEnabled", 0),
-		/*8*/ imports.NewTable("WKPreferences_Release", 0),
-		/*9*/ imports.NewTable("WKPreferences_SetElementFullscreenEnabled", 0),
-		/*10*/ imports.NewTable("WKPreferences_SetFraudulentWebsiteWarningEnabled", 0),
-		/*11*/ imports.NewTable("WKPreferences_SetJavaEnabled", 0),
-		/*12*/ imports.NewTable("WKPreferences_SetJavaScriptCanOpenWindowsAutomatically", 0),
-		/*13*/ imports.NewTable("WKPreferences_SetJavaScriptEnabled", 0),
-		/*14*/ imports.NewTable("WKPreferences_SetMinimumFontSize", 0),
-		/*15*/ imports.NewTable("WKPreferences_SetPlugInsEnabled", 0),
-		/*16*/ imports.NewTable("WKPreferences_SetTabFocusesLinks", 0),
-		/*17*/ imports.NewTable("WKPreferences_SetTextInteractionEnabled", 0),
-		/*18*/ imports.NewTable("WKPreferences_SetValueForKey", 0),
-	}
+	wkPreferencesOnce   base.Once
+	wkPreferencesImport *imports.Imports = nil
 )
 
-func wKPreferencesImportAPI() *imports.Imports {
-	if wKPreferencesImport == nil {
-		wKPreferencesImport = NewDefaultImports()
-		wKPreferencesImport.SetImportTable(wKPreferencesImportTables)
-		wKPreferencesImportTables = nil
-	}
-	return wKPreferencesImport
+func wkPreferencesAPI() *imports.Imports {
+	wkPreferencesOnce.Do(func() {
+		wkPreferencesImport = api.NewDefaultImports()
+		wkPreferencesImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkPreferences_Create", 0), // constructor NewPreferences
+			/* 1 */ imports.NewTable("TWkPreferences_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkPreferences_New", 0), // static function New
+			/* 3 */ imports.NewTable("TWkPreferences_MinimumFontSize", 0), // function MinimumFontSize
+			/* 4 */ imports.NewTable("TWkPreferences_JavaScriptEnabled", 0), // function JavaScriptEnabled
+			/* 5 */ imports.NewTable("TWkPreferences_JavaScriptCanOpenWindowsAutomatically", 0), // function JavaScriptCanOpenWindowsAutomatically
+			/* 6 */ imports.NewTable("TWkPreferences_JavaEnabled", 0), // function JavaEnabled
+			/* 7 */ imports.NewTable("TWkPreferences_PlugInsEnabled", 0), // function PlugInsEnabled
+			/* 8 */ imports.NewTable("TWkPreferences_Release", 0), // procedure Release
+			/* 9 */ imports.NewTable("TWkPreferences_SetMinimumFontSize", 0), // procedure SetMinimumFontSize
+			/* 10 */ imports.NewTable("TWkPreferences_SetJavaScriptEnabled", 0), // procedure SetJavaScriptEnabled
+			/* 11 */ imports.NewTable("TWkPreferences_SetJavaScriptCanOpenWindowsAutomatically", 0), // procedure SetJavaScriptCanOpenWindowsAutomatically
+			/* 12 */ imports.NewTable("TWkPreferences_SetJavaEnabled", 0), // procedure SetJavaEnabled
+			/* 13 */ imports.NewTable("TWkPreferences_SetPlugInsEnabled", 0), // procedure SetPlugInsEnabled
+			/* 14 */ imports.NewTable("TWkPreferences_SetTabFocusesLinks", 0), // procedure SetTabFocusesLinks
+			/* 15 */ imports.NewTable("TWkPreferences_SetFraudulentWebsiteWarningEnabled", 0), // procedure SetFraudulentWebsiteWarningEnabled
+			/* 16 */ imports.NewTable("TWkPreferences_SetTextInteractionEnabled", 0), // procedure SetTextInteractionEnabled
+			/* 17 */ imports.NewTable("TWkPreferences_SetElementFullscreenEnabled", 0), // procedure SetElementFullscreenEnabled
+			/* 18 */ imports.NewTable("TWkPreferences_SetValueForKey", 0), // procedure SetValueForKey
+		}
+	})
+	return wkPreferencesImport
 }

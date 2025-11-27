@@ -6,28 +6,29 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKWebViewConfiguration Root Interface
-//
-//	A collection of properties that you use to initialize a web view.
-//	https://developer.apple.com/documentation/webkit/wkwebviewconfiguration?language=objc
-type IWKWebViewConfiguration interface {
-	IObject
+// IWkWebViewConfiguration Parent: lcl.IObject
+type IWkWebViewConfiguration interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKWebViewConfiguration // function
+	Data() wvTypes.WKWebViewConfiguration // function
 	// Preferences
 	//  Returns The object that manages the preference-related settings for the web view.
-	Preferences() WKPreferences // function
+	Preferences() wvTypes.WKPreferences // function
 	// UserContentController
 	//  Returns The object that coordinates interactions between your app’s native code and the webpage’s scripts and other content.
-	UserContentController() WKUserContentController // function
+	UserContentController() wvTypes.WKUserContentController // function
 	// SuppressesIncrementalRendering
 	//  Returns A Boolean value that indicates whether the web view suppresses content rendering until the content is fully loaded into memory.
 	SuppressesIncrementalRendering() bool // function
@@ -39,10 +40,10 @@ type IWKWebViewConfiguration interface {
 	Release() // procedure
 	// SetPreferences
 	//  Sets The object that manages the preference-related settings for the web view.
-	SetPreferences(preferences WKPreferences) // procedure
+	SetPreferences(preferences wvTypes.WKPreferences) // procedure
 	// SetUserContentController
 	//  Sets The object that coordinates interactions between your app’s native code and the webpage’s scripts and other content.
-	SetUserContentController(userContentController WKUserContentController) // procedure
+	SetUserContentController(userContentController wvTypes.WKUserContentController) // procedure
 	// SetSuppressesIncrementalRendering
 	//  Sets A Boolean value that indicates whether the web view suppresses content rendering until the content is fully loaded into memory.
 	SetSuppressesIncrementalRendering(newValue bool) // procedure
@@ -51,109 +52,138 @@ type IWKWebViewConfiguration interface {
 	SetApplicationNameForUserAgent(newValue string) // procedure
 	// SetURLSchemeHandlerForURLScheme
 	//  Sets Registers an object to load resources associated with the specified URL scheme.
-	SetURLSchemeHandlerForURLScheme(urlSchemeHandler WKURLSchemeHandler, urlScheme string) // procedure
+	SetURLSchemeHandlerForURLScheme(urlSchemeHandler wvTypes.WKURLSchemeHandler, urlScheme string) // procedure
 }
 
-// TWKWebViewConfiguration Root Object
-//
-//	A collection of properties that you use to initialize a web view.
-//	https://developer.apple.com/documentation/webkit/wkwebviewconfiguration?language=objc
-type TWKWebViewConfiguration struct {
-	TObject
+type TWkWebViewConfiguration struct {
+	lcl.TObject
 }
 
-func NewWKWebViewConfiguration(aData WKWebViewConfiguration) IWKWebViewConfiguration {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(1, uintptr(aData))
-	return AsWKWebViewConfiguration(r1)
+func (m *TWkWebViewConfiguration) Data() wvTypes.WKWebViewConfiguration {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWebViewConfigurationAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKWebViewConfiguration(r)
 }
 
-// WKWebViewConfigurationRef -> IWKWebViewConfiguration
-var WKWebViewConfigurationRef wKWebViewConfiguration
+func (m *TWkWebViewConfiguration) Preferences() wvTypes.WKPreferences {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWebViewConfigurationAPI().SysCallN(3, m.Instance())
+	return wvTypes.WKPreferences(r)
+}
 
-// wKWebViewConfiguration TWKWebViewConfiguration Ref
-type wKWebViewConfiguration uintptr
+func (m *TWkWebViewConfiguration) UserContentController() wvTypes.WKUserContentController {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWebViewConfigurationAPI().SysCallN(4, m.Instance())
+	return wvTypes.WKUserContentController(r)
+}
+
+func (m *TWkWebViewConfiguration) SuppressesIncrementalRendering() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWebViewConfigurationAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TWkWebViewConfiguration) ApplicationNameForUserAgent() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkWebViewConfigurationAPI().SysCallN(6, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWkWebViewConfiguration) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkWebViewConfigurationAPI().SysCallN(7, m.Instance())
+}
+
+func (m *TWkWebViewConfiguration) SetPreferences(preferences wvTypes.WKPreferences) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebViewConfigurationAPI().SysCallN(8, m.Instance(), uintptr(preferences))
+}
+
+func (m *TWkWebViewConfiguration) SetUserContentController(userContentController wvTypes.WKUserContentController) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebViewConfigurationAPI().SysCallN(9, m.Instance(), uintptr(userContentController))
+}
+
+func (m *TWkWebViewConfiguration) SetSuppressesIncrementalRendering(newValue bool) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebViewConfigurationAPI().SysCallN(10, m.Instance(), api.PasBool(newValue))
+}
+
+func (m *TWkWebViewConfiguration) SetApplicationNameForUserAgent(newValue string) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebViewConfigurationAPI().SysCallN(11, m.Instance(), api.PasStr(newValue))
+}
+
+func (m *TWkWebViewConfiguration) SetURLSchemeHandlerForURLScheme(urlSchemeHandler wvTypes.WKURLSchemeHandler, urlScheme string) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebViewConfigurationAPI().SysCallN(12, m.Instance(), uintptr(urlSchemeHandler), api.PasStr(urlScheme))
+}
+
+// WebViewConfiguration  is static instance
+var WebViewConfiguration _WebViewConfigurationClass
+
+// _WebViewConfigurationClass is class type defined by TWkWebViewConfiguration
+type _WebViewConfigurationClass uintptr
 
 // New
 //
 //	Creates and returns an NSMutableURLRequest object.
-func (m *wKWebViewConfiguration) New() IWKWebViewConfiguration {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(3)
-	return AsWKWebViewConfiguration(r1)
+func (_WebViewConfigurationClass) New() IWkWebViewConfiguration {
+	r := wkWebViewConfigurationAPI().SysCallN(2)
+	return AsWkWebViewConfiguration(r)
 }
 
-func (m *TWKWebViewConfiguration) Data() WKWebViewConfiguration {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(2, m.Instance())
-	return WKWebViewConfiguration(r1)
-}
-
-func (m *TWKWebViewConfiguration) Preferences() WKPreferences {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(4, m.Instance())
-	return WKPreferences(r1)
-}
-
-func (m *TWKWebViewConfiguration) UserContentController() WKUserContentController {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(12, m.Instance())
-	return WKUserContentController(r1)
-}
-
-func (m *TWKWebViewConfiguration) SuppressesIncrementalRendering() bool {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(11, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKWebViewConfiguration) ApplicationNameForUserAgent() string {
-	r1 := wKWebViewConfigurationImportAPI().SysCallN(0, m.Instance())
-	return GoStr(r1)
-}
-
-func (m *TWKWebViewConfiguration) Release() {
-	wKWebViewConfigurationImportAPI().SysCallN(5, m.Instance())
-}
-
-func (m *TWKWebViewConfiguration) SetPreferences(preferences WKPreferences) {
-	wKWebViewConfigurationImportAPI().SysCallN(7, m.Instance(), uintptr(preferences))
-}
-
-func (m *TWKWebViewConfiguration) SetUserContentController(userContentController WKUserContentController) {
-	wKWebViewConfigurationImportAPI().SysCallN(10, m.Instance(), uintptr(userContentController))
-}
-
-func (m *TWKWebViewConfiguration) SetSuppressesIncrementalRendering(newValue bool) {
-	wKWebViewConfigurationImportAPI().SysCallN(8, m.Instance(), PascalBool(newValue))
-}
-
-func (m *TWKWebViewConfiguration) SetApplicationNameForUserAgent(newValue string) {
-	wKWebViewConfigurationImportAPI().SysCallN(6, m.Instance(), PascalStr(newValue))
-}
-
-func (m *TWKWebViewConfiguration) SetURLSchemeHandlerForURLScheme(urlSchemeHandler WKURLSchemeHandler, urlScheme string) {
-	wKWebViewConfigurationImportAPI().SysCallN(9, m.Instance(), uintptr(urlSchemeHandler), PascalStr(urlScheme))
+// NewWebViewConfiguration class constructor
+func NewWebViewConfiguration(data wvTypes.WKWebViewConfiguration) IWkWebViewConfiguration {
+	r := wkWebViewConfigurationAPI().SysCallN(0, uintptr(data))
+	return AsWkWebViewConfiguration(r)
 }
 
 var (
-	wKWebViewConfigurationImport       *imports.Imports = nil
-	wKWebViewConfigurationImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKWebViewConfiguration_ApplicationNameForUserAgent", 0),
-		/*1*/ imports.NewTable("WKWebViewConfiguration_Create", 0),
-		/*2*/ imports.NewTable("WKWebViewConfiguration_Data", 0),
-		/*3*/ imports.NewTable("WKWebViewConfiguration_New", 0),
-		/*4*/ imports.NewTable("WKWebViewConfiguration_Preferences", 0),
-		/*5*/ imports.NewTable("WKWebViewConfiguration_Release", 0),
-		/*6*/ imports.NewTable("WKWebViewConfiguration_SetApplicationNameForUserAgent", 0),
-		/*7*/ imports.NewTable("WKWebViewConfiguration_SetPreferences", 0),
-		/*8*/ imports.NewTable("WKWebViewConfiguration_SetSuppressesIncrementalRendering", 0),
-		/*9*/ imports.NewTable("WKWebViewConfiguration_SetURLSchemeHandlerForURLScheme", 0),
-		/*10*/ imports.NewTable("WKWebViewConfiguration_SetUserContentController", 0),
-		/*11*/ imports.NewTable("WKWebViewConfiguration_SuppressesIncrementalRendering", 0),
-		/*12*/ imports.NewTable("WKWebViewConfiguration_UserContentController", 0),
-	}
+	wkWebViewConfigurationOnce   base.Once
+	wkWebViewConfigurationImport *imports.Imports = nil
 )
 
-func wKWebViewConfigurationImportAPI() *imports.Imports {
-	if wKWebViewConfigurationImport == nil {
-		wKWebViewConfigurationImport = NewDefaultImports()
-		wKWebViewConfigurationImport.SetImportTable(wKWebViewConfigurationImportTables)
-		wKWebViewConfigurationImportTables = nil
-	}
-	return wKWebViewConfigurationImport
+func wkWebViewConfigurationAPI() *imports.Imports {
+	wkWebViewConfigurationOnce.Do(func() {
+		wkWebViewConfigurationImport = api.NewDefaultImports()
+		wkWebViewConfigurationImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkWebViewConfiguration_Create", 0), // constructor NewWebViewConfiguration
+			/* 1 */ imports.NewTable("TWkWebViewConfiguration_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkWebViewConfiguration_New", 0), // static function New
+			/* 3 */ imports.NewTable("TWkWebViewConfiguration_Preferences", 0), // function Preferences
+			/* 4 */ imports.NewTable("TWkWebViewConfiguration_UserContentController", 0), // function UserContentController
+			/* 5 */ imports.NewTable("TWkWebViewConfiguration_SuppressesIncrementalRendering", 0), // function SuppressesIncrementalRendering
+			/* 6 */ imports.NewTable("TWkWebViewConfiguration_ApplicationNameForUserAgent", 0), // function ApplicationNameForUserAgent
+			/* 7 */ imports.NewTable("TWkWebViewConfiguration_Release", 0), // procedure Release
+			/* 8 */ imports.NewTable("TWkWebViewConfiguration_SetPreferences", 0), // procedure SetPreferences
+			/* 9 */ imports.NewTable("TWkWebViewConfiguration_SetUserContentController", 0), // procedure SetUserContentController
+			/* 10 */ imports.NewTable("TWkWebViewConfiguration_SetSuppressesIncrementalRendering", 0), // procedure SetSuppressesIncrementalRendering
+			/* 11 */ imports.NewTable("TWkWebViewConfiguration_SetApplicationNameForUserAgent", 0), // procedure SetApplicationNameForUserAgent
+			/* 12 */ imports.NewTable("TWkWebViewConfiguration_SetURLSchemeHandlerForURLScheme", 0), // procedure SetURLSchemeHandlerForURLScheme
+		}
+	})
+	return wkWebViewConfigurationImport
 }

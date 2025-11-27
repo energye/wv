@@ -6,150 +6,32 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
-	. "github.com/energye/lcl/types"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2 Parent: IObject
+// ICoreWebView2 Parent: lcl.IObject
 type ICoreWebView2 interface {
-	IObject
-	// Initialized
-	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
-	// BaseIntf
-	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2 // property
-	// Settings
-	//  The `ICoreWebView2Settings` object contains various modifiable settings
-	//  for the running WebView.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_settings">See the ICoreWebView2 article.</a>
-	Settings() ICoreWebView2Settings // property
-	// BrowserProcessID
-	//  The process ID of the browser process that hosts the WebView.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_browserprocessid">See the ICoreWebView2 article.</a>
-	BrowserProcessID() DWORD // property
-	// CanGoBack
-	//  `TRUE` if the WebView is able to navigate to a previous page in the
-	//  navigation history. If `CanGoBack` changes value, the `HistoryChanged`
-	//  event runs.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2##get_cangoback">See the ICoreWebView2 article.</a>
-	CanGoBack() bool // property
-	// CanGoForward
-	//  `TRUE` if the WebView is able to navigate to a next page in the
-	//  navigation history. If `CanGoForward` changes value, the
-	//  `HistoryChanged` event runs.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_cangoforward">See the ICoreWebView2 article.</a>
-	CanGoForward() bool // property
-	// ContainsFullScreenElement
-	//  Indicates if the WebView contains a fullscreen HTML element.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_containsfullscreenelement">See the ICoreWebView2 article.</a>
-	ContainsFullScreenElement() bool // property
-	// DocumentTitle
-	//  The title for the current top-level document. If the document has no
-	//  explicit title or is otherwise empty, a default that may or may not match
-	//  the URI of the document is used.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_documenttitle">See the ICoreWebView2 article.</a>
-	DocumentTitle() string // property
-	// Source
-	//  The URI of the current top level document. This value potentially
-	//  changes as a part of the `SourceChanged` event that runs for some cases
-	//  such as navigating to a different site or fragment navigations. It
-	//  remains the same for other types of navigations such as page refreshes
-	//  or `history.pushState` with the same URL as the current page.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_source">See the ICoreWebView2 article.</a>
-	Source() string // property
-	// CookieManager
-	//  Gets the cookie manager object associated with this ICoreWebView2.
-	//  See ICoreWebView2CookieManager.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_2#get_cookiemanager">See the ICoreWebView2_2 article.</a>
-	CookieManager() ICoreWebView2CookieManager // property
-	// Environment
-	//  Exposes the CoreWebView2Environment used to create this CoreWebView2.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_2#get_environment">See the ICoreWebView2_2 article.</a>
-	Environment() ICoreWebView2Environment // property
-	// IsSuspended
-	//  Whether WebView is suspended.
-	//  `TRUE` when WebView is suspended, from the time when TrySuspend has completed
-	//  successfully until WebView is resumed.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_3#get_issuspended">See the ICoreWebView2_3 article.</a>
-	IsSuspended() bool // property
-	// IsMuted
-	//  Indicates whether all audio output from this CoreWebView2 is muted or not.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_8#get_ismuted">See the ICoreWebView2_8 article.</a>
-	IsMuted() bool // property
-	// SetIsMuted Set IsMuted
-	SetIsMuted(AValue bool) // property
-	// IsDocumentPlayingAudio
-	//  Indicates whether any audio output from this CoreWebView2 is playing.
-	//  This property will be true if audio is playing even if IsMuted is true.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_8#get_isdocumentplayingaudio">See the ICoreWebView2_8 article.</a>
-	IsDocumentPlayingAudio() bool // property
-	// IsDefaultDownloadDialogOpen
-	//  `TRUE` if the default download dialog is currently open. The value of this
-	//  property changes only when the default download dialog is explicitly
-	//  opened or closed. Hiding the WebView implicitly hides the dialog, but does
-	//  not change the value of this property.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_9#get_isdefaultdownloaddialogopen">See the ICoreWebView2_9 article.</a>
-	IsDefaultDownloadDialogOpen() bool // property
-	// DefaultDownloadDialogCornerAlignment
-	//  Get the default download dialog corner alignment.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_9#get_defaultdownloaddialogcorneralignment">See the ICoreWebView2_9 article.</a>
-	DefaultDownloadDialogCornerAlignment() TWVDefaultDownloadDialogCornerAlignment // property
-	// SetDefaultDownloadDialogCornerAlignment Set DefaultDownloadDialogCornerAlignment
-	SetDefaultDownloadDialogCornerAlignment(AValue TWVDefaultDownloadDialogCornerAlignment) // property
-	// DefaultDownloadDialogMargin
-	//  Get the default download dialog margin.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_9#get_defaultdownloaddialogmargin">See the ICoreWebView2_9 article.</a>
-	DefaultDownloadDialogMargin() (resultPoint TPoint) // property
-	// SetDefaultDownloadDialogMargin Set DefaultDownloadDialogMargin
-	SetDefaultDownloadDialogMargin(AValue *TPoint) // property
-	// StatusBarText
-	//  The status message text.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_12#get_statusbartext">See the ICoreWebView2_12 article.</a>
-	StatusBarText() string // property
-	// Profile
-	//  The associated `ICoreWebView2Profile` object. If this CoreWebView2 was created with a
-	//  CoreWebView2ControllerOptions, the CoreWebView2Profile will match those specified options.
-	//  Otherwise if this CoreWebView2 was created without a CoreWebView2ControllerOptions, then
-	//  this will be the default CoreWebView2Profile for the corresponding CoreWebView2Environment.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_13#get_profile">See the ICoreWebView2_13 article.</a>
-	Profile() ICoreWebView2Profile // property
-	// FaviconURI
-	//  Get the current Uri of the favicon as a string.
-	//  If the value is null, then the return value is `E_POINTER`, otherwise it is `S_OK`.
-	//  If a page has no favicon then the value is an empty string.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_15#get_faviconuri">See the ICoreWebView2_15 article.</a>
-	FaviconURI() string // property
-	// MemoryUsageTargetLevel
-	//  `MemoryUsageTargetLevel` indicates desired memory consumption level of
-	//  WebView.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_19#get_memoryusagetargetlevel">See the ICoreWebView2_19 article.</a>
-	MemoryUsageTargetLevel() TWVMemoryUsageTargetLevel // property
-	// SetMemoryUsageTargetLevel Set MemoryUsageTargetLevel
-	SetMemoryUsageTargetLevel(AValue TWVMemoryUsageTargetLevel) // property
-	// FrameId
-	//  The unique identifier of the main frame. It's the same kind of ID as
-	//  with the `FrameId` in `ICoreWebView2Frame` and via `ICoreWebView2FrameInfo`.
-	//  Note that `FrameId` may not be valid if `ICoreWebView2` has not done
-	//  any navigation. It's safe to get this value during or after the first
-	//  `ContentLoading` event. Otherwise, it could return the invalid frame Id 0.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_20#get_frameid">See the ICoreWebView2_20 article.</a>
-	FrameId() uint32 // property
+	lcl.IObject
 	// AddAllBrowserEvents
 	//  Adds all the events of this class to an existing TWVBrowserBase instance.
 	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
-	AddAllBrowserEvents(aBrowserComponent IComponent) bool // function
+	AddAllBrowserEvents(browserComponent lcl.IComponent) bool // function
 	// SubscribeToDevToolsProtocolEvent
 	//  Subscribe to a DevTools protocol event. The TWVBrowserBase.OnDevToolsProtocolEventReceived
 	//  event will be triggered on each DevTools event.
 	//  <param name="aEventName">The DevTools protocol event name.</param>
 	//  <param name="aEventID">A custom event ID that will be passed as a parameter in the TWVBrowserBase event.</param>
 	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
-	SubscribeToDevToolsProtocolEvent(aEventName string, aEventID int32, aBrowserComponent IComponent) bool // function
+	SubscribeToDevToolsProtocolEvent(eventName string, eventID int32, browserComponent lcl.IComponent) bool // function
 	// CapturePreview
 	//  Capture an image of what WebView is displaying. Specify the format of
 	//  the image with the aImageFormat parameter. The resulting image binary
@@ -164,7 +46,7 @@ type ICoreWebView2 interface {
 	//  <param name="aImageFormat">The format of the image.</param>
 	//  <param name="aImageStream">The resulting image binary data is written to this stream.</param>
 	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
-	CapturePreview(aImageFormat TWVCapturePreviewImageFormat, aImageStream IStream, aBrowserComponent IComponent) bool // function
+	CapturePreview(imageFormat wvTypes.TWVCapturePreviewImageFormat, imageStream lcl.IStreamAdapter, browserComponent lcl.IComponent) bool // function
 	// ExecuteScript
 	//  Run JavaScript code from the JavaScript parameter in the current
 	//  top-level document rendered in the WebView.
@@ -184,7 +66,7 @@ type ICoreWebView2 interface {
 	//  <param name="JavaScript">The JavaScript code.</param>
 	//  <param name="aExecutionID">A custom event ID that will be passed as a parameter in the TWVBrowserBase event.</param>
 	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
-	ExecuteScript(JavaScript string, aExecutionID int32, aBrowserComponent IComponent) bool // function
+	ExecuteScript(javaScript string, executionID int32, browserComponent lcl.IComponent) bool // function
 	// GoBack
 	//  Navigates the WebView to the previous page in the navigation history.
 	GoBack() bool // function
@@ -193,19 +75,19 @@ type ICoreWebView2 interface {
 	GoForward() bool // function
 	// Navigate
 	//  Cause a navigation of the top-level document to run to the specified URI.
-	Navigate(aURI string) bool // function
+	Navigate(uRI string) bool // function
 	// NavigateToString
 	//  Initiates a navigation to aHTMLContent as source HTML of a new document.
-	//  The `aHTMLContent` parameter may not be larger than 2 MB(2 * 1024 * 1024 bytes) in total size.
+	//  The `aHTMLContent` parameter may not be larger than 2 MB (2 * 1024 * 1024 bytes) in total size.
 	//  The origin of the new page is `about:blank`.
-	NavigateToString(aHTMLContent string) bool // function
+	NavigateToString(hTMLContent string) bool // function
 	// NavigateWithWebResourceRequest
 	//  Navigates using a constructed ICoreWebView2WebResourceRequest object. This lets you
 	//  provide post data or additional request headers during navigation.
 	//  The headers in aRequest override headers added by WebView2 runtime except for Cookie headers.
 	//  Method can only be either "GET" or "POST". Provided post data will only
 	//  be sent only if the method is "POST" and the uri scheme is HTTP(S).
-	NavigateWithWebResourceRequest(aRequest ICoreWebView2WebResourceRequestRef) bool // function
+	NavigateWithWebResourceRequest(request ICoreWebView2WebResourceRequest) bool // function
 	// Reload
 	//  Reload the current page. This is similar to navigating to the URI of
 	//  current top level document including all navigation events firing and
@@ -240,7 +122,7 @@ type ICoreWebView2 interface {
 	//  All WebView APIs can still be accessed when a WebView is suspended. Some APIs like Navigate
 	//  will auto resume the WebView. To avoid unexpected auto resume, check `IsSuspended` property
 	//  before calling APIs that might change WebView state.
-	TrySuspend(aHandler ICoreWebView2TrySuspendCompletedHandler) bool // function
+	TrySuspend(handler ICoreWebView2TrySuspendCompletedHandler) bool // function
 	// Resume
 	//  Resumes the WebView so that it resumes activities on the web page.
 	//  This API can be called while the WebView2 controller is invisible.
@@ -250,26 +132,33 @@ type ICoreWebView2 interface {
 	// SetVirtualHostNameToFolderMapping
 	//  Sets a mapping between a virtual host name and a folder path to make available to web sites
 	//  via that host name.
+	//
 	//  After setting the mapping, documents loaded in the WebView can use HTTP or HTTPS URLs at
 	//  the specified host name specified by hostName to access files in the local folder specified
 	//  by folderPath.
+	//
 	//  This mapping applies to both top-level document and iframe navigations as well as subresource
 	//  references from a document. This also applies to web workers including dedicated/shared worker
 	//  and service worker, for loading either worker scripts or subresources
-	// (importScripts(), fetch(), XHR, etc.) issued from within a worker.
+	//  (importScripts(), fetch(), XHR, etc.) issued from within a worker.
 	//  For virtual host mapping to work with service worker, please keep the virtual host name
 	//  mappings consistent among all WebViews sharing the same browser instance. As service worker
 	//  works independently of WebViews, we merge mappings from all WebViews when resolving virtual
 	//  host name, inconsistent mappings between WebViews would lead unexpected behavior.
+	//
 	//  Due to a current implementation limitation, media files accessed using virtual host name can be
 	//  very slow to load.
 	//  As the resource loaders for the current page might have already been created and running,
 	//  changes to the mapping might not be applied to the current page and a reload of the page is
 	//  needed to apply the new mapping.
+	//
 	//  Both absolute and relative paths are supported for folderPath. Relative paths are interpreted
 	//  as relative to the folder where the exe of the app is in.
+	//
 	//  Note that the folderPath length must not exceed the Windows MAX_PATH limit.
+	//
 	//  accessKind specifies the level of access to resources under the virtual host from other sites.
+	//
 	//  For example, after calling
 	//  <code>
 	//  ```cpp
@@ -281,6 +170,7 @@ type ICoreWebView2 interface {
 	//  navigating to `https://appassets.example/my-local-file.html` will
 	//  show the content from my-local-file.html in the assets subfolder located on disk under
 	//  the same path as the app's executable file.
+	//
 	//  DOM elements that want to reference local files will have their host reference virtual host in the source.
 	//  If there are multiple folders being used, define one unique virtual host per folder.
 	//  For example, you can embed a local image like this
@@ -291,35 +181,43 @@ type ICoreWebView2 interface {
 	//  ```
 	//  </code>
 	//  The example above shows the image wv2.png by resolving the folder mapping above.
+	//
 	//  You should typically choose virtual host names that are never used by real sites.
 	//  If you own a domain such as example.com, another option is to use a subdomain reserved for
-	//  the app(like my-app.example.com).
+	//  the app (like my-app.example.com).
+	//
 	//  [RFC 6761](https://tools.ietf.org/html/rfc6761) has reserved several special-use domain
-	//  names that are guaranteed to not be used by real sites(for example, .example, .test, and
+	//  names that are guaranteed to not be used by real sites (for example, .example, .test, and
 	//  .invalid.)
+	//
 	//  Note that using `.local` as the top-level domain name will work but can cause a delay
 	//  during navigations. You should avoid using `.local` if you can.
+	//
 	//  Apps should use distinct domain names when mapping folder from different sources that
 	//  should be isolated from each other. For instance, the app might use app-file.example for
 	//  files that ship as part of the app, and book1.example might be used for files containing
 	//  books from a less trusted source that were previously downloaded and saved to the disk by
 	//  the app.
+	//
 	//  The host name used in the APIs is canonicalized using Chromium's host name parsing logic
 	//  before being used internally. For more information see [HTML5 2.6 URLs](https://dev.w3.org/html5/spec-LC/urls.html).
+	//
 	//  All host names that are canonicalized to the same string are considered identical.
 	//  For example, `EXAMPLE.COM` and `example.com` are treated as the same host name.
 	//  An international host name and its Punycode-encoded host name are considered the same host
 	//  name. There is no DNS resolution for host name and the trailing '.' is not normalized as
 	//  part of canonicalization.
+	//
 	//  Therefore `example.com` and `example.com.` are treated as different host names. Similarly,
 	//  `virtual-host-name` and `virtual-host-name.example.com` are treated as different host names
 	//  even if the machine has a DNS suffix of `example.com`.
+	//
 	//  Specify the minimal cross-origin access necessary to run the app. If there is not a need to
 	//  access local resources from other origins, use COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_DENY.
-	SetVirtualHostNameToFolderMapping(aHostName, aFolderPath string, aAccessKind TWVHostResourceAcccessKind) bool // function
+	SetVirtualHostNameToFolderMapping(hostName string, folderPath string, accessKind wvTypes.TWVHostResourceAcccessKind) bool // function
 	// ClearVirtualHostNameToFolderMapping
 	//  Clears a host name mapping for local folder that was added by `SetVirtualHostNameToFolderMapping`.
-	ClearVirtualHostNameToFolderMapping(aHostName string) bool // function
+	ClearVirtualHostNameToFolderMapping(hostName string) bool // function
 	// OpenTaskManagerWindow
 	//  Opens the Browser Task Manager view as a new window in the foreground.
 	//  If the Browser Task Manager is already open, this will bring it into
@@ -332,10 +230,12 @@ type ICoreWebView2 interface {
 	//  Print the current page to PDF asynchronously with the provided settings.
 	//  See `ICoreWebView2PrintSettings` for description of settings. Passing
 	//  nullptr for `printSettings` results in default print settings used.
+	//
 	//  Use `resultFilePath` to specify the path to the PDF file. The host should
 	//  provide an absolute path, including file name. If the path
 	//  points to an existing file, the file will be overwritten. If the path is
 	//  not valid, the method fails with `E_INVALIDARG`.
+	//
 	//  The async `PrintToPdf` operation completes when the data has been written
 	//  to the PDF file. At this time the
 	//  `ICoreWebView2PrintToPdfCompletedHandler` is invoked. If the
@@ -344,7 +244,7 @@ type ICoreWebView2 interface {
 	//  `PrintToPdf` is called while a `PrintToPdf` or `PrintToPdfStream` or `Print` or
 	//  `ShowPrintUI` job is in progress, the completed handler is immediately invoked
 	//  with `isSuccessful` set to FALSE.
-	PrintToPdf(aResultFilePath string, aPrintSettings ICoreWebView2PrintSettings, aHandler ICoreWebView2PrintToPdfCompletedHandler) bool // function
+	PrintToPdf(resultFilePath string, printSettings ICoreWebView2PrintSettings, handler ICoreWebView2PrintToPdfCompletedHandler) bool // function
 	// OpenDevToolsWindow
 	//  Opens the DevTools window for the current document in the WebView. Does
 	//  nothing if run when the DevTools window is already open.
@@ -369,7 +269,7 @@ type ICoreWebView2 interface {
 	//  [add_WebMessageReceived](/microsoft-edge/webview2/reference/win32/icorewebview2#add_webmessagereceived).
 	//  The message is delivered asynchronously. If a navigation occurs before
 	//  the message is posted to the page, the message is discarded.
-	PostWebMessageAsJson(aWebMessageAsJson string) bool // function
+	PostWebMessageAsJson(webMessageAsJson string) bool // function
 	// PostWebMessageAsString
 	//  Posts a message that is a simple string rather than a JSON string
 	//  representation of a JavaScript object. This behaves in exactly the same
@@ -378,7 +278,7 @@ type ICoreWebView2 interface {
 	//  value as `webMessageAsString`. Use this instead of
 	//  `PostWebMessageAsJson` if you want to communicate using simple strings
 	//  rather than JSON objects.
-	PostWebMessageAsString(aWebMessageAsString string) bool // function
+	PostWebMessageAsString(webMessageAsString string) bool // function
 	// CallDevToolsProtocolMethod
 	//  Runs an asynchronous `DevToolsProtocol` method. For more information
 	//  about available methods, navigate to
@@ -397,7 +297,12 @@ type ICoreWebView2 interface {
 	//  If you require CDP methods to run in a particular order, you should wait
 	//  for the previous method's completed handler to run before calling the
 	//  next method.
-	CallDevToolsProtocolMethod(aMethodName, aParametersAsJson string, aExecutionID int32, aBrowserComponent IComponent) bool // function
+	//  If the method is to run in add_NewWindowRequested handler it should be called
+	//  before the new window is set if the cdp message should affect the initial navigation. If
+	//  called after setting the NewWindow property, the cdp messages
+	//  may or may not apply to the initial navigation and may only apply to the subsequent navigation.
+	//  For more details see `ICoreWebView2NewWindowRequestedEventArgs::put_NewWindow`.
+	CallDevToolsProtocolMethod(methodName string, parametersAsJson string, executionID int32, browserComponent lcl.IComponent) bool // function
 	// CallDevToolsProtocolMethodForSession
 	//  Runs an asynchronous `DevToolsProtocol` method for a specific session of
 	//  an attached target.
@@ -426,25 +331,36 @@ type ICoreWebView2 interface {
 	//  unknown or the `parametersAsJson` has an error. In the case of such an error, the
 	//  `returnObjectAsJson` parameter of the handler will include information
 	//  about the error.
-	CallDevToolsProtocolMethodForSession(aSessionId, aMethodName, aParametersAsJson string, aExecutionID int32, aBrowserComponent IComponent) bool // function
+	CallDevToolsProtocolMethodForSession(sessionId string, methodName string, parametersAsJson string, executionID int32, browserComponent lcl.IComponent) bool // function
 	// AddWebResourceRequestedFilter
+	//  Warning: This method is deprecated and does not behave as expected for
+	//  iframes. It will cause the WebResourceRequested event to fire only for the
+	//  main frame and its same-origin iframes. Please use
+	//  `AddWebResourceRequestedFilterWithRequestSourceKinds`
+	//  instead, which will let the event to fire for all iframes on the
+	//  document.
+	//
 	//  Adds a URI and resource context filter for the `WebResourceRequested`
 	//  event. A web resource request with a resource context that matches this
 	//  filter's resource context and a URI that matches this filter's URI
 	//  wildcard string will be raised via the `WebResourceRequested` event.
+	//
 	//  The `uri` parameter value is a wildcard string matched against the URI
 	//  of the web resource request. This is a glob style
 	//  wildcard string in which a `*` matches zero or more characters and a `?`
 	//  matches exactly one character.
 	//  These wildcard characters can be escaped using a backslash just before
 	//  the wildcard character in order to represent the literal `*` or `?`.
+	//
 	//  The matching occurs over the URI as a whole string and not limiting
 	//  wildcard matches to particular parts of the URI.
 	//  The wildcard filter is compared to the URI after the URI has been
 	//  normalized, any URI fragment has been removed, and non-ASCII hostnames
 	//  have been converted to punycode.
+	//
 	//  Specifying a `nullptr` for the uri is equivalent to an empty string which
 	//  matches no URIs.
+	//
 	//  For more information about resource context filters, navigate to
 	//  [COREWEBVIEW2_WEB_RESOURCE_CONTEXT](/microsoft-edge/webview2/reference/win32/webview2-idl#corewebview2_web_resource_context).
 	//  <code>
@@ -462,14 +378,114 @@ type ICoreWebView2 interface {
 	//  | `https://xn--qei.example/` | `https://&#x2764;.example/` | Yes | Non-ASCII hostnames are normalized to punycode before wildcard comparison |
 	//  | `https://&#x2764;.example/` | `https://xn--qei.example/` | No | Non-ASCII hostnames are normalized to punycode before wildcard comparison |
 	//  </code>
-	AddWebResourceRequestedFilter(URI string, ResourceContext TWVWebResourceContext) bool // function
+	AddWebResourceRequestedFilter(uRI string, resourceContext wvTypes.TWVWebResourceContext) bool // function
 	// RemoveWebResourceRequestedFilter
+	//  Warning: This method and `AddWebResourceRequestedFilter` are deprecated.
+	//  Please use `AddWebResourceRequestedFilterWithRequestSourceKinds` and
+	//  `RemoveWebResourceRequestedFilterWithRequestSourceKinds` instead.
 	//  Removes a matching WebResource filter that was previously added for the
 	//  `WebResourceRequested` event. If the same filter was added multiple
 	//  times, then it must be removed as many times as it was added for the
 	//  removal to be effective. Returns `E_INVALIDARG` for a filter that was
 	//  never added.
-	RemoveWebResourceRequestedFilter(URI string, ResourceContext TWVWebResourceContext) bool // function
+	RemoveWebResourceRequestedFilter(uRI string, resourceContext wvTypes.TWVWebResourceContext) bool // function
+	// AddHostObjectToScript
+	//  Add the provided host object to script running in the WebView with the
+	//  specified name. Host objects are exposed as host object proxies using
+	//  `window.chrome.webview.hostObjects.{name}`. Host object proxies are
+	//  promises and resolves to an object representing the host object. The
+	//  promise is rejected if the app has not added an object with the name.
+	//  When JavaScript code access a property or method of the object, a promise
+	//  is return, which resolves to the value returned from the host for the
+	//  property or method, or rejected in case of error, for example, no
+	//  property or method on the object or parameters are not valid.
+	//
+	//  NOTE: While simple types, `IDispatch` and array are supported, and
+	//  `IUnknown` objects that also implement `IDispatch` are treated as `IDispatch`,
+	//  generic `IUnknown`, `VT_DECIMAL`, or `VT_RECORD` variant is not supported.
+	//  Remote JavaScript objects like callback functions are represented as an
+	//  `VT_DISPATCH` `VARIANT` with the object implementing `IDispatch`. The
+	//  JavaScript callback method may be invoked using `DISPID_VALUE` for the
+	//  `DISPID`. Such callback method invocations will return immediately and will
+	//  not wait for the JavaScript function to run and so will not provide the return
+	//  value of the JavaScript function.
+	//  Nested arrays are supported up to a depth of 3. Arrays of by
+	//  reference types are not supported. `VT_EMPTY` and `VT_NULL` are mapped
+	//  into JavaScript as `null`. In JavaScript, `null` and undefined are
+	//  mapped to `VT_EMPTY`.
+	//
+	//  Additionally, all host objects are exposed as
+	//  `window.chrome.webview.hostObjects.sync.{name}`. Here the host objects
+	//  are exposed as synchronous host object proxies. These are not promises
+	//  and function runtimes or property access synchronously block running
+	//  script waiting to communicate cross process for the host code to run.
+	//  Accordingly the result may have reliability issues and it is recommended
+	//  that you use the promise-based asynchronous
+	//  `window.chrome.webview.hostObjects.{name}` API.
+	//
+	//  Synchronous host object proxies and asynchronous host object proxies may
+	//  both use a proxy to the same host object. Remote changes made by one
+	//  proxy propagates to any other proxy of that same host object whether
+	//  the other proxies and synchronous or asynchronous.
+	//
+	//  While JavaScript is blocked on a synchronous run to native code, that
+	//  native code is unable to run back to JavaScript. Attempts to do so fail
+	//  with `HRESULT_FROM_WIN32(ERROR_POSSIBLE_DEADLOCK)`.
+	//
+	//  Host object proxies are JavaScript Proxy objects that intercept all
+	//  property get, property set, and method invocations. Properties or methods
+	//  that are a part of the Function or Object prototype are run locally.
+	//  Additionally any property or method in the
+	//  `chrome.webview.hostObjects.options.forceLocalProperties`
+	//  array are also run locally. This defaults to including optional methods
+	//  that have meaning in JavaScript like `toJSON` and `Symbol.toPrimitive`.
+	//  Add more to the array as required.
+	//
+	//  The `chrome.webview.hostObjects.cleanupSome` method performs a best
+	//  effort garbage collection on host object proxies.
+	//
+	//  The `chrome.webview.hostObjects.options` object provides the ability to
+	//  change some functionality of host objects.
+	//  <code>
+	//  Options property | Details
+	//  ---|---
+	//  `forceLocalProperties` | This is an array of host object property names that will be run locally, instead of being called on the native host object. This defaults to `then`, `toJSON`, `Symbol.toString`, and `Symbol.toPrimitive`. You can add other properties to specify that they should be run locally on the javascript host object proxy.
+	//  `log` | This is a callback that will be called with debug information. For example, you can set this to `console.log.bind(console)` to have it print debug information to the console to help when troubleshooting host object usage. By default this is null.
+	//  `shouldSerializeDates` | By default this is false, and javascript Date objects will be sent to host objects as a string using `JSON.stringify`. You can set this property to true to have Date objects properly serialize as a `VT_DATE` when sending to the native host object, and have `VT_DATE` properties and return values create a javascript Date object.
+	//  `defaultSyncProxy` | When calling a method on a synchronous proxy, the result should also be a synchronous proxy. But in some cases, the sync/async context is lost (for example, when providing to native code a reference to a function, and then calling that function in native code). In these cases, the proxy will be asynchronous, unless this property is set.
+	//  `forceAsyncMethodMatches ` | This is an array of regular expressions. When calling a method on a synchronous proxy, the method call will be performed asynchronously if the method name matches a string or regular expression in this array. Setting this value to `Async` will make any method that ends with Async be an asynchronous method call. If an async method doesn't match here and isn't forced to be asynchronous, the method will be invoked synchronously, blocking execution of the calling JavaScript and then returning the resolution of the promise, rather than returning a promise.
+	//  `ignoreMemberNotFoundError` | By default, an exception is thrown when attempting to get the value of a proxy property that doesn't exist on the corresponding native class. Setting this property to `true` switches the behavior to match Chakra WinRT projection (and general JavaScript) behavior of returning `undefined` with no error.
+	//  `shouldPassTypedArraysAsArrays` | By default, typed arrays are passed to the host as `IDispatch`. To instead pass typed arrays to the host as `array`, set this to `true`.
+	//  </code>
+	//  Host object proxies additionally have the following methods which run
+	//  locally.
+	//  <code>
+	//  Method name | Details
+	//  ---|---
+	//  `applyHostFunction`, `getHostProperty`, `setHostProperty` | Perform a method invocation, property get, or property set on the host object. Use the methods to explicitly force a method or property to run remotely if a conflicting local method or property exists. For instance, `proxy.toString()` runs the local `toString` method on the proxy object. But proxy.applyHostFunction('toString') runs `toString` on the host proxied object instead.
+	//  `getLocalProperty`, `setLocalProperty` | Perform property get, or property set locally. Use the methods to force getting or setting a property on the host object proxy rather than on the host object it represents. For instance, `proxy.unknownProperty` gets the property named `unknownProperty` from the host proxied object. But proxy.getLocalProperty('unknownProperty') gets the value of the property `unknownProperty` on the proxy object.
+	//  `sync` | Asynchronous host object proxies expose a sync method which returns a promise for a synchronous host object proxy for the same host object. For example, `chrome.webview.hostObjects.sample.methodCall()` returns an asynchronous host object proxy. Use the `sync` method to obtain a synchronous host object proxy instead: `const syncProxy = await chrome.webview.hostObjects.sample.methodCall().sync()`.
+	//  `async` | Synchronous host object proxies expose an async method which blocks and returns an asynchronous host object proxy for the same host object. For example, `chrome.webview.hostObjects.sync.sample.methodCall()` returns a synchronous host object proxy. Running the `async` method on this blocks and then returns an asynchronous host object proxy for the same host object: `const asyncProxy = chrome.webview.hostObjects.sync.sample.methodCall().async()`.
+	//  `then` | Asynchronous host object proxies have a `then` method. Allows proxies to be awaitable. `then` returns a promise that resolves with a representation of the host object. If the proxy represents a JavaScript literal, a copy of that is returned locally. If the proxy represents a function, a non-awaitable proxy is returned. If the proxy represents a JavaScript object with a mix of literal properties and function properties, the a copy of the object is returned with some properties as host object proxies.
+	//  </code>
+	//  All other property and method invocations (other than the above Remote
+	//  object proxy methods, `forceLocalProperties` list, and properties on
+	//  Function and Object prototypes) are run remotely. Asynchronous host
+	//  object proxies return a promise representing asynchronous completion of
+	//  remotely invoking the method, or getting the property. The promise
+	//  resolves after the remote operations complete and the promises resolve to
+	//  the resulting value of the operation. Synchronous host object proxies
+	//  work similarly, but block running JavaScript and wait for the remote
+	//  operation to complete.
+	//
+	//  Setting a property on an asynchronous host object proxy works slightly
+	//  differently. The set returns immediately and the return value is the
+	//  value that is set. This is a requirement of the JavaScript Proxy object.
+	//  If you need to asynchronously wait for the property set to complete, use
+	//  the `setHostProperty` method which returns a promise as described above.
+	//  Synchronous object property set property synchronously blocks until the
+	//  property is set.
+	AddHostObjectToScript(name string, object types.OleVariant) bool // function
 	// RemoveHostObjectFromScript
 	//  Remove the host object specified by the name so that it is no longer
 	//  accessible from JavaScript code in the WebView. While new access
@@ -477,7 +493,7 @@ type ICoreWebView2 interface {
 	//  in the WebView, the JavaScript code continues to have access to that
 	//  object. Run this method for a name that is already removed or never
 	//  added fails.
-	RemoveHostObjectFromScript(aName string) bool // function
+	RemoveHostObjectFromScript(name string) bool // function
 	// AddScriptToExecuteOnDocumentCreated
 	//  Add the provided JavaScript to a list of scripts that should be run after
 	//  the global object has been created, but before the HTML document has
@@ -500,7 +516,7 @@ type ICoreWebView2 interface {
 	//  HTTP header affects the script that runs. For example, if the
 	//  `allow-modals` keyword is not set then requests to run the `alert`
 	//  function are ignored.
-	AddScriptToExecuteOnDocumentCreated(JavaScript string, aBrowserComponent IComponent) bool // function
+	AddScriptToExecuteOnDocumentCreated(javaScript string, browserComponent lcl.IComponent) bool // function
 	// RemoveScriptToExecuteOnDocumentCreated
 	//  Remove the corresponding JavaScript added using
 	//  `AddScriptToExecuteOnDocumentCreated` with the specified script ID. The
@@ -508,7 +524,7 @@ type ICoreWebView2 interface {
 	//  Both use `AddScriptToExecuteOnDocumentCreated` and this method in `NewWindowRequested`
 	//  event handler at the same time sometimes causes trouble. Since invalid scripts will
 	//  be ignored, the script IDs you got may not be valid anymore.
-	RemoveScriptToExecuteOnDocumentCreated(aID string) bool // function
+	RemoveScriptToExecuteOnDocumentCreated(iD string) bool // function
 	// OpenDefaultDownloadDialog
 	//  Open the default download dialog. If the dialog is opened before there
 	//  are recent downloads, the dialog shows all past downloads for the
@@ -525,14 +541,14 @@ type ICoreWebView2 interface {
 	// ClearServerCertificateErrorActions
 	//  Clears all cached decisions to proceed with TLS certificate errors from the
 	//  ServerCertificateErrorDetected event for all WebView2's sharing the same session.
-	ClearServerCertificateErrorActions(aBrowserComponent IComponent) bool // function
+	ClearServerCertificateErrorActions(browserComponent lcl.IComponent) bool // function
 	// GetFavicon
 	//  Async function for getting the actual image data of the favicon.
 	//  The image is copied to the `imageStream` object in `ICoreWebView2GetFaviconCompletedHandler`.
 	//  If there is no image then no data would be copied into the imageStream.
 	//  The `format` is the file format to return the image stream.
 	//  `completedHandler` is executed at the end of the operation.
-	GetFavicon(aFormat TWVFaviconImageFormat, aBrowserComponent IComponent) bool // function
+	GetFavicon(format wvTypes.TWVFaviconImageFormat, browserComponent lcl.IComponent) bool // function
 	// Print
 	//  Print the current web page asynchronously to the specified printer with the provided settings.
 	//  See `ICoreWebView2PrintSettings` for description of settings. Passing
@@ -556,13 +572,13 @@ type ICoreWebView2 interface {
 	//  | E_INVALIDARG | COREWEBVIEW2_PRINT_STATUS_OTHER_ERROR | If the caller provides invalid settings for the specified printer. |
 	//  | E_ABORT | COREWEBVIEW2_PRINT_STATUS_OTHER_ERROR | Print operation is failed as printing job already in progress. |
 	//  </code>
-	Print(aPrintSettings ICoreWebView2PrintSettings, aHandler ICoreWebView2PrintCompletedHandler) bool // function
+	Print(printSettings ICoreWebView2PrintSettings, handler ICoreWebView2PrintCompletedHandler) bool // function
 	// ShowPrintUI
 	//  Opens the print dialog to print the current web page. See `COREWEBVIEW2_PRINT_DIALOG_KIND`
 	//  for descriptions of print dialog kinds.
 	//  Invoking browser or system print dialog doesn't open new print dialog if
 	//  it is already open.
-	ShowPrintUI(aPrintDialogKind TWVPrintDialogKind) bool // function
+	ShowPrintUI(printDialogKind wvTypes.TWVPrintDialogKind) bool // function
 	// PrintToPdfStream
 	//  Provides the Pdf data of current web page asynchronously for the provided settings.
 	//  Stream will be rewound to the start of the pdf data.
@@ -574,7 +590,7 @@ type ICoreWebView2 interface {
 	//  `PrintToPdfStream` is called while a `PrintToPdfStream` or `PrintToPdf` or `Print`
 	//  or `ShowPrintUI` job is in progress, the completed handler is immediately invoked with `E_ABORT`.
 	//  This is only for printing operation on one webview.
-	PrintToPdfStream(aPrintSettings ICoreWebView2PrintSettings, aHandler ICoreWebView2PrintToPdfStreamCompletedHandler) bool // function
+	PrintToPdfStream(printSettings ICoreWebView2PrintSettings, handler ICoreWebView2PrintToPdfStreamCompletedHandler) bool // function
 	// PostSharedBufferToScript
 	//  Share a shared buffer object with script of the main frame in the WebView.
 	//  The script will receive a `sharedbufferreceived` event from chrome.webview.
@@ -596,7 +612,7 @@ type ICoreWebView2 interface {
 	//  post to the same web page or iframe multiple times. Each `PostSharedBufferToScript` will
 	//  create a separate ArrayBuffer object with its own view of the memory and is separately
 	//  released. The underlying shared memory will be released when all the views are released.
-	PostSharedBufferToScript(aSharedBuffer ICoreWebView2SharedBuffer, aAccess TWVSharedBufferAccess, aAdditionalDataAsJson string) bool // function
+	PostSharedBufferToScript(sharedBuffer ICoreWebView2SharedBuffer, access wvTypes.TWVSharedBufferAccess, additionalDataAsJson string) bool // function
 	// ExecuteScriptWithResult
 	//  Run JavaScript code from the JavaScript parameter in the current
 	//  top-level document rendered in the WebView.
@@ -608,401 +624,870 @@ type ICoreWebView2 interface {
 	//  runs in the new document when loading it, around the time
 	//  ContentLoading is run. This operation executes the script even if
 	//  ICoreWebView2Settings::IsScriptEnabled is set to FALSE.
+	//
 	//  \snippet ScriptComponent.cpp ExecuteScriptWithResult
-	ExecuteScriptWithResult(JavaScript string, aExecutionID int32, aBrowserComponent IComponent) bool // function
+	ExecuteScriptWithResult(javaScript string, executionID int32, browserComponent lcl.IComponent) bool // function
+	// AddWebResourceRequestedFilterWithRequestSourceKinds
+	//  A web resource request with a resource context that matches this
+	//  filter's resource context and a URI that matches this filter's URI
+	//  wildcard string for corresponding request sources will be raised via
+	//  the `WebResourceRequested` event. To receive all raised events filters
+	//  have to be added before main page navigation.
+	//
+	//  The `uri` parameter value is a wildcard string matched against the URI
+	//  of the web resource request. This is a glob style
+	//  wildcard string in which a `*` matches zero or more characters and a `?`
+	//  matches exactly one character.
+	//  These wildcard characters can be escaped using a backslash just before
+	//  the wildcard character in order to represent the literal `*` or `?`.
+	//
+	//  The matching occurs over the URI as a whole string and not limiting
+	//  wildcard matches to particular parts of the URI.
+	//  The wildcard filter is compared to the URI after the URI has been
+	//  normalized, any URI fragment has been removed, and non-ASCII hostnames
+	//  have been converted to punycode.
+	//
+	//  Specifying a `nullptr` for the uri is equivalent to an empty string which
+	//  matches no URIs.
+	//
+	//  For more information about resource context filters, navigate to
+	//  [COREWEBVIEW2_WEB_RESOURCE_CONTEXT](/microsoft-edge/webview2/reference/win32/icorewebview2#corewebview2_web_resource_context).
+	//
+	//  The `requestSourceKinds` is a mask of one or more
+	//  `COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS`. OR operation(s) can be
+	//  applied to multiple `COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS` to
+	//  create a mask representing those data types. API returns `E_INVALIDARG` if
+	//  `requestSourceKinds` equals to zero. For more information about request
+	//  source kinds, navigate to
+	//  [COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS](/microsoft-edge/webview2/reference/win32/icorewebview2#corewebview2_web_resource_request_source_kinds).
+	//
+	//  Because service workers and shared workers run separately from any one
+	//  HTML document their WebResourceRequested will be raised for all
+	//  CoreWebView2s that have appropriate filters added in the corresponding
+	//  CoreWebView2Environment. You should only add a WebResourceRequested filter
+	//  for COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS_SERVICE_WORKER or
+	//  COREWEBVIEW2_WEB_RESOURCE_REQUEST_SOURCE_KINDS_SHARED_WORKER on
+	//  one CoreWebView2 to avoid handling the same WebResourceRequested
+	//  event multiple times.
+	//
+	//  | URI Filter String | Request URI | Match | Notes |
+	//  | ---- | ---- | ---- | ---- |
+	//  | `*` | `https://contoso.com/a/b/c` | Yes | A single * will match all URIs |
+	//  | `*://contoso.com/*` | `https://contoso.com/a/b/c` | Yes | Matches everything in contoso.com across all schemes |
+	//  | `*://contoso.com/*` | `https://example.com/?https://contoso.com/` | Yes | But also matches a URI with just the same text anywhere in the URI |
+	//  | `example` | `https://contoso.com/example` | No | The filter does not perform partial matches |
+	//  | `*example` | `https://contoso.com/example` | Yes | The filter matches across URI parts |
+	//  | `*example` | `https://contoso.com/path/?example` | Yes | The filter matches across URI parts |
+	//  | `*example` | `https://contoso.com/path/?query#example` | No | The filter is matched against the URI with no fragment |
+	//  | `*example` | `https://example` | No | The URI is normalized before filter matching so the actual URI used for comparison is `https://example/` |
+	//  | `*example/` | `https://example` | Yes | Just like above, but this time the filter ends with a / just like the normalized URI |
+	//  | `https://xn--qei.example/` | `https://&#x2764;.example/` | Yes | Non-ASCII hostnames are normalized to punycode before wildcard comparison |
+	//  | `https://&#x2764;.example/` | `https://xn--qei.example/` | No | Non-ASCII hostnames are normalized to punycode before wildcard comparison |
+	//
+	//  \snippet ScenarioSharedWorkerWRR.cpp WebResourceRequested2
+	AddWebResourceRequestedFilterWithRequestSourceKinds(uri string, resourceContext wvTypes.TWVWebResourceContext, requestSourceKinds wvTypes.TWVWebResourceRequestSourceKind) bool // function
+	// RemoveWebResourceRequestedFilterWithRequestSourceKinds
+	//  Removes a matching WebResource filter that was previously added for the
+	//  `WebResourceRequested` event. If the same filter was added multiple
+	//  times, then it must be removed as many times as it was added for the
+	//  removal to be effective. Returns `E_INVALIDARG` for a filter that was
+	//  not added or is already removed.
+	//  If the filter was added for multiple requestSourceKinds and removed just for one of them
+	//  the filter remains for the non-removed requestSourceKinds.
+	RemoveWebResourceRequestedFilterWithRequestSourceKinds(uri string, resourceContext wvTypes.TWVWebResourceContext, requestSourceKinds wvTypes.TWVWebResourceRequestSourceKind) bool // function
+	// PostWebMessageAsJsonWithAdditionalObjects
+	//  Same as `PostWebMessageAsJson`, but also has support for posting DOM objects
+	//  to page content. The `additionalObjects` property in the DOM MessageEvent
+	//  fired on the page content is an array-like list of DOM objects that can
+	//  be posted to the web content. Currently these can be the following
+	//  types of objects:
+	//  <code>
+	//  | Win32 | DOM type |
+	//  |-------------------|-------------|
+	//  | ICoreWebView2FileSystemHandle | [FileSystemHandle](https://developer.mozilla.org/docs/Web/API/FileSystemHandle) |
+	//  | nullptr | null |
+	//  </code>
+	//  The objects are posted to the web content, following the
+	//  [structured-clone](https://developer.mozilla.org/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
+	//  semantics, meaning only objects that can be cloned can be posted.
+	//  They will also behave as if they had been created by the web content they are
+	//  posted to. For example, if a FileSystemFileHandle is posted to a web content
+	//  it can only be re-transferred via postMessage to other web content
+	//  [with the same origin](https://fs.spec.whatwg.org/#filesystemhandle).
+	//  Warning: An app needs to be mindful when using this API to post DOM objects
+	//  as this API provides the web content with unusual access to sensitive Web
+	//  Platform features such as filesystem access! Similar to PostWebMessageAsJson
+	//  the app should check the `Source` property of WebView2 right before posting the message
+	//  to ensure the message and objects will only be sent to the target web content
+	//  that it expects to receive the DOM objects. Additionally, the order
+	//  of messages that are posted between `PostWebMessageAsJson` and `PostWebMessageAsJsonWithAdditionalObjects`
+	//  may not be preserved.
+	PostWebMessageAsJsonWithAdditionalObjects(webMessageAsJson string, additionalObjects ICoreWebView2ObjectCollectionView) bool // function
+	// ShowSaveAsUI
+	//  Programmatically trigger a Save As action for the currently loaded document.
+	//  The `SaveAsUIShowing` event is raised.
+	//
+	//  Opens a system modal dialog by default. If the `SuppressDefaultDialog` property
+	//  is `TRUE`, the system dialog is not opened.
+	//
+	//  This method returns `COREWEBVIEW2_SAVE_AS_UI_RESULT`. See
+	//  `COREWEBVIEW2_SAVE_AS_UI_RESULT` for details.
+	ShowSaveAsUI(browserComponent lcl.IComponent) bool // function
+	AfterConstruction()                                // procedure
+	// Initialized
+	//  Returns true when the interface implemented by this class is fully initialized.
+	Initialized() bool // property Initialized Getter
+	// BaseIntf
+	//  Returns the interface implemented by this class.
+	BaseIntf() ICoreWebView2 // property BaseIntf Getter
+	// Settings
+	//  The `ICoreWebView2Settings` object contains various modifiable settings
+	//  for the running WebView.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_settings">See the ICoreWebView2 article.</see>
+	Settings() ICoreWebView2Settings // property Settings Getter
+	// BrowserProcessID
+	//  The process ID of the browser process that hosts the WebView.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_browserprocessid">See the ICoreWebView2 article.</see>
+	BrowserProcessID() types.DWORD // property BrowserProcessID Getter
+	// CanGoBack
+	//  `TRUE` if the WebView is able to navigate to a previous page in the
+	//  navigation history. If `CanGoBack` changes value, the `HistoryChanged`
+	//  event runs.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2##get_cangoback">See the ICoreWebView2 article.</see>
+	CanGoBack() bool // property CanGoBack Getter
+	// CanGoForward
+	//  `TRUE` if the WebView is able to navigate to a next page in the
+	//  navigation history. If `CanGoForward` changes value, the
+	//  `HistoryChanged` event runs.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_cangoforward">See the ICoreWebView2 article.</see>
+	CanGoForward() bool // property CanGoForward Getter
+	// ContainsFullScreenElement
+	//  Indicates if the WebView contains a fullscreen HTML element.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_containsfullscreenelement">See the ICoreWebView2 article.</see>
+	ContainsFullScreenElement() bool // property ContainsFullScreenElement Getter
+	// DocumentTitle
+	//  The title for the current top-level document. If the document has no
+	//  explicit title or is otherwise empty, a default that may or may not match
+	//  the URI of the document is used.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_documenttitle">See the ICoreWebView2 article.</see>
+	DocumentTitle() string // property DocumentTitle Getter
+	// Source
+	//  The URI of the current top level document. This value potentially
+	//  changes as a part of the `SourceChanged` event that runs for some cases
+	//  such as navigating to a different site or fragment navigations. It
+	//  remains the same for other types of navigations such as page refreshes
+	//  or `history.pushState` with the same URL as the current page.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2#get_source">See the ICoreWebView2 article.</see>
+	Source() string // property Source Getter
+	// CookieManager
+	//  Gets the cookie manager object associated with this ICoreWebView2.
+	//  See ICoreWebView2CookieManager.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_2#get_cookiemanager">See the ICoreWebView2_2 article.</see>
+	CookieManager() ICoreWebView2CookieManager // property CookieManager Getter
+	// Environment
+	//  Exposes the CoreWebView2Environment used to create this CoreWebView2.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_2#get_environment">See the ICoreWebView2_2 article.</see>
+	Environment() ICoreWebView2Environment // property Environment Getter
+	// IsSuspended
+	//  Whether WebView is suspended.
+	//  `TRUE` when WebView is suspended, from the time when TrySuspend has completed
+	//  successfully until WebView is resumed.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_3#get_issuspended">See the ICoreWebView2_3 article.</see>
+	IsSuspended() bool // property IsSuspended Getter
+	// IsMuted
+	//  Indicates whether all audio output from this CoreWebView2 is muted or not.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_8#get_ismuted">See the ICoreWebView2_8 article.</see>
+	IsMuted() bool         // property IsMuted Getter
+	SetIsMuted(value bool) // property IsMuted Setter
+	// IsDocumentPlayingAudio
+	//  Indicates whether any audio output from this CoreWebView2 is playing.
+	//  This property will be true if audio is playing even if IsMuted is true.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_8#get_isdocumentplayingaudio">See the ICoreWebView2_8 article.</see>
+	IsDocumentPlayingAudio() bool // property IsDocumentPlayingAudio Getter
+	// IsDefaultDownloadDialogOpen
+	//  `TRUE` if the default download dialog is currently open. The value of this
+	//  property changes only when the default download dialog is explicitly
+	//  opened or closed. Hiding the WebView implicitly hides the dialog, but does
+	//  not change the value of this property.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_9#get_isdefaultdownloaddialogopen">See the ICoreWebView2_9 article.</see>
+	IsDefaultDownloadDialogOpen() bool // property IsDefaultDownloadDialogOpen Getter
+	// DefaultDownloadDialogCornerAlignment
+	//  Get the default download dialog corner alignment.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_9#get_defaultdownloaddialogcorneralignment">See the ICoreWebView2_9 article.</see>
+	DefaultDownloadDialogCornerAlignment() wvTypes.TWVDefaultDownloadDialogCornerAlignment         // property DefaultDownloadDialogCornerAlignment Getter
+	SetDefaultDownloadDialogCornerAlignment(value wvTypes.TWVDefaultDownloadDialogCornerAlignment) // property DefaultDownloadDialogCornerAlignment Setter
+	// DefaultDownloadDialogMargin
+	//  Get the default download dialog margin.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_9#get_defaultdownloaddialogmargin">See the ICoreWebView2_9 article.</see>
+	DefaultDownloadDialogMargin() types.TPoint         // property DefaultDownloadDialogMargin Getter
+	SetDefaultDownloadDialogMargin(value types.TPoint) // property DefaultDownloadDialogMargin Setter
+	// StatusBarText
+	//  The status message text.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_12#get_statusbartext">See the ICoreWebView2_12 article.</see>
+	StatusBarText() string // property StatusBarText Getter
+	// Profile
+	//  The associated `ICoreWebView2Profile` object. If this CoreWebView2 was created with a
+	//  CoreWebView2ControllerOptions, the CoreWebView2Profile will match those specified options.
+	//  Otherwise if this CoreWebView2 was created without a CoreWebView2ControllerOptions, then
+	//  this will be the default CoreWebView2Profile for the corresponding CoreWebView2Environment.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_13#get_profile">See the ICoreWebView2_13 article.</see>
+	Profile() ICoreWebView2Profile // property Profile Getter
+	// FaviconURI
+	//  Get the current Uri of the favicon as a string.
+	//  If the value is null, then the return value is `E_POINTER`, otherwise it is `S_OK`.
+	//  If a page has no favicon then the value is an empty string.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_15#get_faviconuri">See the ICoreWebView2_15 article.</see>
+	FaviconURI() string // property FaviconURI Getter
+	// MemoryUsageTargetLevel
+	//  `MemoryUsageTargetLevel` indicates desired memory consumption level of
+	//  WebView.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_19#get_memoryusagetargetlevel">See the ICoreWebView2_19 article.</see>
+	MemoryUsageTargetLevel() wvTypes.TWVMemoryUsageTargetLevel         // property MemoryUsageTargetLevel Getter
+	SetMemoryUsageTargetLevel(value wvTypes.TWVMemoryUsageTargetLevel) // property MemoryUsageTargetLevel Setter
+	// FrameId
+	//  The unique identifier of the main frame. It's the same kind of ID as
+	//  with the `FrameId` in `ICoreWebView2Frame` and via `ICoreWebView2FrameInfo`.
+	//  Note that `FrameId` may not be valid if `ICoreWebView2` has not done
+	//  any navigation. It's safe to get this value during or after the first
+	//  `ContentLoading` event. Otherwise, it could return the invalid frame Id 0.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2_20#get_frameid">See the ICoreWebView2_20 article.</see>
+	FrameId() uint32 // property FrameId Getter
 }
 
-// TCoreWebView2 Parent: TObject
 type TCoreWebView2 struct {
-	TObject
+	lcl.TObject
 }
 
-func NewCoreWebView2(aBaseIntf ICoreWebView2) ICoreWebView2 {
-	r1 := coreWebView2ImportAPI().SysCallN(15, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2(r1)
+func (m *TCoreWebView2) AddAllBrowserEvents(browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(1, m.Instance(), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) Initialized() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(27, m.Instance())
-	return GoBool(r1)
+func (m *TCoreWebView2) SubscribeToDevToolsProtocolEvent(eventName string, eventID int32, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(2, m.Instance(), api.PasStr(eventName), uintptr(eventID), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) BaseIntf() ICoreWebView2 {
-	var resultCoreWebView2 uintptr
-	coreWebView2ImportAPI().SysCallN(3, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2)))
-	return AsCoreWebView2(resultCoreWebView2)
+func (m *TCoreWebView2) CapturePreview(imageFormat wvTypes.TWVCapturePreviewImageFormat, imageStream lcl.IStreamAdapter, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(3, m.Instance(), uintptr(imageFormat), base.GetObjectUintptr(imageStream), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) Settings() ICoreWebView2Settings {
-	var resultCoreWebView2Settings uintptr
-	coreWebView2ImportAPI().SysCallN(52, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Settings)))
-	return AsCoreWebView2Settings(resultCoreWebView2Settings)
-}
-
-func (m *TCoreWebView2) BrowserProcessID() DWORD {
-	r1 := coreWebView2ImportAPI().SysCallN(4, m.Instance())
-	return DWORD(r1)
-}
-
-func (m *TCoreWebView2) CanGoBack() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(7, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) CanGoForward() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(8, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) ContainsFullScreenElement() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(13, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) DocumentTitle() string {
-	r1 := coreWebView2ImportAPI().SysCallN(18, m.Instance())
-	return GoStr(r1)
-}
-
-func (m *TCoreWebView2) Source() string {
-	r1 := coreWebView2ImportAPI().SysCallN(54, m.Instance())
-	return GoStr(r1)
-}
-
-func (m *TCoreWebView2) CookieManager() ICoreWebView2CookieManager {
-	var resultCoreWebView2CookieManager uintptr
-	coreWebView2ImportAPI().SysCallN(14, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2CookieManager)))
-	return AsCoreWebView2CookieManager(resultCoreWebView2CookieManager)
-}
-
-func (m *TCoreWebView2) Environment() ICoreWebView2Environment {
-	var resultCoreWebView2Environment uintptr
-	coreWebView2ImportAPI().SysCallN(19, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Environment)))
-	return AsCoreWebView2Environment(resultCoreWebView2Environment)
-}
-
-func (m *TCoreWebView2) IsSuspended() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(31, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) IsMuted() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(30, 0, m.Instance(), 0)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) SetIsMuted(AValue bool) {
-	coreWebView2ImportAPI().SysCallN(30, 1, m.Instance(), PascalBool(AValue))
-}
-
-func (m *TCoreWebView2) IsDocumentPlayingAudio() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(29, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) IsDefaultDownloadDialogOpen() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(28, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) DefaultDownloadDialogCornerAlignment() TWVDefaultDownloadDialogCornerAlignment {
-	r1 := coreWebView2ImportAPI().SysCallN(16, 0, m.Instance(), 0)
-	return TWVDefaultDownloadDialogCornerAlignment(r1)
-}
-
-func (m *TCoreWebView2) SetDefaultDownloadDialogCornerAlignment(AValue TWVDefaultDownloadDialogCornerAlignment) {
-	coreWebView2ImportAPI().SysCallN(16, 1, m.Instance(), uintptr(AValue))
-}
-
-func (m *TCoreWebView2) DefaultDownloadDialogMargin() (resultPoint TPoint) {
-	coreWebView2ImportAPI().SysCallN(17, 0, m.Instance(), uintptr(unsafePointer(&resultPoint)), uintptr(unsafePointer(&resultPoint)))
-	return
-}
-
-func (m *TCoreWebView2) SetDefaultDownloadDialogMargin(AValue *TPoint) {
-	coreWebView2ImportAPI().SysCallN(17, 1, m.Instance(), uintptr(unsafePointer(AValue)), uintptr(unsafePointer(AValue)))
-}
-
-func (m *TCoreWebView2) StatusBarText() string {
-	r1 := coreWebView2ImportAPI().SysCallN(55, m.Instance())
-	return GoStr(r1)
-}
-
-func (m *TCoreWebView2) Profile() ICoreWebView2Profile {
-	var resultCoreWebView2Profile uintptr
-	coreWebView2ImportAPI().SysCallN(45, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Profile)))
-	return AsCoreWebView2Profile(resultCoreWebView2Profile)
-}
-
-func (m *TCoreWebView2) FaviconURI() string {
-	r1 := coreWebView2ImportAPI().SysCallN(22, m.Instance())
-	return GoStr(r1)
-}
-
-func (m *TCoreWebView2) MemoryUsageTargetLevel() TWVMemoryUsageTargetLevel {
-	r1 := coreWebView2ImportAPI().SysCallN(32, 0, m.Instance(), 0)
-	return TWVMemoryUsageTargetLevel(r1)
-}
-
-func (m *TCoreWebView2) SetMemoryUsageTargetLevel(AValue TWVMemoryUsageTargetLevel) {
-	coreWebView2ImportAPI().SysCallN(32, 1, m.Instance(), uintptr(AValue))
-}
-
-func (m *TCoreWebView2) FrameId() uint32 {
-	r1 := coreWebView2ImportAPI().SysCallN(23, m.Instance())
-	return uint32(r1)
-}
-
-func (m *TCoreWebView2) AddAllBrowserEvents(aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(0, m.Instance(), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) SubscribeToDevToolsProtocolEvent(aEventName string, aEventID int32, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(57, m.Instance(), PascalStr(aEventName), uintptr(aEventID), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) CapturePreview(aImageFormat TWVCapturePreviewImageFormat, aImageStream IStream, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(9, m.Instance(), uintptr(aImageFormat), GetObjectUintptr(aImageStream), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2) ExecuteScript(JavaScript string, aExecutionID int32, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(20, m.Instance(), PascalStr(JavaScript), uintptr(aExecutionID), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+func (m *TCoreWebView2) ExecuteScript(javaScript string, executionID int32, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(4, m.Instance(), api.PasStr(javaScript), uintptr(executionID), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) GoBack() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(25, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(5, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) GoForward() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(26, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(6, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) Navigate(aURI string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(33, m.Instance(), PascalStr(aURI))
-	return GoBool(r1)
+func (m *TCoreWebView2) Navigate(uRI string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(7, m.Instance(), api.PasStr(uRI))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) NavigateToString(aHTMLContent string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(34, m.Instance(), PascalStr(aHTMLContent))
-	return GoBool(r1)
+func (m *TCoreWebView2) NavigateToString(hTMLContent string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(8, m.Instance(), api.PasStr(hTMLContent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) NavigateWithWebResourceRequest(aRequest ICoreWebView2WebResourceRequestRef) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(35, m.Instance(), GetObjectUintptr(aRequest))
-	return GoBool(r1)
+func (m *TCoreWebView2) NavigateWithWebResourceRequest(request ICoreWebView2WebResourceRequest) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(9, m.Instance(), base.GetObjectUintptr(request))
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) Reload() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(46, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(10, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) Stop() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(56, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(11, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) TrySuspend(aHandler ICoreWebView2TrySuspendCompletedHandler) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(58, m.Instance(), GetObjectUintptr(aHandler))
-	return GoBool(r1)
+func (m *TCoreWebView2) TrySuspend(handler ICoreWebView2TrySuspendCompletedHandler) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(12, m.Instance(), base.GetObjectUintptr(handler))
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) Resume() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(50, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(13, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) SetVirtualHostNameToFolderMapping(aHostName, aFolderPath string, aAccessKind TWVHostResourceAcccessKind) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(51, m.Instance(), PascalStr(aHostName), PascalStr(aFolderPath), uintptr(aAccessKind))
-	return GoBool(r1)
+func (m *TCoreWebView2) SetVirtualHostNameToFolderMapping(hostName string, folderPath string, accessKind wvTypes.TWVHostResourceAcccessKind) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(14, m.Instance(), api.PasStr(hostName), api.PasStr(folderPath), uintptr(accessKind))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) ClearVirtualHostNameToFolderMapping(aHostName string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(11, m.Instance(), PascalStr(aHostName))
-	return GoBool(r1)
+func (m *TCoreWebView2) ClearVirtualHostNameToFolderMapping(hostName string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(15, m.Instance(), api.PasStr(hostName))
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) OpenTaskManagerWindow() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(38, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(16, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) PrintToPdf(aResultFilePath string, aPrintSettings ICoreWebView2PrintSettings, aHandler ICoreWebView2PrintToPdfCompletedHandler) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(43, m.Instance(), PascalStr(aResultFilePath), GetObjectUintptr(aPrintSettings), GetObjectUintptr(aHandler))
-	return GoBool(r1)
+func (m *TCoreWebView2) PrintToPdf(resultFilePath string, printSettings ICoreWebView2PrintSettings, handler ICoreWebView2PrintToPdfCompletedHandler) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(17, m.Instance(), api.PasStr(resultFilePath), base.GetObjectUintptr(printSettings), base.GetObjectUintptr(handler))
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) OpenDevToolsWindow() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(37, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(18, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) PostWebMessageAsJson(aWebMessageAsJson string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(40, m.Instance(), PascalStr(aWebMessageAsJson))
-	return GoBool(r1)
+func (m *TCoreWebView2) PostWebMessageAsJson(webMessageAsJson string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(19, m.Instance(), api.PasStr(webMessageAsJson))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) PostWebMessageAsString(aWebMessageAsString string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(41, m.Instance(), PascalStr(aWebMessageAsString))
-	return GoBool(r1)
+func (m *TCoreWebView2) PostWebMessageAsString(webMessageAsString string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(20, m.Instance(), api.PasStr(webMessageAsString))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) CallDevToolsProtocolMethod(aMethodName, aParametersAsJson string, aExecutionID int32, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(5, m.Instance(), PascalStr(aMethodName), PascalStr(aParametersAsJson), uintptr(aExecutionID), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+func (m *TCoreWebView2) CallDevToolsProtocolMethod(methodName string, parametersAsJson string, executionID int32, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(21, m.Instance(), api.PasStr(methodName), api.PasStr(parametersAsJson), uintptr(executionID), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) CallDevToolsProtocolMethodForSession(aSessionId, aMethodName, aParametersAsJson string, aExecutionID int32, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(6, m.Instance(), PascalStr(aSessionId), PascalStr(aMethodName), PascalStr(aParametersAsJson), uintptr(aExecutionID), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+func (m *TCoreWebView2) CallDevToolsProtocolMethodForSession(sessionId string, methodName string, parametersAsJson string, executionID int32, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(22, m.Instance(), api.PasStr(sessionId), api.PasStr(methodName), api.PasStr(parametersAsJson), uintptr(executionID), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) AddWebResourceRequestedFilter(URI string, ResourceContext TWVWebResourceContext) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(2, m.Instance(), PascalStr(URI), uintptr(ResourceContext))
-	return GoBool(r1)
+func (m *TCoreWebView2) AddWebResourceRequestedFilter(uRI string, resourceContext wvTypes.TWVWebResourceContext) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(23, m.Instance(), api.PasStr(uRI), uintptr(resourceContext))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) RemoveWebResourceRequestedFilter(URI string, ResourceContext TWVWebResourceContext) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(49, m.Instance(), PascalStr(URI), uintptr(ResourceContext))
-	return GoBool(r1)
+func (m *TCoreWebView2) RemoveWebResourceRequestedFilter(uRI string, resourceContext wvTypes.TWVWebResourceContext) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(24, m.Instance(), api.PasStr(uRI), uintptr(resourceContext))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) RemoveHostObjectFromScript(aName string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(47, m.Instance(), PascalStr(aName))
-	return GoBool(r1)
+func (m *TCoreWebView2) AddHostObjectToScript(name string, object types.OleVariant) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(25, m.Instance(), api.PasStr(name), uintptr(object))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) AddScriptToExecuteOnDocumentCreated(JavaScript string, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(1, m.Instance(), PascalStr(JavaScript), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+func (m *TCoreWebView2) RemoveHostObjectFromScript(name string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(26, m.Instance(), api.PasStr(name))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) RemoveScriptToExecuteOnDocumentCreated(aID string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(48, m.Instance(), PascalStr(aID))
-	return GoBool(r1)
+func (m *TCoreWebView2) AddScriptToExecuteOnDocumentCreated(javaScript string, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(27, m.Instance(), api.PasStr(javaScript), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) RemoveScriptToExecuteOnDocumentCreated(iD string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(28, m.Instance(), api.PasStr(iD))
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) OpenDefaultDownloadDialog() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(36, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(29, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2) CloseDefaultDownloadDialog() bool {
-	r1 := coreWebView2ImportAPI().SysCallN(12, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(30, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) ClearServerCertificateErrorActions(aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(10, m.Instance(), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+func (m *TCoreWebView2) ClearServerCertificateErrorActions(browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(31, m.Instance(), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) GetFavicon(aFormat TWVFaviconImageFormat, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(24, m.Instance(), uintptr(aFormat), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+func (m *TCoreWebView2) GetFavicon(format wvTypes.TWVFaviconImageFormat, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(32, m.Instance(), uintptr(format), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) Print(aPrintSettings ICoreWebView2PrintSettings, aHandler ICoreWebView2PrintCompletedHandler) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(42, m.Instance(), GetObjectUintptr(aPrintSettings), GetObjectUintptr(aHandler))
-	return GoBool(r1)
+func (m *TCoreWebView2) Print(printSettings ICoreWebView2PrintSettings, handler ICoreWebView2PrintCompletedHandler) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(33, m.Instance(), base.GetObjectUintptr(printSettings), base.GetObjectUintptr(handler))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) ShowPrintUI(aPrintDialogKind TWVPrintDialogKind) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(53, m.Instance(), uintptr(aPrintDialogKind))
-	return GoBool(r1)
+func (m *TCoreWebView2) ShowPrintUI(printDialogKind wvTypes.TWVPrintDialogKind) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(34, m.Instance(), uintptr(printDialogKind))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) PrintToPdfStream(aPrintSettings ICoreWebView2PrintSettings, aHandler ICoreWebView2PrintToPdfStreamCompletedHandler) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(44, m.Instance(), GetObjectUintptr(aPrintSettings), GetObjectUintptr(aHandler))
-	return GoBool(r1)
+func (m *TCoreWebView2) PrintToPdfStream(printSettings ICoreWebView2PrintSettings, handler ICoreWebView2PrintToPdfStreamCompletedHandler) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(35, m.Instance(), base.GetObjectUintptr(printSettings), base.GetObjectUintptr(handler))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) PostSharedBufferToScript(aSharedBuffer ICoreWebView2SharedBuffer, aAccess TWVSharedBufferAccess, aAdditionalDataAsJson string) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(39, m.Instance(), GetObjectUintptr(aSharedBuffer), uintptr(aAccess), PascalStr(aAdditionalDataAsJson))
-	return GoBool(r1)
+func (m *TCoreWebView2) PostSharedBufferToScript(sharedBuffer ICoreWebView2SharedBuffer, access wvTypes.TWVSharedBufferAccess, additionalDataAsJson string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(36, m.Instance(), base.GetObjectUintptr(sharedBuffer), uintptr(access), api.PasStr(additionalDataAsJson))
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) ExecuteScriptWithResult(JavaScript string, aExecutionID int32, aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ImportAPI().SysCallN(21, m.Instance(), PascalStr(JavaScript), uintptr(aExecutionID), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+func (m *TCoreWebView2) ExecuteScriptWithResult(javaScript string, executionID int32, browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(37, m.Instance(), api.PasStr(javaScript), uintptr(executionID), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) AddWebResourceRequestedFilterWithRequestSourceKinds(uri string, resourceContext wvTypes.TWVWebResourceContext, requestSourceKinds wvTypes.TWVWebResourceRequestSourceKind) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(38, m.Instance(), api.PasStr(uri), uintptr(resourceContext), uintptr(requestSourceKinds))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) RemoveWebResourceRequestedFilterWithRequestSourceKinds(uri string, resourceContext wvTypes.TWVWebResourceContext, requestSourceKinds wvTypes.TWVWebResourceRequestSourceKind) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(39, m.Instance(), api.PasStr(uri), uintptr(resourceContext), uintptr(requestSourceKinds))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) PostWebMessageAsJsonWithAdditionalObjects(webMessageAsJson string, additionalObjects ICoreWebView2ObjectCollectionView) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(40, m.Instance(), api.PasStr(webMessageAsJson), base.GetObjectUintptr(additionalObjects))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) ShowSaveAsUI(browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(41, m.Instance(), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) AfterConstruction() {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2API().SysCallN(42, m.Instance())
+}
+
+func (m *TCoreWebView2) Initialized() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(43, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) BaseIntf() (result ICoreWebView2) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2API().SysCallN(44, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2) Settings() (result ICoreWebView2Settings) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2API().SysCallN(45, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Settings(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2) BrowserProcessID() types.DWORD {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2API().SysCallN(46, m.Instance())
+	return types.DWORD(r)
+}
+
+func (m *TCoreWebView2) CanGoBack() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(47, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) CanGoForward() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(48, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) ContainsFullScreenElement() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(49, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) DocumentTitle() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2API().SysCallN(50, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TCoreWebView2) Source() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2API().SysCallN(51, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TCoreWebView2) CookieManager() (result ICoreWebView2CookieManager) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2API().SysCallN(52, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2CookieManager(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2) Environment() (result ICoreWebView2Environment) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2API().SysCallN(53, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Environment(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2) IsSuspended() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(54, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) IsMuted() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(55, 0, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) SetIsMuted(value bool) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2API().SysCallN(55, 1, m.Instance(), api.PasBool(value))
+}
+
+func (m *TCoreWebView2) IsDocumentPlayingAudio() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(56, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) IsDefaultDownloadDialogOpen() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2API().SysCallN(57, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2) DefaultDownloadDialogCornerAlignment() wvTypes.TWVDefaultDownloadDialogCornerAlignment {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2API().SysCallN(58, 0, m.Instance())
+	return wvTypes.TWVDefaultDownloadDialogCornerAlignment(r)
+}
+
+func (m *TCoreWebView2) SetDefaultDownloadDialogCornerAlignment(value wvTypes.TWVDefaultDownloadDialogCornerAlignment) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2API().SysCallN(58, 1, m.Instance(), uintptr(value))
+}
+
+func (m *TCoreWebView2) DefaultDownloadDialogMargin() (result types.TPoint) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2API().SysCallN(59, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&result)))
+	return
+}
+
+func (m *TCoreWebView2) SetDefaultDownloadDialogMargin(value types.TPoint) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2API().SysCallN(59, 1, m.Instance(), uintptr(base.UnsafePointer(&value)))
+}
+
+func (m *TCoreWebView2) StatusBarText() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2API().SysCallN(60, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TCoreWebView2) Profile() (result ICoreWebView2Profile) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2API().SysCallN(61, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Profile(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2) FaviconURI() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2API().SysCallN(62, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TCoreWebView2) MemoryUsageTargetLevel() wvTypes.TWVMemoryUsageTargetLevel {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2API().SysCallN(63, 0, m.Instance())
+	return wvTypes.TWVMemoryUsageTargetLevel(r)
+}
+
+func (m *TCoreWebView2) SetMemoryUsageTargetLevel(value wvTypes.TWVMemoryUsageTargetLevel) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2API().SysCallN(63, 1, m.Instance(), uintptr(value))
+}
+
+func (m *TCoreWebView2) FrameId() uint32 {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2API().SysCallN(64, m.Instance())
+	return uint32(r)
+}
+
+// NewCoreWebView2 class constructor
+func NewCoreWebView2(baseIntf ICoreWebView2) ICoreWebView2 {
+	r := coreWebView2API().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2(r)
 }
 
 var (
-	coreWebView2Import       *imports.Imports = nil
-	coreWebView2ImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2_AddAllBrowserEvents", 0),
-		/*1*/ imports.NewTable("CoreWebView2_AddScriptToExecuteOnDocumentCreated", 0),
-		/*2*/ imports.NewTable("CoreWebView2_AddWebResourceRequestedFilter", 0),
-		/*3*/ imports.NewTable("CoreWebView2_BaseIntf", 0),
-		/*4*/ imports.NewTable("CoreWebView2_BrowserProcessID", 0),
-		/*5*/ imports.NewTable("CoreWebView2_CallDevToolsProtocolMethod", 0),
-		/*6*/ imports.NewTable("CoreWebView2_CallDevToolsProtocolMethodForSession", 0),
-		/*7*/ imports.NewTable("CoreWebView2_CanGoBack", 0),
-		/*8*/ imports.NewTable("CoreWebView2_CanGoForward", 0),
-		/*9*/ imports.NewTable("CoreWebView2_CapturePreview", 0),
-		/*10*/ imports.NewTable("CoreWebView2_ClearServerCertificateErrorActions", 0),
-		/*11*/ imports.NewTable("CoreWebView2_ClearVirtualHostNameToFolderMapping", 0),
-		/*12*/ imports.NewTable("CoreWebView2_CloseDefaultDownloadDialog", 0),
-		/*13*/ imports.NewTable("CoreWebView2_ContainsFullScreenElement", 0),
-		/*14*/ imports.NewTable("CoreWebView2_CookieManager", 0),
-		/*15*/ imports.NewTable("CoreWebView2_Create", 0),
-		/*16*/ imports.NewTable("CoreWebView2_DefaultDownloadDialogCornerAlignment", 0),
-		/*17*/ imports.NewTable("CoreWebView2_DefaultDownloadDialogMargin", 0),
-		/*18*/ imports.NewTable("CoreWebView2_DocumentTitle", 0),
-		/*19*/ imports.NewTable("CoreWebView2_Environment", 0),
-		/*20*/ imports.NewTable("CoreWebView2_ExecuteScript", 0),
-		/*21*/ imports.NewTable("CoreWebView2_ExecuteScriptWithResult", 0),
-		/*22*/ imports.NewTable("CoreWebView2_FaviconURI", 0),
-		/*23*/ imports.NewTable("CoreWebView2_FrameId", 0),
-		/*24*/ imports.NewTable("CoreWebView2_GetFavicon", 0),
-		/*25*/ imports.NewTable("CoreWebView2_GoBack", 0),
-		/*26*/ imports.NewTable("CoreWebView2_GoForward", 0),
-		/*27*/ imports.NewTable("CoreWebView2_Initialized", 0),
-		/*28*/ imports.NewTable("CoreWebView2_IsDefaultDownloadDialogOpen", 0),
-		/*29*/ imports.NewTable("CoreWebView2_IsDocumentPlayingAudio", 0),
-		/*30*/ imports.NewTable("CoreWebView2_IsMuted", 0),
-		/*31*/ imports.NewTable("CoreWebView2_IsSuspended", 0),
-		/*32*/ imports.NewTable("CoreWebView2_MemoryUsageTargetLevel", 0),
-		/*33*/ imports.NewTable("CoreWebView2_Navigate", 0),
-		/*34*/ imports.NewTable("CoreWebView2_NavigateToString", 0),
-		/*35*/ imports.NewTable("CoreWebView2_NavigateWithWebResourceRequest", 0),
-		/*36*/ imports.NewTable("CoreWebView2_OpenDefaultDownloadDialog", 0),
-		/*37*/ imports.NewTable("CoreWebView2_OpenDevToolsWindow", 0),
-		/*38*/ imports.NewTable("CoreWebView2_OpenTaskManagerWindow", 0),
-		/*39*/ imports.NewTable("CoreWebView2_PostSharedBufferToScript", 0),
-		/*40*/ imports.NewTable("CoreWebView2_PostWebMessageAsJson", 0),
-		/*41*/ imports.NewTable("CoreWebView2_PostWebMessageAsString", 0),
-		/*42*/ imports.NewTable("CoreWebView2_Print", 0),
-		/*43*/ imports.NewTable("CoreWebView2_PrintToPdf", 0),
-		/*44*/ imports.NewTable("CoreWebView2_PrintToPdfStream", 0),
-		/*45*/ imports.NewTable("CoreWebView2_Profile", 0),
-		/*46*/ imports.NewTable("CoreWebView2_Reload", 0),
-		/*47*/ imports.NewTable("CoreWebView2_RemoveHostObjectFromScript", 0),
-		/*48*/ imports.NewTable("CoreWebView2_RemoveScriptToExecuteOnDocumentCreated", 0),
-		/*49*/ imports.NewTable("CoreWebView2_RemoveWebResourceRequestedFilter", 0),
-		/*50*/ imports.NewTable("CoreWebView2_Resume", 0),
-		/*51*/ imports.NewTable("CoreWebView2_SetVirtualHostNameToFolderMapping", 0),
-		/*52*/ imports.NewTable("CoreWebView2_Settings", 0),
-		/*53*/ imports.NewTable("CoreWebView2_ShowPrintUI", 0),
-		/*54*/ imports.NewTable("CoreWebView2_Source", 0),
-		/*55*/ imports.NewTable("CoreWebView2_StatusBarText", 0),
-		/*56*/ imports.NewTable("CoreWebView2_Stop", 0),
-		/*57*/ imports.NewTable("CoreWebView2_SubscribeToDevToolsProtocolEvent", 0),
-		/*58*/ imports.NewTable("CoreWebView2_TrySuspend", 0),
-	}
+	coreWebView2Once   base.Once
+	coreWebView2Import *imports.Imports = nil
 )
 
-func coreWebView2ImportAPI() *imports.Imports {
-	if coreWebView2Import == nil {
-		coreWebView2Import = NewDefaultImports()
-		coreWebView2Import.SetImportTable(coreWebView2ImportTables)
-		coreWebView2ImportTables = nil
-	}
+func coreWebView2API() *imports.Imports {
+	coreWebView2Once.Do(func() {
+		coreWebView2Import = api.NewDefaultImports()
+		coreWebView2Import.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2_Create", 0), // constructor NewCoreWebView2
+			/* 1 */ imports.NewTable("TCoreWebView2_AddAllBrowserEvents", 0), // function AddAllBrowserEvents
+			/* 2 */ imports.NewTable("TCoreWebView2_SubscribeToDevToolsProtocolEvent", 0), // function SubscribeToDevToolsProtocolEvent
+			/* 3 */ imports.NewTable("TCoreWebView2_CapturePreview", 0), // function CapturePreview
+			/* 4 */ imports.NewTable("TCoreWebView2_ExecuteScript", 0), // function ExecuteScript
+			/* 5 */ imports.NewTable("TCoreWebView2_GoBack", 0), // function GoBack
+			/* 6 */ imports.NewTable("TCoreWebView2_GoForward", 0), // function GoForward
+			/* 7 */ imports.NewTable("TCoreWebView2_Navigate", 0), // function Navigate
+			/* 8 */ imports.NewTable("TCoreWebView2_NavigateToString", 0), // function NavigateToString
+			/* 9 */ imports.NewTable("TCoreWebView2_NavigateWithWebResourceRequest", 0), // function NavigateWithWebResourceRequest
+			/* 10 */ imports.NewTable("TCoreWebView2_Reload", 0), // function Reload
+			/* 11 */ imports.NewTable("TCoreWebView2_Stop", 0), // function Stop
+			/* 12 */ imports.NewTable("TCoreWebView2_TrySuspend", 0), // function TrySuspend
+			/* 13 */ imports.NewTable("TCoreWebView2_Resume", 0), // function Resume
+			/* 14 */ imports.NewTable("TCoreWebView2_SetVirtualHostNameToFolderMapping", 0), // function SetVirtualHostNameToFolderMapping
+			/* 15 */ imports.NewTable("TCoreWebView2_ClearVirtualHostNameToFolderMapping", 0), // function ClearVirtualHostNameToFolderMapping
+			/* 16 */ imports.NewTable("TCoreWebView2_OpenTaskManagerWindow", 0), // function OpenTaskManagerWindow
+			/* 17 */ imports.NewTable("TCoreWebView2_PrintToPdf", 0), // function PrintToPdf
+			/* 18 */ imports.NewTable("TCoreWebView2_OpenDevToolsWindow", 0), // function OpenDevToolsWindow
+			/* 19 */ imports.NewTable("TCoreWebView2_PostWebMessageAsJson", 0), // function PostWebMessageAsJson
+			/* 20 */ imports.NewTable("TCoreWebView2_PostWebMessageAsString", 0), // function PostWebMessageAsString
+			/* 21 */ imports.NewTable("TCoreWebView2_CallDevToolsProtocolMethod", 0), // function CallDevToolsProtocolMethod
+			/* 22 */ imports.NewTable("TCoreWebView2_CallDevToolsProtocolMethodForSession", 0), // function CallDevToolsProtocolMethodForSession
+			/* 23 */ imports.NewTable("TCoreWebView2_AddWebResourceRequestedFilter", 0), // function AddWebResourceRequestedFilter
+			/* 24 */ imports.NewTable("TCoreWebView2_RemoveWebResourceRequestedFilter", 0), // function RemoveWebResourceRequestedFilter
+			/* 25 */ imports.NewTable("TCoreWebView2_AddHostObjectToScript", 0), // function AddHostObjectToScript
+			/* 26 */ imports.NewTable("TCoreWebView2_RemoveHostObjectFromScript", 0), // function RemoveHostObjectFromScript
+			/* 27 */ imports.NewTable("TCoreWebView2_AddScriptToExecuteOnDocumentCreated", 0), // function AddScriptToExecuteOnDocumentCreated
+			/* 28 */ imports.NewTable("TCoreWebView2_RemoveScriptToExecuteOnDocumentCreated", 0), // function RemoveScriptToExecuteOnDocumentCreated
+			/* 29 */ imports.NewTable("TCoreWebView2_OpenDefaultDownloadDialog", 0), // function OpenDefaultDownloadDialog
+			/* 30 */ imports.NewTable("TCoreWebView2_CloseDefaultDownloadDialog", 0), // function CloseDefaultDownloadDialog
+			/* 31 */ imports.NewTable("TCoreWebView2_ClearServerCertificateErrorActions", 0), // function ClearServerCertificateErrorActions
+			/* 32 */ imports.NewTable("TCoreWebView2_GetFavicon", 0), // function GetFavicon
+			/* 33 */ imports.NewTable("TCoreWebView2_Print", 0), // function Print
+			/* 34 */ imports.NewTable("TCoreWebView2_ShowPrintUI", 0), // function ShowPrintUI
+			/* 35 */ imports.NewTable("TCoreWebView2_PrintToPdfStream", 0), // function PrintToPdfStream
+			/* 36 */ imports.NewTable("TCoreWebView2_PostSharedBufferToScript", 0), // function PostSharedBufferToScript
+			/* 37 */ imports.NewTable("TCoreWebView2_ExecuteScriptWithResult", 0), // function ExecuteScriptWithResult
+			/* 38 */ imports.NewTable("TCoreWebView2_AddWebResourceRequestedFilterWithRequestSourceKinds", 0), // function AddWebResourceRequestedFilterWithRequestSourceKinds
+			/* 39 */ imports.NewTable("TCoreWebView2_RemoveWebResourceRequestedFilterWithRequestSourceKinds", 0), // function RemoveWebResourceRequestedFilterWithRequestSourceKinds
+			/* 40 */ imports.NewTable("TCoreWebView2_PostWebMessageAsJsonWithAdditionalObjects", 0), // function PostWebMessageAsJsonWithAdditionalObjects
+			/* 41 */ imports.NewTable("TCoreWebView2_ShowSaveAsUI", 0), // function ShowSaveAsUI
+			/* 42 */ imports.NewTable("TCoreWebView2_AfterConstruction", 0), // procedure AfterConstruction
+			/* 43 */ imports.NewTable("TCoreWebView2_Initialized", 0), // property Initialized
+			/* 44 */ imports.NewTable("TCoreWebView2_BaseIntf", 0), // property BaseIntf
+			/* 45 */ imports.NewTable("TCoreWebView2_Settings", 0), // property Settings
+			/* 46 */ imports.NewTable("TCoreWebView2_BrowserProcessID", 0), // property BrowserProcessID
+			/* 47 */ imports.NewTable("TCoreWebView2_CanGoBack", 0), // property CanGoBack
+			/* 48 */ imports.NewTable("TCoreWebView2_CanGoForward", 0), // property CanGoForward
+			/* 49 */ imports.NewTable("TCoreWebView2_ContainsFullScreenElement", 0), // property ContainsFullScreenElement
+			/* 50 */ imports.NewTable("TCoreWebView2_DocumentTitle", 0), // property DocumentTitle
+			/* 51 */ imports.NewTable("TCoreWebView2_Source", 0), // property Source
+			/* 52 */ imports.NewTable("TCoreWebView2_CookieManager", 0), // property CookieManager
+			/* 53 */ imports.NewTable("TCoreWebView2_Environment", 0), // property Environment
+			/* 54 */ imports.NewTable("TCoreWebView2_IsSuspended", 0), // property IsSuspended
+			/* 55 */ imports.NewTable("TCoreWebView2_IsMuted", 0), // property IsMuted
+			/* 56 */ imports.NewTable("TCoreWebView2_IsDocumentPlayingAudio", 0), // property IsDocumentPlayingAudio
+			/* 57 */ imports.NewTable("TCoreWebView2_IsDefaultDownloadDialogOpen", 0), // property IsDefaultDownloadDialogOpen
+			/* 58 */ imports.NewTable("TCoreWebView2_DefaultDownloadDialogCornerAlignment", 0), // property DefaultDownloadDialogCornerAlignment
+			/* 59 */ imports.NewTable("TCoreWebView2_DefaultDownloadDialogMargin", 0), // property DefaultDownloadDialogMargin
+			/* 60 */ imports.NewTable("TCoreWebView2_StatusBarText", 0), // property StatusBarText
+			/* 61 */ imports.NewTable("TCoreWebView2_Profile", 0), // property Profile
+			/* 62 */ imports.NewTable("TCoreWebView2_FaviconURI", 0), // property FaviconURI
+			/* 63 */ imports.NewTable("TCoreWebView2_MemoryUsageTargetLevel", 0), // property MemoryUsageTargetLevel
+			/* 64 */ imports.NewTable("TCoreWebView2_FrameId", 0), // property FrameId
+		}
+	})
 	return coreWebView2Import
 }

@@ -6,46 +6,70 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2TrySuspendCompletedHandler Parent: IObject
-//
-//	The caller implements this interface to receive the TrySuspend result.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2trysuspendcompletedhandler">See the ICoreWebView2TrySuspendCompletedHandler article.</a>
+// ICoreWebView2TrySuspendCompletedHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2TrySuspendCompletedHandler0 interface {
+	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the result of the corresponding asynchronous method.
+	Invoke(errorCode types.HRESULT, result int32) types.HRESULT // function
+}
+
+// ICoreWebView2TrySuspendCompletedHandler Parent: ICoreWebView2TrySuspendCompletedHandler0
 type ICoreWebView2TrySuspendCompletedHandler interface {
-	IObject
+	ICoreWebView2TrySuspendCompletedHandler0
+	AsIntfTrySuspendCompletedHandler() uintptr
 }
 
-// TCoreWebView2TrySuspendCompletedHandler Parent: TObject
-//
-//	The caller implements this interface to receive the TrySuspend result.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2trysuspendcompletedhandler">See the ICoreWebView2TrySuspendCompletedHandler article.</a>
 type TCoreWebView2TrySuspendCompletedHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2TrySuspendCompletedHandler(aEvents IWVBrowserEvents) ICoreWebView2TrySuspendCompletedHandler {
-	r1 := coreWebView2TrySuspendCompletedHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents))
-	return AsCoreWebView2TrySuspendCompletedHandler(r1)
+func (m *TCoreWebView2TrySuspendCompletedHandler) Invoke(errorCode types.HRESULT, result int32) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2TrySuspendCompletedHandlerAPI().SysCallN(1, m.Instance(), uintptr(errorCode), uintptr(result))
+	return types.HRESULT(r)
+}
+
+func (m *TCoreWebView2TrySuspendCompletedHandler) AsIntfTrySuspendCompletedHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2TrySuspendCompletedHandler class constructor
+func NewCoreWebView2TrySuspendCompletedHandler(events IWVBrowserBase) ICoreWebView2TrySuspendCompletedHandler {
+	var trySuspendCompletedHandlerPtr uintptr // ICoreWebView2TrySuspendCompletedHandler
+	r := coreWebView2TrySuspendCompletedHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), uintptr(base.UnsafePointer(&trySuspendCompletedHandlerPtr)))
+	ret := AsCoreWebView2TrySuspendCompletedHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, trySuspendCompletedHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2TrySuspendCompletedHandlerImport       *imports.Imports = nil
-	coreWebView2TrySuspendCompletedHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2TrySuspendCompletedHandler_Create", 0),
-	}
+	coreWebView2TrySuspendCompletedHandlerOnce   base.Once
+	coreWebView2TrySuspendCompletedHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2TrySuspendCompletedHandlerImportAPI() *imports.Imports {
-	if coreWebView2TrySuspendCompletedHandlerImport == nil {
-		coreWebView2TrySuspendCompletedHandlerImport = NewDefaultImports()
-		coreWebView2TrySuspendCompletedHandlerImport.SetImportTable(coreWebView2TrySuspendCompletedHandlerImportTables)
-		coreWebView2TrySuspendCompletedHandlerImportTables = nil
-	}
+func coreWebView2TrySuspendCompletedHandlerAPI() *imports.Imports {
+	coreWebView2TrySuspendCompletedHandlerOnce.Do(func() {
+		coreWebView2TrySuspendCompletedHandlerImport = api.NewDefaultImports()
+		coreWebView2TrySuspendCompletedHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2TrySuspendCompletedHandler_Create", 0), // constructor NewCoreWebView2TrySuspendCompletedHandler
+			/* 1 */ imports.NewTable("TCoreWebView2TrySuspendCompletedHandler_Invoke", 0), // function Invoke
+		}
+	})
 	return coreWebView2TrySuspendCompletedHandlerImport
 }

@@ -6,85 +6,103 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkURIRequest Root Interface
+// IWkURIRequest Parent: lcl.IObject
 type IWkURIRequest interface {
-	IObject
-	URI() string                  // property
-	SetURI(AValue string)         // property
-	Data() WebKitURIRequest       // function
-	Method() string               // function
-	Headers() PSoupMessageHeaders // function
+	lcl.IObject
+	Data() wvTypes.WebKitURIRequest       // function
+	Method() string                       // function
+	Headers() wvTypes.PSoupMessageHeaders // function
+	URI() string                          // property URI Getter
+	SetURI(value string)                  // property URI Setter
 }
 
-// TWkURIRequest Root Object
 type TWkURIRequest struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkURIRequest(aURIRequest WebKitURIRequest) IWkURIRequest {
-	r1 := wkURIRequestImportAPI().SysCallN(0, uintptr(aURIRequest))
-	return AsWkURIRequest(r1)
-}
-
-// WkURIRequestRef -> IWkURIRequest
-var WkURIRequestRef wkURIRequest
-
-// wkURIRequest TWkURIRequest Ref
-type wkURIRequest uintptr
-
-func (m *wkURIRequest) NewURIRequest(aUri string) IWkURIRequest {
-	r1 := wkURIRequestImportAPI().SysCallN(4, PascalStr(aUri))
-	return AsWkURIRequest(r1)
-}
-
-func (m *TWkURIRequest) URI() string {
-	r1 := wkURIRequestImportAPI().SysCallN(5, 0, m.Instance(), 0)
-	return GoStr(r1)
-}
-
-func (m *TWkURIRequest) SetURI(AValue string) {
-	wkURIRequestImportAPI().SysCallN(5, 1, m.Instance(), PascalStr(AValue))
-}
-
-func (m *TWkURIRequest) Data() WebKitURIRequest {
-	r1 := wkURIRequestImportAPI().SysCallN(1, m.Instance())
-	return WebKitURIRequest(r1)
+func (m *TWkURIRequest) Data() wvTypes.WebKitURIRequest {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURIRequestAPI().SysCallN(1, m.Instance())
+	return wvTypes.WebKitURIRequest(r)
 }
 
 func (m *TWkURIRequest) Method() string {
-	r1 := wkURIRequestImportAPI().SysCallN(3, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkURIRequestAPI().SysCallN(2, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TWkURIRequest) Headers() PSoupMessageHeaders {
-	r1 := wkURIRequestImportAPI().SysCallN(2, m.Instance())
-	return PSoupMessageHeaders(r1)
+func (m *TWkURIRequest) Headers() wvTypes.PSoupMessageHeaders {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURIRequestAPI().SysCallN(3, m.Instance())
+	return wvTypes.PSoupMessageHeaders(r)
+}
+
+func (m *TWkURIRequest) URI() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkURIRequestAPI().SysCallN(5, 0, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWkURIRequest) SetURI(value string) {
+	if !m.IsValid() {
+		return
+	}
+	wkURIRequestAPI().SysCallN(5, 1, m.Instance(), api.PasStr(value))
+}
+
+// URIRequest  is static instance
+var URIRequest _URIRequestClass
+
+// _URIRequestClass is class type defined by TWkURIRequest
+type _URIRequestClass uintptr
+
+func (_URIRequestClass) NewURIRequest(uri string) IWkURIRequest {
+	r := wkURIRequestAPI().SysCallN(4, api.PasStr(uri))
+	return AsWkURIRequest(r)
+}
+
+// NewURIRequest class constructor
+func NewURIRequest(uRIRequest wvTypes.WebKitURIRequest) IWkURIRequest {
+	r := wkURIRequestAPI().SysCallN(0, uintptr(uRIRequest))
+	return AsWkURIRequest(r)
 }
 
 var (
-	wkURIRequestImport       *imports.Imports = nil
-	wkURIRequestImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkURIRequest_Create", 0),
-		/*1*/ imports.NewTable("WkURIRequest_Data", 0),
-		/*2*/ imports.NewTable("WkURIRequest_Headers", 0),
-		/*3*/ imports.NewTable("WkURIRequest_Method", 0),
-		/*4*/ imports.NewTable("WkURIRequest_NewURIRequest", 0),
-		/*5*/ imports.NewTable("WkURIRequest_URI", 0),
-	}
+	wkURIRequestOnce   base.Once
+	wkURIRequestImport *imports.Imports = nil
 )
 
-func wkURIRequestImportAPI() *imports.Imports {
-	if wkURIRequestImport == nil {
-		wkURIRequestImport = NewDefaultImports()
-		wkURIRequestImport.SetImportTable(wkURIRequestImportTables)
-		wkURIRequestImportTables = nil
-	}
+func wkURIRequestAPI() *imports.Imports {
+	wkURIRequestOnce.Do(func() {
+		wkURIRequestImport = api.NewDefaultImports()
+		wkURIRequestImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkURIRequest_Create", 0), // constructor NewURIRequest
+			/* 1 */ imports.NewTable("TWkURIRequest_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkURIRequest_Method", 0), // function Method
+			/* 3 */ imports.NewTable("TWkURIRequest_Headers", 0), // function Headers
+			/* 4 */ imports.NewTable("TWkURIRequest_NewURIRequest", 0), // static function NewURIRequest
+			/* 5 */ imports.NewTable("TWkURIRequest_URI", 0), // property URI
+		}
+	})
 	return wkURIRequestImport
 }

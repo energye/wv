@@ -6,72 +6,78 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKNavigation Root Interface
-//
-//	An object that tracks the loading progress of a webpage.
-//	https://developer.apple.com/documentation/webkit/wknavigation?language=objc
-type IWKNavigation interface {
-	IObject
+// IWkNavigation Parent: lcl.IObject
+type IWkNavigation interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKNavigation // function
+	Data() wvTypes.WKNavigation // function
 	// EffectiveContentMode
 	//  The content mode WebKit uses to load the webpage.
-	EffectiveContentMode() WKContentMode // function
+	EffectiveContentMode() wvTypes.WKContentMode // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
-// TWKNavigation Root Object
-//
-//	An object that tracks the loading progress of a webpage.
-//	https://developer.apple.com/documentation/webkit/wknavigation?language=objc
-type TWKNavigation struct {
-	TObject
+type TWkNavigation struct {
+	lcl.TObject
 }
 
-func NewWKNavigation(aData WKNavigation) IWKNavigation {
-	r1 := wKNavigationImportAPI().SysCallN(0, uintptr(aData))
-	return AsWKNavigation(r1)
+func (m *TWkNavigation) Data() wvTypes.WKNavigation {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKNavigation(r)
 }
 
-func (m *TWKNavigation) Data() WKNavigation {
-	r1 := wKNavigationImportAPI().SysCallN(1, m.Instance())
-	return WKNavigation(r1)
+func (m *TWkNavigation) EffectiveContentMode() wvTypes.WKContentMode {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationAPI().SysCallN(2, m.Instance())
+	return wvTypes.WKContentMode(r)
 }
 
-func (m *TWKNavigation) EffectiveContentMode() WKContentMode {
-	r1 := wKNavigationImportAPI().SysCallN(2, m.Instance())
-	return WKContentMode(r1)
+func (m *TWkNavigation) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkNavigationAPI().SysCallN(3, m.Instance())
 }
 
-func (m *TWKNavigation) Release() {
-	wKNavigationImportAPI().SysCallN(3, m.Instance())
+// NewNavigation class constructor
+func NewNavigation(data wvTypes.WKNavigation) IWkNavigation {
+	r := wkNavigationAPI().SysCallN(0, uintptr(data))
+	return AsWkNavigation(r)
 }
 
 var (
-	wKNavigationImport       *imports.Imports = nil
-	wKNavigationImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKNavigation_Create", 0),
-		/*1*/ imports.NewTable("WKNavigation_Data", 0),
-		/*2*/ imports.NewTable("WKNavigation_EffectiveContentMode", 0),
-		/*3*/ imports.NewTable("WKNavigation_Release", 0),
-	}
+	wkNavigationOnce   base.Once
+	wkNavigationImport *imports.Imports = nil
 )
 
-func wKNavigationImportAPI() *imports.Imports {
-	if wKNavigationImport == nil {
-		wKNavigationImport = NewDefaultImports()
-		wKNavigationImport.SetImportTable(wKNavigationImportTables)
-		wKNavigationImportTables = nil
-	}
-	return wKNavigationImport
+func wkNavigationAPI() *imports.Imports {
+	wkNavigationOnce.Do(func() {
+		wkNavigationImport = api.NewDefaultImports()
+		wkNavigationImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkNavigation_Create", 0), // constructor NewNavigation
+			/* 1 */ imports.NewTable("TWkNavigation_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkNavigation_EffectiveContentMode", 0), // function EffectiveContentMode
+			/* 3 */ imports.NewTable("TWkNavigation_Release", 0), // procedure Release
+		}
+	})
+	return wkNavigationImport
 }

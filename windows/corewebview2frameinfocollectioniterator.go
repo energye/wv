@@ -6,104 +6,112 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2FrameInfoCollectionIterator Parent: IObject
-//
-//	Iterator for a collection of FrameInfos. For more info, see
-//	ICoreWebView2ProcessFailedEventArgs2 and
-//	ICoreWebView2FrameInfoCollection.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator">See the ICoreWebView2FrameInfoCollectionIterator article.</a>
+// ICoreWebView2FrameInfoCollectionIterator Parent: lcl.IObject
 type ICoreWebView2FrameInfoCollectionIterator interface {
-	IObject
+	lcl.IObject
+	// MoveNext
+	//  Move the iterator to the next `FrameInfo` in the collection.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator#movenext">See the ICoreWebView2FrameInfoCollectionIterator article.</see>
+	MoveNext() bool // function
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2FrameInfoCollectionIterator // property
+	BaseIntf() ICoreWebView2FrameInfoCollectionIterator // property BaseIntf Getter
 	// HasCurrent
 	//  `TRUE` when the iterator has not run out of `FrameInfo`s. If the
 	//  collection over which the iterator is iterating is empty or if the
 	//  iterator has gone past the end of the collection, then this is `FALSE`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator#get_hascurrent">See the ICoreWebView2FrameInfoCollectionIterator article.</a>
-	HasCurrent() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator#get_hascurrent">See the ICoreWebView2FrameInfoCollectionIterator article.</see>
+	HasCurrent() bool // property HasCurrent Getter
 	// Current
 	//  Get the current `ICoreWebView2FrameInfo` of the iterator.
 	//  Returns `HRESULT_FROM_WIN32(ERROR_INVALID_INDEX)` if HasCurrent is
 	//  `FALSE`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator#getcurrent">See the ICoreWebView2FrameInfoCollectionIterator article.</a>
-	Current() ICoreWebView2FrameInfo // property
-	// MoveNext
-	//  Move the iterator to the next `FrameInfo` in the collection.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator#movenext">See the ICoreWebView2FrameInfoCollectionIterator article.</a>
-	MoveNext() bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator#getcurrent">See the ICoreWebView2FrameInfoCollectionIterator article.</see>
+	Current() ICoreWebView2FrameInfo // property Current Getter
 }
 
-// TCoreWebView2FrameInfoCollectionIterator Parent: TObject
-//
-//	Iterator for a collection of FrameInfos. For more info, see
-//	ICoreWebView2ProcessFailedEventArgs2 and
-//	ICoreWebView2FrameInfoCollection.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator">See the ICoreWebView2FrameInfoCollectionIterator article.</a>
 type TCoreWebView2FrameInfoCollectionIterator struct {
-	TObject
-}
-
-func NewCoreWebView2FrameInfoCollectionIterator(aBaseIntf ICoreWebView2FrameInfoCollectionIterator) ICoreWebView2FrameInfoCollectionIterator {
-	r1 := coreWebView2FrameInfoCollectionIteratorImportAPI().SysCallN(1, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2FrameInfoCollectionIterator(r1)
-}
-
-func (m *TCoreWebView2FrameInfoCollectionIterator) Initialized() bool {
-	r1 := coreWebView2FrameInfoCollectionIteratorImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2FrameInfoCollectionIterator) BaseIntf() ICoreWebView2FrameInfoCollectionIterator {
-	var resultCoreWebView2FrameInfoCollectionIterator uintptr
-	coreWebView2FrameInfoCollectionIteratorImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2FrameInfoCollectionIterator)))
-	return AsCoreWebView2FrameInfoCollectionIterator(resultCoreWebView2FrameInfoCollectionIterator)
-}
-
-func (m *TCoreWebView2FrameInfoCollectionIterator) HasCurrent() bool {
-	r1 := coreWebView2FrameInfoCollectionIteratorImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2FrameInfoCollectionIterator) Current() ICoreWebView2FrameInfo {
-	var resultCoreWebView2FrameInfo uintptr
-	coreWebView2FrameInfoCollectionIteratorImportAPI().SysCallN(2, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2FrameInfo)))
-	return AsCoreWebView2FrameInfo(resultCoreWebView2FrameInfo)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2FrameInfoCollectionIterator) MoveNext() bool {
-	r1 := coreWebView2FrameInfoCollectionIteratorImportAPI().SysCallN(5, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2FrameInfoCollectionIteratorAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2FrameInfoCollectionIterator) Initialized() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2FrameInfoCollectionIteratorAPI().SysCallN(2, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2FrameInfoCollectionIterator) BaseIntf() (result ICoreWebView2FrameInfoCollectionIterator) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2FrameInfoCollectionIteratorAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2FrameInfoCollectionIterator(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2FrameInfoCollectionIterator) HasCurrent() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2FrameInfoCollectionIteratorAPI().SysCallN(4, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2FrameInfoCollectionIterator) Current() (result ICoreWebView2FrameInfo) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2FrameInfoCollectionIteratorAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2FrameInfo(resultPtr)
+	return
+}
+
+// NewCoreWebView2FrameInfoCollectionIterator class constructor
+func NewCoreWebView2FrameInfoCollectionIterator(baseIntf ICoreWebView2FrameInfoCollectionIterator) ICoreWebView2FrameInfoCollectionIterator {
+	r := coreWebView2FrameInfoCollectionIteratorAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2FrameInfoCollectionIterator(r)
 }
 
 var (
-	coreWebView2FrameInfoCollectionIteratorImport       *imports.Imports = nil
-	coreWebView2FrameInfoCollectionIteratorImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2FrameInfoCollectionIterator_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2FrameInfoCollectionIterator_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2FrameInfoCollectionIterator_Current", 0),
-		/*3*/ imports.NewTable("CoreWebView2FrameInfoCollectionIterator_HasCurrent", 0),
-		/*4*/ imports.NewTable("CoreWebView2FrameInfoCollectionIterator_Initialized", 0),
-		/*5*/ imports.NewTable("CoreWebView2FrameInfoCollectionIterator_MoveNext", 0),
-	}
+	coreWebView2FrameInfoCollectionIteratorOnce   base.Once
+	coreWebView2FrameInfoCollectionIteratorImport *imports.Imports = nil
 )
 
-func coreWebView2FrameInfoCollectionIteratorImportAPI() *imports.Imports {
-	if coreWebView2FrameInfoCollectionIteratorImport == nil {
-		coreWebView2FrameInfoCollectionIteratorImport = NewDefaultImports()
-		coreWebView2FrameInfoCollectionIteratorImport.SetImportTable(coreWebView2FrameInfoCollectionIteratorImportTables)
-		coreWebView2FrameInfoCollectionIteratorImportTables = nil
-	}
+func coreWebView2FrameInfoCollectionIteratorAPI() *imports.Imports {
+	coreWebView2FrameInfoCollectionIteratorOnce.Do(func() {
+		coreWebView2FrameInfoCollectionIteratorImport = api.NewDefaultImports()
+		coreWebView2FrameInfoCollectionIteratorImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2FrameInfoCollectionIterator_Create", 0), // constructor NewCoreWebView2FrameInfoCollectionIterator
+			/* 1 */ imports.NewTable("TCoreWebView2FrameInfoCollectionIterator_MoveNext", 0), // function MoveNext
+			/* 2 */ imports.NewTable("TCoreWebView2FrameInfoCollectionIterator_Initialized", 0), // property Initialized
+			/* 3 */ imports.NewTable("TCoreWebView2FrameInfoCollectionIterator_BaseIntf", 0), // property BaseIntf
+			/* 4 */ imports.NewTable("TCoreWebView2FrameInfoCollectionIterator_HasCurrent", 0), // property HasCurrent
+			/* 5 */ imports.NewTable("TCoreWebView2FrameInfoCollectionIterator_Current", 0), // property Current
+		}
+	})
 	return coreWebView2FrameInfoCollectionIteratorImport
 }

@@ -6,198 +6,239 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ContextMenuTarget Parent: IObject
-//
-//	Represents the information regarding the context menu target.
-//	Includes the context selected and the appropriate data used for the actions of a context menu.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget">See the ICoreWebView2ContextMenuTarget article.</a>
+// ICoreWebView2ContextMenuTarget Parent: lcl.IObject
 type ICoreWebView2ContextMenuTarget interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2ContextMenuTarget // property
+	BaseIntf() ICoreWebView2ContextMenuTarget // property BaseIntf Getter
 	// Kind
 	//  Gets the kind of context that the user selected.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_kind">See the ICoreWebView2ContextMenuTarget article.</a>
-	Kind() TWVMenuTargetKind // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_kind">See the ICoreWebView2ContextMenuTarget article.</see>
+	Kind() wvTypes.TWVMenuTargetKind // property Kind Getter
 	// IsEditable
 	//  Returns TRUE if the context menu is requested on an editable component.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_iseditable">See the ICoreWebView2ContextMenuTarget article.</a>
-	IsEditable() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_iseditable">See the ICoreWebView2ContextMenuTarget article.</see>
+	IsEditable() bool // property IsEditable Getter
 	// IsRequestedForMainFrame
 	//  Returns TRUE if the context menu was requested on the main frame and
 	//  FALSE if invoked on another frame.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_isrequestedformainframe">See the ICoreWebView2ContextMenuTarget article.</a>
-	IsRequestedForMainFrame() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_isrequestedformainframe">See the ICoreWebView2ContextMenuTarget article.</see>
+	IsRequestedForMainFrame() bool // property IsRequestedForMainFrame Getter
 	// PageUri
 	//  Gets the uri of the page.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_pageuri">See the ICoreWebView2ContextMenuTarget article.</a>
-	PageUri() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_pageuri">See the ICoreWebView2ContextMenuTarget article.</see>
+	PageUri() string // property PageUri Getter
 	// FrameUri
 	//  Gets the uri of the frame. Will match the PageUri if `IsRequestedForMainFrame` is TRUE.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_frameuri">See the ICoreWebView2ContextMenuTarget article.</a>
-	FrameUri() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_frameuri">See the ICoreWebView2ContextMenuTarget article.</see>
+	FrameUri() string // property FrameUri Getter
 	// HasLinkUri
 	//  Returns TRUE if the context menu is requested on HTML containing an anchor tag.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_haslinkuri">See the ICoreWebView2ContextMenuTarget article.</a>
-	HasLinkUri() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_haslinkuri">See the ICoreWebView2ContextMenuTarget article.</see>
+	HasLinkUri() bool // property HasLinkUri Getter
 	// LinkUri
-	//  Gets the uri of the link(if `HasLinkUri` is TRUE, null otherwise).
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_linkuri">See the ICoreWebView2ContextMenuTarget article.</a>
-	LinkUri() string // property
+	//  Gets the uri of the link (if `HasLinkUri` is TRUE, null otherwise).
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_linkuri">See the ICoreWebView2ContextMenuTarget article.</see>
+	LinkUri() string // property LinkUri Getter
 	// HasLinkText
 	//  Returns TRUE if the context menu is requested on text element that contains an anchor tag.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_haslinktext">See the ICoreWebView2ContextMenuTarget article.</a>
-	HasLinkText() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_haslinktext">See the ICoreWebView2ContextMenuTarget article.</see>
+	HasLinkText() bool // property HasLinkText Getter
 	// LinkText
-	//  Gets the text of the link(if `HasLinkText` is TRUE, null otherwise).
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_linktext">See the ICoreWebView2ContextMenuTarget article.</a>
-	LinkText() string // property
+	//  Gets the text of the link (if `HasLinkText` is TRUE, null otherwise).
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_linktext">See the ICoreWebView2ContextMenuTarget article.</see>
+	LinkText() string // property LinkText Getter
 	// HasSourceUri
 	//  Returns TRUE if the context menu is requested on HTML containing a source uri.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_hassourceuri">See the ICoreWebView2ContextMenuTarget article.</a>
-	HasSourceUri() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_hassourceuri">See the ICoreWebView2ContextMenuTarget article.</see>
+	HasSourceUri() bool // property HasSourceUri Getter
 	// SourceUri
-	//  Gets the active source uri of element(if `HasSourceUri` is TRUE, null otherwise).
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_sourceuri">See the ICoreWebView2ContextMenuTarget article.</a>
-	SourceUri() string // property
+	//  Gets the active source uri of element (if `HasSourceUri` is TRUE, null otherwise).
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_sourceuri">See the ICoreWebView2ContextMenuTarget article.</see>
+	SourceUri() string // property SourceUri Getter
 	// HasSelection
 	//  Returns TRUE if the context menu is requested on a selection.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_hasselection">See the ICoreWebView2ContextMenuTarget article.</a>
-	HasSelection() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_hasselection">See the ICoreWebView2ContextMenuTarget article.</see>
+	HasSelection() bool // property HasSelection Getter
 	// SelectionText
-	//  Gets the selected text(if `HasSelection` is TRUE, null otherwise).
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_selectiontext">See the ICoreWebView2ContextMenuTarget article.</a>
-	SelectionText() string // property
+	//  Gets the selected text (if `HasSelection` is TRUE, null otherwise).
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget#get_selectiontext">See the ICoreWebView2ContextMenuTarget article.</see>
+	SelectionText() string // property SelectionText Getter
 }
 
-// TCoreWebView2ContextMenuTarget Parent: TObject
-//
-//	Represents the information regarding the context menu target.
-//	Includes the context selected and the appropriate data used for the actions of a context menu.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenutarget">See the ICoreWebView2ContextMenuTarget article.</a>
 type TCoreWebView2ContextMenuTarget struct {
-	TObject
-}
-
-func NewCoreWebView2ContextMenuTarget(aBaseIntf ICoreWebView2ContextMenuTarget) ICoreWebView2ContextMenuTarget {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(1, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2ContextMenuTarget(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2ContextMenuTarget) Initialized() bool {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(7, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuTarget) BaseIntf() ICoreWebView2ContextMenuTarget {
-	var resultCoreWebView2ContextMenuTarget uintptr
-	coreWebView2ContextMenuTargetImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2ContextMenuTarget)))
-	return AsCoreWebView2ContextMenuTarget(resultCoreWebView2ContextMenuTarget)
+func (m *TCoreWebView2ContextMenuTarget) BaseIntf() (result ICoreWebView2ContextMenuTarget) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ContextMenuTargetAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ContextMenuTarget(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ContextMenuTarget) Kind() TWVMenuTargetKind {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(10, m.Instance())
-	return TWVMenuTargetKind(r1)
+func (m *TCoreWebView2ContextMenuTarget) Kind() wvTypes.TWVMenuTargetKind {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(3, m.Instance())
+	return wvTypes.TWVMenuTargetKind(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) IsEditable() bool {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(8, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(4, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) IsRequestedForMainFrame() bool {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(9, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) PageUri() string {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(13, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(6, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) FrameUri() string {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(2, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(7, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasLinkUri() bool {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(8, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) LinkUri() string {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(12, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(9, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasLinkText() bool {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(10, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) LinkText() string {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(11, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(11, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasSourceUri() bool {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(6, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(12, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) SourceUri() string {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(15, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(13, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasSelection() bool {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(5, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(14, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2ContextMenuTarget) SelectionText() string {
-	r1 := coreWebView2ContextMenuTargetImportAPI().SysCallN(14, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(15, m.Instance())
+	return api.GoStr(r)
+}
+
+// NewCoreWebView2ContextMenuTarget class constructor
+func NewCoreWebView2ContextMenuTarget(baseIntf ICoreWebView2ContextMenuTarget) ICoreWebView2ContextMenuTarget {
+	r := coreWebView2ContextMenuTargetAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2ContextMenuTarget(r)
 }
 
 var (
-	coreWebView2ContextMenuTargetImport       *imports.Imports = nil
-	coreWebView2ContextMenuTargetImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2ContextMenuTarget_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2ContextMenuTarget_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2ContextMenuTarget_FrameUri", 0),
-		/*3*/ imports.NewTable("CoreWebView2ContextMenuTarget_HasLinkText", 0),
-		/*4*/ imports.NewTable("CoreWebView2ContextMenuTarget_HasLinkUri", 0),
-		/*5*/ imports.NewTable("CoreWebView2ContextMenuTarget_HasSelection", 0),
-		/*6*/ imports.NewTable("CoreWebView2ContextMenuTarget_HasSourceUri", 0),
-		/*7*/ imports.NewTable("CoreWebView2ContextMenuTarget_Initialized", 0),
-		/*8*/ imports.NewTable("CoreWebView2ContextMenuTarget_IsEditable", 0),
-		/*9*/ imports.NewTable("CoreWebView2ContextMenuTarget_IsRequestedForMainFrame", 0),
-		/*10*/ imports.NewTable("CoreWebView2ContextMenuTarget_Kind", 0),
-		/*11*/ imports.NewTable("CoreWebView2ContextMenuTarget_LinkText", 0),
-		/*12*/ imports.NewTable("CoreWebView2ContextMenuTarget_LinkUri", 0),
-		/*13*/ imports.NewTable("CoreWebView2ContextMenuTarget_PageUri", 0),
-		/*14*/ imports.NewTable("CoreWebView2ContextMenuTarget_SelectionText", 0),
-		/*15*/ imports.NewTable("CoreWebView2ContextMenuTarget_SourceUri", 0),
-	}
+	coreWebView2ContextMenuTargetOnce   base.Once
+	coreWebView2ContextMenuTargetImport *imports.Imports = nil
 )
 
-func coreWebView2ContextMenuTargetImportAPI() *imports.Imports {
-	if coreWebView2ContextMenuTargetImport == nil {
-		coreWebView2ContextMenuTargetImport = NewDefaultImports()
-		coreWebView2ContextMenuTargetImport.SetImportTable(coreWebView2ContextMenuTargetImportTables)
-		coreWebView2ContextMenuTargetImportTables = nil
-	}
+func coreWebView2ContextMenuTargetAPI() *imports.Imports {
+	coreWebView2ContextMenuTargetOnce.Do(func() {
+		coreWebView2ContextMenuTargetImport = api.NewDefaultImports()
+		coreWebView2ContextMenuTargetImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2ContextMenuTarget_Create", 0), // constructor NewCoreWebView2ContextMenuTarget
+			/* 1 */ imports.NewTable("TCoreWebView2ContextMenuTarget_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2ContextMenuTarget_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2ContextMenuTarget_Kind", 0), // property Kind
+			/* 4 */ imports.NewTable("TCoreWebView2ContextMenuTarget_IsEditable", 0), // property IsEditable
+			/* 5 */ imports.NewTable("TCoreWebView2ContextMenuTarget_IsRequestedForMainFrame", 0), // property IsRequestedForMainFrame
+			/* 6 */ imports.NewTable("TCoreWebView2ContextMenuTarget_PageUri", 0), // property PageUri
+			/* 7 */ imports.NewTable("TCoreWebView2ContextMenuTarget_FrameUri", 0), // property FrameUri
+			/* 8 */ imports.NewTable("TCoreWebView2ContextMenuTarget_HasLinkUri", 0), // property HasLinkUri
+			/* 9 */ imports.NewTable("TCoreWebView2ContextMenuTarget_LinkUri", 0), // property LinkUri
+			/* 10 */ imports.NewTable("TCoreWebView2ContextMenuTarget_HasLinkText", 0), // property HasLinkText
+			/* 11 */ imports.NewTable("TCoreWebView2ContextMenuTarget_LinkText", 0), // property LinkText
+			/* 12 */ imports.NewTable("TCoreWebView2ContextMenuTarget_HasSourceUri", 0), // property HasSourceUri
+			/* 13 */ imports.NewTable("TCoreWebView2ContextMenuTarget_SourceUri", 0), // property SourceUri
+			/* 14 */ imports.NewTable("TCoreWebView2ContextMenuTarget_HasSelection", 0), // property HasSelection
+			/* 15 */ imports.NewTable("TCoreWebView2ContextMenuTarget_SelectionText", 0), // property SelectionText
+		}
+	})
 	return coreWebView2ContextMenuTargetImport
 }

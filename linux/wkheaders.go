@@ -6,91 +6,111 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkHeaders Root Interface
+// IWkHeaders Parent: lcl.IObject
 type IWkHeaders interface {
-	IObject
-	Data() PSoupMessageHeaders           // function
-	List() IStrings                      // function
-	Append(aName string, aValue string)  // procedure
-	Clear()                              // procedure
-	Remove(aName string)                 // procedure
-	Replace(aName string, aValue string) // procedure
+	lcl.IObject
+	Data() wvTypes.PSoupMessageHeaders // function
+	List() lcl.IStrings                // function
+	Append(name string, value string)  // procedure
+	Clear()                            // procedure
+	Remove(name string)                // procedure
+	Replace(name string, value string) // procedure
 }
 
-// TWkHeaders Root Object
 type TWkHeaders struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkHeaders(aMessageHeaders PSoupMessageHeaders) IWkHeaders {
-	r1 := wkHeadersImportAPI().SysCallN(2, uintptr(aMessageHeaders))
-	return AsWkHeaders(r1)
+func (m *TWkHeaders) Data() wvTypes.PSoupMessageHeaders {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkHeadersAPI().SysCallN(1, m.Instance())
+	return wvTypes.PSoupMessageHeaders(r)
 }
 
-// WkHeadersRef -> IWkHeaders
-var WkHeadersRef wkHeaders
-
-// wkHeaders TWkHeaders Ref
-type wkHeaders uintptr
-
-func (m *wkHeaders) NewMessageHeadersType(type_ TSoupMessageHeadersType) IWkHeaders {
-	r1 := wkHeadersImportAPI().SysCallN(5, uintptr(type_))
-	return AsWkHeaders(r1)
+func (m *TWkHeaders) List() lcl.IStrings {
+	if !m.IsValid() {
+		return nil
+	}
+	r := wkHeadersAPI().SysCallN(2, m.Instance())
+	return lcl.AsStrings(r)
 }
 
-func (m *TWkHeaders) Data() PSoupMessageHeaders {
-	r1 := wkHeadersImportAPI().SysCallN(3, m.Instance())
-	return PSoupMessageHeaders(r1)
-}
-
-func (m *TWkHeaders) List() IStrings {
-	var resultStrings uintptr
-	wkHeadersImportAPI().SysCallN(4, m.Instance(), uintptr(unsafePointer(&resultStrings)))
-	return AsStrings(resultStrings)
-}
-
-func (m *TWkHeaders) Append(aName string, aValue string) {
-	wkHeadersImportAPI().SysCallN(0, m.Instance(), PascalStr(aName), PascalStr(aValue))
+func (m *TWkHeaders) Append(name string, value string) {
+	if !m.IsValid() {
+		return
+	}
+	wkHeadersAPI().SysCallN(4, m.Instance(), api.PasStr(name), api.PasStr(value))
 }
 
 func (m *TWkHeaders) Clear() {
-	wkHeadersImportAPI().SysCallN(1, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkHeadersAPI().SysCallN(5, m.Instance())
 }
 
-func (m *TWkHeaders) Remove(aName string) {
-	wkHeadersImportAPI().SysCallN(6, m.Instance(), PascalStr(aName))
+func (m *TWkHeaders) Remove(name string) {
+	if !m.IsValid() {
+		return
+	}
+	wkHeadersAPI().SysCallN(6, m.Instance(), api.PasStr(name))
 }
 
-func (m *TWkHeaders) Replace(aName string, aValue string) {
-	wkHeadersImportAPI().SysCallN(7, m.Instance(), PascalStr(aName), PascalStr(aValue))
+func (m *TWkHeaders) Replace(name string, value string) {
+	if !m.IsValid() {
+		return
+	}
+	wkHeadersAPI().SysCallN(7, m.Instance(), api.PasStr(name), api.PasStr(value))
+}
+
+// Headers  is static instance
+var Headers _HeadersClass
+
+// _HeadersClass is class type defined by TWkHeaders
+type _HeadersClass uintptr
+
+func (_HeadersClass) NewMessageHeadersType(type_ wvTypes.TSoupMessageHeadersType) IWkHeaders {
+	r := wkHeadersAPI().SysCallN(3, uintptr(type_))
+	return AsWkHeaders(r)
+}
+
+// NewHeaders class constructor
+func NewHeaders(messageHeaders wvTypes.PSoupMessageHeaders) IWkHeaders {
+	r := wkHeadersAPI().SysCallN(0, uintptr(messageHeaders))
+	return AsWkHeaders(r)
 }
 
 var (
-	wkHeadersImport       *imports.Imports = nil
-	wkHeadersImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkHeaders_Append", 0),
-		/*1*/ imports.NewTable("WkHeaders_Clear", 0),
-		/*2*/ imports.NewTable("WkHeaders_Create", 0),
-		/*3*/ imports.NewTable("WkHeaders_Data", 0),
-		/*4*/ imports.NewTable("WkHeaders_List", 0),
-		/*5*/ imports.NewTable("WkHeaders_NewMessageHeadersType", 0),
-		/*6*/ imports.NewTable("WkHeaders_Remove", 0),
-		/*7*/ imports.NewTable("WkHeaders_Replace", 0),
-	}
+	wkHeadersOnce   base.Once
+	wkHeadersImport *imports.Imports = nil
 )
 
-func wkHeadersImportAPI() *imports.Imports {
-	if wkHeadersImport == nil {
-		wkHeadersImport = NewDefaultImports()
-		wkHeadersImport.SetImportTable(wkHeadersImportTables)
-		wkHeadersImportTables = nil
-	}
+func wkHeadersAPI() *imports.Imports {
+	wkHeadersOnce.Do(func() {
+		wkHeadersImport = api.NewDefaultImports()
+		wkHeadersImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkHeaders_Create", 0), // constructor NewHeaders
+			/* 1 */ imports.NewTable("TWkHeaders_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkHeaders_List", 0), // function List
+			/* 3 */ imports.NewTable("TWkHeaders_NewMessageHeadersType", 0), // static function NewMessageHeadersType
+			/* 4 */ imports.NewTable("TWkHeaders_Append", 0), // procedure Append
+			/* 5 */ imports.NewTable("TWkHeaders_Clear", 0), // procedure Clear
+			/* 6 */ imports.NewTable("TWkHeaders_Remove", 0), // procedure Remove
+			/* 7 */ imports.NewTable("TWkHeaders_Replace", 0), // procedure Replace
+		}
+	})
 	return wkHeadersImport
 }

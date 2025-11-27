@@ -6,48 +6,70 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2GetCookiesCompletedHandler Parent: IObject
-//
-//	Receives the result of the GetCookies method.  The result is written to
-//	the cookie list provided in the GetCookies method call.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2getcookiescompletedhandler">See the ICoreWebView2GetCookiesCompletedHandler article.</a>
+// ICoreWebView2GetCookiesCompletedHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2GetCookiesCompletedHandler0 interface {
+	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the result of the corresponding asynchronous method.
+	Invoke(errorCode types.HRESULT, result ICoreWebView2CookieList) types.HRESULT // function
+}
+
+// ICoreWebView2GetCookiesCompletedHandler Parent: ICoreWebView2GetCookiesCompletedHandler0
 type ICoreWebView2GetCookiesCompletedHandler interface {
-	IObject
+	ICoreWebView2GetCookiesCompletedHandler0
+	AsIntfGetCookiesCompletedHandler() uintptr
 }
 
-// TCoreWebView2GetCookiesCompletedHandler Parent: TObject
-//
-//	Receives the result of the GetCookies method.  The result is written to
-//	the cookie list provided in the GetCookies method call.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2getcookiescompletedhandler">See the ICoreWebView2GetCookiesCompletedHandler article.</a>
 type TCoreWebView2GetCookiesCompletedHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2GetCookiesCompletedHandler(aEvents IWVBrowserEvents) ICoreWebView2GetCookiesCompletedHandler {
-	r1 := coreWebView2GetCookiesCompletedHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents))
-	return AsCoreWebView2GetCookiesCompletedHandler(r1)
+func (m *TCoreWebView2GetCookiesCompletedHandler) Invoke(errorCode types.HRESULT, result ICoreWebView2CookieList) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2GetCookiesCompletedHandlerAPI().SysCallN(1, m.Instance(), uintptr(errorCode), base.GetObjectUintptr(result))
+	return types.HRESULT(r)
+}
+
+func (m *TCoreWebView2GetCookiesCompletedHandler) AsIntfGetCookiesCompletedHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2GetCookiesCompletedHandler class constructor
+func NewCoreWebView2GetCookiesCompletedHandler(events IWVBrowserBase) ICoreWebView2GetCookiesCompletedHandler {
+	var getCookiesCompletedHandlerPtr uintptr // ICoreWebView2GetCookiesCompletedHandler
+	r := coreWebView2GetCookiesCompletedHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), uintptr(base.UnsafePointer(&getCookiesCompletedHandlerPtr)))
+	ret := AsCoreWebView2GetCookiesCompletedHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, getCookiesCompletedHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2GetCookiesCompletedHandlerImport       *imports.Imports = nil
-	coreWebView2GetCookiesCompletedHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2GetCookiesCompletedHandler_Create", 0),
-	}
+	coreWebView2GetCookiesCompletedHandlerOnce   base.Once
+	coreWebView2GetCookiesCompletedHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2GetCookiesCompletedHandlerImportAPI() *imports.Imports {
-	if coreWebView2GetCookiesCompletedHandlerImport == nil {
-		coreWebView2GetCookiesCompletedHandlerImport = NewDefaultImports()
-		coreWebView2GetCookiesCompletedHandlerImport.SetImportTable(coreWebView2GetCookiesCompletedHandlerImportTables)
-		coreWebView2GetCookiesCompletedHandlerImportTables = nil
-	}
+func coreWebView2GetCookiesCompletedHandlerAPI() *imports.Imports {
+	coreWebView2GetCookiesCompletedHandlerOnce.Do(func() {
+		coreWebView2GetCookiesCompletedHandlerImport = api.NewDefaultImports()
+		coreWebView2GetCookiesCompletedHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2GetCookiesCompletedHandler_Create", 0), // constructor NewCoreWebView2GetCookiesCompletedHandler
+			/* 1 */ imports.NewTable("TCoreWebView2GetCookiesCompletedHandler_Invoke", 0), // function Invoke
+		}
+	})
 	return coreWebView2GetCookiesCompletedHandlerImport
 }

@@ -6,63 +6,66 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKURLSchemeHandler Root Interface
-//
-//	A protocol for loading resources with URL schemes that WebKit doesn't handle.
-//	https://developer.apple.com/documentation/webkit/wkurlschemehandler?language=objc
-type IWKURLSchemeHandler interface {
-	IObject
+// IWkURLSchemeHandler Parent: lcl.IObject
+type IWkURLSchemeHandler interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKURLSchemeHandlerProtocol // function
+	Data() wvTypes.WKURLSchemeHandlerProtocol // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
-// TWKURLSchemeHandler Root Object
-//
-//	A protocol for loading resources with URL schemes that WebKit doesn't handle.
-//	https://developer.apple.com/documentation/webkit/wkurlschemehandler?language=objc
-type TWKURLSchemeHandler struct {
-	TObject
+type TWkURLSchemeHandler struct {
+	lcl.TObject
 }
 
-func NewWKURLSchemeHandler(event IWKURLSchemeHandlerDelegateEvent) IWKURLSchemeHandler {
-	r1 := wKURLSchemeHandlerImportAPI().SysCallN(0, GetObjectUintptr(event))
-	return AsWKURLSchemeHandler(r1)
+func (m *TWkURLSchemeHandler) Data() wvTypes.WKURLSchemeHandlerProtocol {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURLSchemeHandlerAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKURLSchemeHandlerProtocol(r)
 }
 
-func (m *TWKURLSchemeHandler) Data() WKURLSchemeHandlerProtocol {
-	r1 := wKURLSchemeHandlerImportAPI().SysCallN(1, m.Instance())
-	return WKURLSchemeHandlerProtocol(r1)
+func (m *TWkURLSchemeHandler) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkURLSchemeHandlerAPI().SysCallN(2, m.Instance())
 }
 
-func (m *TWKURLSchemeHandler) Release() {
-	wKURLSchemeHandlerImportAPI().SysCallN(2, m.Instance())
+// NewURLSchemeHandler class constructor
+func NewURLSchemeHandler(event IWkWebview) IWkURLSchemeHandler {
+	r := wkURLSchemeHandlerAPI().SysCallN(0, base.GetObjectUintptr(event))
+	return AsWkURLSchemeHandler(r)
 }
 
 var (
-	wKURLSchemeHandlerImport       *imports.Imports = nil
-	wKURLSchemeHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKURLSchemeHandler_Create", 0),
-		/*1*/ imports.NewTable("WKURLSchemeHandler_Data", 0),
-		/*2*/ imports.NewTable("WKURLSchemeHandler_Release", 0),
-	}
+	wkURLSchemeHandlerOnce   base.Once
+	wkURLSchemeHandlerImport *imports.Imports = nil
 )
 
-func wKURLSchemeHandlerImportAPI() *imports.Imports {
-	if wKURLSchemeHandlerImport == nil {
-		wKURLSchemeHandlerImport = NewDefaultImports()
-		wKURLSchemeHandlerImport.SetImportTable(wKURLSchemeHandlerImportTables)
-		wKURLSchemeHandlerImportTables = nil
-	}
-	return wKURLSchemeHandlerImport
+func wkURLSchemeHandlerAPI() *imports.Imports {
+	wkURLSchemeHandlerOnce.Do(func() {
+		wkURLSchemeHandlerImport = api.NewDefaultImports()
+		wkURLSchemeHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkURLSchemeHandler_Create", 0), // constructor NewURLSchemeHandler
+			/* 1 */ imports.NewTable("TWkURLSchemeHandler_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkURLSchemeHandler_Release", 0), // procedure Release
+		}
+	})
+	return wkURLSchemeHandlerImport
 }

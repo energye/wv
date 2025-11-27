@@ -6,86 +6,37 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
-	. "github.com/energye/lcl/types"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2Environment Parent: IObject
-//
-//	Represents the WebView2 Environment.  WebViews created from an environment
-//	run on the browser process specified with environment parameters and
-//	objects created from an environment should be used in the same
-//	environment.  Using it in different environments are not guaranteed to be
-//	 compatible and may fail.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment">See the ICoreWebView2Environment article.</a>
+// ICoreWebView2Environment Parent: lcl.IObject
 type ICoreWebView2Environment interface {
-	IObject
-	// Initialized
-	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
-	// BaseIntf
-	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2Environment // property
-	// BrowserVersionInfo
-	//  The browser version info of the current `ICoreWebView2Environment`,
-	//  including channel name if it is not the WebView2 Runtime. It matches the
-	//  format of the `GetAvailableCoreWebView2BrowserVersionString` API.
-	//  Channel names are `beta`, `dev`, and `canary`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment#get_browserversionstring">See the ICoreWebView2Environment article.</a>
-	BrowserVersionInfo() string // property
-	// SupportsCompositionController
-	//  Returns true if the current WebView2 runtime version supports Composition Controllers.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment3">See the ICoreWebView2Environment3 article.</a>
-	SupportsCompositionController() bool // property
-	// SupportsControllerOptions
-	//  Returns true if the current WebView2 runtime version supports Controller Options.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10">See the ICoreWebView2Environment10 article.</a>
-	SupportsControllerOptions() bool // property
-	// UserDataFolder
-	//  Returns the user data folder that all CoreWebView2's created from this
-	//  environment are using.
-	//  This could be either the value passed in by the developer when creating
-	//  the environment object or the calculated one for default handling. It
-	//  will always be an absolute path.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment7#get_userdatafolder">See the ICoreWebView2Environment7 article.</a>
-	UserDataFolder() string // property
-	// ProcessInfos
-	//  Returns the `ICoreWebView2ProcessInfoCollection`. Provide a list of all
-	//  process using same user data folder except for crashpad process.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment8#getprocessinfos">See the ICoreWebView2Environment8 article.</a>
-	ProcessInfos() ICoreWebView2ProcessInfoCollection // property
-	// FailureReportFolderPath
-	//  `FailureReportFolderPath` returns the path of the folder where minidump files are written.
-	//  Whenever a WebView2 process crashes, a crash dump file will be created in the crash dump folder.
-	//  The crash dump format is minidump files. Please see
-	//  [Minidump Files documentation](/windows/win32/debug/minidump-files) for detailed information.
-	//  Normally when a single child process fails, a minidump will be generated and written to disk,
-	//  then the `ProcessFailed` event is raised. But for unexpected crashes, a minidump file might not be generated
-	//  at all, despite whether `ProcessFailed` event is raised. If there are multiple
-	//  process failures at once, multiple minidump files could be generated. Thus `FailureReportFolderPath`
-	//  could contain old minidump files that are not associated with a specific `ProcessFailed` event.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment11#get_failurereportfolderpath">See the ICoreWebView2Environment11 article.</a>
-	FailureReportFolderPath() string // property
+	lcl.IObject
 	// AddAllLoaderEvents
 	//  Adds all the events of this class to an existing TWVLoader instance.
 	//  <param name="aLoaderComponent">The TWVLoader instance.</param>
-	AddAllLoaderEvents(aLoaderComponent IComponent) bool // function
+	AddAllLoaderEvents(loaderComponent lcl.IComponent) bool // function
 	// AddAllBrowserEvents
 	//  Adds all the events of this class to an existing TWVBrowserBase instance.
 	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
-	AddAllBrowserEvents(aBrowserComponent IComponent) bool // function
+	AddAllBrowserEvents(browserComponent lcl.IComponent) bool // function
 	// CreateCoreWebView2Controller
 	//  Asynchronously create a new WebView.
 	//  <param name="aParentWindow">Handle of the control in which the WebView should be displayed.</param>
 	//  <param name="aBrowserEvents">The TWVBrowserBase instance that will receive all the events.</param>
 	//  <param name="aResult">Result code.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment#createcorewebview2controller">See the ICoreWebView2Environment article.</a>
-	CreateCoreWebView2Controller(aParentWindow THandle, aBrowserEvents IWVBrowserEvents, aResult *int32) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment#createcorewebview2controller">See the ICoreWebView2Environment article.</see>
+	CreateCoreWebView2Controller(parentWindow types.THandle, browserEvents IWVBrowserBase, result *types.HRESULT) bool // function
 	// CreateWebResourceResponse
 	//  Create a new web resource response object.
 	//  <param name="aContent">HTTP response content as stream.</param>
@@ -94,13 +45,13 @@ type ICoreWebView2Environment interface {
 	//  <param name="aHeaders">Overridden HTTP response headers.</param>
 	//  <param name="aResponse">The new ICoreWebView2WebResourceResponse instance.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment#createcorewebview2controller">See the ICoreWebView2Environment article.</a>
-	CreateWebResourceResponse(aContent IStream, aStatusCode int32, aReasonPhrase, aHeaders string, aResponse *ICoreWebView2WebResourceResponse) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment#createcorewebview2controller">See the ICoreWebView2Environment article.</see>
+	CreateWebResourceResponse(content lcl.IStreamAdapter, statusCode int32, reasonPhrase string, headers string, response *ICoreWebView2WebResourceResponse) bool // function
 	// CreateWebResourceRequest
 	//  Create a new web resource request object.
 	//  URI parameter must be absolute URI.
 	//  The headers string is the raw request header string delimited by CRLF
-	// (optional in last header).
+	//  (optional in last header).
 	//  It's also possible to create this object with null headers string
 	//  and then use the ICoreWebView2HttpRequestHeaders to construct the headers
 	//  line by line.
@@ -110,42 +61,30 @@ type ICoreWebView2Environment interface {
 	//  <param name="aHeaders">The mutable HTTP request headers.</param>
 	//  <param name="aRequest">The new ICoreWebView2WebResourceRequest instance.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment2#createwebresourcerequest">See the ICoreWebView2Environment2 article.</a>
-	CreateWebResourceRequest(aURI, aMethod string, aPostData IStream, aHeaders string, aRequest *ICoreWebView2WebResourceRequestRef) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment2#createwebresourcerequest">See the ICoreWebView2Environment2 article.</see>
+	CreateWebResourceRequest(uRI string, method string, postData lcl.IStreamAdapter, headers string, request *ICoreWebView2WebResourceRequest) bool // function
 	// CreateCoreWebView2CompositionController
 	//  Asynchronously create a new WebView for use with visual hosting.
 	//  <param name="aParentWindow">Handle of the control in which the app will connect the visual tree of the WebView.</param>
 	//  <param name="aBrowserEvents">The TWVBrowserBase instance that will receive all the events.</param>
 	//  <param name="aResult">Result code.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment3#createcorewebview2compositioncontroller">See the ICoreWebView2Environment3 article.</a>
-	CreateCoreWebView2CompositionController(aParentWindow THandle, aBrowserEvents IWVBrowserEvents, aResult *int32) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment3#createcorewebview2compositioncontroller">See the ICoreWebView2Environment3 article.</see>
+	CreateCoreWebView2CompositionController(parentWindow types.THandle, browserEvents IWVBrowserBase, result *types.HRESULT) bool // function
 	// CreateCoreWebView2PointerInfo
 	//  Create an empty ICoreWebView2PointerInfo. The returned
 	//  ICoreWebView2PointerInfo needs to be populated with all of the relevant
 	//  info before calling SendPointerInput.
 	//  <param name="aPointerInfo">The new ICoreWebView2PointerInfo instance.</param>
-	//  <param name="aResult">Result code.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment3#createcorewebview2pointerinfo">See the ICoreWebView2Environment3 article.</a>
-	CreateCoreWebView2PointerInfo(aPointerInfo *ICoreWebView2PointerInfo) bool // function
-	// GetAutomationProviderForWindow
-	//  Returns the Automation Provider for the WebView that matches the provided
-	//  window. Host apps are expected to implement
-	//  IRawElementProviderHwndOverride. When GetOverrideProviderForHwnd is
-	//  called, the app can pass the HWND to GetAutomationProviderForWindow to
-	//  find the matching WebView Automation Provider.
-	//  <param name="aHandle">Handle used to find the matching WebView Automation Provider.</param>
-	//  <param name="aProvider">The Automation Provider for the WebView that matches the provided window.</param>
-	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment4#getautomationproviderforwindow">See the ICoreWebView2Environment4 article.</a>
-	GetAutomationProviderForWindow(aHandle THandle, aProvider *IUnknown) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment3#createcorewebview2pointerinfo">See the ICoreWebView2Environment3 article.</see>
+	CreateCoreWebView2PointerInfo(pointerInfo *ICoreWebView2PointerInfo) bool // function
 	// CreatePrintSettings
 	//  Creates the `ICoreWebView2PrintSettings` used by the `PrintToPdf` method.
 	//  <param name="aPrintSettings">The new ICoreWebView2PrintSettings instance.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment6#createprintsettings">See the ICoreWebView2Environment6 article.</a>
-	CreatePrintSettings(aPrintSettings *ICoreWebView2PrintSettings) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment6#createprintsettings">See the ICoreWebView2Environment6 article.</see>
+	CreatePrintSettings(printSettings *ICoreWebView2PrintSettings) bool // function
 	// CreateContextMenuItem
 	//  Create a custom `ContextMenuItem` object to insert into the WebView context menu.
 	//  CoreWebView2 will rewind the icon stream before decoding.
@@ -163,8 +102,8 @@ type ICoreWebView2Environment interface {
 	//  <param name="aKind">Context menu item kind.</param>
 	//  <param name="aMenuItem">The new ICoreWebView2ContextMenuItem instance.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment9#createcontextmenuitem">See the ICoreWebView2Environment9 article.</a>
-	CreateContextMenuItem(aLabel string, aIconStream IStream, aKind TWVMenuItemKind, aMenuItem *ICoreWebView2ContextMenuItem) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment9#createcontextmenuitem">See the ICoreWebView2Environment9 article.</see>
+	CreateContextMenuItem(label string, iconStream lcl.IStreamAdapter, kind wvTypes.TWVMenuItemKind, menuItem *ICoreWebView2ContextMenuItem) bool // function
 	// CreateCoreWebView2ControllerOptions
 	//  Create a new ICoreWebView2ControllerOptions to be passed as a parameter of
 	//  CreateCoreWebView2ControllerWithOptions and CreateCoreWebView2CompositionControllerWithOptions.
@@ -174,8 +113,8 @@ type ICoreWebView2Environment interface {
 	//  <param name="aOptions">The new ICoreWebView2ControllerOptions instance.</param>
 	//  <param name="aResult">Result code.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10#createcorewebview2controlleroptions">See the ICoreWebView2Environment10 article.</a>
-	CreateCoreWebView2ControllerOptions(aOptions *ICoreWebView2ControllerOptions, aResult *int32) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10#createcorewebview2controlleroptions">See the ICoreWebView2Environment10 article.</see>
+	CreateCoreWebView2ControllerOptions(options *ICoreWebView2ControllerOptions, result *types.HRESULT) bool // function
 	// CreateCoreWebView2ControllerWithOptions
 	//  Create a new WebView with options.
 	//  <param name="aParentWindow">Handle of the control in which the WebView should be displayed.</param>
@@ -183,8 +122,8 @@ type ICoreWebView2Environment interface {
 	//  <param name="aBrowserEvents">The TWVBrowserBase instance that will receive all the events.</param>
 	//  <param name="aResult">Result code.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10#createcorewebview2controllerwithoptions">See the ICoreWebView2Environment10 article.</a>
-	CreateCoreWebView2ControllerWithOptions(aParentWindow HWND, aOptions ICoreWebView2ControllerOptions, aBrowserEvents IWVBrowserEvents, aResult *int32) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10#createcorewebview2controllerwithoptions">See the ICoreWebView2Environment10 article.</see>
+	CreateCoreWebView2ControllerWithOptions(parentWindow types.HWND, options ICoreWebView2ControllerOptions, browserEvents IWVBrowserBase, result *types.HRESULT) bool // function
 	// CreateCoreWebView2CompositionControllerWithOptions
 	//  Create a new WebView in visual hosting mode with options.
 	//  <param name="aParentWindow">Handle of the control in which the app will connect the visual tree of the WebView.</param>
@@ -192,8 +131,8 @@ type ICoreWebView2Environment interface {
 	//  <param name="aBrowserEvents">The TWVBrowserBase instance that will receive all the events.</param>
 	//  <param name="aResult">Result code.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10#createcorewebview2compositioncontrollerwithoptions">See the ICoreWebView2Environment10 article.</a>
-	CreateCoreWebView2CompositionControllerWithOptions(aParentWindow HWND, aOptions ICoreWebView2ControllerOptions, aBrowserEvents IWVBrowserEvents, aResult *int32) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10#createcorewebview2compositioncontrollerwithoptions">See the ICoreWebView2Environment10 article.</see>
+	CreateCoreWebView2CompositionControllerWithOptions(parentWindow types.HWND, options ICoreWebView2ControllerOptions, browserEvents IWVBrowserBase, result *types.HRESULT) bool // function
 	// CreateSharedBuffer
 	//  Create a shared memory based buffer with the specified size in bytes.
 	//  The buffer can be shared with web contents in WebView by calling
@@ -207,217 +146,456 @@ type ICoreWebView2Environment interface {
 	//  <param name="aSize">Buffer size in bytes.</param>
 	//  <param name="aSharedBuffer">The new ICoreWebView2SharedBuffer instance.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment12#createsharedbuffer">See the ICoreWebView2Environment12 article.</a>
-	CreateSharedBuffer(aSize int64, aSharedBuffer *ICoreWebView2SharedBuffer) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment12#createsharedbuffer">See the ICoreWebView2Environment12 article.</see>
+	CreateSharedBuffer(size int64, sharedBuffer *ICoreWebView2SharedBuffer) bool // function
 	// GetProcessExtendedInfos
 	//  Gets a snapshot collection of `ProcessExtendedInfo`s corresponding to all
 	//  currently running processes associated with this `ICoreWebView2Environment`
 	//  excludes crashpad process.
 	//  This provides the same list of `ProcessInfo`s as what's provided in
 	//  `GetProcessInfos`, but additionally provides a list of associated `FrameInfo`s
-	//  which are actively running(showing or hiding UI elements) in the renderer
+	//  which are actively running (showing or hiding UI elements) in the renderer
 	//  process. See `AssociatedFrameInfos` for more information.
 	//  <param name="aBrowserEvents">The TWVBrowserBase instance that will receive all the events.</param>
 	//  <returns>True if successfull.</return>
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment13#getprocessextendedinfos">See the ICoreWebView2Environment13 article.</a>
-	GetProcessExtendedInfos(aBrowserEvents IWVBrowserEvents) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment13#getprocessextendedinfos">See the ICoreWebView2Environment13 article.</see>
+	GetProcessExtendedInfos(browserEvents IWVBrowserBase) bool // function
+	// CreateWebFileSystemFileHandle
+	//  Create a `ICoreWebView2FileSystemHandle` object from a path that represents a Web
+	//  [FileSystemFileHandle](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle).
+	//
+	//  The `path` is the path pointed by the file and must be a syntactically correct fully qualified
+	//  path, but it is not checked here whether it currently points to a file. If an invalid path is
+	//  passed, an E_INVALIDARG will be returned and the object will fail to create. Any other state
+	//  validation will be done when this handle is accessed from web content
+	//  and will cause the DOM exceptions described in
+	//  [FileSystemFileHandle methods](https://developer.mozilla.org/docs/Web/API/FileSystemDirectoryHandle#instance_methods)
+	//  if access operations fail.
+	//
+	//  `Permission` property is used to specify whether the Handle should be created with a Read-only or
+	//  Read-and-write web permission. For the `permission` value specified here, the DOM
+	//  [PermissionStatus](https://developer.mozilla.org/docs/Web/API/PermissionStatus) property
+	//  will be [granted](https://developer.mozilla.org/docs/Web/API/PermissionStatus/state)
+	//  and the unspecified permission will be
+	//  [prompt](https://developer.mozilla.org/docs/Web/API/PermissionStatus/state). Therefore,
+	//  the web content then does not need to call
+	//  [requestPermission](https://developer.mozilla.org/docs/Web/API/FileSystemHandle/requestPermission)
+	//  for the permission that was specified before attempting the permitted operation,
+	//  but if it does, the promise will immediately be resolved
+	//  with 'granted' PermissionStatus without firing the WebView2
+	//  [PermissionRequested](/microsoft-edge/webview2/reference/win32/icorewebview2permissionrequestedeventargs)
+	//  event or prompting the user for permission. Otherwise, `requestPermission` will behave as the
+	//  status of permission is currently `prompt`, which means the `PermissionRequested` event will fire
+	//  or the user will be prompted.
+	//  Additionally, the app must have the same OS permissions that have propagated to the
+	//  [WebView2 browser process](/microsoft-edge/webview2/concepts/process-model)
+	//  for the path it wishes to give the web content to read/write the file.
+	//  Specifically, the WebView2 browser process will run in same user, package identity, and app
+	//  container of the app, but other means such as security context impersonations do not get
+	//  propagated, so such permissions that the app has, will not be effective in WebView2.
+	//  Note: An exception to this is, if there is a parent directory handle that
+	//  has broader permissions in the same page context than specified in here, the handle will automatically
+	//  inherit the most permissive permission of the parent handle when posted to that page context.
+	//  i.e. If there is already a `FileSystemDirectoryHandle` to `C:\example` that has write permission on
+	//  a page, even though a WebFileSystemHandle to file `C:\example\file.txt` is created with
+	//  `COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_ONLY` permission, when posted to that page, write permission
+	//  will be automatically granted to the created handle.
+	//
+	//  An app needs to be mindful that this object, when posted to the web content, provides it with unusual
+	//  access to OS file system via the Web FileSystem API! The app should therefore only post objects
+	//  for paths that it wants to allow access to the web content and it is not recommended that the web content
+	//  "asks" for this path. The app should also check the source property of the target to ensure
+	//  that it is sending to the web content of intended origin.
+	//
+	//  Once the object is passed to web content, if the content is attempting a read,
+	//  the file must be existing and available to read similar to a file chosen by
+	//  [open file picker](https://developer.mozilla.org/docs/Web/API/Window/showOpenFilePicker),
+	//  otherwise the read operation will
+	//  [throw a DOM exception](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/getFile#exceptions).
+	//  For write operations, the file does not need to exist as `FileSystemFileHandle` will behave
+	//  as a file path chosen by
+	//  [save file picker](https://developer.mozilla.org/docs/Web/API/Window/showSaveFilePicker)
+	//  and will create or overwrite the file, but the parent directory structure pointed
+	//  by the file must exist and an existing file must be available to write and delete
+	//  or the write operation will
+	//  [throw a DOM exception](https://developer.mozilla.org/docs/Web/API/FileSystemFileHandle/createWritable#exceptions).
+	//  <param name="aPath">The path pointed by the file.</param>
+	//  <param name="aPermission">Used to specify whether the Handle should be created with a Read-only or Read-and-write web permission.</param>
+	//  <param name="aValue">The ICoreWebView2FileSystemHandle object created from a path that represents a Web FileSystemFileHandle.</param>
+	//  <returns>True if successfull.</return>
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment14#createwebfilesystemfilehandle">See the ICoreWebView2Environment14 article.</see>
+	CreateWebFileSystemFileHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool // function
+	// CreateWebFileSystemDirectoryHandle
+	//  Create a `ICoreWebView2FileSystemHandle` object from a path that represents a Web
+	//  [FileSystemDirectoryHandle](https://developer.mozilla.org/docs/Web/API/FileSystemDirectoryHandle).
+	//
+	//  The `path` is the path pointed by the directory and must be a syntactically correct fully qualified
+	//  path, but it is not checked here whether it currently points to a directory. Any other state
+	//  validation will be done when this handle is accessed from web content
+	//  and will cause DOM exceptions if access operations fail. If an invalid path is
+	//  passed, an E_INVALIDARG will be returned and the object will fail to create.
+	//
+	//  `Permission` property is used to specify whether the Handle should be created with a Read-only or
+	//  Read-and-write web permission. For the `permission` value specified here, the Web
+	//  [PermissionStatus](https://developer.mozilla.org/docs/Web/API/PermissionStatus)
+	//  will be [granted](https://developer.mozilla.org/docs/Web/API/PermissionStatus/state)
+	//  and the unspecified permission will be
+	//  [prompt](https://developer.mozilla.org/docs/Web/API/PermissionStatus/state). Therefore,
+	//  the web content then does not need to call
+	//  [requestPermission](https://developer.mozilla.org/docs/Web/API/FileSystemHandle/requestPermission)
+	//  for the permission that was specified before attempting the permitted operation,
+	//  but if it does, the promise will immediately be resolved
+	//  with 'granted' PermissionStatus without firing the WebView2
+	//  [PermissionRequested](/microsoft-edge/webview2/reference/win32/icorewebview2permissionrequestedeventargs)
+	//  event or prompting the user for permission. Otherwise, `requestPermission` will behave as the
+	//  status of permission is currently `Prompt`, which means the `PermissionRequested` event will fire
+	//  or the user will be prompted.
+	//  Additionally, the app must have the same OS permissions that have propagated to the
+	//  [WebView2 browser process](/microsoft-edge/webview2/concepts/process-model)
+	//  for the path it wishes to give the web content to make any operations on the directory.
+	//  Specifically, the WebView2 browser process will run in same user, package identity, and app
+	//  container of the app, but other means such as security context impersonations do not get
+	//  propagated, so such permissions that the app has, will not be effective in WebView2.
+	//  Note: An exception to this is, if there is a parent directory handle that
+	//  has broader permissions in the same page context than specified in here, the handle will automatically
+	//  inherit the most permissive permission of the parent handle when posted to that page context.
+	//  i.e. If there is already a `FileSystemDirectoryHandle` to `C:\example` that has write permission on
+	//  a page, even though a WebFileSystemHandle to directory `C:\example\directory` is created with
+	//  `COREWEBVIEW2_FILE_SYSTEM_HANDLE_PERMISSION_READ_ONLY` permission, when posted to that page, write permission
+	//  will be automatically granted to the created handle.
+	//
+	//  An app needs to be mindful that this object, when posted to the web content, provides it with unusual
+	//  access to OS file system via the Web FileSystem API! The app should therefore only post objects
+	//  for paths that it wants to allow access to the web content and it is not recommended that the web content
+	//  "asks" for this path. The app should also check the source property of the target to ensure
+	//  that it is sending to the web content of intended origin.
+	//
+	//  Once the object is passed to web content, the path must point to a directory as if it was chosen via
+	//  [directory picker](https://developer.mozilla.org/docs/Web/API/Window/showDirectoryPicker)
+	//  otherwise any IO operation done on the `FileSystemDirectoryHandle` will throw a DOM exception.
+	//  <param name="aPath">The path pointed by the directory.</param>
+	//  <param name="aPermission">Used to specify whether the Handle should be created with a Read-only or Read-and-write web permission.</param>
+	//  <param name="aValue">The ICoreWebView2FileSystemHandle object created from a path that represents a Web FileSystemDirectoryHandle.</param>
+	//  <returns>True if successfull.</return>
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment14#createwebfilesystemdirectoryhandle">See the ICoreWebView2Environment14 article.</see>
+	CreateWebFileSystemDirectoryHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool // function
+	// Initialized
+	//  Returns true when the interface implemented by this class is fully initialized.
+	Initialized() bool // property Initialized Getter
+	// BaseIntf
+	//  Returns the interface implemented by this class.
+	BaseIntf() ICoreWebView2Environment // property BaseIntf Getter
+	// BrowserVersionInfo
+	//  The browser version info of the current `ICoreWebView2Environment`,
+	//  including channel name if it is not the WebView2 Runtime. It matches the
+	//  format of the `GetAvailableCoreWebView2BrowserVersionString` API.
+	//  Channel names are `beta`, `dev`, and `canary`.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment#get_browserversionstring">See the ICoreWebView2Environment article.</see>
+	BrowserVersionInfo() string // property BrowserVersionInfo Getter
+	// SupportsCompositionController
+	//  Returns true if the current WebView2 runtime version supports Composition Controllers.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment3">See the ICoreWebView2Environment3 article.</see>
+	SupportsCompositionController() bool // property SupportsCompositionController Getter
+	// SupportsControllerOptions
+	//  Returns true if the current WebView2 runtime version supports Controller Options.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment10">See the ICoreWebView2Environment10 article.</see>
+	SupportsControllerOptions() bool // property SupportsControllerOptions Getter
+	// UserDataFolder
+	//  Returns the user data folder that all CoreWebView2's created from this
+	//  environment are using.
+	//  This could be either the value passed in by the developer when creating
+	//  the environment object or the calculated one for default handling. It
+	//  will always be an absolute path.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment7#get_userdatafolder">See the ICoreWebView2Environment7 article.</see>
+	UserDataFolder() string // property UserDataFolder Getter
+	// ProcessInfos
+	//  Returns the `ICoreWebView2ProcessInfoCollection`. Provide a list of all
+	//  process using same user data folder except for crashpad process.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment8#getprocessinfos">See the ICoreWebView2Environment8 article.</see>
+	ProcessInfos() ICoreWebView2ProcessInfoCollection // property ProcessInfos Getter
+	// FailureReportFolderPath
+	//  `FailureReportFolderPath` returns the path of the folder where minidump files are written.
+	//  Whenever a WebView2 process crashes, a crash dump file will be created in the crash dump folder.
+	//  The crash dump format is minidump files. Please see
+	//  [Minidump Files documentation](/windows/win32/debug/minidump-files) for detailed information.
+	//  Normally when a single child process fails, a minidump will be generated and written to disk,
+	//  then the `ProcessFailed` event is raised. But for unexpected crashes, a minidump file might not be generated
+	//  at all, despite whether `ProcessFailed` event is raised. If there are multiple
+	//  process failures at once, multiple minidump files could be generated. Thus `FailureReportFolderPath`
+	//  could contain old minidump files that are not associated with a specific `ProcessFailed` event.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment11#get_failurereportfolderpath">See the ICoreWebView2Environment11 article.</see>
+	FailureReportFolderPath() string // property FailureReportFolderPath Getter
 }
 
-// TCoreWebView2Environment Parent: TObject
-//
-//	Represents the WebView2 Environment.  WebViews created from an environment
-//	run on the browser process specified with environment parameters and
-//	objects created from an environment should be used in the same
-//	environment.  Using it in different environments are not guaranteed to be
-//	 compatible and may fail.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment">See the ICoreWebView2Environment article.</a>
 type TCoreWebView2Environment struct {
-	TObject
+	lcl.TObject
 }
 
-func NewCoreWebView2Environment(aBaseIntf ICoreWebView2Environment) ICoreWebView2Environment {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(4, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2Environment(r1)
+func (m *TCoreWebView2Environment) AddAllLoaderEvents(loaderComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(1, m.Instance(), base.GetObjectUintptr(loaderComponent))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) AddAllBrowserEvents(browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(2, m.Instance(), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateCoreWebView2Controller(parentWindow types.THandle, browserEvents IWVBrowserBase, result *types.HRESULT) bool {
+	if !m.IsValid() {
+		return false
+	}
+	resultPtr := uintptr(*result)
+	r := coreWebView2EnvironmentAPI().SysCallN(3, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
+	*result = types.HRESULT(resultPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateWebResourceResponse(content lcl.IStreamAdapter, statusCode int32, reasonPhrase string, headers string, response *ICoreWebView2WebResourceResponse) bool {
+	if !m.IsValid() {
+		return false
+	}
+	responsePtr := base.GetObjectUintptr(*response)
+	r := coreWebView2EnvironmentAPI().SysCallN(4, m.Instance(), base.GetObjectUintptr(content), uintptr(statusCode), api.PasStr(reasonPhrase), api.PasStr(headers), uintptr(base.UnsafePointer(&responsePtr)))
+	*response = AsCoreWebView2WebResourceResponse(responsePtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateWebResourceRequest(uRI string, method string, postData lcl.IStreamAdapter, headers string, request *ICoreWebView2WebResourceRequest) bool {
+	if !m.IsValid() {
+		return false
+	}
+	requestPtr := base.GetObjectUintptr(*request)
+	r := coreWebView2EnvironmentAPI().SysCallN(5, m.Instance(), api.PasStr(uRI), api.PasStr(method), base.GetObjectUintptr(postData), api.PasStr(headers), uintptr(base.UnsafePointer(&requestPtr)))
+	*request = AsCoreWebView2WebResourceRequestOwn(requestPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateCoreWebView2CompositionController(parentWindow types.THandle, browserEvents IWVBrowserBase, result *types.HRESULT) bool {
+	if !m.IsValid() {
+		return false
+	}
+	resultPtr := uintptr(*result)
+	r := coreWebView2EnvironmentAPI().SysCallN(6, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
+	*result = types.HRESULT(resultPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateCoreWebView2PointerInfo(pointerInfo *ICoreWebView2PointerInfo) bool {
+	if !m.IsValid() {
+		return false
+	}
+	pointerInfoPtr := base.GetObjectUintptr(*pointerInfo)
+	r := coreWebView2EnvironmentAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&pointerInfoPtr)))
+	*pointerInfo = AsCoreWebView2PointerInfo(pointerInfoPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreatePrintSettings(printSettings *ICoreWebView2PrintSettings) bool {
+	if !m.IsValid() {
+		return false
+	}
+	printSettingsPtr := base.GetObjectUintptr(*printSettings)
+	r := coreWebView2EnvironmentAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&printSettingsPtr)))
+	*printSettings = AsCoreWebView2PrintSettings(printSettingsPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateContextMenuItem(label string, iconStream lcl.IStreamAdapter, kind wvTypes.TWVMenuItemKind, menuItem *ICoreWebView2ContextMenuItem) bool {
+	if !m.IsValid() {
+		return false
+	}
+	menuItemPtr := base.GetObjectUintptr(*menuItem)
+	r := coreWebView2EnvironmentAPI().SysCallN(9, m.Instance(), api.PasStr(label), base.GetObjectUintptr(iconStream), uintptr(kind), uintptr(base.UnsafePointer(&menuItemPtr)))
+	*menuItem = AsCoreWebView2ContextMenuItem(menuItemPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateCoreWebView2ControllerOptions(options *ICoreWebView2ControllerOptions, result *types.HRESULT) bool {
+	if !m.IsValid() {
+		return false
+	}
+	optionsPtr := base.GetObjectUintptr(*options)
+	resultPtr := uintptr(*result)
+	r := coreWebView2EnvironmentAPI().SysCallN(10, m.Instance(), uintptr(base.UnsafePointer(&optionsPtr)), uintptr(base.UnsafePointer(&resultPtr)))
+	*options = AsCoreWebView2ControllerOptions(optionsPtr)
+	*result = types.HRESULT(resultPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateCoreWebView2ControllerWithOptions(parentWindow types.HWND, options ICoreWebView2ControllerOptions, browserEvents IWVBrowserBase, result *types.HRESULT) bool {
+	if !m.IsValid() {
+		return false
+	}
+	resultPtr := uintptr(*result)
+	r := coreWebView2EnvironmentAPI().SysCallN(11, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(options), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
+	*result = types.HRESULT(resultPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateCoreWebView2CompositionControllerWithOptions(parentWindow types.HWND, options ICoreWebView2ControllerOptions, browserEvents IWVBrowserBase, result *types.HRESULT) bool {
+	if !m.IsValid() {
+		return false
+	}
+	resultPtr := uintptr(*result)
+	r := coreWebView2EnvironmentAPI().SysCallN(12, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(options), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
+	*result = types.HRESULT(resultPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateSharedBuffer(size int64, sharedBuffer *ICoreWebView2SharedBuffer) bool {
+	if !m.IsValid() {
+		return false
+	}
+	sharedBufferPtr := base.GetObjectUintptr(*sharedBuffer)
+	r := coreWebView2EnvironmentAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&size)), uintptr(base.UnsafePointer(&sharedBufferPtr)))
+	*sharedBuffer = AsCoreWebView2SharedBuffer(sharedBufferPtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) GetProcessExtendedInfos(browserEvents IWVBrowserBase) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(14, m.Instance(), base.GetObjectUintptr(browserEvents))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateWebFileSystemFileHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool {
+	if !m.IsValid() {
+		return false
+	}
+	valuePtr := base.GetObjectUintptr(*value)
+	r := coreWebView2EnvironmentAPI().SysCallN(15, m.Instance(), api.PasStr(path), uintptr(permission), uintptr(base.UnsafePointer(&valuePtr)))
+	*value = AsCoreWebView2FileSystemHandle(valuePtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateWebFileSystemDirectoryHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool {
+	if !m.IsValid() {
+		return false
+	}
+	valuePtr := base.GetObjectUintptr(*value)
+	r := coreWebView2EnvironmentAPI().SysCallN(16, m.Instance(), api.PasStr(path), uintptr(permission), uintptr(base.UnsafePointer(&valuePtr)))
+	*value = AsCoreWebView2FileSystemHandle(valuePtr)
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2Environment) Initialized() bool {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(19, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(17, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2Environment) BaseIntf() ICoreWebView2Environment {
-	var resultCoreWebView2Environment uintptr
-	coreWebView2EnvironmentImportAPI().SysCallN(2, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Environment)))
-	return AsCoreWebView2Environment(resultCoreWebView2Environment)
+func (m *TCoreWebView2Environment) BaseIntf() (result ICoreWebView2Environment) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2EnvironmentAPI().SysCallN(18, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Environment(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2Environment) BrowserVersionInfo() string {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(3, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(19, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2Environment) SupportsCompositionController() bool {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(21, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(20, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2Environment) SupportsControllerOptions() bool {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(22, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(21, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2Environment) UserDataFolder() string {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(23, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(22, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2Environment) ProcessInfos() ICoreWebView2ProcessInfoCollection {
-	var resultCoreWebView2ProcessInfoCollection uintptr
-	coreWebView2EnvironmentImportAPI().SysCallN(20, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2ProcessInfoCollection)))
-	return AsCoreWebView2ProcessInfoCollection(resultCoreWebView2ProcessInfoCollection)
+func (m *TCoreWebView2Environment) ProcessInfos() (result ICoreWebView2ProcessInfoCollection) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2EnvironmentAPI().SysCallN(23, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ProcessInfoCollection(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2Environment) FailureReportFolderPath() string {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(16, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2EnvironmentAPI().SysCallN(24, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2Environment) AddAllLoaderEvents(aLoaderComponent IComponent) bool {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(1, m.Instance(), GetObjectUintptr(aLoaderComponent))
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) AddAllBrowserEvents(aBrowserComponent IComponent) bool {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(0, m.Instance(), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateCoreWebView2Controller(aParentWindow THandle, aBrowserEvents IWVBrowserEvents, aResult *int32) bool {
-	var result2 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(8, m.Instance(), uintptr(aParentWindow), GetObjectUintptr(aBrowserEvents), uintptr(unsafePointer(&result2)))
-	*aResult = int32(result2)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateWebResourceResponse(aContent IStream, aStatusCode int32, aReasonPhrase, aHeaders string, aResponse *ICoreWebView2WebResourceResponse) bool {
-	var result3 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(15, m.Instance(), GetObjectUintptr(aContent), uintptr(aStatusCode), PascalStr(aReasonPhrase), PascalStr(aHeaders), uintptr(unsafePointer(&result3)))
-	*aResponse = AsCoreWebView2WebResourceResponse(result3)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateWebResourceRequest(aURI, aMethod string, aPostData IStream, aHeaders string, aRequest *ICoreWebView2WebResourceRequestRef) bool {
-	var result3 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(14, m.Instance(), PascalStr(aURI), PascalStr(aMethod), GetObjectUintptr(aPostData), PascalStr(aHeaders), uintptr(unsafePointer(&result3)))
-	*aRequest = AsCoreWebView2WebResourceRequestRef(result3)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateCoreWebView2CompositionController(aParentWindow THandle, aBrowserEvents IWVBrowserEvents, aResult *int32) bool {
-	var result2 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(6, m.Instance(), uintptr(aParentWindow), GetObjectUintptr(aBrowserEvents), uintptr(unsafePointer(&result2)))
-	*aResult = int32(result2)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateCoreWebView2PointerInfo(aPointerInfo *ICoreWebView2PointerInfo) bool {
-	var result0 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(11, m.Instance(), uintptr(unsafePointer(&result0)))
-	*aPointerInfo = AsCoreWebView2PointerInfo(result0)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) GetAutomationProviderForWindow(aHandle THandle, aProvider *IUnknown) bool {
-	var result1 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(17, m.Instance(), uintptr(aHandle), uintptr(unsafePointer(&result1)))
-	*aProvider = AsUnknown(result1)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreatePrintSettings(aPrintSettings *ICoreWebView2PrintSettings) bool {
-	var result0 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(12, m.Instance(), uintptr(unsafePointer(&result0)))
-	*aPrintSettings = AsCoreWebView2PrintSettings(result0)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateContextMenuItem(aLabel string, aIconStream IStream, aKind TWVMenuItemKind, aMenuItem *ICoreWebView2ContextMenuItem) bool {
-	var result3 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(5, m.Instance(), PascalStr(aLabel), GetObjectUintptr(aIconStream), uintptr(aKind), uintptr(unsafePointer(&result3)))
-	*aMenuItem = AsCoreWebView2ContextMenuItem(result3)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateCoreWebView2ControllerOptions(aOptions *ICoreWebView2ControllerOptions, aResult *int32) bool {
-	var result0 uintptr
-	var result1 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(9, m.Instance(), uintptr(unsafePointer(&result0)), uintptr(unsafePointer(&result1)))
-	*aOptions = AsCoreWebView2ControllerOptions(result0)
-	*aResult = int32(result1)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateCoreWebView2ControllerWithOptions(aParentWindow HWND, aOptions ICoreWebView2ControllerOptions, aBrowserEvents IWVBrowserEvents, aResult *int32) bool {
-	var result3 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(10, m.Instance(), uintptr(aParentWindow), GetObjectUintptr(aOptions), GetObjectUintptr(aBrowserEvents), uintptr(unsafePointer(&result3)))
-	*aResult = int32(result3)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateCoreWebView2CompositionControllerWithOptions(aParentWindow HWND, aOptions ICoreWebView2ControllerOptions, aBrowserEvents IWVBrowserEvents, aResult *int32) bool {
-	var result3 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(7, m.Instance(), uintptr(aParentWindow), GetObjectUintptr(aOptions), GetObjectUintptr(aBrowserEvents), uintptr(unsafePointer(&result3)))
-	*aResult = int32(result3)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) CreateSharedBuffer(aSize int64, aSharedBuffer *ICoreWebView2SharedBuffer) bool {
-	var result1 uintptr
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(13, m.Instance(), uintptr(unsafePointer(&aSize)), uintptr(unsafePointer(&result1)))
-	*aSharedBuffer = AsCoreWebView2SharedBuffer(result1)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2Environment) GetProcessExtendedInfos(aBrowserEvents IWVBrowserEvents) bool {
-	r1 := coreWebView2EnvironmentImportAPI().SysCallN(18, m.Instance(), GetObjectUintptr(aBrowserEvents))
-	return GoBool(r1)
+// NewCoreWebView2Environment class constructor
+func NewCoreWebView2Environment(baseIntf ICoreWebView2Environment) ICoreWebView2Environment {
+	r := coreWebView2EnvironmentAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2Environment(r)
 }
 
 var (
-	coreWebView2EnvironmentImport       *imports.Imports = nil
-	coreWebView2EnvironmentImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2Environment_AddAllBrowserEvents", 0),
-		/*1*/ imports.NewTable("CoreWebView2Environment_AddAllLoaderEvents", 0),
-		/*2*/ imports.NewTable("CoreWebView2Environment_BaseIntf", 0),
-		/*3*/ imports.NewTable("CoreWebView2Environment_BrowserVersionInfo", 0),
-		/*4*/ imports.NewTable("CoreWebView2Environment_Create", 0),
-		/*5*/ imports.NewTable("CoreWebView2Environment_CreateContextMenuItem", 0),
-		/*6*/ imports.NewTable("CoreWebView2Environment_CreateCoreWebView2CompositionController", 0),
-		/*7*/ imports.NewTable("CoreWebView2Environment_CreateCoreWebView2CompositionControllerWithOptions", 0),
-		/*8*/ imports.NewTable("CoreWebView2Environment_CreateCoreWebView2Controller", 0),
-		/*9*/ imports.NewTable("CoreWebView2Environment_CreateCoreWebView2ControllerOptions", 0),
-		/*10*/ imports.NewTable("CoreWebView2Environment_CreateCoreWebView2ControllerWithOptions", 0),
-		/*11*/ imports.NewTable("CoreWebView2Environment_CreateCoreWebView2PointerInfo", 0),
-		/*12*/ imports.NewTable("CoreWebView2Environment_CreatePrintSettings", 0),
-		/*13*/ imports.NewTable("CoreWebView2Environment_CreateSharedBuffer", 0),
-		/*14*/ imports.NewTable("CoreWebView2Environment_CreateWebResourceRequest", 0),
-		/*15*/ imports.NewTable("CoreWebView2Environment_CreateWebResourceResponse", 0),
-		/*16*/ imports.NewTable("CoreWebView2Environment_FailureReportFolderPath", 0),
-		/*17*/ imports.NewTable("CoreWebView2Environment_GetAutomationProviderForWindow", 0),
-		/*18*/ imports.NewTable("CoreWebView2Environment_GetProcessExtendedInfos", 0),
-		/*19*/ imports.NewTable("CoreWebView2Environment_Initialized", 0),
-		/*20*/ imports.NewTable("CoreWebView2Environment_ProcessInfos", 0),
-		/*21*/ imports.NewTable("CoreWebView2Environment_SupportsCompositionController", 0),
-		/*22*/ imports.NewTable("CoreWebView2Environment_SupportsControllerOptions", 0),
-		/*23*/ imports.NewTable("CoreWebView2Environment_UserDataFolder", 0),
-	}
+	coreWebView2EnvironmentOnce   base.Once
+	coreWebView2EnvironmentImport *imports.Imports = nil
 )
 
-func coreWebView2EnvironmentImportAPI() *imports.Imports {
-	if coreWebView2EnvironmentImport == nil {
-		coreWebView2EnvironmentImport = NewDefaultImports()
-		coreWebView2EnvironmentImport.SetImportTable(coreWebView2EnvironmentImportTables)
-		coreWebView2EnvironmentImportTables = nil
-	}
+func coreWebView2EnvironmentAPI() *imports.Imports {
+	coreWebView2EnvironmentOnce.Do(func() {
+		coreWebView2EnvironmentImport = api.NewDefaultImports()
+		coreWebView2EnvironmentImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2Environment_Create", 0), // constructor NewCoreWebView2Environment
+			/* 1 */ imports.NewTable("TCoreWebView2Environment_AddAllLoaderEvents", 0), // function AddAllLoaderEvents
+			/* 2 */ imports.NewTable("TCoreWebView2Environment_AddAllBrowserEvents", 0), // function AddAllBrowserEvents
+			/* 3 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2Controller", 0), // function CreateCoreWebView2Controller
+			/* 4 */ imports.NewTable("TCoreWebView2Environment_CreateWebResourceResponse", 0), // function CreateWebResourceResponse
+			/* 5 */ imports.NewTable("TCoreWebView2Environment_CreateWebResourceRequest", 0), // function CreateWebResourceRequest
+			/* 6 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2CompositionController", 0), // function CreateCoreWebView2CompositionController
+			/* 7 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2PointerInfo", 0), // function CreateCoreWebView2PointerInfo
+			/* 8 */ imports.NewTable("TCoreWebView2Environment_CreatePrintSettings", 0), // function CreatePrintSettings
+			/* 9 */ imports.NewTable("TCoreWebView2Environment_CreateContextMenuItem", 0), // function CreateContextMenuItem
+			/* 10 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2ControllerOptions", 0), // function CreateCoreWebView2ControllerOptions
+			/* 11 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2ControllerWithOptions", 0), // function CreateCoreWebView2ControllerWithOptions
+			/* 12 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2CompositionControllerWithOptions", 0), // function CreateCoreWebView2CompositionControllerWithOptions
+			/* 13 */ imports.NewTable("TCoreWebView2Environment_CreateSharedBuffer", 0), // function CreateSharedBuffer
+			/* 14 */ imports.NewTable("TCoreWebView2Environment_GetProcessExtendedInfos", 0), // function GetProcessExtendedInfos
+			/* 15 */ imports.NewTable("TCoreWebView2Environment_CreateWebFileSystemFileHandle", 0), // function CreateWebFileSystemFileHandle
+			/* 16 */ imports.NewTable("TCoreWebView2Environment_CreateWebFileSystemDirectoryHandle", 0), // function CreateWebFileSystemDirectoryHandle
+			/* 17 */ imports.NewTable("TCoreWebView2Environment_Initialized", 0), // property Initialized
+			/* 18 */ imports.NewTable("TCoreWebView2Environment_BaseIntf", 0), // property BaseIntf
+			/* 19 */ imports.NewTable("TCoreWebView2Environment_BrowserVersionInfo", 0), // property BrowserVersionInfo
+			/* 20 */ imports.NewTable("TCoreWebView2Environment_SupportsCompositionController", 0), // property SupportsCompositionController
+			/* 21 */ imports.NewTable("TCoreWebView2Environment_SupportsControllerOptions", 0), // property SupportsControllerOptions
+			/* 22 */ imports.NewTable("TCoreWebView2Environment_UserDataFolder", 0), // property UserDataFolder
+			/* 23 */ imports.NewTable("TCoreWebView2Environment_ProcessInfos", 0), // property ProcessInfos
+			/* 24 */ imports.NewTable("TCoreWebView2Environment_FailureReportFolderPath", 0), // property FailureReportFolderPath
+		}
+	})
 	return coreWebView2EnvironmentImport
 }

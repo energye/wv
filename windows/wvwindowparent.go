@@ -6,60 +6,61 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
 // IWVWindowParent Parent: IWVWinControl
-//
-//	Parent control used by VCL and LCL applications to show the web contents.
 type IWVWindowParent interface {
 	IWVWinControl
 	// Browser
 	//  Browser associated to this control to show web contents.
-	Browser() IWVBrowserBase // property
-	// SetBrowser Set Browser
-	SetBrowser(AValue IWVBrowserBase) // property
+	Browser() IWVBrowserBase         // property Browser Getter
+	SetBrowser(value IWVBrowserBase) // property Browser Setter
 }
 
-// TWVWindowParent Parent: TWVWinControl
-//
-//	Parent control used by VCL and LCL applications to show the web contents.
 type TWVWindowParent struct {
 	TWVWinControl
 }
 
-func NewWVWindowParent(AOwner IComponent) IWVWindowParent {
-	r1 := wVWindowParentImportAPI().SysCallN(1, GetObjectUintptr(AOwner))
-	return AsWVWindowParent(r1)
-}
-
 func (m *TWVWindowParent) Browser() IWVBrowserBase {
-	var resultWVBrowserBase uintptr
-	wVWindowParentImportAPI().SysCallN(0, 0, m.Instance(), 0, uintptr(unsafePointer(&resultWVBrowserBase)))
-	return AsWVBrowserBase(resultWVBrowserBase)
+	if !m.IsValid() {
+		return nil
+	}
+	r := wVWindowParentAPI().SysCallN(1, 0, m.Instance())
+	return AsWVBrowserBase(r)
 }
 
-func (m *TWVWindowParent) SetBrowser(AValue IWVBrowserBase) {
-	wVWindowParentImportAPI().SysCallN(0, 1, m.Instance(), GetObjectUintptr(AValue), GetObjectUintptr(AValue))
+func (m *TWVWindowParent) SetBrowser(value IWVBrowserBase) {
+	if !m.IsValid() {
+		return
+	}
+	wVWindowParentAPI().SysCallN(1, 1, m.Instance(), base.GetObjectUintptr(value))
+}
+
+// NewWindowParent class constructor
+func NewWindowParent(owner lcl.IComponent) IWVWindowParent {
+	r := wVWindowParentAPI().SysCallN(0, base.GetObjectUintptr(owner))
+	return AsWVWindowParent(r)
 }
 
 var (
-	wVWindowParentImport       *imports.Imports = nil
-	wVWindowParentImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WVWindowParent_Browser", 0),
-		/*1*/ imports.NewTable("WVWindowParent_Create", 0),
-	}
+	wVWindowParentOnce   base.Once
+	wVWindowParentImport *imports.Imports = nil
 )
 
-func wVWindowParentImportAPI() *imports.Imports {
-	if wVWindowParentImport == nil {
-		wVWindowParentImport = NewDefaultImports()
-		wVWindowParentImport.SetImportTable(wVWindowParentImportTables)
-		wVWindowParentImportTables = nil
-	}
+func wVWindowParentAPI() *imports.Imports {
+	wVWindowParentOnce.Do(func() {
+		wVWindowParentImport = api.NewDefaultImports()
+		wVWindowParentImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWVWindowParent_Create", 0), // constructor NewWindowParent
+			/* 1 */ imports.NewTable("TWVWindowParent_Browser", 0), // property Browser
+		}
+	})
 	return wVWindowParentImport
 }

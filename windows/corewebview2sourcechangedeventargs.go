@@ -6,75 +6,80 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2SourceChangedEventArgs Parent: IObject
-//
-//	Event args for the SourceChanged event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2sourcechangedeventargs">See the ICoreWebView2SourceChangedEventArgs article.</a>
+// ICoreWebView2SourceChangedEventArgs Parent: lcl.IObject
 type ICoreWebView2SourceChangedEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2SourceChangedEventArgs // property
+	BaseIntf() ICoreWebView2SourceChangedEventArgs // property BaseIntf Getter
 	// IsNewDocument
 	//  `TRUE` if the page being navigated to is a new document.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2sourcechangedeventargs#get_isnewdocument">See the ICoreWebView2SourceChangedEventArgs article.</a>
-	IsNewDocument() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2sourcechangedeventargs#get_isnewdocument">See the ICoreWebView2SourceChangedEventArgs article.</see>
+	IsNewDocument() bool // property IsNewDocument Getter
 }
 
-// TCoreWebView2SourceChangedEventArgs Parent: TObject
-//
-//	Event args for the SourceChanged event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2sourcechangedeventargs">See the ICoreWebView2SourceChangedEventArgs article.</a>
 type TCoreWebView2SourceChangedEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2SourceChangedEventArgs(aArgs ICoreWebView2SourceChangedEventArgs) ICoreWebView2SourceChangedEventArgs {
-	r1 := coreWebView2SourceChangedEventArgsImportAPI().SysCallN(1, GetObjectUintptr(aArgs))
-	return AsCoreWebView2SourceChangedEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2SourceChangedEventArgs) Initialized() bool {
-	r1 := coreWebView2SourceChangedEventArgsImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2SourceChangedEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2SourceChangedEventArgs) BaseIntf() ICoreWebView2SourceChangedEventArgs {
-	var resultCoreWebView2SourceChangedEventArgs uintptr
-	coreWebView2SourceChangedEventArgsImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2SourceChangedEventArgs)))
-	return AsCoreWebView2SourceChangedEventArgs(resultCoreWebView2SourceChangedEventArgs)
+func (m *TCoreWebView2SourceChangedEventArgs) BaseIntf() (result ICoreWebView2SourceChangedEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2SourceChangedEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2SourceChangedEventArgs(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2SourceChangedEventArgs) IsNewDocument() bool {
-	r1 := coreWebView2SourceChangedEventArgsImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2SourceChangedEventArgsAPI().SysCallN(3, m.Instance())
+	return api.GoBool(r)
+}
+
+// NewCoreWebView2SourceChangedEventArgs class constructor
+func NewCoreWebView2SourceChangedEventArgs(args ICoreWebView2SourceChangedEventArgs) ICoreWebView2SourceChangedEventArgs {
+	r := coreWebView2SourceChangedEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2SourceChangedEventArgs(r)
 }
 
 var (
-	coreWebView2SourceChangedEventArgsImport       *imports.Imports = nil
-	coreWebView2SourceChangedEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2SourceChangedEventArgs_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2SourceChangedEventArgs_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2SourceChangedEventArgs_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2SourceChangedEventArgs_IsNewDocument", 0),
-	}
+	coreWebView2SourceChangedEventArgsOnce   base.Once
+	coreWebView2SourceChangedEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2SourceChangedEventArgsImportAPI() *imports.Imports {
-	if coreWebView2SourceChangedEventArgsImport == nil {
-		coreWebView2SourceChangedEventArgsImport = NewDefaultImports()
-		coreWebView2SourceChangedEventArgsImport.SetImportTable(coreWebView2SourceChangedEventArgsImportTables)
-		coreWebView2SourceChangedEventArgsImportTables = nil
-	}
+func coreWebView2SourceChangedEventArgsAPI() *imports.Imports {
+	coreWebView2SourceChangedEventArgsOnce.Do(func() {
+		coreWebView2SourceChangedEventArgsImport = api.NewDefaultImports()
+		coreWebView2SourceChangedEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2SourceChangedEventArgs_Create", 0), // constructor NewCoreWebView2SourceChangedEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2SourceChangedEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2SourceChangedEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2SourceChangedEventArgs_IsNewDocument", 0), // property IsNewDocument
+		}
+	})
 	return coreWebView2SourceChangedEventArgsImport
 }

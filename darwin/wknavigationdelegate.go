@@ -6,63 +6,66 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKNavigationDelegate Root Interface
-//
-//	https://developer.apple.com/documentation/webkit/wknavigationdelegate?language=objc
-//	Methods for accepting or rejecting navigation changes, and for tracking the progress of navigation requests.
-type IWKNavigationDelegate interface {
-	IObject
+// IWkNavigationDelegate Parent: lcl.IObject
+type IWkNavigationDelegate interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKNavigationDelegateProtocol // function
+	Data() wvTypes.WKNavigationDelegateProtocol // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
-// TWKNavigationDelegate Root Object
-//
-//	https://developer.apple.com/documentation/webkit/wknavigationdelegate?language=objc
-//	Methods for accepting or rejecting navigation changes, and for tracking the progress of navigation requests.
-type TWKNavigationDelegate struct {
-	TObject
+type TWkNavigationDelegate struct {
+	lcl.TObject
 }
 
-func NewWKNavigationDelegate(event IWKNavigationDelegateEvent) IWKNavigationDelegate {
-	r1 := wKNavigationDelegateImportAPI().SysCallN(0, GetObjectUintptr(event))
-	return AsWKNavigationDelegate(r1)
+func (m *TWkNavigationDelegate) Data() wvTypes.WKNavigationDelegateProtocol {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationDelegateAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKNavigationDelegateProtocol(r)
 }
 
-func (m *TWKNavigationDelegate) Data() WKNavigationDelegateProtocol {
-	r1 := wKNavigationDelegateImportAPI().SysCallN(1, m.Instance())
-	return WKNavigationDelegateProtocol(r1)
+func (m *TWkNavigationDelegate) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkNavigationDelegateAPI().SysCallN(2, m.Instance())
 }
 
-func (m *TWKNavigationDelegate) Release() {
-	wKNavigationDelegateImportAPI().SysCallN(2, m.Instance())
+// NewNavigationDelegate class constructor
+func NewNavigationDelegate(event IWkWebview) IWkNavigationDelegate {
+	r := wkNavigationDelegateAPI().SysCallN(0, base.GetObjectUintptr(event))
+	return AsWkNavigationDelegate(r)
 }
 
 var (
-	wKNavigationDelegateImport       *imports.Imports = nil
-	wKNavigationDelegateImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKNavigationDelegate_Create", 0),
-		/*1*/ imports.NewTable("WKNavigationDelegate_Data", 0),
-		/*2*/ imports.NewTable("WKNavigationDelegate_Release", 0),
-	}
+	wkNavigationDelegateOnce   base.Once
+	wkNavigationDelegateImport *imports.Imports = nil
 )
 
-func wKNavigationDelegateImportAPI() *imports.Imports {
-	if wKNavigationDelegateImport == nil {
-		wKNavigationDelegateImport = NewDefaultImports()
-		wKNavigationDelegateImport.SetImportTable(wKNavigationDelegateImportTables)
-		wKNavigationDelegateImportTables = nil
-	}
-	return wKNavigationDelegateImport
+func wkNavigationDelegateAPI() *imports.Imports {
+	wkNavigationDelegateOnce.Do(func() {
+		wkNavigationDelegateImport = api.NewDefaultImports()
+		wkNavigationDelegateImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkNavigationDelegate_Create", 0), // constructor NewNavigationDelegate
+			/* 1 */ imports.NewTable("TWkNavigationDelegate_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkNavigationDelegate_Release", 0), // procedure Release
+		}
+	})
+	return wkNavigationDelegateImport
 }

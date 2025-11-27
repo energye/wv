@@ -6,50 +6,57 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2CustomItemSelectedEventHandler Parent: IObject
-//
-//	Raised to notify the host that the end user selected a custom
-//	ContextMenuItem. CustomItemSelected event is raised on the specific
-//	ContextMenuItem that the end user selected.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2customitemselectedeventhandler">See the ICoreWebView2CustomItemSelectedEventHandler article.</a>
+// ICoreWebView2CustomItemSelectedEventHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2CustomItemSelectedEventHandler0 interface {
+	lcl.IInterfacedObject
+}
+
+// ICoreWebView2CustomItemSelectedEventHandler Parent: ICoreWebView2CustomItemSelectedEventHandler0
 type ICoreWebView2CustomItemSelectedEventHandler interface {
-	IObject
+	ICoreWebView2CustomItemSelectedEventHandler0
+	AsIntfCustomItemSelectedEventHandler() uintptr
 }
 
-// TCoreWebView2CustomItemSelectedEventHandler Parent: TObject
-//
-//	Raised to notify the host that the end user selected a custom
-//	ContextMenuItem. CustomItemSelected event is raised on the specific
-//	ContextMenuItem that the end user selected.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2customitemselectedeventhandler">See the ICoreWebView2CustomItemSelectedEventHandler article.</a>
 type TCoreWebView2CustomItemSelectedEventHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2CustomItemSelectedEventHandler(aEvents IWVBrowserEvents) ICoreWebView2CustomItemSelectedEventHandler {
-	r1 := coreWebView2CustomItemSelectedEventHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents))
-	return AsCoreWebView2CustomItemSelectedEventHandler(r1)
+func (m *TCoreWebView2CustomItemSelectedEventHandler) AsIntfCustomItemSelectedEventHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2CustomItemSelectedEventHandler class constructor
+func NewCoreWebView2CustomItemSelectedEventHandler(events IWVBrowserBase) ICoreWebView2CustomItemSelectedEventHandler {
+	var customItemSelectedEventHandlerPtr uintptr // ICoreWebView2CustomItemSelectedEventHandler
+	r := coreWebView2CustomItemSelectedEventHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), uintptr(base.UnsafePointer(&customItemSelectedEventHandlerPtr)))
+	ret := AsCoreWebView2CustomItemSelectedEventHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, customItemSelectedEventHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2CustomItemSelectedEventHandlerImport       *imports.Imports = nil
-	coreWebView2CustomItemSelectedEventHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2CustomItemSelectedEventHandler_Create", 0),
-	}
+	coreWebView2CustomItemSelectedEventHandlerOnce   base.Once
+	coreWebView2CustomItemSelectedEventHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2CustomItemSelectedEventHandlerImportAPI() *imports.Imports {
-	if coreWebView2CustomItemSelectedEventHandlerImport == nil {
-		coreWebView2CustomItemSelectedEventHandlerImport = NewDefaultImports()
-		coreWebView2CustomItemSelectedEventHandlerImport.SetImportTable(coreWebView2CustomItemSelectedEventHandlerImportTables)
-		coreWebView2CustomItemSelectedEventHandlerImportTables = nil
-	}
+func coreWebView2CustomItemSelectedEventHandlerAPI() *imports.Imports {
+	coreWebView2CustomItemSelectedEventHandlerOnce.Do(func() {
+		coreWebView2CustomItemSelectedEventHandlerImport = api.NewDefaultImports()
+		coreWebView2CustomItemSelectedEventHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2CustomItemSelectedEventHandler_Create", 0), // constructor NewCoreWebView2CustomItemSelectedEventHandler
+		}
+	})
 	return coreWebView2CustomItemSelectedEventHandlerImport
 }

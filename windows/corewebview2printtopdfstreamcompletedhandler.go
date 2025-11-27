@@ -6,50 +6,70 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2PrintToPdfStreamCompletedHandler Parent: IObject
-//
-//	Receives the result of the PrintToPdfStream method.
-//	errorCode returns S_OK if the PrintToPdfStream operation succeeded.
-//	The printable pdf data is returned in the pdfStream object.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2printtopdfstreamcompletedhandler">See the ICoreWebView2PrintToPdfStreamCompletedHandler article.</a>
+// ICoreWebView2PrintToPdfStreamCompletedHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2PrintToPdfStreamCompletedHandler0 interface {
+	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the result of the corresponding asynchronous method.
+	Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT // function
+}
+
+// ICoreWebView2PrintToPdfStreamCompletedHandler Parent: ICoreWebView2PrintToPdfStreamCompletedHandler0
 type ICoreWebView2PrintToPdfStreamCompletedHandler interface {
-	IObject
+	ICoreWebView2PrintToPdfStreamCompletedHandler0
+	AsIntfPrintToPdfStreamCompletedHandler() uintptr
 }
 
-// TCoreWebView2PrintToPdfStreamCompletedHandler Parent: TObject
-//
-//	Receives the result of the PrintToPdfStream method.
-//	errorCode returns S_OK if the PrintToPdfStream operation succeeded.
-//	The printable pdf data is returned in the pdfStream object.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2printtopdfstreamcompletedhandler">See the ICoreWebView2PrintToPdfStreamCompletedHandler article.</a>
 type TCoreWebView2PrintToPdfStreamCompletedHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2PrintToPdfStreamCompletedHandler(aEvents IWVBrowserEvents) ICoreWebView2PrintToPdfStreamCompletedHandler {
-	r1 := coreWebView2PrintToPdfStreamCompletedHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents))
-	return AsCoreWebView2PrintToPdfStreamCompletedHandler(r1)
+func (m *TCoreWebView2PrintToPdfStreamCompletedHandler) Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2PrintToPdfStreamCompletedHandlerAPI().SysCallN(1, m.Instance(), uintptr(errorCode), base.GetObjectUintptr(result))
+	return types.HRESULT(r)
+}
+
+func (m *TCoreWebView2PrintToPdfStreamCompletedHandler) AsIntfPrintToPdfStreamCompletedHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2PrintToPdfStreamCompletedHandler class constructor
+func NewCoreWebView2PrintToPdfStreamCompletedHandler(events IWVBrowserBase) ICoreWebView2PrintToPdfStreamCompletedHandler {
+	var printToPdfStreamCompletedHandlerPtr uintptr // ICoreWebView2PrintToPdfStreamCompletedHandler
+	r := coreWebView2PrintToPdfStreamCompletedHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), uintptr(base.UnsafePointer(&printToPdfStreamCompletedHandlerPtr)))
+	ret := AsCoreWebView2PrintToPdfStreamCompletedHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, printToPdfStreamCompletedHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2PrintToPdfStreamCompletedHandlerImport       *imports.Imports = nil
-	coreWebView2PrintToPdfStreamCompletedHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2PrintToPdfStreamCompletedHandler_Create", 0),
-	}
+	coreWebView2PrintToPdfStreamCompletedHandlerOnce   base.Once
+	coreWebView2PrintToPdfStreamCompletedHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2PrintToPdfStreamCompletedHandlerImportAPI() *imports.Imports {
-	if coreWebView2PrintToPdfStreamCompletedHandlerImport == nil {
-		coreWebView2PrintToPdfStreamCompletedHandlerImport = NewDefaultImports()
-		coreWebView2PrintToPdfStreamCompletedHandlerImport.SetImportTable(coreWebView2PrintToPdfStreamCompletedHandlerImportTables)
-		coreWebView2PrintToPdfStreamCompletedHandlerImportTables = nil
-	}
+func coreWebView2PrintToPdfStreamCompletedHandlerAPI() *imports.Imports {
+	coreWebView2PrintToPdfStreamCompletedHandlerOnce.Do(func() {
+		coreWebView2PrintToPdfStreamCompletedHandlerImport = api.NewDefaultImports()
+		coreWebView2PrintToPdfStreamCompletedHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2PrintToPdfStreamCompletedHandler_Create", 0), // constructor NewCoreWebView2PrintToPdfStreamCompletedHandler
+			/* 1 */ imports.NewTable("TCoreWebView2PrintToPdfStreamCompletedHandler_Invoke", 0), // function Invoke
+		}
+	})
 	return coreWebView2PrintToPdfStreamCompletedHandlerImport
 }

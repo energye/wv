@@ -6,39 +6,40 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2NavigationStartingEventArgs Parent: IObject
-//
-//	Event args for the NavigationStarting event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs">See the ICoreWebView2NavigationStartingEventArgs article.</a>
+// ICoreWebView2NavigationStartingEventArgs Parent: lcl.IObject
 type ICoreWebView2NavigationStartingEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2NavigationStartingEventArgs // property
+	BaseIntf() ICoreWebView2NavigationStartingEventArgs // property BaseIntf Getter
 	// URI
 	//  The uri of the requested navigation.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_uri">See the ICoreWebView2NavigationStartingEventArgs article.</a>
-	URI() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_uri">See the ICoreWebView2NavigationStartingEventArgs article.</see>
+	URI() string // property URI Getter
 	// IsUserInitiated
 	//  `TRUE` when the navigation was initiated through a user gesture as
 	//  opposed to programmatic navigation by page script. Navigations initiated
 	//  via WebView2 APIs are considered as user initiated.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_isuserinitiated">See the ICoreWebView2NavigationStartingEventArgs article.</a>
-	IsUserInitiated() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_isuserinitiated">See the ICoreWebView2NavigationStartingEventArgs article.</see>
+	IsUserInitiated() bool // property IsUserInitiated Getter
 	// IsRedirected
 	//  `TRUE` when the navigation is redirected.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_isredirected">See the ICoreWebView2NavigationStartingEventArgs article.</a>
-	IsRedirected() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_isredirected">See the ICoreWebView2NavigationStartingEventArgs article.</see>
+	IsRedirected() bool // property IsRedirected Getter
 	// Cancel
 	//  The host may set this flag to cancel the navigation. If set, the
 	//  navigation is not longer present and the content of the current page is
@@ -50,127 +51,159 @@ type ICoreWebView2NavigationStartingEventArgs interface {
 	//  wil be ignored. A cancelled navigation will fire a `NavigationCompleted`
 	//  event with a `WebErrorStatus` of
 	//  `COREWEBVIEW2_WEB_ERROR_STATUS_OPERATION_CANCELED`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_cancel">See the ICoreWebView2NavigationStartingEventArgs article.</a>
-	Cancel() bool // property
-	// SetCancel Set Cancel
-	SetCancel(AValue bool) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_cancel">See the ICoreWebView2NavigationStartingEventArgs article.</see>
+	Cancel() bool         // property Cancel Getter
+	SetCancel(value bool) // property Cancel Setter
 	// NavigationID
 	//  The ID of the navigation.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_navigationid">See the ICoreWebView2NavigationStartingEventArgs article.</a>
-	NavigationID() (resultUint64 uint64) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_navigationid">See the ICoreWebView2NavigationStartingEventArgs article.</see>
+	NavigationID() uint64 // property NavigationID Getter
 	// RequestHeaders
 	//  The HTTP request headers for the navigation.
-	//  NOTE: You are not able to modify the HTTP request headers in a
+	//  \>NOTE: You are not able to modify the HTTP request headers in a
 	//  `NavigationStarting` event.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_requestheaders">See the ICoreWebView2NavigationStartingEventArgs article.</a>
-	RequestHeaders() ICoreWebView2HttpRequestHeaders // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs#get_requestheaders">See the ICoreWebView2NavigationStartingEventArgs article.</see>
+	RequestHeaders() ICoreWebView2HttpRequestHeaders // property RequestHeaders Getter
 	// AdditionalAllowedFrameAncestors
 	//  Get additional allowed frame ancestors set by the host app.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs2#get_additionalallowedframeancestors">See the ICoreWebView2NavigationStartingEventArgs3 article.</a>
-	AdditionalAllowedFrameAncestors() string // property
-	// SetAdditionalAllowedFrameAncestors Set AdditionalAllowedFrameAncestors
-	SetAdditionalAllowedFrameAncestors(AValue string) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs2#get_additionalallowedframeancestors">See the ICoreWebView2NavigationStartingEventArgs3 article.</see>
+	AdditionalAllowedFrameAncestors() string         // property AdditionalAllowedFrameAncestors Getter
+	SetAdditionalAllowedFrameAncestors(value string) // property AdditionalAllowedFrameAncestors Setter
 	// NavigationKind
 	//  Get the navigation kind of this navigation.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs3#get_navigationkind">See the ICoreWebView2NavigationStartingEventArgs3 article.</a>
-	NavigationKind() TWVNavigationKind // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs3#get_navigationkind">See the ICoreWebView2NavigationStartingEventArgs3 article.</see>
+	NavigationKind() wvTypes.TWVNavigationKind // property NavigationKind Getter
 }
 
-// TCoreWebView2NavigationStartingEventArgs Parent: TObject
-//
-//	Event args for the NavigationStarting event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2navigationstartingeventargs">See the ICoreWebView2NavigationStartingEventArgs article.</a>
 type TCoreWebView2NavigationStartingEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2NavigationStartingEventArgs(aArgs ICoreWebView2NavigationStartingEventArgs) ICoreWebView2NavigationStartingEventArgs {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(3, GetObjectUintptr(aArgs))
-	return AsCoreWebView2NavigationStartingEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2NavigationStartingEventArgs) Initialized() bool {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2NavigationStartingEventArgs) BaseIntf() ICoreWebView2NavigationStartingEventArgs {
-	var resultCoreWebView2NavigationStartingEventArgs uintptr
-	coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(1, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2NavigationStartingEventArgs)))
-	return AsCoreWebView2NavigationStartingEventArgs(resultCoreWebView2NavigationStartingEventArgs)
-}
-
-func (m *TCoreWebView2NavigationStartingEventArgs) URI() string {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(10, m.Instance())
-	return GoStr(r1)
-}
-
-func (m *TCoreWebView2NavigationStartingEventArgs) IsUserInitiated() bool {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(6, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2NavigationStartingEventArgs) IsRedirected() bool {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(5, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2NavigationStartingEventArgs) Cancel() bool {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(2, 0, m.Instance(), 0)
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2NavigationStartingEventArgs) SetCancel(AValue bool) {
-	coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(2, 1, m.Instance(), PascalBool(AValue))
-}
-
-func (m *TCoreWebView2NavigationStartingEventArgs) NavigationID() (resultUint64 uint64) {
-	coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(7, m.Instance(), uintptr(unsafePointer(&resultUint64)))
+func (m *TCoreWebView2NavigationStartingEventArgs) BaseIntf() (result ICoreWebView2NavigationStartingEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2NavigationStartingEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2NavigationStartingEventArgs(resultPtr)
 	return
 }
 
-func (m *TCoreWebView2NavigationStartingEventArgs) RequestHeaders() ICoreWebView2HttpRequestHeaders {
-	var resultCoreWebView2HttpRequestHeaders uintptr
-	coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(9, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2HttpRequestHeaders)))
-	return AsCoreWebView2HttpRequestHeaders(resultCoreWebView2HttpRequestHeaders)
+func (m *TCoreWebView2NavigationStartingEventArgs) URI() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(3, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TCoreWebView2NavigationStartingEventArgs) IsUserInitiated() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(4, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2NavigationStartingEventArgs) IsRedirected() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2NavigationStartingEventArgs) Cancel() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(6, 0, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2NavigationStartingEventArgs) SetCancel(value bool) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2NavigationStartingEventArgsAPI().SysCallN(6, 1, m.Instance(), api.PasBool(value))
+}
+
+func (m *TCoreWebView2NavigationStartingEventArgs) NavigationID() (result uint64) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2NavigationStartingEventArgsAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&result)))
+	return
+}
+
+func (m *TCoreWebView2NavigationStartingEventArgs) RequestHeaders() (result ICoreWebView2HttpRequestHeaders) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2NavigationStartingEventArgsAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2HttpRequestHeaders(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2NavigationStartingEventArgs) AdditionalAllowedFrameAncestors() string {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(0, 0, m.Instance(), 0)
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(9, 0, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2NavigationStartingEventArgs) SetAdditionalAllowedFrameAncestors(AValue string) {
-	coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(0, 1, m.Instance(), PascalStr(AValue))
+func (m *TCoreWebView2NavigationStartingEventArgs) SetAdditionalAllowedFrameAncestors(value string) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2NavigationStartingEventArgsAPI().SysCallN(9, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TCoreWebView2NavigationStartingEventArgs) NavigationKind() TWVNavigationKind {
-	r1 := coreWebView2NavigationStartingEventArgsImportAPI().SysCallN(8, m.Instance())
-	return TWVNavigationKind(r1)
+func (m *TCoreWebView2NavigationStartingEventArgs) NavigationKind() wvTypes.TWVNavigationKind {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(10, m.Instance())
+	return wvTypes.TWVNavigationKind(r)
+}
+
+// NewCoreWebView2NavigationStartingEventArgs class constructor
+func NewCoreWebView2NavigationStartingEventArgs(args ICoreWebView2NavigationStartingEventArgs) ICoreWebView2NavigationStartingEventArgs {
+	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2NavigationStartingEventArgs(r)
 }
 
 var (
-	coreWebView2NavigationStartingEventArgsImport       *imports.Imports = nil
-	coreWebView2NavigationStartingEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_AdditionalAllowedFrameAncestors", 0),
-		/*1*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_BaseIntf", 0),
-		/*2*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_Cancel", 0),
-		/*3*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_Create", 0),
-		/*4*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_Initialized", 0),
-		/*5*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_IsRedirected", 0),
-		/*6*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_IsUserInitiated", 0),
-		/*7*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_NavigationID", 0),
-		/*8*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_NavigationKind", 0),
-		/*9*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_RequestHeaders", 0),
-		/*10*/ imports.NewTable("CoreWebView2NavigationStartingEventArgs_URI", 0),
-	}
+	coreWebView2NavigationStartingEventArgsOnce   base.Once
+	coreWebView2NavigationStartingEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2NavigationStartingEventArgsImportAPI() *imports.Imports {
-	if coreWebView2NavigationStartingEventArgsImport == nil {
-		coreWebView2NavigationStartingEventArgsImport = NewDefaultImports()
-		coreWebView2NavigationStartingEventArgsImport.SetImportTable(coreWebView2NavigationStartingEventArgsImportTables)
-		coreWebView2NavigationStartingEventArgsImportTables = nil
-	}
+func coreWebView2NavigationStartingEventArgsAPI() *imports.Imports {
+	coreWebView2NavigationStartingEventArgsOnce.Do(func() {
+		coreWebView2NavigationStartingEventArgsImport = api.NewDefaultImports()
+		coreWebView2NavigationStartingEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_Create", 0), // constructor NewCoreWebView2NavigationStartingEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_URI", 0), // property URI
+			/* 4 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_IsUserInitiated", 0), // property IsUserInitiated
+			/* 5 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_IsRedirected", 0), // property IsRedirected
+			/* 6 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_Cancel", 0), // property Cancel
+			/* 7 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_NavigationID", 0), // property NavigationID
+			/* 8 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_RequestHeaders", 0), // property RequestHeaders
+			/* 9 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_AdditionalAllowedFrameAncestors", 0), // property AdditionalAllowedFrameAncestors
+			/* 10 */ imports.NewTable("TCoreWebView2NavigationStartingEventArgs_NavigationKind", 0), // property NavigationKind
+		}
+	})
 	return coreWebView2NavigationStartingEventArgsImport
 }

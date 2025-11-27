@@ -6,63 +6,66 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKUIDelegate Root Interface
-//
-//	The methods for presenting native user interface elements on behalf of a webpage.
-//	https://developer.apple.com/documentation/webkit/wkuidelegate?language=objc
-type IWKUIDelegate interface {
-	IObject
+// IWkUIDelegate Parent: lcl.IObject
+type IWkUIDelegate interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKUIDelegateProtocol // function
+	Data() wvTypes.WKUIDelegateProtocol // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
-// TWKUIDelegate Root Object
-//
-//	The methods for presenting native user interface elements on behalf of a webpage.
-//	https://developer.apple.com/documentation/webkit/wkuidelegate?language=objc
-type TWKUIDelegate struct {
-	TObject
+type TWkUIDelegate struct {
+	lcl.TObject
 }
 
-func NewWKUIDelegate(event IWKUIDelegateEvent) IWKUIDelegate {
-	r1 := wKUIDelegateImportAPI().SysCallN(0, GetObjectUintptr(event))
-	return AsWKUIDelegate(r1)
+func (m *TWkUIDelegate) Data() wvTypes.WKUIDelegateProtocol {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkUIDelegateAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKUIDelegateProtocol(r)
 }
 
-func (m *TWKUIDelegate) Data() WKUIDelegateProtocol {
-	r1 := wKUIDelegateImportAPI().SysCallN(1, m.Instance())
-	return WKUIDelegateProtocol(r1)
+func (m *TWkUIDelegate) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkUIDelegateAPI().SysCallN(2, m.Instance())
 }
 
-func (m *TWKUIDelegate) Release() {
-	wKUIDelegateImportAPI().SysCallN(2, m.Instance())
+// NewUIDelegate class constructor
+func NewUIDelegate(event IWkWebview) IWkUIDelegate {
+	r := wkUIDelegateAPI().SysCallN(0, base.GetObjectUintptr(event))
+	return AsWkUIDelegate(r)
 }
 
 var (
-	wKUIDelegateImport       *imports.Imports = nil
-	wKUIDelegateImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKUIDelegate_Create", 0),
-		/*1*/ imports.NewTable("WKUIDelegate_Data", 0),
-		/*2*/ imports.NewTable("WKUIDelegate_Release", 0),
-	}
+	wkUIDelegateOnce   base.Once
+	wkUIDelegateImport *imports.Imports = nil
 )
 
-func wKUIDelegateImportAPI() *imports.Imports {
-	if wKUIDelegateImport == nil {
-		wKUIDelegateImport = NewDefaultImports()
-		wKUIDelegateImport.SetImportTable(wKUIDelegateImportTables)
-		wKUIDelegateImportTables = nil
-	}
-	return wKUIDelegateImport
+func wkUIDelegateAPI() *imports.Imports {
+	wkUIDelegateOnce.Do(func() {
+		wkUIDelegateImport = api.NewDefaultImports()
+		wkUIDelegateImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkUIDelegate_Create", 0), // constructor NewUIDelegate
+			/* 1 */ imports.NewTable("TWkUIDelegate_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkUIDelegate_Release", 0), // procedure Release
+		}
+	})
+	return wkUIDelegateImport
 }

@@ -6,75 +6,80 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2DOMContentLoadedEventArgs Parent: IObject
-//
-//	Event args for the DOMContentLoaded event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2domcontentloadedeventargs">See the ICoreWebView2DOMContentLoadedEventArgs article.</a>
+// ICoreWebView2DOMContentLoadedEventArgs Parent: lcl.IObject
 type ICoreWebView2DOMContentLoadedEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2DOMContentLoadedEventArgs // property
+	BaseIntf() ICoreWebView2DOMContentLoadedEventArgs // property BaseIntf Getter
 	// NavigationId
 	//  The ID of the navigation which corresponds to other navigation ID properties on other navigation events.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2domcontentloadedeventargs#get_navigationid">See the ICoreWebView2DOMContentLoadedEventArgs article.</a>
-	NavigationId() (resultUint64 uint64) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2domcontentloadedeventargs#get_navigationid">See the ICoreWebView2DOMContentLoadedEventArgs article.</see>
+	NavigationId() uint64 // property NavigationId Getter
 }
 
-// TCoreWebView2DOMContentLoadedEventArgs Parent: TObject
-//
-//	Event args for the DOMContentLoaded event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2domcontentloadedeventargs">See the ICoreWebView2DOMContentLoadedEventArgs article.</a>
 type TCoreWebView2DOMContentLoadedEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2DOMContentLoadedEventArgs(aArgs ICoreWebView2DOMContentLoadedEventArgs) ICoreWebView2DOMContentLoadedEventArgs {
-	r1 := coreWebView2DOMContentLoadedEventArgsImportAPI().SysCallN(1, GetObjectUintptr(aArgs))
-	return AsCoreWebView2DOMContentLoadedEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2DOMContentLoadedEventArgs) Initialized() bool {
-	r1 := coreWebView2DOMContentLoadedEventArgsImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2DOMContentLoadedEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2DOMContentLoadedEventArgs) BaseIntf() ICoreWebView2DOMContentLoadedEventArgs {
-	var resultCoreWebView2DOMContentLoadedEventArgs uintptr
-	coreWebView2DOMContentLoadedEventArgsImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2DOMContentLoadedEventArgs)))
-	return AsCoreWebView2DOMContentLoadedEventArgs(resultCoreWebView2DOMContentLoadedEventArgs)
-}
-
-func (m *TCoreWebView2DOMContentLoadedEventArgs) NavigationId() (resultUint64 uint64) {
-	coreWebView2DOMContentLoadedEventArgsImportAPI().SysCallN(3, m.Instance(), uintptr(unsafePointer(&resultUint64)))
+func (m *TCoreWebView2DOMContentLoadedEventArgs) BaseIntf() (result ICoreWebView2DOMContentLoadedEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2DOMContentLoadedEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2DOMContentLoadedEventArgs(resultPtr)
 	return
 }
 
-var (
-	coreWebView2DOMContentLoadedEventArgsImport       *imports.Imports = nil
-	coreWebView2DOMContentLoadedEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2DOMContentLoadedEventArgs_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2DOMContentLoadedEventArgs_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2DOMContentLoadedEventArgs_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2DOMContentLoadedEventArgs_NavigationId", 0),
+func (m *TCoreWebView2DOMContentLoadedEventArgs) NavigationId() (result uint64) {
+	if !m.IsValid() {
+		return
 	}
+	coreWebView2DOMContentLoadedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&result)))
+	return
+}
+
+// NewCoreWebView2DOMContentLoadedEventArgs class constructor
+func NewCoreWebView2DOMContentLoadedEventArgs(args ICoreWebView2DOMContentLoadedEventArgs) ICoreWebView2DOMContentLoadedEventArgs {
+	r := coreWebView2DOMContentLoadedEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2DOMContentLoadedEventArgs(r)
+}
+
+var (
+	coreWebView2DOMContentLoadedEventArgsOnce   base.Once
+	coreWebView2DOMContentLoadedEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2DOMContentLoadedEventArgsImportAPI() *imports.Imports {
-	if coreWebView2DOMContentLoadedEventArgsImport == nil {
-		coreWebView2DOMContentLoadedEventArgsImport = NewDefaultImports()
-		coreWebView2DOMContentLoadedEventArgsImport.SetImportTable(coreWebView2DOMContentLoadedEventArgsImportTables)
-		coreWebView2DOMContentLoadedEventArgsImportTables = nil
-	}
+func coreWebView2DOMContentLoadedEventArgsAPI() *imports.Imports {
+	coreWebView2DOMContentLoadedEventArgsOnce.Do(func() {
+		coreWebView2DOMContentLoadedEventArgsImport = api.NewDefaultImports()
+		coreWebView2DOMContentLoadedEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2DOMContentLoadedEventArgs_Create", 0), // constructor NewCoreWebView2DOMContentLoadedEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2DOMContentLoadedEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2DOMContentLoadedEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2DOMContentLoadedEventArgs_NavigationId", 0), // property NavigationId
+		}
+	})
 	return coreWebView2DOMContentLoadedEventArgsImport
 }

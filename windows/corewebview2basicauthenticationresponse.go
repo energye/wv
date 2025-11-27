@@ -6,105 +6,117 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2BasicAuthenticationResponse Parent: IObject
-//
-//	Represents a Basic HTTP authentication response that contains a user name
-//	and a password as according to RFC7617 (https://tools.ietf.org/html/rfc7617)
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2basicauthenticationresponse">See the ICoreWebView2BasicAuthenticationResponse article.</a>
+// ICoreWebView2BasicAuthenticationResponse Parent: lcl.IObject
 type ICoreWebView2BasicAuthenticationResponse interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2BasicAuthenticationResponse // property
-	// SetBaseIntf Set BaseIntf
-	SetBaseIntf(AValue ICoreWebView2BasicAuthenticationResponse) // property
+	BaseIntf() ICoreWebView2BasicAuthenticationResponse         // property BaseIntf Getter
+	SetBaseIntf(value ICoreWebView2BasicAuthenticationResponse) // property BaseIntf Setter
 	// UserName
 	//  User name provided for authentication.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2basicauthenticationresponse#get_username">See the ICoreWebView2BasicAuthenticationResponse article.</a>
-	UserName() string // property
-	// SetUserName Set UserName
-	SetUserName(AValue string) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2basicauthenticationresponse#get_username">See the ICoreWebView2BasicAuthenticationResponse article.</see>
+	UserName() string         // property UserName Getter
+	SetUserName(value string) // property UserName Setter
 	// Password
 	//  Password provided for authentication.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2basicauthenticationresponse#get_password">See the ICoreWebView2BasicAuthenticationResponse article.</a>
-	Password() string // property
-	// SetPassword Set Password
-	SetPassword(AValue string) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2basicauthenticationresponse#get_password">See the ICoreWebView2BasicAuthenticationResponse article.</see>
+	Password() string         // property Password Getter
+	SetPassword(value string) // property Password Setter
 }
 
-// TCoreWebView2BasicAuthenticationResponse Parent: TObject
-//
-//	Represents a Basic HTTP authentication response that contains a user name
-//	and a password as according to RFC7617 (https://tools.ietf.org/html/rfc7617)
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2basicauthenticationresponse">See the ICoreWebView2BasicAuthenticationResponse article.</a>
 type TCoreWebView2BasicAuthenticationResponse struct {
-	TObject
-}
-
-func NewCoreWebView2BasicAuthenticationResponse(aBaseIntf ICoreWebView2BasicAuthenticationResponse) ICoreWebView2BasicAuthenticationResponse {
-	r1 := coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(1, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2BasicAuthenticationResponse(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2BasicAuthenticationResponse) Initialized() bool {
-	r1 := coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2BasicAuthenticationResponseAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2BasicAuthenticationResponse) BaseIntf() ICoreWebView2BasicAuthenticationResponse {
-	var resultCoreWebView2BasicAuthenticationResponse uintptr
-	coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(0, 0, m.Instance(), 0, uintptr(unsafePointer(&resultCoreWebView2BasicAuthenticationResponse)))
-	return AsCoreWebView2BasicAuthenticationResponse(resultCoreWebView2BasicAuthenticationResponse)
+func (m *TCoreWebView2BasicAuthenticationResponse) BaseIntf() (result ICoreWebView2BasicAuthenticationResponse) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2BasicAuthenticationResponseAPI().SysCallN(2, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2BasicAuthenticationResponse(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2BasicAuthenticationResponse) SetBaseIntf(AValue ICoreWebView2BasicAuthenticationResponse) {
-	coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(0, 1, m.Instance(), GetObjectUintptr(AValue), GetObjectUintptr(AValue))
+func (m *TCoreWebView2BasicAuthenticationResponse) SetBaseIntf(value ICoreWebView2BasicAuthenticationResponse) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2BasicAuthenticationResponseAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
 func (m *TCoreWebView2BasicAuthenticationResponse) UserName() string {
-	r1 := coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(4, 0, m.Instance(), 0)
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2BasicAuthenticationResponseAPI().SysCallN(3, 0, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2BasicAuthenticationResponse) SetUserName(AValue string) {
-	coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(4, 1, m.Instance(), PascalStr(AValue))
+func (m *TCoreWebView2BasicAuthenticationResponse) SetUserName(value string) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2BasicAuthenticationResponseAPI().SysCallN(3, 1, m.Instance(), api.PasStr(value))
 }
 
 func (m *TCoreWebView2BasicAuthenticationResponse) Password() string {
-	r1 := coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(3, 0, m.Instance(), 0)
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2BasicAuthenticationResponseAPI().SysCallN(4, 0, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2BasicAuthenticationResponse) SetPassword(AValue string) {
-	coreWebView2BasicAuthenticationResponseImportAPI().SysCallN(3, 1, m.Instance(), PascalStr(AValue))
+func (m *TCoreWebView2BasicAuthenticationResponse) SetPassword(value string) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2BasicAuthenticationResponseAPI().SysCallN(4, 1, m.Instance(), api.PasStr(value))
+}
+
+// NewCoreWebView2BasicAuthenticationResponse class constructor
+func NewCoreWebView2BasicAuthenticationResponse(baseIntf ICoreWebView2BasicAuthenticationResponse) ICoreWebView2BasicAuthenticationResponse {
+	r := coreWebView2BasicAuthenticationResponseAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2BasicAuthenticationResponse(r)
 }
 
 var (
-	coreWebView2BasicAuthenticationResponseImport       *imports.Imports = nil
-	coreWebView2BasicAuthenticationResponseImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2BasicAuthenticationResponse_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2BasicAuthenticationResponse_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2BasicAuthenticationResponse_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2BasicAuthenticationResponse_Password", 0),
-		/*4*/ imports.NewTable("CoreWebView2BasicAuthenticationResponse_UserName", 0),
-	}
+	coreWebView2BasicAuthenticationResponseOnce   base.Once
+	coreWebView2BasicAuthenticationResponseImport *imports.Imports = nil
 )
 
-func coreWebView2BasicAuthenticationResponseImportAPI() *imports.Imports {
-	if coreWebView2BasicAuthenticationResponseImport == nil {
-		coreWebView2BasicAuthenticationResponseImport = NewDefaultImports()
-		coreWebView2BasicAuthenticationResponseImport.SetImportTable(coreWebView2BasicAuthenticationResponseImportTables)
-		coreWebView2BasicAuthenticationResponseImportTables = nil
-	}
+func coreWebView2BasicAuthenticationResponseAPI() *imports.Imports {
+	coreWebView2BasicAuthenticationResponseOnce.Do(func() {
+		coreWebView2BasicAuthenticationResponseImport = api.NewDefaultImports()
+		coreWebView2BasicAuthenticationResponseImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2BasicAuthenticationResponse_Create", 0), // constructor NewCoreWebView2BasicAuthenticationResponse
+			/* 1 */ imports.NewTable("TCoreWebView2BasicAuthenticationResponse_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2BasicAuthenticationResponse_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2BasicAuthenticationResponse_UserName", 0), // property UserName
+			/* 4 */ imports.NewTable("TCoreWebView2BasicAuthenticationResponse_Password", 0), // property Password
+		}
+	})
 	return coreWebView2BasicAuthenticationResponseImport
 }

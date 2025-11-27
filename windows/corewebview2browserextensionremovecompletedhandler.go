@@ -6,48 +6,70 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2BrowserExtensionRemoveCompletedHandler Parent: IObject
-//
-//	The caller implements this interface to receive the result of removing
-//	the browser Extension from the Profile.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2browserextensionremovecompletedhandler">See the ICoreWebView2BrowserExtensionRemoveCompletedHandler article.</a>
+// ICoreWebView2BrowserExtensionRemoveCompletedHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2BrowserExtensionRemoveCompletedHandler0 interface {
+	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the result of the corresponding asynchronous method.
+	Invoke(errorCode types.HRESULT) types.HRESULT // function
+}
+
+// ICoreWebView2BrowserExtensionRemoveCompletedHandler Parent: ICoreWebView2BrowserExtensionRemoveCompletedHandler0
 type ICoreWebView2BrowserExtensionRemoveCompletedHandler interface {
-	IObject
+	ICoreWebView2BrowserExtensionRemoveCompletedHandler0
+	AsIntfBrowserExtensionRemoveCompletedHandler() uintptr
 }
 
-// TCoreWebView2BrowserExtensionRemoveCompletedHandler Parent: TObject
-//
-//	The caller implements this interface to receive the result of removing
-//	the browser Extension from the Profile.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2browserextensionremovecompletedhandler">See the ICoreWebView2BrowserExtensionRemoveCompletedHandler article.</a>
 type TCoreWebView2BrowserExtensionRemoveCompletedHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2BrowserExtensionRemoveCompletedHandler(aEvents IWVBrowserEvents, aExtensionID string) ICoreWebView2BrowserExtensionRemoveCompletedHandler {
-	r1 := coreWebView2BrowserExtensionRemoveCompletedHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents), PascalStr(aExtensionID))
-	return AsCoreWebView2BrowserExtensionRemoveCompletedHandler(r1)
+func (m *TCoreWebView2BrowserExtensionRemoveCompletedHandler) Invoke(errorCode types.HRESULT) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2BrowserExtensionRemoveCompletedHandlerAPI().SysCallN(1, m.Instance(), uintptr(errorCode))
+	return types.HRESULT(r)
+}
+
+func (m *TCoreWebView2BrowserExtensionRemoveCompletedHandler) AsIntfBrowserExtensionRemoveCompletedHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2BrowserExtensionRemoveCompletedHandler class constructor
+func NewCoreWebView2BrowserExtensionRemoveCompletedHandler(events IWVBrowserBase, extensionID string) ICoreWebView2BrowserExtensionRemoveCompletedHandler {
+	var browserExtensionRemoveCompletedHandlerPtr uintptr // ICoreWebView2BrowserExtensionRemoveCompletedHandler
+	r := coreWebView2BrowserExtensionRemoveCompletedHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), api.PasStr(extensionID), uintptr(base.UnsafePointer(&browserExtensionRemoveCompletedHandlerPtr)))
+	ret := AsCoreWebView2BrowserExtensionRemoveCompletedHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, browserExtensionRemoveCompletedHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2BrowserExtensionRemoveCompletedHandlerImport       *imports.Imports = nil
-	coreWebView2BrowserExtensionRemoveCompletedHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2BrowserExtensionRemoveCompletedHandler_Create", 0),
-	}
+	coreWebView2BrowserExtensionRemoveCompletedHandlerOnce   base.Once
+	coreWebView2BrowserExtensionRemoveCompletedHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2BrowserExtensionRemoveCompletedHandlerImportAPI() *imports.Imports {
-	if coreWebView2BrowserExtensionRemoveCompletedHandlerImport == nil {
-		coreWebView2BrowserExtensionRemoveCompletedHandlerImport = NewDefaultImports()
-		coreWebView2BrowserExtensionRemoveCompletedHandlerImport.SetImportTable(coreWebView2BrowserExtensionRemoveCompletedHandlerImportTables)
-		coreWebView2BrowserExtensionRemoveCompletedHandlerImportTables = nil
-	}
+func coreWebView2BrowserExtensionRemoveCompletedHandlerAPI() *imports.Imports {
+	coreWebView2BrowserExtensionRemoveCompletedHandlerOnce.Do(func() {
+		coreWebView2BrowserExtensionRemoveCompletedHandlerImport = api.NewDefaultImports()
+		coreWebView2BrowserExtensionRemoveCompletedHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2BrowserExtensionRemoveCompletedHandler_Create", 0), // constructor NewCoreWebView2BrowserExtensionRemoveCompletedHandler
+			/* 1 */ imports.NewTable("TCoreWebView2BrowserExtensionRemoveCompletedHandler_Invoke", 0), // function Invoke
+		}
+	})
 	return coreWebView2BrowserExtensionRemoveCompletedHandlerImport
 }

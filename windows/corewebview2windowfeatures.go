@@ -6,218 +6,210 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
-	. "github.com/energye/lcl/types"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2WindowFeatures Parent: IObject
-//
-//	The window features for a WebView popup window.  The fields match the
-//	windowFeatures passed to window.open as specified in
-//	[Window features](https://developer.mozilla.org/docs/Web/API/Window/open#Window_features)
-//	on MDN.
-//	There is no requirement for you to respect the values.  If your app does
-//	not have corresponding UI features (for example, no toolbar) or if all
-//	instance of WebView are opened in tabs and do not have distinct size or
-//	positions, then your app does not respect the values.  You may want to
-//	respect values, but perhaps only some apply to the UI of you app.
-//	Accordingly, you may respect all, some, or none of the properties as
-//	appropriate for your app.  For all numeric properties, if the value that is
-//	passed to window.open is outside the range of an unsigned 32bit int, the
-//	resulting value is the absolute value of the maximum for unsigned 32bit
-//	integer.  If you are not able to parse the value an integer, it is
-//	considered 0.  If the value is a floating point value, it is rounded down
-//	to an integer.
-//	In runtime versions 98 or later, the values of ShouldDisplayMenuBar,
-//	ShouldDisplayStatus, ShouldDisplayToolbar, and ShouldDisplayScrollBars
-//	will not directly depend on the equivalent fields in the windowFeatures
-//	string.  Instead, they will all be false if the window is expected to be a
-//	popup, and true if it is not.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures">See the ICoreWebView2WindowFeatures article.</a>
+// ICoreWebView2WindowFeatures Parent: lcl.IObject
 type ICoreWebView2WindowFeatures interface {
-	IObject
+	lcl.IObject
+	CopyToRecord(windowFeatures *TWVWindowFeatures) // procedure
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2WindowFeatures // property
+	BaseIntf() ICoreWebView2WindowFeatures // property BaseIntf Getter
 	// HasPosition
 	//  Specifies left and top values.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_hasposition">See the ICoreWebView2WindowFeatures article.</a>
-	HasPosition() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_hasposition">See the ICoreWebView2WindowFeatures article.</see>
+	HasPosition() bool // property HasPosition Getter
 	// HasSize
 	//  Specifies height and width values.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_hassize">See the ICoreWebView2WindowFeatures article.</a>
-	HasSize() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_hassize">See the ICoreWebView2WindowFeatures article.</see>
+	HasSize() bool // property HasSize Getter
 	// Left
 	//  Specifies the left position of the window. If `HasPosition` is set to
 	//  `FALSE`, this field is ignored.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_left">See the ICoreWebView2WindowFeatures article.</a>
-	Left() uint32 // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_left">See the ICoreWebView2WindowFeatures article.</see>
+	Left() uint32 // property Left Getter
 	// Top
 	//  Specifies the top position of the window. If `HasPosition` is set to
 	//  `FALSE`, this field is ignored.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_top">See the ICoreWebView2WindowFeatures article.</a>
-	Top() uint32 // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_top">See the ICoreWebView2WindowFeatures article.</see>
+	Top() uint32 // property Top Getter
 	// Width
 	//  Specifies the width of the window. Minimum value is `100`. If `HasSize`
 	//  is set to `FALSE`, this field is ignored.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_width">See the ICoreWebView2WindowFeatures article.</a>
-	Width() uint32 // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_width">See the ICoreWebView2WindowFeatures article.</see>
+	Width() uint32 // property Width Getter
 	// Height
 	//  Specifies the height of the window. Minimum value is `100`. If
 	//  `HasSize` is set to `FALSE`, this field is ignored.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_height">See the ICoreWebView2WindowFeatures article.</a>
-	Height() uint32 // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_height">See the ICoreWebView2WindowFeatures article.</see>
+	Height() uint32 // property Height Getter
 	// ShouldDisplayMenuBar
 	//  Indicates that the menu bar is displayed.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplaymenubar">See the ICoreWebView2WindowFeatures article.</a>
-	ShouldDisplayMenuBar() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplaymenubar">See the ICoreWebView2WindowFeatures article.</see>
+	ShouldDisplayMenuBar() bool // property ShouldDisplayMenuBar Getter
 	// ShouldDisplayStatus
 	//  Indicates that the status bar is displayed.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplaystatus">See the ICoreWebView2WindowFeatures article.</a>
-	ShouldDisplayStatus() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplaystatus">See the ICoreWebView2WindowFeatures article.</see>
+	ShouldDisplayStatus() bool // property ShouldDisplayStatus Getter
 	// ShouldDisplayToolbar
 	//  Indicates that the browser toolbar is displayed.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplaytoolbar">See the ICoreWebView2WindowFeatures article.</a>
-	ShouldDisplayToolbar() bool // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplaytoolbar">See the ICoreWebView2WindowFeatures article.</see>
+	ShouldDisplayToolbar() bool // property ShouldDisplayToolbar Getter
 	// ShouldDisplayScrollBars
 	//  Indicates that the scroll bars are displayed.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplayscrollbars">See the ICoreWebView2WindowFeatures article.</a>
-	ShouldDisplayScrollBars() bool                   // property
-	CopyToRecord(aWindowFeatures *TWVWindowFeatures) // procedure
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures#get_shoulddisplayscrollbars">See the ICoreWebView2WindowFeatures article.</see>
+	ShouldDisplayScrollBars() bool // property ShouldDisplayScrollBars Getter
 }
 
-// TCoreWebView2WindowFeatures Parent: TObject
-//
-//	The window features for a WebView popup window.  The fields match the
-//	windowFeatures passed to window.open as specified in
-//	[Window features](https://developer.mozilla.org/docs/Web/API/Window/open#Window_features)
-//	on MDN.
-//	There is no requirement for you to respect the values.  If your app does
-//	not have corresponding UI features (for example, no toolbar) or if all
-//	instance of WebView are opened in tabs and do not have distinct size or
-//	positions, then your app does not respect the values.  You may want to
-//	respect values, but perhaps only some apply to the UI of you app.
-//	Accordingly, you may respect all, some, or none of the properties as
-//	appropriate for your app.  For all numeric properties, if the value that is
-//	passed to window.open is outside the range of an unsigned 32bit int, the
-//	resulting value is the absolute value of the maximum for unsigned 32bit
-//	integer.  If you are not able to parse the value an integer, it is
-//	considered 0.  If the value is a floating point value, it is rounded down
-//	to an integer.
-//	In runtime versions 98 or later, the values of ShouldDisplayMenuBar,
-//	ShouldDisplayStatus, ShouldDisplayToolbar, and ShouldDisplayScrollBars
-//	will not directly depend on the equivalent fields in the windowFeatures
-//	string.  Instead, they will all be false if the window is expected to be a
-//	popup, and true if it is not.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2windowfeatures">See the ICoreWebView2WindowFeatures article.</a>
 type TCoreWebView2WindowFeatures struct {
-	TObject
+	lcl.TObject
 }
 
-func NewCoreWebView2WindowFeatures(aBaseIntf ICoreWebView2WindowFeatures) ICoreWebView2WindowFeatures {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(2, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2WindowFeatures(r1)
+func (m *TCoreWebView2WindowFeatures) CopyToRecord(windowFeatures *TWVWindowFeatures) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2WindowFeaturesAPI().SysCallN(1, m.Instance(), uintptr(base.UnsafePointer(windowFeatures)))
 }
 
 func (m *TCoreWebView2WindowFeatures) Initialized() bool {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(6, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(2, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2WindowFeatures) BaseIntf() ICoreWebView2WindowFeatures {
-	var resultCoreWebView2WindowFeatures uintptr
-	coreWebView2WindowFeaturesImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2WindowFeatures)))
-	return AsCoreWebView2WindowFeatures(resultCoreWebView2WindowFeatures)
+func (m *TCoreWebView2WindowFeatures) BaseIntf() (result ICoreWebView2WindowFeatures) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2WindowFeaturesAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2WindowFeatures(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2WindowFeatures) HasPosition() bool {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(4, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) HasSize() bool {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) Left() uint32 {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(7, m.Instance())
-	return uint32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(6, m.Instance())
+	return uint32(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) Top() uint32 {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(12, m.Instance())
-	return uint32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(7, m.Instance())
+	return uint32(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) Width() uint32 {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(13, m.Instance())
-	return uint32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(8, m.Instance())
+	return uint32(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) Height() uint32 {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(5, m.Instance())
-	return uint32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(9, m.Instance())
+	return uint32(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) ShouldDisplayMenuBar() bool {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(8, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(10, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) ShouldDisplayStatus() bool {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(10, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(11, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) ShouldDisplayToolbar() bool {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(11, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(12, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2WindowFeatures) ShouldDisplayScrollBars() bool {
-	r1 := coreWebView2WindowFeaturesImportAPI().SysCallN(9, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WindowFeaturesAPI().SysCallN(13, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2WindowFeatures) CopyToRecord(aWindowFeatures *TWVWindowFeatures) {
-	var result0 uintptr
-	coreWebView2WindowFeaturesImportAPI().SysCallN(1, m.Instance(), uintptr(unsafePointer(&result0)))
-	*aWindowFeatures = *(*TWVWindowFeatures)(unsafePointer(result0))
+// NewCoreWebView2WindowFeatures class constructor
+func NewCoreWebView2WindowFeatures(baseIntf ICoreWebView2WindowFeatures) ICoreWebView2WindowFeatures {
+	r := coreWebView2WindowFeaturesAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2WindowFeatures(r)
 }
 
 var (
-	coreWebView2WindowFeaturesImport       *imports.Imports = nil
-	coreWebView2WindowFeaturesImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2WindowFeatures_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2WindowFeatures_CopyToRecord", 0),
-		/*2*/ imports.NewTable("CoreWebView2WindowFeatures_Create", 0),
-		/*3*/ imports.NewTable("CoreWebView2WindowFeatures_HasPosition", 0),
-		/*4*/ imports.NewTable("CoreWebView2WindowFeatures_HasSize", 0),
-		/*5*/ imports.NewTable("CoreWebView2WindowFeatures_Height", 0),
-		/*6*/ imports.NewTable("CoreWebView2WindowFeatures_Initialized", 0),
-		/*7*/ imports.NewTable("CoreWebView2WindowFeatures_Left", 0),
-		/*8*/ imports.NewTable("CoreWebView2WindowFeatures_ShouldDisplayMenuBar", 0),
-		/*9*/ imports.NewTable("CoreWebView2WindowFeatures_ShouldDisplayScrollBars", 0),
-		/*10*/ imports.NewTable("CoreWebView2WindowFeatures_ShouldDisplayStatus", 0),
-		/*11*/ imports.NewTable("CoreWebView2WindowFeatures_ShouldDisplayToolbar", 0),
-		/*12*/ imports.NewTable("CoreWebView2WindowFeatures_Top", 0),
-		/*13*/ imports.NewTable("CoreWebView2WindowFeatures_Width", 0),
-	}
+	coreWebView2WindowFeaturesOnce   base.Once
+	coreWebView2WindowFeaturesImport *imports.Imports = nil
 )
 
-func coreWebView2WindowFeaturesImportAPI() *imports.Imports {
-	if coreWebView2WindowFeaturesImport == nil {
-		coreWebView2WindowFeaturesImport = NewDefaultImports()
-		coreWebView2WindowFeaturesImport.SetImportTable(coreWebView2WindowFeaturesImportTables)
-		coreWebView2WindowFeaturesImportTables = nil
-	}
+func coreWebView2WindowFeaturesAPI() *imports.Imports {
+	coreWebView2WindowFeaturesOnce.Do(func() {
+		coreWebView2WindowFeaturesImport = api.NewDefaultImports()
+		coreWebView2WindowFeaturesImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2WindowFeatures_Create", 0), // constructor NewCoreWebView2WindowFeatures
+			/* 1 */ imports.NewTable("TCoreWebView2WindowFeatures_CopyToRecord", 0), // procedure CopyToRecord
+			/* 2 */ imports.NewTable("TCoreWebView2WindowFeatures_Initialized", 0), // property Initialized
+			/* 3 */ imports.NewTable("TCoreWebView2WindowFeatures_BaseIntf", 0), // property BaseIntf
+			/* 4 */ imports.NewTable("TCoreWebView2WindowFeatures_HasPosition", 0), // property HasPosition
+			/* 5 */ imports.NewTable("TCoreWebView2WindowFeatures_HasSize", 0), // property HasSize
+			/* 6 */ imports.NewTable("TCoreWebView2WindowFeatures_Left", 0), // property Left
+			/* 7 */ imports.NewTable("TCoreWebView2WindowFeatures_Top", 0), // property Top
+			/* 8 */ imports.NewTable("TCoreWebView2WindowFeatures_Width", 0), // property Width
+			/* 9 */ imports.NewTable("TCoreWebView2WindowFeatures_Height", 0), // property Height
+			/* 10 */ imports.NewTable("TCoreWebView2WindowFeatures_ShouldDisplayMenuBar", 0), // property ShouldDisplayMenuBar
+			/* 11 */ imports.NewTable("TCoreWebView2WindowFeatures_ShouldDisplayStatus", 0), // property ShouldDisplayStatus
+			/* 12 */ imports.NewTable("TCoreWebView2WindowFeatures_ShouldDisplayToolbar", 0), // property ShouldDisplayToolbar
+			/* 13 */ imports.NewTable("TCoreWebView2WindowFeatures_ShouldDisplayScrollBars", 0), // property ShouldDisplayScrollBars
+		}
+	})
 	return coreWebView2WindowFeaturesImport
 }

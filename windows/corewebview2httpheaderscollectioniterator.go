@@ -6,107 +6,116 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2HttpHeadersCollectionIterator Parent: IObject
-//
-//	Iterator for a collection of HTTP headers.  For more information, navigate
-//	to ICoreWebView2HttpRequestHeaders and ICoreWebView2HttpResponseHeaders.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator">See the ICoreWebView2HttpHeadersCollectionIterator article.</a>
+// ICoreWebView2HttpHeadersCollectionIterator Parent: lcl.IObject
 type ICoreWebView2HttpHeadersCollectionIterator interface {
-	IObject
-	// Initialized
-	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
-	// BaseIntf
-	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2HttpHeadersCollectionIterator // property
-	// HasCurrentHeader
-	//  `TRUE` when the iterator has not run out of headers. If the collection
-	//  over which the iterator is iterating is empty or if the iterator has gone
-	//  past the end of the collection then this is `FALSE`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator#get_hascurrentheader">See the ICoreWebView2HttpHeadersCollectionIterator article.</a>
-	HasCurrentHeader() bool // property
+	lcl.IObject
 	// GetCurrentHeader
 	//  Get the name and value of the current HTTP header of the iterator. If
 	//  the previous `MoveNext` operation set the `hasNext` parameter to `FALSE`,
 	//  this method fails.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator#getcurrentheader">See the ICoreWebView2HttpHeadersCollectionIterator article.</a>
-	GetCurrentHeader(aName, aValue *string) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator#getcurrentheader">See the ICoreWebView2HttpHeadersCollectionIterator article.</see>
+	GetCurrentHeader(name *string, value *string) bool // function
 	// MoveNext
 	//  Move the iterator to the next HTTP header in the collection.
-	//   [!NOTE]\n \> If no more HTTP headers exist, the `hasNext` parameter is set to
+	//  \> [!NOTE]\n \> If no more HTTP headers exist, the `hasNext` parameter is set to
 	//  `FALSE`. After this occurs the `GetCurrentHeader` method fails.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator#movenext">See the ICoreWebView2HttpHeadersCollectionIterator article.</a>
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator#movenext">See the ICoreWebView2HttpHeadersCollectionIterator article.</see>
 	MoveNext() bool // function
+	// Initialized
+	//  Returns true when the interface implemented by this class is fully initialized.
+	Initialized() bool // property Initialized Getter
+	// BaseIntf
+	//  Returns the interface implemented by this class.
+	BaseIntf() ICoreWebView2HttpHeadersCollectionIterator // property BaseIntf Getter
+	// HasCurrentHeader
+	//  `TRUE` when the iterator has not run out of headers. If the collection
+	//  over which the iterator is iterating is empty or if the iterator has gone
+	//  past the end of the collection then this is `FALSE`.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator#get_hascurrentheader">See the ICoreWebView2HttpHeadersCollectionIterator article.</see>
+	HasCurrentHeader() bool // property HasCurrentHeader Getter
 }
 
-// TCoreWebView2HttpHeadersCollectionIterator Parent: TObject
-//
-//	Iterator for a collection of HTTP headers.  For more information, navigate
-//	to ICoreWebView2HttpRequestHeaders and ICoreWebView2HttpResponseHeaders.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpheaderscollectioniterator">See the ICoreWebView2HttpHeadersCollectionIterator article.</a>
 type TCoreWebView2HttpHeadersCollectionIterator struct {
-	TObject
+	lcl.TObject
 }
 
-func NewCoreWebView2HttpHeadersCollectionIterator(aBaseIntf ICoreWebView2HttpHeadersCollectionIterator) ICoreWebView2HttpHeadersCollectionIterator {
-	r1 := coreWebView2HttpHeadersCollectionIteratorImportAPI().SysCallN(1, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2HttpHeadersCollectionIterator(r1)
-}
-
-func (m *TCoreWebView2HttpHeadersCollectionIterator) Initialized() bool {
-	r1 := coreWebView2HttpHeadersCollectionIteratorImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2HttpHeadersCollectionIterator) BaseIntf() ICoreWebView2HttpHeadersCollectionIterator {
-	var resultCoreWebView2HttpHeadersCollectionIterator uintptr
-	coreWebView2HttpHeadersCollectionIteratorImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2HttpHeadersCollectionIterator)))
-	return AsCoreWebView2HttpHeadersCollectionIterator(resultCoreWebView2HttpHeadersCollectionIterator)
-}
-
-func (m *TCoreWebView2HttpHeadersCollectionIterator) HasCurrentHeader() bool {
-	r1 := coreWebView2HttpHeadersCollectionIteratorImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TCoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader(aName, aValue *string) bool {
-	var result0 uintptr
-	var result1 uintptr
-	r1 := coreWebView2HttpHeadersCollectionIteratorImportAPI().SysCallN(2, m.Instance(), uintptr(unsafePointer(&result0)), uintptr(unsafePointer(&result1)))
-	*aName = GoStr(result0)
-	*aValue = GoStr(result1)
-	return GoBool(r1)
+func (m *TCoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader(name *string, value *string) bool {
+	if !m.IsValid() {
+		return false
+	}
+	namePtr := api.PasStr(*name)
+	valuePtr := api.PasStr(*value)
+	r := coreWebView2HttpHeadersCollectionIteratorAPI().SysCallN(1, m.Instance(), uintptr(base.UnsafePointer(&namePtr)), uintptr(base.UnsafePointer(&valuePtr)))
+	*name = api.GoStr(namePtr)
+	*value = api.GoStr(valuePtr)
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2HttpHeadersCollectionIterator) MoveNext() bool {
-	r1 := coreWebView2HttpHeadersCollectionIteratorImportAPI().SysCallN(5, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2HttpHeadersCollectionIteratorAPI().SysCallN(2, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2HttpHeadersCollectionIterator) Initialized() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2HttpHeadersCollectionIteratorAPI().SysCallN(3, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2HttpHeadersCollectionIterator) BaseIntf() (result ICoreWebView2HttpHeadersCollectionIterator) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2HttpHeadersCollectionIteratorAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2HttpHeadersCollectionIterator(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2HttpHeadersCollectionIterator) HasCurrentHeader() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2HttpHeadersCollectionIteratorAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
+}
+
+// NewCoreWebView2HttpHeadersCollectionIterator class constructor
+func NewCoreWebView2HttpHeadersCollectionIterator(baseIntf ICoreWebView2HttpHeadersCollectionIterator) ICoreWebView2HttpHeadersCollectionIterator {
+	r := coreWebView2HttpHeadersCollectionIteratorAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2HttpHeadersCollectionIterator(r)
 }
 
 var (
-	coreWebView2HttpHeadersCollectionIteratorImport       *imports.Imports = nil
-	coreWebView2HttpHeadersCollectionIteratorImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2HttpHeadersCollectionIterator_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2HttpHeadersCollectionIterator_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2HttpHeadersCollectionIterator_GetCurrentHeader", 0),
-		/*3*/ imports.NewTable("CoreWebView2HttpHeadersCollectionIterator_HasCurrentHeader", 0),
-		/*4*/ imports.NewTable("CoreWebView2HttpHeadersCollectionIterator_Initialized", 0),
-		/*5*/ imports.NewTable("CoreWebView2HttpHeadersCollectionIterator_MoveNext", 0),
-	}
+	coreWebView2HttpHeadersCollectionIteratorOnce   base.Once
+	coreWebView2HttpHeadersCollectionIteratorImport *imports.Imports = nil
 )
 
-func coreWebView2HttpHeadersCollectionIteratorImportAPI() *imports.Imports {
-	if coreWebView2HttpHeadersCollectionIteratorImport == nil {
-		coreWebView2HttpHeadersCollectionIteratorImport = NewDefaultImports()
-		coreWebView2HttpHeadersCollectionIteratorImport.SetImportTable(coreWebView2HttpHeadersCollectionIteratorImportTables)
-		coreWebView2HttpHeadersCollectionIteratorImportTables = nil
-	}
+func coreWebView2HttpHeadersCollectionIteratorAPI() *imports.Imports {
+	coreWebView2HttpHeadersCollectionIteratorOnce.Do(func() {
+		coreWebView2HttpHeadersCollectionIteratorImport = api.NewDefaultImports()
+		coreWebView2HttpHeadersCollectionIteratorImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2HttpHeadersCollectionIterator_Create", 0), // constructor NewCoreWebView2HttpHeadersCollectionIterator
+			/* 1 */ imports.NewTable("TCoreWebView2HttpHeadersCollectionIterator_GetCurrentHeader", 0), // function GetCurrentHeader
+			/* 2 */ imports.NewTable("TCoreWebView2HttpHeadersCollectionIterator_MoveNext", 0), // function MoveNext
+			/* 3 */ imports.NewTable("TCoreWebView2HttpHeadersCollectionIterator_Initialized", 0), // property Initialized
+			/* 4 */ imports.NewTable("TCoreWebView2HttpHeadersCollectionIterator_BaseIntf", 0), // property BaseIntf
+			/* 5 */ imports.NewTable("TCoreWebView2HttpHeadersCollectionIterator_HasCurrentHeader", 0), // property HasCurrentHeader
+		}
+	})
 	return coreWebView2HttpHeadersCollectionIteratorImport
 }

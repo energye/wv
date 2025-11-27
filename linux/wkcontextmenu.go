@@ -6,103 +6,130 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkContextMenu Root Interface
+// IWkContextMenu Parent: lcl.IObject
 type IWkContextMenu interface {
-	IObject
-	Data() WebKitContextMenu                                // function
-	GetItemsLength() int32                                  // function
-	GetItemAtPosition(position int32) WebKitContextMenuItem // function
-	Prepend(item WebKitContextMenuItem)                     // procedure
-	Append(item WebKitContextMenuItem)                      // procedure
-	Insert(item WebKitContextMenuItem, position int32)      // procedure
-	Remove(item WebKitContextMenuItem)                      // procedure
-	RemoveAll()                                             // procedure
+	lcl.IObject
+	Data() wvTypes.WebKitContextMenu                                // function
+	GetItemsLength() int32                                          // function
+	GetItemAtPosition(position int32) wvTypes.WebKitContextMenuItem // function
+	Prepend(item wvTypes.WebKitContextMenuItem)                     // procedure
+	Append(item wvTypes.WebKitContextMenuItem)                      // procedure
+	Insert(item wvTypes.WebKitContextMenuItem, position int32)      // procedure
+	Remove(item wvTypes.WebKitContextMenuItem)                      // procedure
+	RemoveAll()                                                     // procedure
 }
 
-// TWkContextMenu Root Object
 type TWkContextMenu struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkContextMenu(aContextMenu WebKitContextMenu) IWkContextMenu {
-	r1 := wkContextMenuImportAPI().SysCallN(1, uintptr(aContextMenu))
-	return AsWkContextMenu(r1)
-}
-
-// WkContextMenuRef -> IWkContextMenu
-var WkContextMenuRef wkContextMenu
-
-// wkContextMenu TWkContextMenu Ref
-type wkContextMenu uintptr
-
-func (m *wkContextMenu) New() IWkContextMenu {
-	r1 := wkContextMenuImportAPI().SysCallN(6)
-	return AsWkContextMenu(r1)
-}
-
-func (m *TWkContextMenu) Data() WebKitContextMenu {
-	r1 := wkContextMenuImportAPI().SysCallN(2, m.Instance())
-	return WebKitContextMenu(r1)
+func (m *TWkContextMenu) Data() wvTypes.WebKitContextMenu {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkContextMenuAPI().SysCallN(1, m.Instance())
+	return wvTypes.WebKitContextMenu(r)
 }
 
 func (m *TWkContextMenu) GetItemsLength() int32 {
-	r1 := wkContextMenuImportAPI().SysCallN(4, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkContextMenuAPI().SysCallN(2, m.Instance())
+	return int32(r)
 }
 
-func (m *TWkContextMenu) GetItemAtPosition(position int32) WebKitContextMenuItem {
-	r1 := wkContextMenuImportAPI().SysCallN(3, m.Instance(), uintptr(position))
-	return WebKitContextMenuItem(r1)
+func (m *TWkContextMenu) GetItemAtPosition(position int32) wvTypes.WebKitContextMenuItem {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkContextMenuAPI().SysCallN(3, m.Instance(), uintptr(position))
+	return wvTypes.WebKitContextMenuItem(r)
 }
 
-func (m *TWkContextMenu) Prepend(item WebKitContextMenuItem) {
-	wkContextMenuImportAPI().SysCallN(7, m.Instance(), uintptr(item))
+func (m *TWkContextMenu) Prepend(item wvTypes.WebKitContextMenuItem) {
+	if !m.IsValid() {
+		return
+	}
+	wkContextMenuAPI().SysCallN(5, m.Instance(), uintptr(item))
 }
 
-func (m *TWkContextMenu) Append(item WebKitContextMenuItem) {
-	wkContextMenuImportAPI().SysCallN(0, m.Instance(), uintptr(item))
+func (m *TWkContextMenu) Append(item wvTypes.WebKitContextMenuItem) {
+	if !m.IsValid() {
+		return
+	}
+	wkContextMenuAPI().SysCallN(6, m.Instance(), uintptr(item))
 }
 
-func (m *TWkContextMenu) Insert(item WebKitContextMenuItem, position int32) {
-	wkContextMenuImportAPI().SysCallN(5, m.Instance(), uintptr(item), uintptr(position))
+func (m *TWkContextMenu) Insert(item wvTypes.WebKitContextMenuItem, position int32) {
+	if !m.IsValid() {
+		return
+	}
+	wkContextMenuAPI().SysCallN(7, m.Instance(), uintptr(item), uintptr(position))
 }
 
-func (m *TWkContextMenu) Remove(item WebKitContextMenuItem) {
-	wkContextMenuImportAPI().SysCallN(8, m.Instance(), uintptr(item))
+func (m *TWkContextMenu) Remove(item wvTypes.WebKitContextMenuItem) {
+	if !m.IsValid() {
+		return
+	}
+	wkContextMenuAPI().SysCallN(8, m.Instance(), uintptr(item))
 }
 
 func (m *TWkContextMenu) RemoveAll() {
-	wkContextMenuImportAPI().SysCallN(9, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkContextMenuAPI().SysCallN(9, m.Instance())
+}
+
+// ContextMenu  is static instance
+var ContextMenu _ContextMenuClass
+
+// _ContextMenuClass is class type defined by TWkContextMenu
+type _ContextMenuClass uintptr
+
+func (_ContextMenuClass) New() IWkContextMenu {
+	r := wkContextMenuAPI().SysCallN(4)
+	return AsWkContextMenu(r)
+}
+
+// NewContextMenu class constructor
+func NewContextMenu(contextMenu wvTypes.WebKitContextMenu) IWkContextMenu {
+	r := wkContextMenuAPI().SysCallN(0, uintptr(contextMenu))
+	return AsWkContextMenu(r)
 }
 
 var (
-	wkContextMenuImport       *imports.Imports = nil
-	wkContextMenuImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkContextMenu_Append", 0),
-		/*1*/ imports.NewTable("WkContextMenu_Create", 0),
-		/*2*/ imports.NewTable("WkContextMenu_Data", 0),
-		/*3*/ imports.NewTable("WkContextMenu_GetItemAtPosition", 0),
-		/*4*/ imports.NewTable("WkContextMenu_GetItemsLength", 0),
-		/*5*/ imports.NewTable("WkContextMenu_Insert", 0),
-		/*6*/ imports.NewTable("WkContextMenu_New", 0),
-		/*7*/ imports.NewTable("WkContextMenu_Prepend", 0),
-		/*8*/ imports.NewTable("WkContextMenu_Remove", 0),
-		/*9*/ imports.NewTable("WkContextMenu_RemoveAll", 0),
-	}
+	wkContextMenuOnce   base.Once
+	wkContextMenuImport *imports.Imports = nil
 )
 
-func wkContextMenuImportAPI() *imports.Imports {
-	if wkContextMenuImport == nil {
-		wkContextMenuImport = NewDefaultImports()
-		wkContextMenuImport.SetImportTable(wkContextMenuImportTables)
-		wkContextMenuImportTables = nil
-	}
+func wkContextMenuAPI() *imports.Imports {
+	wkContextMenuOnce.Do(func() {
+		wkContextMenuImport = api.NewDefaultImports()
+		wkContextMenuImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkContextMenu_Create", 0), // constructor NewContextMenu
+			/* 1 */ imports.NewTable("TWkContextMenu_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkContextMenu_GetItemsLength", 0), // function GetItemsLength
+			/* 3 */ imports.NewTable("TWkContextMenu_GetItemAtPosition", 0), // function GetItemAtPosition
+			/* 4 */ imports.NewTable("TWkContextMenu_New", 0), // static function New
+			/* 5 */ imports.NewTable("TWkContextMenu_Prepend", 0), // procedure Prepend
+			/* 6 */ imports.NewTable("TWkContextMenu_Append", 0), // procedure Append
+			/* 7 */ imports.NewTable("TWkContextMenu_Insert", 0), // procedure Insert
+			/* 8 */ imports.NewTable("TWkContextMenu_Remove", 0), // procedure Remove
+			/* 9 */ imports.NewTable("TWkContextMenu_RemoveAll", 0), // procedure RemoveAll
+		}
+	})
 	return wkContextMenuImport
 }

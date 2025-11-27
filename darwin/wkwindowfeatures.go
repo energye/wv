@@ -6,22 +6,23 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKWindowFeatures Root Interface
-//
-//	Display-related attributes that a webpage requests for its window.
-//	https://developer.apple.com/documentation/webkit/wkwindowfeatures?language=objc
-type IWKWindowFeatures interface {
-	IObject
+// IWkWindowFeatures Parent: lcl.IObject
+type IWkWindowFeatures interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKWindowFeatures // function
+	Data() wvTypes.WKWindowFeatures // function
 	// MenuBarVisibility
 	//  A Boolean value that indicates whether the webpage requests a visible menu bar.
 	MenuBarVisibility() bool // function
@@ -51,90 +52,116 @@ type IWKWindowFeatures interface {
 	Release() // procedure
 }
 
-// TWKWindowFeatures Root Object
-//
-//	Display-related attributes that a webpage requests for its window.
-//	https://developer.apple.com/documentation/webkit/wkwindowfeatures?language=objc
-type TWKWindowFeatures struct {
-	TObject
+type TWkWindowFeatures struct {
+	lcl.TObject
 }
 
-func NewWKWindowFeatures(aData WKWindowFeatures) IWKWindowFeatures {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(1, uintptr(aData))
-	return AsWKWindowFeatures(r1)
+func (m *TWkWindowFeatures) Data() wvTypes.WKWindowFeatures {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWindowFeaturesAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKWindowFeatures(r)
 }
 
-func (m *TWKWindowFeatures) Data() WKWindowFeatures {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(2, m.Instance())
-	return WKWindowFeatures(r1)
+func (m *TWkWindowFeatures) MenuBarVisibility() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWindowFeaturesAPI().SysCallN(2, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TWKWindowFeatures) MenuBarVisibility() bool {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
+func (m *TWkWindowFeatures) StatusBarVisibility() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWindowFeaturesAPI().SysCallN(3, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TWKWindowFeatures) StatusBarVisibility() bool {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(6, m.Instance())
-	return GoBool(r1)
+func (m *TWkWindowFeatures) ToolbarsVisibility() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWindowFeaturesAPI().SysCallN(4, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TWKWindowFeatures) ToolbarsVisibility() bool {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(7, m.Instance())
-	return GoBool(r1)
+func (m *TWkWindowFeatures) AllowsResizing() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWindowFeaturesAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TWKWindowFeatures) AllowsResizing() bool {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(0, m.Instance())
-	return GoBool(r1)
+func (m *TWkWindowFeatures) X() int32 {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWindowFeaturesAPI().SysCallN(6, m.Instance())
+	return int32(r)
 }
 
-func (m *TWKWindowFeatures) X() int32 {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(9, m.Instance())
-	return int32(r1)
+func (m *TWkWindowFeatures) Y() int32 {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWindowFeaturesAPI().SysCallN(7, m.Instance())
+	return int32(r)
 }
 
-func (m *TWKWindowFeatures) Y() int32 {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(10, m.Instance())
-	return int32(r1)
+func (m *TWkWindowFeatures) Width() int32 {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWindowFeaturesAPI().SysCallN(8, m.Instance())
+	return int32(r)
 }
 
-func (m *TWKWindowFeatures) Width() int32 {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(8, m.Instance())
-	return int32(r1)
+func (m *TWkWindowFeatures) Height() int32 {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWindowFeaturesAPI().SysCallN(9, m.Instance())
+	return int32(r)
 }
 
-func (m *TWKWindowFeatures) Height() int32 {
-	r1 := wKWindowFeaturesImportAPI().SysCallN(3, m.Instance())
-	return int32(r1)
+func (m *TWkWindowFeatures) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkWindowFeaturesAPI().SysCallN(10, m.Instance())
 }
 
-func (m *TWKWindowFeatures) Release() {
-	wKWindowFeaturesImportAPI().SysCallN(5, m.Instance())
+// NewWindowFeatures class constructor
+func NewWindowFeatures(data wvTypes.WKWindowFeatures) IWkWindowFeatures {
+	r := wkWindowFeaturesAPI().SysCallN(0, uintptr(data))
+	return AsWkWindowFeatures(r)
 }
 
 var (
-	wKWindowFeaturesImport       *imports.Imports = nil
-	wKWindowFeaturesImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKWindowFeatures_AllowsResizing", 0),
-		/*1*/ imports.NewTable("WKWindowFeatures_Create", 0),
-		/*2*/ imports.NewTable("WKWindowFeatures_Data", 0),
-		/*3*/ imports.NewTable("WKWindowFeatures_Height", 0),
-		/*4*/ imports.NewTable("WKWindowFeatures_MenuBarVisibility", 0),
-		/*5*/ imports.NewTable("WKWindowFeatures_Release", 0),
-		/*6*/ imports.NewTable("WKWindowFeatures_StatusBarVisibility", 0),
-		/*7*/ imports.NewTable("WKWindowFeatures_ToolbarsVisibility", 0),
-		/*8*/ imports.NewTable("WKWindowFeatures_Width", 0),
-		/*9*/ imports.NewTable("WKWindowFeatures_X", 0),
-		/*10*/ imports.NewTable("WKWindowFeatures_Y", 0),
-	}
+	wkWindowFeaturesOnce   base.Once
+	wkWindowFeaturesImport *imports.Imports = nil
 )
 
-func wKWindowFeaturesImportAPI() *imports.Imports {
-	if wKWindowFeaturesImport == nil {
-		wKWindowFeaturesImport = NewDefaultImports()
-		wKWindowFeaturesImport.SetImportTable(wKWindowFeaturesImportTables)
-		wKWindowFeaturesImportTables = nil
-	}
-	return wKWindowFeaturesImport
+func wkWindowFeaturesAPI() *imports.Imports {
+	wkWindowFeaturesOnce.Do(func() {
+		wkWindowFeaturesImport = api.NewDefaultImports()
+		wkWindowFeaturesImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkWindowFeatures_Create", 0), // constructor NewWindowFeatures
+			/* 1 */ imports.NewTable("TWkWindowFeatures_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkWindowFeatures_MenuBarVisibility", 0), // function MenuBarVisibility
+			/* 3 */ imports.NewTable("TWkWindowFeatures_StatusBarVisibility", 0), // function StatusBarVisibility
+			/* 4 */ imports.NewTable("TWkWindowFeatures_ToolbarsVisibility", 0), // function ToolbarsVisibility
+			/* 5 */ imports.NewTable("TWkWindowFeatures_AllowsResizing", 0), // function AllowsResizing
+			/* 6 */ imports.NewTable("TWkWindowFeatures_X", 0), // function X
+			/* 7 */ imports.NewTable("TWkWindowFeatures_Y", 0), // function Y
+			/* 8 */ imports.NewTable("TWkWindowFeatures_Width", 0), // function Width
+			/* 9 */ imports.NewTable("TWkWindowFeatures_Height", 0), // function Height
+			/* 10 */ imports.NewTable("TWkWindowFeatures_Release", 0), // procedure Release
+		}
+	})
+	return wkWindowFeaturesImport
 }

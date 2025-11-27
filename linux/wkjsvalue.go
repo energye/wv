@@ -6,88 +6,110 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkJSValue Root Interface
+// IWkJSValue Parent: lcl.IObject
 type IWkJSValue interface {
-	IObject
-	ValueType() JSType                    // property
-	StringValue() string                  // function
-	NumberValue() (resultFloat64 float64) // function
-	IntegerValue() int32                  // function
-	BooleanValue() bool                   // function
-	ExceptionMessage() string             // function
+	lcl.IObject
+	StringValue() string       // function
+	NumberValue() float64      // function
+	IntegerValue() int32       // function
+	BooleanValue() bool        // function
+	ExceptionMessage() string  // function
+	ValueType() wvTypes.JSType // property ValueType Getter
 }
 
-// TWkJSValue Root Object
 type TWkJSValue struct {
-	TObject
-}
-
-func NewWkJSValue(aResult WebKitJavascriptResult, aIsException bool, exception string) IWkJSValue {
-	r1 := wkJSValueImportAPI().SysCallN(1, uintptr(aResult), PascalBool(aIsException), PascalStr(exception))
-	return AsWkJSValue(r1)
-}
-
-func NewWkJSValue1(aResult WebKitJavascriptResult) IWkJSValue {
-	r1 := wkJSValueImportAPI().SysCallN(2, uintptr(aResult))
-	return AsWkJSValue(r1)
-}
-
-func (m *TWkJSValue) ValueType() JSType {
-	r1 := wkJSValueImportAPI().SysCallN(7, m.Instance())
-	return JSType(r1)
+	lcl.TObject
 }
 
 func (m *TWkJSValue) StringValue() string {
-	r1 := wkJSValueImportAPI().SysCallN(6, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkJSValueAPI().SysCallN(2, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TWkJSValue) NumberValue() (resultFloat64 float64) {
-	wkJSValueImportAPI().SysCallN(5, m.Instance(), uintptr(unsafePointer(&resultFloat64)))
+func (m *TWkJSValue) NumberValue() (result float64) {
+	if !m.IsValid() {
+		return
+	}
+	wkJSValueAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&result)))
 	return
 }
 
 func (m *TWkJSValue) IntegerValue() int32 {
-	r1 := wkJSValueImportAPI().SysCallN(4, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkJSValueAPI().SysCallN(4, m.Instance())
+	return int32(r)
 }
 
 func (m *TWkJSValue) BooleanValue() bool {
-	r1 := wkJSValueImportAPI().SysCallN(0, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := wkJSValueAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TWkJSValue) ExceptionMessage() string {
-	r1 := wkJSValueImportAPI().SysCallN(3, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkJSValueAPI().SysCallN(6, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWkJSValue) ValueType() wvTypes.JSType {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkJSValueAPI().SysCallN(7, m.Instance())
+	return wvTypes.JSType(r)
+}
+
+// NewJSValue class constructor
+func NewJSValue(result wvTypes.WebKitJavascriptResult, isException bool, exception string) IWkJSValue {
+	r := wkJSValueAPI().SysCallN(0, uintptr(result), api.PasBool(isException), api.PasStr(exception))
+	return AsWkJSValue(r)
+}
+
+// NewJSValueWithWebKitJavascriptResult class constructor
+func NewJSValueWithWebKitJavascriptResult(result wvTypes.WebKitJavascriptResult) IWkJSValue {
+	r := wkJSValueAPI().SysCallN(1, uintptr(result))
+	return AsWkJSValue(r)
 }
 
 var (
-	wkJSValueImport       *imports.Imports = nil
-	wkJSValueImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkJSValue_BooleanValue", 0),
-		/*1*/ imports.NewTable("WkJSValue_Create", 0),
-		/*2*/ imports.NewTable("WkJSValue_Create1", 0),
-		/*3*/ imports.NewTable("WkJSValue_ExceptionMessage", 0),
-		/*4*/ imports.NewTable("WkJSValue_IntegerValue", 0),
-		/*5*/ imports.NewTable("WkJSValue_NumberValue", 0),
-		/*6*/ imports.NewTable("WkJSValue_StringValue", 0),
-		/*7*/ imports.NewTable("WkJSValue_ValueType", 0),
-	}
+	wkJSValueOnce   base.Once
+	wkJSValueImport *imports.Imports = nil
 )
 
-func wkJSValueImportAPI() *imports.Imports {
-	if wkJSValueImport == nil {
-		wkJSValueImport = NewDefaultImports()
-		wkJSValueImport.SetImportTable(wkJSValueImportTables)
-		wkJSValueImportTables = nil
-	}
+func wkJSValueAPI() *imports.Imports {
+	wkJSValueOnce.Do(func() {
+		wkJSValueImport = api.NewDefaultImports()
+		wkJSValueImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkJSValue_Create", 0), // constructor NewJSValue
+			/* 1 */ imports.NewTable("TWkJSValue_CreateWithWebKitJavascriptResult", 0), // constructor NewJSValueWithWebKitJavascriptResult
+			/* 2 */ imports.NewTable("TWkJSValue_StringValue", 0), // function StringValue
+			/* 3 */ imports.NewTable("TWkJSValue_NumberValue", 0), // function NumberValue
+			/* 4 */ imports.NewTable("TWkJSValue_IntegerValue", 0), // function IntegerValue
+			/* 5 */ imports.NewTable("TWkJSValue_BooleanValue", 0), // function BooleanValue
+			/* 6 */ imports.NewTable("TWkJSValue_ExceptionMessage", 0), // function ExceptionMessage
+			/* 7 */ imports.NewTable("TWkJSValue_ValueType", 0), // property ValueType
+		}
+	})
 	return wkJSValueImport
 }

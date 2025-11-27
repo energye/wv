@@ -6,96 +6,117 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkWebContext Root Interface
+// IWkWebContext Parent: lcl.IObject
 type IWkWebContext interface {
-	IObject
-	Data() WebKitWebContext                                                    // function
-	GetCookieManager() WebKitCookieManager                                     // function
-	RegisterURIScheme(aScheme string, aDelegate IWkSchemeRequestDelegateEvent) // procedure
-	SetCacheModel(cachemodel WebKitCacheModel)                                 // procedure
-	DownloadURI(uri string)                                                    // procedure
-	SetWetPreferredLanguages(languages IStrings)                               // procedure
+	lcl.IObject
+	Data() wvTypes.WebKitWebContext                       // function
+	GetCookieManager() wvTypes.WebKitCookieManager        // function
+	RegisterURIScheme(scheme string, delegate IWkWebview) // procedure
+	SetCacheModel(cacheModel wvTypes.WebKitCacheModel)    // procedure
+	DownloadURI(uri string)                               // procedure
+	SetWetPreferredLanguages(languages lcl.IStrings)      // procedure
 }
 
-// TWkWebContext Root Object
 type TWkWebContext struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkWebContext(aWebContext WebKitWebContext) IWkWebContext {
-	r1 := wkWebContextImportAPI().SysCallN(0, uintptr(aWebContext))
-	return AsWkWebContext(r1)
+func (m *TWkWebContext) Data() wvTypes.WebKitWebContext {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWebContextAPI().SysCallN(1, m.Instance())
+	return wvTypes.WebKitWebContext(r)
 }
 
-// WkWebContextRef -> IWkWebContext
-var WkWebContextRef wkWebContext
-
-// wkWebContext TWkWebContext Ref
-type wkWebContext uintptr
-
-func (m *wkWebContext) Default() IWkWebContext {
-	r1 := wkWebContextImportAPI().SysCallN(2)
-	return AsWkWebContext(r1)
+func (m *TWkWebContext) GetCookieManager() wvTypes.WebKitCookieManager {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWebContextAPI().SysCallN(2, m.Instance())
+	return wvTypes.WebKitCookieManager(r)
 }
 
-func (m *wkWebContext) New() IWkWebContext {
-	r1 := wkWebContextImportAPI().SysCallN(5)
-	return AsWkWebContext(r1)
+func (m *TWkWebContext) RegisterURIScheme(scheme string, delegate IWkWebview) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebContextAPI().SysCallN(5, m.Instance(), api.PasStr(scheme), base.GetObjectUintptr(delegate))
 }
 
-func (m *TWkWebContext) Data() WebKitWebContext {
-	r1 := wkWebContextImportAPI().SysCallN(1, m.Instance())
-	return WebKitWebContext(r1)
-}
-
-func (m *TWkWebContext) GetCookieManager() WebKitCookieManager {
-	r1 := wkWebContextImportAPI().SysCallN(4, m.Instance())
-	return WebKitCookieManager(r1)
-}
-
-func (m *TWkWebContext) RegisterURIScheme(aScheme string, aDelegate IWkSchemeRequestDelegateEvent) {
-	wkWebContextImportAPI().SysCallN(6, m.Instance(), PascalStr(aScheme), GetObjectUintptr(aDelegate))
-}
-
-func (m *TWkWebContext) SetCacheModel(cachemodel WebKitCacheModel) {
-	wkWebContextImportAPI().SysCallN(7, m.Instance(), uintptr(cachemodel))
+func (m *TWkWebContext) SetCacheModel(cacheModel wvTypes.WebKitCacheModel) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebContextAPI().SysCallN(6, m.Instance(), uintptr(cacheModel))
 }
 
 func (m *TWkWebContext) DownloadURI(uri string) {
-	wkWebContextImportAPI().SysCallN(3, m.Instance(), PascalStr(uri))
+	if !m.IsValid() {
+		return
+	}
+	wkWebContextAPI().SysCallN(7, m.Instance(), api.PasStr(uri))
 }
 
-func (m *TWkWebContext) SetWetPreferredLanguages(languages IStrings) {
-	wkWebContextImportAPI().SysCallN(8, m.Instance(), GetObjectUintptr(languages))
+func (m *TWkWebContext) SetWetPreferredLanguages(languages lcl.IStrings) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebContextAPI().SysCallN(8, m.Instance(), base.GetObjectUintptr(languages))
+}
+
+// WebContext  is static instance
+var WebContext _WebContextClass
+
+// _WebContextClass is class type defined by TWkWebContext
+type _WebContextClass uintptr
+
+func (_WebContextClass) Default() IWkWebContext {
+	r := wkWebContextAPI().SysCallN(3)
+	return AsWkWebContext(r)
+}
+
+func (_WebContextClass) New() IWkWebContext {
+	r := wkWebContextAPI().SysCallN(4)
+	return AsWkWebContext(r)
+}
+
+// NewWebContext class constructor
+func NewWebContext(webContext wvTypes.WebKitWebContext) IWkWebContext {
+	r := wkWebContextAPI().SysCallN(0, uintptr(webContext))
+	return AsWkWebContext(r)
 }
 
 var (
-	wkWebContextImport       *imports.Imports = nil
-	wkWebContextImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkWebContext_Create", 0),
-		/*1*/ imports.NewTable("WkWebContext_Data", 0),
-		/*2*/ imports.NewTable("WkWebContext_Default", 0),
-		/*3*/ imports.NewTable("WkWebContext_DownloadURI", 0),
-		/*4*/ imports.NewTable("WkWebContext_GetCookieManager", 0),
-		/*5*/ imports.NewTable("WkWebContext_New", 0),
-		/*6*/ imports.NewTable("WkWebContext_RegisterURIScheme", 0),
-		/*7*/ imports.NewTable("WkWebContext_SetCacheModel", 0),
-		/*8*/ imports.NewTable("WkWebContext_SetWetPreferredLanguages", 0),
-	}
+	wkWebContextOnce   base.Once
+	wkWebContextImport *imports.Imports = nil
 )
 
-func wkWebContextImportAPI() *imports.Imports {
-	if wkWebContextImport == nil {
-		wkWebContextImport = NewDefaultImports()
-		wkWebContextImport.SetImportTable(wkWebContextImportTables)
-		wkWebContextImportTables = nil
-	}
+func wkWebContextAPI() *imports.Imports {
+	wkWebContextOnce.Do(func() {
+		wkWebContextImport = api.NewDefaultImports()
+		wkWebContextImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkWebContext_Create", 0), // constructor NewWebContext
+			/* 1 */ imports.NewTable("TWkWebContext_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkWebContext_GetCookieManager", 0), // function GetCookieManager
+			/* 3 */ imports.NewTable("TWkWebContext_Default", 0), // static function Default
+			/* 4 */ imports.NewTable("TWkWebContext_New", 0), // static function New
+			/* 5 */ imports.NewTable("TWkWebContext_RegisterURIScheme", 0), // procedure RegisterURIScheme
+			/* 6 */ imports.NewTable("TWkWebContext_SetCacheModel", 0), // procedure SetCacheModel
+			/* 7 */ imports.NewTable("TWkWebContext_DownloadURI", 0), // procedure DownloadURI
+			/* 8 */ imports.NewTable("TWkWebContext_SetWetPreferredLanguages", 0), // procedure SetWetPreferredLanguages
+		}
+	})
 	return wkWebContextImport
 }

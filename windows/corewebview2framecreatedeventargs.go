@@ -6,76 +6,82 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2FrameCreatedEventArgs Parent: IObject
-//
-//	Event args for the FrameCreated events.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2framecreatedeventargs">See the ICoreWebView2FrameCreatedEventArgs article.</a>
+// ICoreWebView2FrameCreatedEventArgs Parent: lcl.IObject
 type ICoreWebView2FrameCreatedEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2FrameCreatedEventArgs // property
+	BaseIntf() ICoreWebView2FrameCreatedEventArgs // property BaseIntf Getter
 	// Frame
 	//  The frame which was created.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2framecreatedeventargs#get_frame">See the ICoreWebView2FrameCreatedEventArgs article.</a>
-	Frame() ICoreWebView2Frame // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2framecreatedeventargs#get_frame">See the ICoreWebView2FrameCreatedEventArgs article.</see>
+	Frame() ICoreWebView2Frame // property Frame Getter
 }
 
-// TCoreWebView2FrameCreatedEventArgs Parent: TObject
-//
-//	Event args for the FrameCreated events.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2framecreatedeventargs">See the ICoreWebView2FrameCreatedEventArgs article.</a>
 type TCoreWebView2FrameCreatedEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2FrameCreatedEventArgs(aArgs ICoreWebView2FrameCreatedEventArgs) ICoreWebView2FrameCreatedEventArgs {
-	r1 := coreWebView2FrameCreatedEventArgsImportAPI().SysCallN(1, GetObjectUintptr(aArgs))
-	return AsCoreWebView2FrameCreatedEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2FrameCreatedEventArgs) Initialized() bool {
-	r1 := coreWebView2FrameCreatedEventArgsImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2FrameCreatedEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2FrameCreatedEventArgs) BaseIntf() ICoreWebView2FrameCreatedEventArgs {
-	var resultCoreWebView2FrameCreatedEventArgs uintptr
-	coreWebView2FrameCreatedEventArgsImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2FrameCreatedEventArgs)))
-	return AsCoreWebView2FrameCreatedEventArgs(resultCoreWebView2FrameCreatedEventArgs)
+func (m *TCoreWebView2FrameCreatedEventArgs) BaseIntf() (result ICoreWebView2FrameCreatedEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2FrameCreatedEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2FrameCreatedEventArgs(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2FrameCreatedEventArgs) Frame() ICoreWebView2Frame {
-	var resultCoreWebView2Frame uintptr
-	coreWebView2FrameCreatedEventArgsImportAPI().SysCallN(2, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Frame)))
-	return AsCoreWebView2Frame(resultCoreWebView2Frame)
+func (m *TCoreWebView2FrameCreatedEventArgs) Frame() (result ICoreWebView2Frame) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2FrameCreatedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Frame(resultPtr)
+	return
+}
+
+// NewCoreWebView2FrameCreatedEventArgs class constructor
+func NewCoreWebView2FrameCreatedEventArgs(args ICoreWebView2FrameCreatedEventArgs) ICoreWebView2FrameCreatedEventArgs {
+	r := coreWebView2FrameCreatedEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2FrameCreatedEventArgs(r)
 }
 
 var (
-	coreWebView2FrameCreatedEventArgsImport       *imports.Imports = nil
-	coreWebView2FrameCreatedEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2FrameCreatedEventArgs_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2FrameCreatedEventArgs_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2FrameCreatedEventArgs_Frame", 0),
-		/*3*/ imports.NewTable("CoreWebView2FrameCreatedEventArgs_Initialized", 0),
-	}
+	coreWebView2FrameCreatedEventArgsOnce   base.Once
+	coreWebView2FrameCreatedEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2FrameCreatedEventArgsImportAPI() *imports.Imports {
-	if coreWebView2FrameCreatedEventArgsImport == nil {
-		coreWebView2FrameCreatedEventArgsImport = NewDefaultImports()
-		coreWebView2FrameCreatedEventArgsImport.SetImportTable(coreWebView2FrameCreatedEventArgsImportTables)
-		coreWebView2FrameCreatedEventArgsImportTables = nil
-	}
+func coreWebView2FrameCreatedEventArgsAPI() *imports.Imports {
+	coreWebView2FrameCreatedEventArgsOnce.Do(func() {
+		coreWebView2FrameCreatedEventArgsImport = api.NewDefaultImports()
+		coreWebView2FrameCreatedEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2FrameCreatedEventArgs_Create", 0), // constructor NewCoreWebView2FrameCreatedEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2FrameCreatedEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2FrameCreatedEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2FrameCreatedEventArgs_Frame", 0), // property Frame
+		}
+	})
 	return coreWebView2FrameCreatedEventArgsImport
 }

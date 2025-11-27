@@ -6,24 +6,23 @@
 //
 //----------------------------------------
 
+// :predefine:
+
 //go:build !windows && cgo
 // +build !windows,cgo
 
-package wv
+package darwin
 
-//// #cgo darwin CFLAGS: -mmacosx-version-min=10.10 -DMACOSX_DEPLOYMENT_TARGET=10.10
-// #cgo darwin CFLAGS: -mmacosx-version-min=10.10
-// #cgo darwin LDFLAGS: -mmacosx-version-min=10.10
 // #include <stdint.h>
 //
-// extern void* doWKEventCallbackProc(uintptr_t f, void* args, long argcount);
-// static void* doGetWKEventCallbackAddr() {
-//    return &doWKEventCallbackProc;
+// extern void* doWVEventCallbackProc(uintptr_t f, void* args, long argcount);
+// static void* doWVEventCallbackAddr() {
+//    return &doWVEventCallbackProc;
 // }
 //
-// extern void* doRemoveWKEventCallbackProc(uintptr_t ptr);
-// static void* doRemoveWKEventCallbackAddr() {
-//    return &doRemoveWKEventCallbackProc;
+// extern void* doWVRemoveEventCallbackProc(uintptr_t ptr);
+// static void* doWVRemoveEventCallbackAddr() {
+//    return &doWVRemoveEventCallbackProc;
 // }
 import "C"
 
@@ -31,19 +30,19 @@ import (
 	"unsafe"
 )
 
-//export doWKEventCallbackProc
-func doWKEventCallbackProc(f C.uintptr_t, args unsafe.Pointer, argcount C.long) unsafe.Pointer {
+//export doWVEventCallbackProc
+func doWVEventCallbackProc(f C.uintptr_t, args unsafe.Pointer, argcount C.long) unsafe.Pointer {
 	eventCallbackProc(uintptr(f), uintptr(args), int(argcount))
 	return nil
 }
 
-//export doRemoveWKEventCallbackProc
-func doRemoveWKEventCallbackProc(ptr C.uintptr_t) unsafe.Pointer {
+//export doWVRemoveEventCallbackProc
+func doWVRemoveEventCallbackProc(ptr C.uintptr_t) unsafe.Pointer {
 	removeEventCallbackProc(uintptr(ptr))
 	return nil
 }
 
 var (
-	eventCallback       = uintptr(C.doGetWKEventCallbackAddr())
-	removeEventCallback = uintptr(C.doRemoveWKEventCallbackAddr())
+	eventCallback       = uintptr(C.doWVEventCallbackAddr())
+	removeEventCallback = uintptr(C.doWVRemoveEventCallbackAddr())
 )

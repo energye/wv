@@ -6,22 +6,23 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKDownload Root Interface
-//
-//	An object that represents the download of a web resource.
-//	https://developer.apple.com/documentation/webkit/wkdownload?language=objc
-type IWKDownload interface {
-	IObject
+// IWkDownload Parent: lcl.IObject
+type IWkDownload interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKDownload // function
+	Data() wvTypes.WKDownload // function
 	// OriginalRequest
 	//  An object that represents the request that initiated the download.
 	OriginalRequest() NSURLRequest // function
@@ -34,70 +35,84 @@ type IWKDownload interface {
 	Release() // procedure
 	// SetDelegate
 	//  An object you use to track download progress and handle redirects, authentication challenges, and failures.
-	SetDelegate(downloadDelegate IWKDownloadDelegate) // procedure
+	SetDelegate(downloadDelegate IWkDownloadDelegate) // procedure
 	// Cancel
 	//  Cancels the download, and optionally captures data so that you can resume the download later.
 	Cancel() // procedure
 }
 
-// TWKDownload Root Object
-//
-//	An object that represents the download of a web resource.
-//	https://developer.apple.com/documentation/webkit/wkdownload?language=objc
-type TWKDownload struct {
-	TObject
+type TWkDownload struct {
+	lcl.TObject
 }
 
-func NewWKDownload(aData WKDownload, aWebViewDelegate IWKDownloadDelegateEvent) IWKDownload {
-	r1 := wKDownloadImportAPI().SysCallN(1, uintptr(aData), GetObjectUintptr(aWebViewDelegate))
-	return AsWKDownload(r1)
+func (m *TWkDownload) Data() wvTypes.WKDownload {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkDownloadAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKDownload(r)
 }
 
-func (m *TWKDownload) Data() WKDownload {
-	r1 := wKDownloadImportAPI().SysCallN(2, m.Instance())
-	return WKDownload(r1)
+func (m *TWkDownload) OriginalRequest() NSURLRequest {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkDownloadAPI().SysCallN(2, m.Instance())
+	return NSURLRequest(r)
 }
 
-func (m *TWKDownload) OriginalRequest() NSURLRequest {
-	r1 := wKDownloadImportAPI().SysCallN(3, m.Instance())
-	return NSURLRequest(r1)
+func (m *TWkDownload) Progress() NSProgress {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkDownloadAPI().SysCallN(3, m.Instance())
+	return NSProgress(r)
 }
 
-func (m *TWKDownload) Progress() NSProgress {
-	r1 := wKDownloadImportAPI().SysCallN(4, m.Instance())
-	return NSProgress(r1)
+func (m *TWkDownload) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkDownloadAPI().SysCallN(4, m.Instance())
 }
 
-func (m *TWKDownload) Release() {
-	wKDownloadImportAPI().SysCallN(5, m.Instance())
+func (m *TWkDownload) SetDelegate(downloadDelegate IWkDownloadDelegate) {
+	if !m.IsValid() {
+		return
+	}
+	wkDownloadAPI().SysCallN(5, m.Instance(), base.GetObjectUintptr(downloadDelegate))
 }
 
-func (m *TWKDownload) SetDelegate(downloadDelegate IWKDownloadDelegate) {
-	wKDownloadImportAPI().SysCallN(6, m.Instance(), GetObjectUintptr(downloadDelegate))
+func (m *TWkDownload) Cancel() {
+	if !m.IsValid() {
+		return
+	}
+	wkDownloadAPI().SysCallN(6, m.Instance())
 }
 
-func (m *TWKDownload) Cancel() {
-	wKDownloadImportAPI().SysCallN(0, m.Instance())
+// NewDownload class constructor
+func NewDownload(data wvTypes.WKDownload, webViewDelegate IWkWebview) IWkDownload {
+	r := wkDownloadAPI().SysCallN(0, uintptr(data), base.GetObjectUintptr(webViewDelegate))
+	return AsWkDownload(r)
 }
 
 var (
-	wKDownloadImport       *imports.Imports = nil
-	wKDownloadImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKDownload_Cancel", 0),
-		/*1*/ imports.NewTable("WKDownload_Create", 0),
-		/*2*/ imports.NewTable("WKDownload_Data", 0),
-		/*3*/ imports.NewTable("WKDownload_OriginalRequest", 0),
-		/*4*/ imports.NewTable("WKDownload_Progress", 0),
-		/*5*/ imports.NewTable("WKDownload_Release", 0),
-		/*6*/ imports.NewTable("WKDownload_SetDelegate", 0),
-	}
+	wkDownloadOnce   base.Once
+	wkDownloadImport *imports.Imports = nil
 )
 
-func wKDownloadImportAPI() *imports.Imports {
-	if wKDownloadImport == nil {
-		wKDownloadImport = NewDefaultImports()
-		wKDownloadImport.SetImportTable(wKDownloadImportTables)
-		wKDownloadImportTables = nil
-	}
-	return wKDownloadImport
+func wkDownloadAPI() *imports.Imports {
+	wkDownloadOnce.Do(func() {
+		wkDownloadImport = api.NewDefaultImports()
+		wkDownloadImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkDownload_Create", 0), // constructor NewDownload
+			/* 1 */ imports.NewTable("TWkDownload_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkDownload_OriginalRequest", 0), // function OriginalRequest
+			/* 3 */ imports.NewTable("TWkDownload_Progress", 0), // function Progress
+			/* 4 */ imports.NewTable("TWkDownload_Release", 0), // procedure Release
+			/* 5 */ imports.NewTable("TWkDownload_SetDelegate", 0), // procedure SetDelegate
+			/* 6 */ imports.NewTable("TWkDownload_Cancel", 0), // procedure Cancel
+		}
+	})
+	return wkDownloadImport
 }

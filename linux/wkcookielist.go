@@ -6,61 +6,73 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkCookieList Root Interface
+// IWkCookieList Parent: lcl.IObject
 type IWkCookieList interface {
-	IObject
-	Data() PList                       // function
-	Length() int32                     // function
-	GetCookie(index int32) PSoupCookie // function
+	lcl.IObject
+	Data() wvTypes.PList                       // function
+	Length() int32                             // function
+	GetCookie(index int32) wvTypes.PSoupCookie // function
 }
 
-// TWkCookieList Root Object
 type TWkCookieList struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkCookieList(aList PList) IWkCookieList {
-	r1 := wkCookieListImportAPI().SysCallN(0, uintptr(aList))
-	return AsWkCookieList(r1)
-}
-
-func (m *TWkCookieList) Data() PList {
-	r1 := wkCookieListImportAPI().SysCallN(1, m.Instance())
-	return PList(r1)
+func (m *TWkCookieList) Data() wvTypes.PList {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkCookieListAPI().SysCallN(1, m.Instance())
+	return wvTypes.PList(r)
 }
 
 func (m *TWkCookieList) Length() int32 {
-	r1 := wkCookieListImportAPI().SysCallN(3, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkCookieListAPI().SysCallN(2, m.Instance())
+	return int32(r)
 }
 
-func (m *TWkCookieList) GetCookie(index int32) PSoupCookie {
-	r1 := wkCookieListImportAPI().SysCallN(2, m.Instance(), uintptr(index))
-	return PSoupCookie(r1)
+func (m *TWkCookieList) GetCookie(index int32) wvTypes.PSoupCookie {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkCookieListAPI().SysCallN(3, m.Instance(), uintptr(index))
+	return wvTypes.PSoupCookie(r)
+}
+
+// NewCookieList class constructor
+func NewCookieList(list wvTypes.PList) IWkCookieList {
+	r := wkCookieListAPI().SysCallN(0, uintptr(list))
+	return AsWkCookieList(r)
 }
 
 var (
-	wkCookieListImport       *imports.Imports = nil
-	wkCookieListImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkCookieList_Create", 0),
-		/*1*/ imports.NewTable("WkCookieList_Data", 0),
-		/*2*/ imports.NewTable("WkCookieList_GetCookie", 0),
-		/*3*/ imports.NewTable("WkCookieList_Length", 0),
-	}
+	wkCookieListOnce   base.Once
+	wkCookieListImport *imports.Imports = nil
 )
 
-func wkCookieListImportAPI() *imports.Imports {
-	if wkCookieListImport == nil {
-		wkCookieListImport = NewDefaultImports()
-		wkCookieListImport.SetImportTable(wkCookieListImportTables)
-		wkCookieListImportTables = nil
-	}
+func wkCookieListAPI() *imports.Imports {
+	wkCookieListOnce.Do(func() {
+		wkCookieListImport = api.NewDefaultImports()
+		wkCookieListImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkCookieList_Create", 0), // constructor NewCookieList
+			/* 1 */ imports.NewTable("TWkCookieList_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkCookieList_Length", 0), // function Length
+			/* 3 */ imports.NewTable("TWkCookieList_GetCookie", 0), // function GetCookie
+		}
+	})
 	return wkCookieListImport
 }

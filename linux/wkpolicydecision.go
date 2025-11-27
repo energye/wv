@@ -6,71 +6,89 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkPolicyDecision Root Interface
+// IWkPolicyDecision Parent: lcl.IObject
 type IWkPolicyDecision interface {
-	IObject
-	Data() WebKitPolicyDecision                     // function
-	Use()                                           // procedure
-	UseWithPolicies(policies WebKitWebsitePolicies) // procedure
-	Ignore()                                        // procedure
-	Download()                                      // procedure
+	lcl.IObject
+	Data() wvTypes.WebKitPolicyDecision                     // function
+	Use()                                                   // procedure
+	UseWithPolicies(policies wvTypes.WebKitWebsitePolicies) // procedure
+	Ignore()                                                // procedure
+	Download()                                              // procedure
 }
 
-// TWkPolicyDecision Root Object
 type TWkPolicyDecision struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkPolicyDecision(aDecision WebKitPolicyDecision) IWkPolicyDecision {
-	r1 := wkPolicyDecisionImportAPI().SysCallN(0, uintptr(aDecision))
-	return AsWkPolicyDecision(r1)
-}
-
-func (m *TWkPolicyDecision) Data() WebKitPolicyDecision {
-	r1 := wkPolicyDecisionImportAPI().SysCallN(1, m.Instance())
-	return WebKitPolicyDecision(r1)
+func (m *TWkPolicyDecision) Data() wvTypes.WebKitPolicyDecision {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkPolicyDecisionAPI().SysCallN(1, m.Instance())
+	return wvTypes.WebKitPolicyDecision(r)
 }
 
 func (m *TWkPolicyDecision) Use() {
-	wkPolicyDecisionImportAPI().SysCallN(4, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkPolicyDecisionAPI().SysCallN(2, m.Instance())
 }
 
-func (m *TWkPolicyDecision) UseWithPolicies(policies WebKitWebsitePolicies) {
-	wkPolicyDecisionImportAPI().SysCallN(5, m.Instance(), uintptr(policies))
+func (m *TWkPolicyDecision) UseWithPolicies(policies wvTypes.WebKitWebsitePolicies) {
+	if !m.IsValid() {
+		return
+	}
+	wkPolicyDecisionAPI().SysCallN(3, m.Instance(), uintptr(policies))
 }
 
 func (m *TWkPolicyDecision) Ignore() {
-	wkPolicyDecisionImportAPI().SysCallN(3, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkPolicyDecisionAPI().SysCallN(4, m.Instance())
 }
 
 func (m *TWkPolicyDecision) Download() {
-	wkPolicyDecisionImportAPI().SysCallN(2, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkPolicyDecisionAPI().SysCallN(5, m.Instance())
+}
+
+// NewPolicyDecision class constructor
+func NewPolicyDecision(decision wvTypes.WebKitPolicyDecision) IWkPolicyDecision {
+	r := wkPolicyDecisionAPI().SysCallN(0, uintptr(decision))
+	return AsWkPolicyDecision(r)
 }
 
 var (
-	wkPolicyDecisionImport       *imports.Imports = nil
-	wkPolicyDecisionImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkPolicyDecision_Create", 0),
-		/*1*/ imports.NewTable("WkPolicyDecision_Data", 0),
-		/*2*/ imports.NewTable("WkPolicyDecision_Download", 0),
-		/*3*/ imports.NewTable("WkPolicyDecision_Ignore", 0),
-		/*4*/ imports.NewTable("WkPolicyDecision_Use", 0),
-		/*5*/ imports.NewTable("WkPolicyDecision_UseWithPolicies", 0),
-	}
+	wkPolicyDecisionOnce   base.Once
+	wkPolicyDecisionImport *imports.Imports = nil
 )
 
-func wkPolicyDecisionImportAPI() *imports.Imports {
-	if wkPolicyDecisionImport == nil {
-		wkPolicyDecisionImport = NewDefaultImports()
-		wkPolicyDecisionImport.SetImportTable(wkPolicyDecisionImportTables)
-		wkPolicyDecisionImportTables = nil
-	}
+func wkPolicyDecisionAPI() *imports.Imports {
+	wkPolicyDecisionOnce.Do(func() {
+		wkPolicyDecisionImport = api.NewDefaultImports()
+		wkPolicyDecisionImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkPolicyDecision_Create", 0), // constructor NewPolicyDecision
+			/* 1 */ imports.NewTable("TWkPolicyDecision_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkPolicyDecision_Use", 0), // procedure Use
+			/* 3 */ imports.NewTable("TWkPolicyDecision_UseWithPolicies", 0), // procedure UseWithPolicies
+			/* 4 */ imports.NewTable("TWkPolicyDecision_Ignore", 0), // procedure Ignore
+			/* 5 */ imports.NewTable("TWkPolicyDecision_Download", 0), // procedure Download
+		}
+	})
 	return wkPolicyDecisionImport
 }

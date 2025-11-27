@@ -6,88 +6,96 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2DevToolsProtocolEventReceivedEventArgs Parent: IObject
-//
-//	Event args for the DevToolsProtocolEventReceived event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2devtoolsprotocoleventreceivedeventargs">See the ICoreWebView2DevToolsProtocolEventReceivedEventArgs article.</a>
+// ICoreWebView2DevToolsProtocolEventReceivedEventArgs Parent: lcl.IObject
 type ICoreWebView2DevToolsProtocolEventReceivedEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2DevToolsProtocolEventReceivedEventArgs // property
+	BaseIntf() ICoreWebView2DevToolsProtocolEventReceivedEventArgs // property BaseIntf Getter
 	// ParameterObjectAsJson
 	//  The parameter object of the corresponding `DevToolsProtocol` event
 	//  represented as a JSON string.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2devtoolsprotocoleventreceivedeventargs#get_parameterobjectasjson">See the ICoreWebView2DevToolsProtocolEventReceivedEventArgs article.</a>
-	ParameterObjectAsJson() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2devtoolsprotocoleventreceivedeventargs#get_parameterobjectasjson">See the ICoreWebView2DevToolsProtocolEventReceivedEventArgs article.</see>
+	ParameterObjectAsJson() string // property ParameterObjectAsJson Getter
 	// SessionId
 	//  The sessionId of the target where the event originates from.
 	//  Empty string is returned as sessionId if the event comes from the default
 	//  session for the top page.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2devtoolsprotocoleventreceivedeventargs2#get_sessionid">See the ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 article.</a>
-	SessionId() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2devtoolsprotocoleventreceivedeventargs2#get_sessionid">See the ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 article.</see>
+	SessionId() string // property SessionId Getter
 }
 
-// TCoreWebView2DevToolsProtocolEventReceivedEventArgs Parent: TObject
-//
-//	Event args for the DevToolsProtocolEventReceived event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2devtoolsprotocoleventreceivedeventargs">See the ICoreWebView2DevToolsProtocolEventReceivedEventArgs article.</a>
 type TCoreWebView2DevToolsProtocolEventReceivedEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2DevToolsProtocolEventReceivedEventArgs(aArgs ICoreWebView2DevToolsProtocolEventReceivedEventArgs) ICoreWebView2DevToolsProtocolEventReceivedEventArgs {
-	r1 := coreWebView2DevToolsProtocolEventReceivedEventArgsImportAPI().SysCallN(1, GetObjectUintptr(aArgs))
-	return AsCoreWebView2DevToolsProtocolEventReceivedEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) Initialized() bool {
-	r1 := coreWebView2DevToolsProtocolEventReceivedEventArgsImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) BaseIntf() ICoreWebView2DevToolsProtocolEventReceivedEventArgs {
-	var resultCoreWebView2DevToolsProtocolEventReceivedEventArgs uintptr
-	coreWebView2DevToolsProtocolEventReceivedEventArgsImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2DevToolsProtocolEventReceivedEventArgs)))
-	return AsCoreWebView2DevToolsProtocolEventReceivedEventArgs(resultCoreWebView2DevToolsProtocolEventReceivedEventArgs)
+func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) BaseIntf() (result ICoreWebView2DevToolsProtocolEventReceivedEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2DevToolsProtocolEventReceivedEventArgs(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) ParameterObjectAsJson() string {
-	r1 := coreWebView2DevToolsProtocolEventReceivedEventArgsImportAPI().SysCallN(3, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(3, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) SessionId() string {
-	r1 := coreWebView2DevToolsProtocolEventReceivedEventArgsImportAPI().SysCallN(4, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(4, m.Instance())
+	return api.GoStr(r)
+}
+
+// NewCoreWebView2DevToolsProtocolEventReceivedEventArgs class constructor
+func NewCoreWebView2DevToolsProtocolEventReceivedEventArgs(args ICoreWebView2DevToolsProtocolEventReceivedEventArgs) ICoreWebView2DevToolsProtocolEventReceivedEventArgs {
+	r := coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2DevToolsProtocolEventReceivedEventArgs(r)
 }
 
 var (
-	coreWebView2DevToolsProtocolEventReceivedEventArgsImport       *imports.Imports = nil
-	coreWebView2DevToolsProtocolEventReceivedEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2DevToolsProtocolEventReceivedEventArgs_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2DevToolsProtocolEventReceivedEventArgs_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2DevToolsProtocolEventReceivedEventArgs_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2DevToolsProtocolEventReceivedEventArgs_ParameterObjectAsJson", 0),
-		/*4*/ imports.NewTable("CoreWebView2DevToolsProtocolEventReceivedEventArgs_SessionId", 0),
-	}
+	coreWebView2DevToolsProtocolEventReceivedEventArgsOnce   base.Once
+	coreWebView2DevToolsProtocolEventReceivedEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2DevToolsProtocolEventReceivedEventArgsImportAPI() *imports.Imports {
-	if coreWebView2DevToolsProtocolEventReceivedEventArgsImport == nil {
-		coreWebView2DevToolsProtocolEventReceivedEventArgsImport = NewDefaultImports()
-		coreWebView2DevToolsProtocolEventReceivedEventArgsImport.SetImportTable(coreWebView2DevToolsProtocolEventReceivedEventArgsImportTables)
-		coreWebView2DevToolsProtocolEventReceivedEventArgsImportTables = nil
-	}
+func coreWebView2DevToolsProtocolEventReceivedEventArgsAPI() *imports.Imports {
+	coreWebView2DevToolsProtocolEventReceivedEventArgsOnce.Do(func() {
+		coreWebView2DevToolsProtocolEventReceivedEventArgsImport = api.NewDefaultImports()
+		coreWebView2DevToolsProtocolEventReceivedEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2DevToolsProtocolEventReceivedEventArgs_Create", 0), // constructor NewCoreWebView2DevToolsProtocolEventReceivedEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2DevToolsProtocolEventReceivedEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2DevToolsProtocolEventReceivedEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2DevToolsProtocolEventReceivedEventArgs_ParameterObjectAsJson", 0), // property ParameterObjectAsJson
+			/* 4 */ imports.NewTable("TCoreWebView2DevToolsProtocolEventReceivedEventArgs_SessionId", 0), // property SessionId
+		}
+	})
 	return coreWebView2DevToolsProtocolEventReceivedEventArgsImport
 }

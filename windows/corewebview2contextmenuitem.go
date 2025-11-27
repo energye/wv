@@ -6,27 +6,31 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ContextMenuItem Parent: IObject
-//
-//	Represents a context menu item of a context menu displayed by WebView.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem">See the ICoreWebView2ContextMenuItem article.</a>
+// ICoreWebView2ContextMenuItem Parent: lcl.IObject
 type ICoreWebView2ContextMenuItem interface {
-	IObject
+	lcl.IObject
+	// AddAllBrowserEvents
+	//  Adds all the events of this class to an existing TWVBrowserBase instance.
+	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
+	AddAllBrowserEvents(browserComponent lcl.IComponent) bool // function
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2ContextMenuItem // property
-	// SetBaseIntf Set BaseIntf
-	SetBaseIntf(AValue ICoreWebView2ContextMenuItem) // property
+	BaseIntf() ICoreWebView2ContextMenuItem         // property BaseIntf Getter
+	SetBaseIntf(value ICoreWebView2ContextMenuItem) // property BaseIntf Setter
 	// Name
 	//  Gets the unlocalized name for the `ContextMenuItem`. Use this to
 	//  distinguish between context menu item types. This will be the English
@@ -34,169 +38,206 @@ type ICoreWebView2ContextMenuItem interface {
 	//  menu item will be "saveAs". Extension menu items will be "extension",
 	//  custom menu items will be "custom" and spellcheck items will be
 	//  "spellCheck".
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_name">See the ICoreWebView2ContextMenuItem article.</a>
-	Name() string // property
-	// Label
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_name">See the ICoreWebView2ContextMenuItem article.</see>
+	Name() string // property Name Getter
+	// Label_
 	//  Gets the localized label for the `ContextMenuItem`. Will contain an
 	//  ampersand for characters to be used as keyboard accelerator.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_label">See the ICoreWebView2ContextMenuItem article.</a>
-	Label() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_label">See the ICoreWebView2ContextMenuItem article.</see>
+	Label_() string // property Label_ Getter
 	// CommandId
 	//  Gets the Command ID for the `ContextMenuItem`. Use this to report the
 	//  `SelectedCommandId` in `ContextMenuRequested` event.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_commandid">See the ICoreWebView2ContextMenuItem article.</a>
-	CommandId() int32 // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_commandid">See the ICoreWebView2ContextMenuItem article.</see>
+	CommandId() int32 // property CommandId Getter
 	// ShortcutKeyDescription
 	//  Gets the localized keyboard shortcut for this ContextMenuItem. It will be
 	//  the empty string if there is no keyboard shortcut. This is text intended
 	//  to be displayed to the end user to show the keyboard shortcut. For example
 	//  this property is Ctrl+Shift+I for the "Inspect" `ContextMenuItem`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_shortcutkeydescription">See the ICoreWebView2ContextMenuItem article.</a>
-	ShortcutKeyDescription() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_shortcutkeydescription">See the ICoreWebView2ContextMenuItem article.</see>
+	ShortcutKeyDescription() string // property ShortcutKeyDescription Getter
 	// Icon
 	//  Gets the Icon for the `ContextMenuItem` in PNG, Bitmap or SVG formats in the form of an IStream.
 	//  Stream will be rewound to the start of the image data.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_icon">See the ICoreWebView2ContextMenuItem article.</a>
-	Icon() IStream // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_icon">See the ICoreWebView2ContextMenuItem article.</see>
+	Icon() lcl.IStreamAdapter // property Icon Getter
 	// Kind
 	//  Gets the `ContextMenuItem` kind.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_kind">See the ICoreWebView2ContextMenuItem article.</a>
-	Kind() TWVMenuItemKind // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_kind">See the ICoreWebView2ContextMenuItem article.</see>
+	Kind() wvTypes.TWVMenuItemKind // property Kind Getter
 	// IsEnabled
 	//  Gets the enabled property of the `ContextMenuItem`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_isenabled">See the ICoreWebView2ContextMenuItem article.</a>
-	IsEnabled() bool // property
-	// SetIsEnabled Set IsEnabled
-	SetIsEnabled(AValue bool) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_isenabled">See the ICoreWebView2ContextMenuItem article.</see>
+	IsEnabled() bool         // property IsEnabled Getter
+	SetIsEnabled(value bool) // property IsEnabled Setter
 	// IsChecked
 	//  Gets the checked property of the `ContextMenuItem`, used if the kind is Check box or Radio.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_ischecked">See the ICoreWebView2ContextMenuItem article.</a>
-	IsChecked() bool // property
-	// SetIsChecked Set IsChecked
-	SetIsChecked(AValue bool) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_ischecked">See the ICoreWebView2ContextMenuItem article.</see>
+	IsChecked() bool         // property IsChecked Getter
+	SetIsChecked(value bool) // property IsChecked Setter
 	// Children
 	//  Gets the list of children menu items through a `ContextMenuItemCollection`
 	//  if the kind is Submenu. If the kind is not submenu, will return null.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_children">See the ICoreWebView2ContextMenuItem article.</a>
-	Children() ICoreWebView2ContextMenuItemCollection // property
-	// AddAllBrowserEvents
-	//  Adds all the events of this class to an existing TWVBrowserBase instance.
-	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
-	AddAllBrowserEvents(aBrowserComponent IComponent) bool // function
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_children">See the ICoreWebView2ContextMenuItem article.</see>
+	Children() ICoreWebView2ContextMenuItemCollection // property Children Getter
 }
 
-// TCoreWebView2ContextMenuItem Parent: TObject
-//
-//	Represents a context menu item of a context menu displayed by WebView.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem">See the ICoreWebView2ContextMenuItem article.</a>
 type TCoreWebView2ContextMenuItem struct {
-	TObject
+	lcl.TObject
 }
 
-func NewCoreWebView2ContextMenuItem(aBaseIntf ICoreWebView2ContextMenuItem) ICoreWebView2ContextMenuItem {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(4, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2ContextMenuItem(r1)
+func (m *TCoreWebView2ContextMenuItem) AddAllBrowserEvents(browserComponent lcl.IComponent) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(1, m.Instance(), base.GetObjectUintptr(browserComponent))
+	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2ContextMenuItem) Initialized() bool {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(6, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(2, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuItem) BaseIntf() ICoreWebView2ContextMenuItem {
-	var resultCoreWebView2ContextMenuItem uintptr
-	coreWebView2ContextMenuItemImportAPI().SysCallN(1, 0, m.Instance(), 0, uintptr(unsafePointer(&resultCoreWebView2ContextMenuItem)))
-	return AsCoreWebView2ContextMenuItem(resultCoreWebView2ContextMenuItem)
+func (m *TCoreWebView2ContextMenuItem) BaseIntf() (result ICoreWebView2ContextMenuItem) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ContextMenuItemAPI().SysCallN(3, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ContextMenuItem(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ContextMenuItem) SetBaseIntf(AValue ICoreWebView2ContextMenuItem) {
-	coreWebView2ContextMenuItemImportAPI().SysCallN(1, 1, m.Instance(), GetObjectUintptr(AValue), GetObjectUintptr(AValue))
+func (m *TCoreWebView2ContextMenuItem) SetBaseIntf(value ICoreWebView2ContextMenuItem) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ContextMenuItemAPI().SysCallN(3, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
 func (m *TCoreWebView2ContextMenuItem) Name() string {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(11, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(4, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ContextMenuItem) Label() string {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(10, m.Instance())
-	return GoStr(r1)
+func (m *TCoreWebView2ContextMenuItem) Label_() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(5, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TCoreWebView2ContextMenuItem) CommandId() int32 {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(3, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(6, m.Instance())
+	return int32(r)
 }
 
 func (m *TCoreWebView2ContextMenuItem) ShortcutKeyDescription() string {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(12, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(7, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ContextMenuItem) Icon() IStream {
-	var resultStream uintptr
-	coreWebView2ContextMenuItemImportAPI().SysCallN(5, m.Instance(), uintptr(unsafePointer(&resultStream)))
-	return AsStream(resultStream)
+func (m *TCoreWebView2ContextMenuItem) Icon() lcl.IStreamAdapter {
+	if !m.IsValid() {
+		return nil
+	}
+	var resultPtr uintptr
+	coreWebView2ContextMenuItemAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	return lcl.AsStreamAdapter(resultPtr)
 }
 
-func (m *TCoreWebView2ContextMenuItem) Kind() TWVMenuItemKind {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(9, m.Instance())
-	return TWVMenuItemKind(r1)
+func (m *TCoreWebView2ContextMenuItem) Kind() wvTypes.TWVMenuItemKind {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(9, m.Instance())
+	return wvTypes.TWVMenuItemKind(r)
 }
 
 func (m *TCoreWebView2ContextMenuItem) IsEnabled() bool {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(8, 0, m.Instance(), 0)
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(10, 0, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuItem) SetIsEnabled(AValue bool) {
-	coreWebView2ContextMenuItemImportAPI().SysCallN(8, 1, m.Instance(), PascalBool(AValue))
+func (m *TCoreWebView2ContextMenuItem) SetIsEnabled(value bool) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ContextMenuItemAPI().SysCallN(10, 1, m.Instance(), api.PasBool(value))
 }
 
 func (m *TCoreWebView2ContextMenuItem) IsChecked() bool {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(7, 0, m.Instance(), 0)
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ContextMenuItemAPI().SysCallN(11, 0, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuItem) SetIsChecked(AValue bool) {
-	coreWebView2ContextMenuItemImportAPI().SysCallN(7, 1, m.Instance(), PascalBool(AValue))
+func (m *TCoreWebView2ContextMenuItem) SetIsChecked(value bool) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ContextMenuItemAPI().SysCallN(11, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TCoreWebView2ContextMenuItem) Children() ICoreWebView2ContextMenuItemCollection {
-	var resultCoreWebView2ContextMenuItemCollection uintptr
-	coreWebView2ContextMenuItemImportAPI().SysCallN(2, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2ContextMenuItemCollection)))
-	return AsCoreWebView2ContextMenuItemCollection(resultCoreWebView2ContextMenuItemCollection)
+func (m *TCoreWebView2ContextMenuItem) Children() (result ICoreWebView2ContextMenuItemCollection) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ContextMenuItemAPI().SysCallN(12, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ContextMenuItemCollection(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ContextMenuItem) AddAllBrowserEvents(aBrowserComponent IComponent) bool {
-	r1 := coreWebView2ContextMenuItemImportAPI().SysCallN(0, m.Instance(), GetObjectUintptr(aBrowserComponent))
-	return GoBool(r1)
+// NewCoreWebView2ContextMenuItem class constructor
+func NewCoreWebView2ContextMenuItem(baseIntf ICoreWebView2ContextMenuItem) ICoreWebView2ContextMenuItem {
+	r := coreWebView2ContextMenuItemAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2ContextMenuItem(r)
 }
 
 var (
-	coreWebView2ContextMenuItemImport       *imports.Imports = nil
-	coreWebView2ContextMenuItemImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2ContextMenuItem_AddAllBrowserEvents", 0),
-		/*1*/ imports.NewTable("CoreWebView2ContextMenuItem_BaseIntf", 0),
-		/*2*/ imports.NewTable("CoreWebView2ContextMenuItem_Children", 0),
-		/*3*/ imports.NewTable("CoreWebView2ContextMenuItem_CommandId", 0),
-		/*4*/ imports.NewTable("CoreWebView2ContextMenuItem_Create", 0),
-		/*5*/ imports.NewTable("CoreWebView2ContextMenuItem_Icon", 0),
-		/*6*/ imports.NewTable("CoreWebView2ContextMenuItem_Initialized", 0),
-		/*7*/ imports.NewTable("CoreWebView2ContextMenuItem_IsChecked", 0),
-		/*8*/ imports.NewTable("CoreWebView2ContextMenuItem_IsEnabled", 0),
-		/*9*/ imports.NewTable("CoreWebView2ContextMenuItem_Kind", 0),
-		/*10*/ imports.NewTable("CoreWebView2ContextMenuItem_Label", 0),
-		/*11*/ imports.NewTable("CoreWebView2ContextMenuItem_Name", 0),
-		/*12*/ imports.NewTable("CoreWebView2ContextMenuItem_ShortcutKeyDescription", 0),
-	}
+	coreWebView2ContextMenuItemOnce   base.Once
+	coreWebView2ContextMenuItemImport *imports.Imports = nil
 )
 
-func coreWebView2ContextMenuItemImportAPI() *imports.Imports {
-	if coreWebView2ContextMenuItemImport == nil {
-		coreWebView2ContextMenuItemImport = NewDefaultImports()
-		coreWebView2ContextMenuItemImport.SetImportTable(coreWebView2ContextMenuItemImportTables)
-		coreWebView2ContextMenuItemImportTables = nil
-	}
+func coreWebView2ContextMenuItemAPI() *imports.Imports {
+	coreWebView2ContextMenuItemOnce.Do(func() {
+		coreWebView2ContextMenuItemImport = api.NewDefaultImports()
+		coreWebView2ContextMenuItemImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2ContextMenuItem_Create", 0), // constructor NewCoreWebView2ContextMenuItem
+			/* 1 */ imports.NewTable("TCoreWebView2ContextMenuItem_AddAllBrowserEvents", 0), // function AddAllBrowserEvents
+			/* 2 */ imports.NewTable("TCoreWebView2ContextMenuItem_Initialized", 0), // property Initialized
+			/* 3 */ imports.NewTable("TCoreWebView2ContextMenuItem_BaseIntf", 0), // property BaseIntf
+			/* 4 */ imports.NewTable("TCoreWebView2ContextMenuItem_Name", 0), // property Name
+			/* 5 */ imports.NewTable("TCoreWebView2ContextMenuItem_Label_", 0), // property Label_
+			/* 6 */ imports.NewTable("TCoreWebView2ContextMenuItem_CommandId", 0), // property CommandId
+			/* 7 */ imports.NewTable("TCoreWebView2ContextMenuItem_ShortcutKeyDescription", 0), // property ShortcutKeyDescription
+			/* 8 */ imports.NewTable("TCoreWebView2ContextMenuItem_Icon", 0), // property Icon
+			/* 9 */ imports.NewTable("TCoreWebView2ContextMenuItem_Kind", 0), // property Kind
+			/* 10 */ imports.NewTable("TCoreWebView2ContextMenuItem_IsEnabled", 0), // property IsEnabled
+			/* 11 */ imports.NewTable("TCoreWebView2ContextMenuItem_IsChecked", 0), // property IsChecked
+			/* 12 */ imports.NewTable("TCoreWebView2ContextMenuItem_Children", 0), // property Children
+		}
+	})
 	return coreWebView2ContextMenuItemImport
 }

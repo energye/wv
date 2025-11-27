@@ -6,96 +6,109 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2PermissionSetting Parent: IObject
-//
-//	Provides a set of properties for a permission setting.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting">See the ICoreWebView2PermissionSetting article.</a>
+// ICoreWebView2PermissionSetting Parent: lcl.IObject
 type ICoreWebView2PermissionSetting interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2PermissionSetting // property
+	BaseIntf() ICoreWebView2PermissionSetting // property BaseIntf Getter
 	// PermissionKind
 	//  The kind of the permission setting. See `COREWEBVIEW2_PERMISSION_KIND` for
 	//  more details.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting#get_permissionkind">See the ICoreWebView2PermissionSetting article.</a>
-	PermissionKind() TWVPermissionKind // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting#get_permissionkind">See the ICoreWebView2PermissionSetting article.</see>
+	PermissionKind() wvTypes.TWVPermissionKind // property PermissionKind Getter
 	// PermissionOrigin
 	//  The origin of the permission setting.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting#get_permissionorigin">See the ICoreWebView2PermissionSetting article.</a>
-	PermissionOrigin() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting#get_permissionorigin">See the ICoreWebView2PermissionSetting article.</see>
+	PermissionOrigin() string // property PermissionOrigin Getter
 	// PermissionState
 	//  The state of the permission setting.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting#get_permissionstate">See the ICoreWebView2PermissionSetting article.</a>
-	PermissionState() TWVPermissionState // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting#get_permissionstate">See the ICoreWebView2PermissionSetting article.</see>
+	PermissionState() wvTypes.TWVPermissionState // property PermissionState Getter
 }
 
-// TCoreWebView2PermissionSetting Parent: TObject
-//
-//	Provides a set of properties for a permission setting.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2permissionsetting">See the ICoreWebView2PermissionSetting article.</a>
 type TCoreWebView2PermissionSetting struct {
-	TObject
-}
-
-func NewCoreWebView2PermissionSetting(aBaseIntf ICoreWebView2PermissionSetting) ICoreWebView2PermissionSetting {
-	r1 := coreWebView2PermissionSettingImportAPI().SysCallN(1, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2PermissionSetting(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2PermissionSetting) Initialized() bool {
-	r1 := coreWebView2PermissionSettingImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2PermissionSettingAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2PermissionSetting) BaseIntf() ICoreWebView2PermissionSetting {
-	var resultCoreWebView2PermissionSetting uintptr
-	coreWebView2PermissionSettingImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2PermissionSetting)))
-	return AsCoreWebView2PermissionSetting(resultCoreWebView2PermissionSetting)
+func (m *TCoreWebView2PermissionSetting) BaseIntf() (result ICoreWebView2PermissionSetting) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2PermissionSettingAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2PermissionSetting(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2PermissionSetting) PermissionKind() TWVPermissionKind {
-	r1 := coreWebView2PermissionSettingImportAPI().SysCallN(3, m.Instance())
-	return TWVPermissionKind(r1)
+func (m *TCoreWebView2PermissionSetting) PermissionKind() wvTypes.TWVPermissionKind {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2PermissionSettingAPI().SysCallN(3, m.Instance())
+	return wvTypes.TWVPermissionKind(r)
 }
 
 func (m *TCoreWebView2PermissionSetting) PermissionOrigin() string {
-	r1 := coreWebView2PermissionSettingImportAPI().SysCallN(4, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2PermissionSettingAPI().SysCallN(4, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2PermissionSetting) PermissionState() TWVPermissionState {
-	r1 := coreWebView2PermissionSettingImportAPI().SysCallN(5, m.Instance())
-	return TWVPermissionState(r1)
+func (m *TCoreWebView2PermissionSetting) PermissionState() wvTypes.TWVPermissionState {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2PermissionSettingAPI().SysCallN(5, m.Instance())
+	return wvTypes.TWVPermissionState(r)
+}
+
+// NewCoreWebView2PermissionSetting class constructor
+func NewCoreWebView2PermissionSetting(baseIntf ICoreWebView2PermissionSetting) ICoreWebView2PermissionSetting {
+	r := coreWebView2PermissionSettingAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2PermissionSetting(r)
 }
 
 var (
-	coreWebView2PermissionSettingImport       *imports.Imports = nil
-	coreWebView2PermissionSettingImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2PermissionSetting_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2PermissionSetting_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2PermissionSetting_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2PermissionSetting_PermissionKind", 0),
-		/*4*/ imports.NewTable("CoreWebView2PermissionSetting_PermissionOrigin", 0),
-		/*5*/ imports.NewTable("CoreWebView2PermissionSetting_PermissionState", 0),
-	}
+	coreWebView2PermissionSettingOnce   base.Once
+	coreWebView2PermissionSettingImport *imports.Imports = nil
 )
 
-func coreWebView2PermissionSettingImportAPI() *imports.Imports {
-	if coreWebView2PermissionSettingImport == nil {
-		coreWebView2PermissionSettingImport = NewDefaultImports()
-		coreWebView2PermissionSettingImport.SetImportTable(coreWebView2PermissionSettingImportTables)
-		coreWebView2PermissionSettingImportTables = nil
-	}
+func coreWebView2PermissionSettingAPI() *imports.Imports {
+	coreWebView2PermissionSettingOnce.Do(func() {
+		coreWebView2PermissionSettingImport = api.NewDefaultImports()
+		coreWebView2PermissionSettingImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2PermissionSetting_Create", 0), // constructor NewCoreWebView2PermissionSetting
+			/* 1 */ imports.NewTable("TCoreWebView2PermissionSetting_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2PermissionSetting_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2PermissionSetting_PermissionKind", 0), // property PermissionKind
+			/* 4 */ imports.NewTable("TCoreWebView2PermissionSetting_PermissionOrigin", 0), // property PermissionOrigin
+			/* 5 */ imports.NewTable("TCoreWebView2PermissionSetting_PermissionState", 0), // property PermissionState
+		}
+	})
 	return coreWebView2PermissionSettingImport
 }

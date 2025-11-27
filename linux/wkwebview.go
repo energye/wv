@@ -6,450 +6,478 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkWebview Root Interface
+// IWkWebview Parent: lcl.IComponent
 type IWkWebview interface {
-	IComponent
-	WebView() WebKitWebView                                 // property
-	CanGoBack() bool                                        // function
-	CanGoForward() bool                                     // function
-	IsLoading() bool                                        // function
-	GetTitle() string                                       // function
-	CookieManager() IWkCookieManager                        // function
-	GetSettings() IWkSettings                               // function
-	AsCookieManagerDelegate() IWkCookieManagerDelegateEvent // function
-	AsSchemeRequestDelegate() IWkSchemeRequestDelegateEvent // function
-	CreateBrowser()                                         // procedure
-	GoBack()                                                // procedure
-	GoForward()                                             // procedure
-	Reload()                                                // procedure
-	Stop()                                                  // procedure
-	StartDrag(aFormWindow IWinControl)                      // procedure
-	TerminateWebProcess()                                   // procedure
-	TryClose()                                              // procedure
-	ExecuteScript(aScript string)                           // procedure
-	LoadHTML(aHTML string)                                  // procedure
-	LoadURL(aURL string)                                    // procedure
-	EnabledDevtools(enabled bool)                           // procedure
-	ShowDevtools()                                          // procedure
-	RegisterScriptCode(scriptCode string)                   // procedure
+	lcl.IComponent
+	CanGoBack() bool                      // function
+	CanGoForward() bool                   // function
+	IsLoading() bool                      // function
+	GetTitle() string                     // function
+	GetURI() string                       // function
+	CookieManager() IWkCookieManager      // function
+	GetSettings() IWkSettings             // function
+	AsCookieManagerDelegate() IWkWebview  // function
+	AsSchemeRequestDelegate() IWkWebview  // function
+	CreateBrowser()                       // procedure
+	GoBack()                              // procedure
+	GoForward()                           // procedure
+	Reload()                              // procedure
+	Stop()                                // procedure
+	StartDrag(formWindow lcl.IWinControl) // procedure
+	TerminateWebProcess()                 // procedure
+	TryClose()                            // procedure
+	ExecuteScript(script string)          // procedure
+	LoadHTML(hTML string)                 // procedure
+	LoadURL(uRL string)                   // procedure
+	EnabledDevtools(enabled bool)         // procedure
+	ShowDevtools()                        // procedure
+	RegisterScriptCode(scriptCode string) // procedure
 	// RegisterScriptMessageHandler
 	//  注册JS消息处理器
 	//  window.webkit.messageHandlers.<name>.postMessage()
-	RegisterScriptMessageHandler(aName string) // procedure
-	SetSettings(aSetting IWkSettings)          // procedure
-	FreeWebview()                              // procedure
-	// SetOnLoadChange
-	//  当web_view中的加载操作改变时触发
-	//  当发出新的加载请求时，WEBKIT_LOAD_STARTED发出信号，当加载成功完成或由于错误而完成时，WEBKIT_LOAD_FINISHED发出信号
-	//  当正在进行的加载操作失败时，在WEBKIT_LOAD_FINISHED发出WebKitWebView::load-changed之前发出WebKitWebView::load-failed信号
-	//  如果从服务器接收到重定向，则在WEBKIT_LOAD_STARTED初始发射之后，WEBKIT_LOAD_COMMITTED之前，用webkit_load_redirect发出此信号
-	//  当页面内容开始到达时，使用WEBKIT_LOAD_COMMITTED事件发出信号
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/signal.WebView.load-changed.html
-	SetOnLoadChange(fn TWkLoadChangeEvent) // property event
-	// SetOnExecuteScriptFinished
-	//  完成由webkit_web_view_run_javascript()开始的异步操作。
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.WebView.run_javascript_finish.html
+	RegisterScriptMessageHandler(name string)                    // procedure
+	SetSettings(setting IWkSettings)                             // procedure
+	FreeWebview()                                                // procedure
+	WebView() wvTypes.WebKitWebView                              // property WebView Getter
+	SetOnLoadChange(fn TWkLoadChangeEvent)                       // property event
 	SetOnExecuteScriptFinished(fn TWkExecuteScriptFinishedEvent) // property event
-	// SetOnLoadFailed
-	//  在加载操作期间发生错误时触发。如果在开始加载页面数据时发生错误，load_event将是WEBKIT_LOAD_STARTED。如果它发生在加载提交的数据源时，load_event将是WEBKIT_LOAD_COMMITTED
-	//  由于加载错误导致加载操作结束，WebKitWebView::load-changed信号将总是伴随着WEBKIT_LOAD_FINISHED事件紧随其后
-	//  默认情况下，如果不处理该信号，将显示一个股票错误页面。如果希望提供自己的错误页面，则需要处理该信号
-	//  默认的处理程序: 默认处理程序在通过g_signal_connect()添加处理程序后调用
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.CookieManager.delete_cookie.html?q=load-failed
-	SetOnLoadFailed(fn TWkLoadFailedEvent) // property event
-	// SetOnURISchemeRequest
-	//  Webview 自定义协议: energy
-	//  在上下文中注册scheme，这样当WebKitWebContext中发出带有scheme的URI请求时，注册的webkitur缺血erequestcallback将被webkitur缺血erequest调用
-	//  可以异步处理URI方案请求，方法是在webkitur缺血性请求中调用g_object_ref()，然后在请求的数据可用时调用webkit_uri_scheme_request_finish()，或者在出现错误时调用webkit_uri_scheme_request_finish_error()
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.WebContext.register_uri_scheme.html
-	SetOnURISchemeRequest(fn TWkURISchemeRequestEvent) // property event
-	// SetOnProcessMessage
-	//  Webview 自定义消息: processMessage, window.webkit.messageHandlers.<processMessage>.postMessage('data')
-	//  当web视图中的JavaScript在使用webkit_user_content_manager_register_script_message_handler()注册后调用window.webkit.messageHandlers.<processMessage>.postMessage()时发出该信号。
-	//  默认的处理程序: 默认处理程序在通过g_signal_connect()添加处理程序后调用。
-	//  信号可以是详细的
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/signal.UserContentManager.script-message-received.html
-	//  注册一个新的用户脚本消息处理程序
-	//  注册后，脚本可以使用window.webkit.messageHandlers.<name>. postmessage(value)发送消息
-	//  通过将处理程序连接到WebKitUserContentManager::script-message-received信号来接收这些消息
-	//  处理程序名称用作信号的详细信息
-	//  为了避免在注册处理程序名称和开始接收信号之间的竞争条件，建议在注册处理程序名称之前连接到信号:
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.UserContentManager.register_script_message_handler.html
-	SetOnProcessMessage(fn TWkProcessMessageEvent) // property event
-	// SetOnMousePress
-	//  g_signal_connect_data button-press-event
-	//  网页鼠标按下触发事件连接信号
-	SetOnMousePress(fn TWkMousePressEvent) // property event
-	// SetOnMouseRelease
-	//  g_signal_connect_data button-release-event
-	//  网页鼠标释放触发事件连接信号
-	SetOnMouseRelease(fn TWkMouseReleaseEvent) // property event
-	// SetOnGetAcceptPolicyFinish
-	//  完成由webkit_cookie_manager_get_accept_policy()启动的异步操作。
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.CookieManager.get_accept_policy_finish.html
+	SetOnLoadFailed(fn TWkLoadFailedEvent)                       // property event
+	SetOnURISchemeRequest(fn TWkURISchemeRequestEvent)           // property event
+	SetOnProcessMessage(fn TWkProcessMessageEvent)               // property event
+	SetOnMousePress(fn TWkMousePressEvent)                       // property event
+	SetOnMouseRelease(fn TWkMouseReleaseEvent)                   // property event
 	SetOnGetAcceptPolicyFinish(fn TWkGetAcceptPolicyFinishEvent) // property event
-	// SetOnAddCookieFinish
-	//  完成由webkit_cookie_manager_add_cookie()开始的异步操作。
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.CookieManager.add_cookie_finish.html
-	SetOnAddCookieFinish(fn TWkAddCookieFinishEvent) // property event
-	// SetOnGetCookiesFinish
-	//  完成由webkit_cookie_manager_get_cookies()开始的异步操作。
-	//  返回值是SoupCookie实例的GSList，应该使用g_list_free_full()和soup_cookie_free()释放。
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.CookieManager.get_cookies_finish.html
-	SetOnGetCookiesFinish(fn TWkGetCookiesFinishEvent) // property event
-	// SetOnDeleteCookieFinish
-	//  完成由webkit_cookie_manager_delete_cookie()开始的异步操作。
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.CookieManager.delete_cookie_finish.html
-	SetOnDeleteCookieFinish(fn TWkDeleteCookieFinishEvent) // property event
-	// SetOnDecidePolicy
-	//  当WebKit请求客户端决定一个策略决策时，例如是否导航到一个页面，打开一个新窗口，或者是否下载一个资源，就会发出这个信号。
-	//  传入的参数是泛型类型，但在做出决策时应将其强制转换为更具体的类型。例如:WebKitNavigationPolicyDecisiondecision
-	//  可以通过简单地调用参数并返回阻塞默认信号处理程序来异步地做出策略决策。
-	//  如果最后一个引用被删除，并且没有明确做出决策，则将是默认的策略决策。
-	//  默认信号处理程序将简单地调用webkit_policy_decision_use()。
-	//  只有为给定选择的第一个策略决策才会有任何影响, g_object_ref() decision TRUE WebKitPolicyDecision webkit_policy_decision_use()
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/signal.WebView.decide-policy.html
-	SetOnDecidePolicy(fn TWkDecidePolicyEvent) // property event
-	// SetOnWebProcessTerminated
-	//  当web进程由于reason异常终止时，发出此信号
-	//  默认处理程序在通过g_signal_connect()添加处理程序后被调用
-	//  https://webkitgtk.org/reference/webkit2gtk/stable/method.WebView.terminate_web_process.html
-	SetOnWebProcessTerminated(fn TWkWebProcessTerminatedEvent) // property event
-	SetOnContextMenu(fn TWkContextMenuEvent)                   // property event
-	SetOnContextMenuCommand(fn TWkContextMenuCommandEvent)     // property event
-	SetOnContextMenuDismissed(fn TWkContextMenuDismissedEvent) // property event
+	SetOnAddCookieFinish(fn TWkAddCookieFinishEvent)             // property event
+	SetOnGetCookiesFinish(fn TWkGetCookiesFinishEvent)           // property event
+	SetOnDeleteCookieFinish(fn TWkDeleteCookieFinishEvent)       // property event
+	SetOnDecidePolicy(fn TWkDecidePolicyEvent)                   // property event
+	SetOnWebProcessTerminated(fn TWkWebProcessTerminatedEvent)   // property event
+	SetOnContextMenu(fn TWkContextMenuEvent)                     // property event
+	SetOnContextMenuCommand(fn TWkContextMenuCommandEvent)       // property event
+	SetOnContextMenuDismissed(fn TWkContextMenuDismissedEvent)   // property event
+	AsIntfWkCookieManagerDelegateEvent() uintptr
+	AsIntfWkSchemeRequestDelegateEvent() uintptr
 }
 
-// TWkWebview Root Object
 type TWkWebview struct {
-	TComponent
-	loadChangePtr            uintptr
-	executeScriptFinishedPtr uintptr
-	loadFailedPtr            uintptr
-	uRISchemeRequestPtr      uintptr
-	processMessagePtr        uintptr
-	mousePressPtr            uintptr
-	mouseReleasePtr          uintptr
-	getAcceptPolicyFinishPtr uintptr
-	addCookieFinishPtr       uintptr
-	getCookiesFinishPtr      uintptr
-	deleteCookieFinishPtr    uintptr
-	decidePolicyPtr          uintptr
-	webProcessTerminatedPtr  uintptr
-	contextMenuPtr           uintptr
-	contextMenuCommandPtr    uintptr
-	contextMenuDismissedPtr  uintptr
-}
-
-func NewWkWebview(aOwner IComponent) IWkWebview {
-	r1 := wkWebviewImportAPI().SysCallN(5, GetObjectUintptr(aOwner))
-	return AsWkWebview(r1)
-}
-
-func (m *TWkWebview) WebView() WebKitWebView {
-	r1 := wkWebviewImportAPI().SysCallN(42, m.Instance())
-	return WebKitWebView(r1)
+	lcl.TComponent
 }
 
 func (m *TWkWebview) CanGoBack() bool {
-	r1 := wkWebviewImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWebviewAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TWkWebview) CanGoForward() bool {
-	r1 := wkWebviewImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWebviewAPI().SysCallN(2, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TWkWebview) IsLoading() bool {
-	r1 := wkWebviewImportAPI().SysCallN(14, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := wkWebviewAPI().SysCallN(3, m.Instance())
+	return api.GoBool(r)
 }
 
 func (m *TWkWebview) GetTitle() string {
-	r1 := wkWebviewImportAPI().SysCallN(11, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkWebviewAPI().SysCallN(4, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWkWebview) GetURI() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkWebviewAPI().SysCallN(5, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TWkWebview) CookieManager() IWkCookieManager {
-	r1 := wkWebviewImportAPI().SysCallN(4, m.Instance())
-	return AsWkCookieManager(r1)
+	if !m.IsValid() {
+		return nil
+	}
+	r := wkWebviewAPI().SysCallN(6, m.Instance())
+	return AsWkCookieManager(r)
 }
 
 func (m *TWkWebview) GetSettings() IWkSettings {
-	r1 := wkWebviewImportAPI().SysCallN(10, m.Instance())
-	return AsWkSettings(r1)
+	if !m.IsValid() {
+		return nil
+	}
+	r := wkWebviewAPI().SysCallN(7, m.Instance())
+	return AsWkSettings(r)
 }
 
-func (m *TWkWebview) AsCookieManagerDelegate() IWkCookieManagerDelegateEvent {
-	var resultWkCookieManagerDelegateEvent uintptr
-	wkWebviewImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultWkCookieManagerDelegateEvent)))
-	return AsWkCookieManagerDelegateEvent(resultWkCookieManagerDelegateEvent)
+func (m *TWkWebview) AsCookieManagerDelegate() IWkWebview {
+	if !m.IsValid() {
+		return nil
+	}
+	var resultPtr uintptr
+	wkWebviewAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	return AsWkWebview(resultPtr)
 }
 
-func (m *TWkWebview) AsSchemeRequestDelegate() IWkSchemeRequestDelegateEvent {
-	var resultWkSchemeRequestDelegateEvent uintptr
-	wkWebviewImportAPI().SysCallN(1, m.Instance(), uintptr(unsafePointer(&resultWkSchemeRequestDelegateEvent)))
-	return AsWkSchemeRequestDelegateEvent(resultWkSchemeRequestDelegateEvent)
+func (m *TWkWebview) AsSchemeRequestDelegate() IWkWebview {
+	if !m.IsValid() {
+		return nil
+	}
+	var resultPtr uintptr
+	wkWebviewAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	return AsWkWebview(resultPtr)
 }
 
 func (m *TWkWebview) CreateBrowser() {
-	wkWebviewImportAPI().SysCallN(6, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(10, m.Instance())
 }
 
 func (m *TWkWebview) GoBack() {
-	wkWebviewImportAPI().SysCallN(12, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(11, m.Instance())
 }
 
 func (m *TWkWebview) GoForward() {
-	wkWebviewImportAPI().SysCallN(13, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(12, m.Instance())
 }
 
 func (m *TWkWebview) Reload() {
-	wkWebviewImportAPI().SysCallN(19, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(13, m.Instance())
 }
 
 func (m *TWkWebview) Stop() {
-	wkWebviewImportAPI().SysCallN(39, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(14, m.Instance())
 }
 
-func (m *TWkWebview) StartDrag(aFormWindow IWinControl) {
-	wkWebviewImportAPI().SysCallN(38, m.Instance(), GetObjectUintptr(aFormWindow))
+func (m *TWkWebview) StartDrag(formWindow lcl.IWinControl) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(15, m.Instance(), base.GetObjectUintptr(formWindow))
 }
 
 func (m *TWkWebview) TerminateWebProcess() {
-	wkWebviewImportAPI().SysCallN(40, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(16, m.Instance())
 }
 
 func (m *TWkWebview) TryClose() {
-	wkWebviewImportAPI().SysCallN(41, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(17, m.Instance())
 }
 
-func (m *TWkWebview) ExecuteScript(aScript string) {
-	wkWebviewImportAPI().SysCallN(8, m.Instance(), PascalStr(aScript))
+func (m *TWkWebview) ExecuteScript(script string) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(18, m.Instance(), api.PasStr(script))
 }
 
-func (m *TWkWebview) LoadHTML(aHTML string) {
-	wkWebviewImportAPI().SysCallN(15, m.Instance(), PascalStr(aHTML))
+func (m *TWkWebview) LoadHTML(hTML string) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(19, m.Instance(), api.PasStr(hTML))
 }
 
-func (m *TWkWebview) LoadURL(aURL string) {
-	wkWebviewImportAPI().SysCallN(16, m.Instance(), PascalStr(aURL))
+func (m *TWkWebview) LoadURL(uRL string) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(20, m.Instance(), api.PasStr(uRL))
 }
 
 func (m *TWkWebview) EnabledDevtools(enabled bool) {
-	wkWebviewImportAPI().SysCallN(7, m.Instance(), PascalBool(enabled))
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(21, m.Instance(), api.PasBool(enabled))
 }
 
 func (m *TWkWebview) ShowDevtools() {
-	wkWebviewImportAPI().SysCallN(37, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(22, m.Instance())
 }
 
 func (m *TWkWebview) RegisterScriptCode(scriptCode string) {
-	wkWebviewImportAPI().SysCallN(17, m.Instance(), PascalStr(scriptCode))
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(23, m.Instance(), api.PasStr(scriptCode))
 }
 
-func (m *TWkWebview) RegisterScriptMessageHandler(aName string) {
-	wkWebviewImportAPI().SysCallN(18, m.Instance(), PascalStr(aName))
+func (m *TWkWebview) RegisterScriptMessageHandler(name string) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(24, m.Instance(), api.PasStr(name))
 }
 
-func (m *TWkWebview) SetSettings(aSetting IWkSettings) {
-	wkWebviewImportAPI().SysCallN(36, m.Instance(), GetObjectUintptr(aSetting))
+func (m *TWkWebview) SetSettings(setting IWkSettings) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(25, m.Instance(), base.GetObjectUintptr(setting))
 }
 
 func (m *TWkWebview) FreeWebview() {
-	wkWebviewImportAPI().SysCallN(9, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewAPI().SysCallN(26, m.Instance())
+}
+
+func (m *TWkWebview) WebView() wvTypes.WebKitWebView {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWebviewAPI().SysCallN(27, m.Instance())
+	return wvTypes.WebKitWebView(r)
 }
 
 func (m *TWkWebview) SetOnLoadChange(fn TWkLoadChangeEvent) {
-	if m.loadChangePtr != 0 {
-		RemoveEventElement(m.loadChangePtr)
+	if !m.IsValid() {
+		return
 	}
-	m.loadChangePtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(29, m.Instance(), m.loadChangePtr)
+	cb := makeTWkLoadChangeEvent(fn)
+	base.SetEvent(m, 28, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnExecuteScriptFinished(fn TWkExecuteScriptFinishedEvent) {
-	if m.executeScriptFinishedPtr != 0 {
-		RemoveEventElement(m.executeScriptFinishedPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.executeScriptFinishedPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(26, m.Instance(), m.executeScriptFinishedPtr)
+	cb := makeTWkExecuteScriptFinishedEvent(fn)
+	base.SetEvent(m, 29, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnLoadFailed(fn TWkLoadFailedEvent) {
-	if m.loadFailedPtr != 0 {
-		RemoveEventElement(m.loadFailedPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.loadFailedPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(30, m.Instance(), m.loadFailedPtr)
+	cb := makeTWkLoadFailedEvent(fn)
+	base.SetEvent(m, 30, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnURISchemeRequest(fn TWkURISchemeRequestEvent) {
-	if m.uRISchemeRequestPtr != 0 {
-		RemoveEventElement(m.uRISchemeRequestPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.uRISchemeRequestPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(34, m.Instance(), m.uRISchemeRequestPtr)
+	cb := makeTWkURISchemeRequestEvent(fn)
+	base.SetEvent(m, 31, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnProcessMessage(fn TWkProcessMessageEvent) {
-	if m.processMessagePtr != 0 {
-		RemoveEventElement(m.processMessagePtr)
+	if !m.IsValid() {
+		return
 	}
-	m.processMessagePtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(33, m.Instance(), m.processMessagePtr)
+	cb := makeTWkProcessMessageEvent(fn)
+	base.SetEvent(m, 32, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnMousePress(fn TWkMousePressEvent) {
-	if m.mousePressPtr != 0 {
-		RemoveEventElement(m.mousePressPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.mousePressPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(31, m.Instance(), m.mousePressPtr)
+	cb := makeTWkMousePressEvent(fn)
+	base.SetEvent(m, 33, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnMouseRelease(fn TWkMouseReleaseEvent) {
-	if m.mouseReleasePtr != 0 {
-		RemoveEventElement(m.mouseReleasePtr)
+	if !m.IsValid() {
+		return
 	}
-	m.mouseReleasePtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(32, m.Instance(), m.mouseReleasePtr)
+	cb := makeTWkMouseReleaseEvent(fn)
+	base.SetEvent(m, 34, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnGetAcceptPolicyFinish(fn TWkGetAcceptPolicyFinishEvent) {
-	if m.getAcceptPolicyFinishPtr != 0 {
-		RemoveEventElement(m.getAcceptPolicyFinishPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.getAcceptPolicyFinishPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(27, m.Instance(), m.getAcceptPolicyFinishPtr)
+	cb := makeTWkGetAcceptPolicyFinishEvent(fn)
+	base.SetEvent(m, 35, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnAddCookieFinish(fn TWkAddCookieFinishEvent) {
-	if m.addCookieFinishPtr != 0 {
-		RemoveEventElement(m.addCookieFinishPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.addCookieFinishPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(20, m.Instance(), m.addCookieFinishPtr)
+	cb := makeTWkAddCookieFinishEvent(fn)
+	base.SetEvent(m, 36, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnGetCookiesFinish(fn TWkGetCookiesFinishEvent) {
-	if m.getCookiesFinishPtr != 0 {
-		RemoveEventElement(m.getCookiesFinishPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.getCookiesFinishPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(28, m.Instance(), m.getCookiesFinishPtr)
+	cb := makeTWkGetCookiesFinishEvent(fn)
+	base.SetEvent(m, 37, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnDeleteCookieFinish(fn TWkDeleteCookieFinishEvent) {
-	if m.deleteCookieFinishPtr != 0 {
-		RemoveEventElement(m.deleteCookieFinishPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.deleteCookieFinishPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(25, m.Instance(), m.deleteCookieFinishPtr)
+	cb := makeTWkDeleteCookieFinishEvent(fn)
+	base.SetEvent(m, 38, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnDecidePolicy(fn TWkDecidePolicyEvent) {
-	if m.decidePolicyPtr != 0 {
-		RemoveEventElement(m.decidePolicyPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.decidePolicyPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(24, m.Instance(), m.decidePolicyPtr)
+	cb := makeTWkDecidePolicyEvent(fn)
+	base.SetEvent(m, 39, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnWebProcessTerminated(fn TWkWebProcessTerminatedEvent) {
-	if m.webProcessTerminatedPtr != 0 {
-		RemoveEventElement(m.webProcessTerminatedPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.webProcessTerminatedPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(35, m.Instance(), m.webProcessTerminatedPtr)
+	cb := makeTWkWebProcessTerminatedEvent(fn)
+	base.SetEvent(m, 40, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnContextMenu(fn TWkContextMenuEvent) {
-	if m.contextMenuPtr != 0 {
-		RemoveEventElement(m.contextMenuPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.contextMenuPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(21, m.Instance(), m.contextMenuPtr)
+	cb := makeTWkContextMenuEvent(fn)
+	base.SetEvent(m, 41, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnContextMenuCommand(fn TWkContextMenuCommandEvent) {
-	if m.contextMenuCommandPtr != 0 {
-		RemoveEventElement(m.contextMenuCommandPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.contextMenuCommandPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(22, m.Instance(), m.contextMenuCommandPtr)
+	cb := makeTWkContextMenuCommandEvent(fn)
+	base.SetEvent(m, 42, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnContextMenuDismissed(fn TWkContextMenuDismissedEvent) {
-	if m.contextMenuDismissedPtr != 0 {
-		RemoveEventElement(m.contextMenuDismissedPtr)
+	if !m.IsValid() {
+		return
 	}
-	m.contextMenuDismissedPtr = MakeEventDataPtr(fn)
-	wkWebviewImportAPI().SysCallN(23, m.Instance(), m.contextMenuDismissedPtr)
+	cb := makeTWkContextMenuDismissedEvent(fn)
+	base.SetEvent(m, 43, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) AsIntfWkCookieManagerDelegateEvent() uintptr {
+	return m.GetIntfPointer(0)
+}
+func (m *TWkWebview) AsIntfWkSchemeRequestDelegateEvent() uintptr {
+	return m.GetIntfPointer(1)
+}
+
+// NewWebview class constructor
+func NewWebview(owner lcl.IComponent) IWkWebview {
+	var wkCookieManagerDelegateEventPtr uintptr // IWkCookieManagerDelegateEvent
+	var wkSchemeRequestDelegateEventPtr uintptr // IWkSchemeRequestDelegateEvent
+	r := wkWebviewAPI().SysCallN(0, base.GetObjectUintptr(owner), uintptr(base.UnsafePointer(&wkCookieManagerDelegateEventPtr)), uintptr(base.UnsafePointer(&wkSchemeRequestDelegateEventPtr)))
+	ret := AsWkWebview(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(2)
+		intf.SetIntfPointer(0, wkCookieManagerDelegateEventPtr)
+		intf.SetIntfPointer(1, wkSchemeRequestDelegateEventPtr)
+	}
+	return ret
 }
 
 var (
-	wkWebviewImport       *imports.Imports = nil
-	wkWebviewImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkWebview_AsCookieManagerDelegate", 0),
-		/*1*/ imports.NewTable("WkWebview_AsSchemeRequestDelegate", 0),
-		/*2*/ imports.NewTable("WkWebview_CanGoBack", 0),
-		/*3*/ imports.NewTable("WkWebview_CanGoForward", 0),
-		/*4*/ imports.NewTable("WkWebview_CookieManager", 0),
-		/*5*/ imports.NewTable("WkWebview_Create", 0),
-		/*6*/ imports.NewTable("WkWebview_CreateBrowser", 0),
-		/*7*/ imports.NewTable("WkWebview_EnabledDevtools", 0),
-		/*8*/ imports.NewTable("WkWebview_ExecuteScript", 0),
-		/*9*/ imports.NewTable("WkWebview_FreeWebview", 0),
-		/*10*/ imports.NewTable("WkWebview_GetSettings", 0),
-		/*11*/ imports.NewTable("WkWebview_GetTitle", 0),
-		/*12*/ imports.NewTable("WkWebview_GoBack", 0),
-		/*13*/ imports.NewTable("WkWebview_GoForward", 0),
-		/*14*/ imports.NewTable("WkWebview_IsLoading", 0),
-		/*15*/ imports.NewTable("WkWebview_LoadHTML", 0),
-		/*16*/ imports.NewTable("WkWebview_LoadURL", 0),
-		/*17*/ imports.NewTable("WkWebview_RegisterScriptCode", 0),
-		/*18*/ imports.NewTable("WkWebview_RegisterScriptMessageHandler", 0),
-		/*19*/ imports.NewTable("WkWebview_Reload", 0),
-		/*20*/ imports.NewTable("WkWebview_SetOnAddCookieFinish", 0),
-		/*21*/ imports.NewTable("WkWebview_SetOnContextMenu", 0),
-		/*22*/ imports.NewTable("WkWebview_SetOnContextMenuCommand", 0),
-		/*23*/ imports.NewTable("WkWebview_SetOnContextMenuDismissed", 0),
-		/*24*/ imports.NewTable("WkWebview_SetOnDecidePolicy", 0),
-		/*25*/ imports.NewTable("WkWebview_SetOnDeleteCookieFinish", 0),
-		/*26*/ imports.NewTable("WkWebview_SetOnExecuteScriptFinished", 0),
-		/*27*/ imports.NewTable("WkWebview_SetOnGetAcceptPolicyFinish", 0),
-		/*28*/ imports.NewTable("WkWebview_SetOnGetCookiesFinish", 0),
-		/*29*/ imports.NewTable("WkWebview_SetOnLoadChange", 0),
-		/*30*/ imports.NewTable("WkWebview_SetOnLoadFailed", 0),
-		/*31*/ imports.NewTable("WkWebview_SetOnMousePress", 0),
-		/*32*/ imports.NewTable("WkWebview_SetOnMouseRelease", 0),
-		/*33*/ imports.NewTable("WkWebview_SetOnProcessMessage", 0),
-		/*34*/ imports.NewTable("WkWebview_SetOnURISchemeRequest", 0),
-		/*35*/ imports.NewTable("WkWebview_SetOnWebProcessTerminated", 0),
-		/*36*/ imports.NewTable("WkWebview_SetSettings", 0),
-		/*37*/ imports.NewTable("WkWebview_ShowDevtools", 0),
-		/*38*/ imports.NewTable("WkWebview_StartDrag", 0),
-		/*39*/ imports.NewTable("WkWebview_Stop", 0),
-		/*40*/ imports.NewTable("WkWebview_TerminateWebProcess", 0),
-		/*41*/ imports.NewTable("WkWebview_TryClose", 0),
-		/*42*/ imports.NewTable("WkWebview_WebView", 0),
-	}
+	wkWebviewOnce   base.Once
+	wkWebviewImport *imports.Imports = nil
 )
 
-func wkWebviewImportAPI() *imports.Imports {
-	if wkWebviewImport == nil {
-		wkWebviewImport = NewDefaultImports()
-		wkWebviewImport.SetImportTable(wkWebviewImportTables)
-		wkWebviewImportTables = nil
-	}
+func wkWebviewAPI() *imports.Imports {
+	wkWebviewOnce.Do(func() {
+		wkWebviewImport = api.NewDefaultImports()
+		wkWebviewImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkWebview_Create", 0), // constructor NewWebview
+			/* 1 */ imports.NewTable("TWkWebview_CanGoBack", 0), // function CanGoBack
+			/* 2 */ imports.NewTable("TWkWebview_CanGoForward", 0), // function CanGoForward
+			/* 3 */ imports.NewTable("TWkWebview_IsLoading", 0), // function IsLoading
+			/* 4 */ imports.NewTable("TWkWebview_GetTitle", 0), // function GetTitle
+			/* 5 */ imports.NewTable("TWkWebview_GetURI", 0), // function GetURI
+			/* 6 */ imports.NewTable("TWkWebview_CookieManager", 0), // function CookieManager
+			/* 7 */ imports.NewTable("TWkWebview_GetSettings", 0), // function GetSettings
+			/* 8 */ imports.NewTable("TWkWebview_AsCookieManagerDelegate", 0), // function AsCookieManagerDelegate
+			/* 9 */ imports.NewTable("TWkWebview_AsSchemeRequestDelegate", 0), // function AsSchemeRequestDelegate
+			/* 10 */ imports.NewTable("TWkWebview_CreateBrowser", 0), // procedure CreateBrowser
+			/* 11 */ imports.NewTable("TWkWebview_GoBack", 0), // procedure GoBack
+			/* 12 */ imports.NewTable("TWkWebview_GoForward", 0), // procedure GoForward
+			/* 13 */ imports.NewTable("TWkWebview_Reload", 0), // procedure Reload
+			/* 14 */ imports.NewTable("TWkWebview_Stop", 0), // procedure Stop
+			/* 15 */ imports.NewTable("TWkWebview_StartDrag", 0), // procedure StartDrag
+			/* 16 */ imports.NewTable("TWkWebview_TerminateWebProcess", 0), // procedure TerminateWebProcess
+			/* 17 */ imports.NewTable("TWkWebview_TryClose", 0), // procedure TryClose
+			/* 18 */ imports.NewTable("TWkWebview_ExecuteScript", 0), // procedure ExecuteScript
+			/* 19 */ imports.NewTable("TWkWebview_LoadHTML", 0), // procedure LoadHTML
+			/* 20 */ imports.NewTable("TWkWebview_LoadURL", 0), // procedure LoadURL
+			/* 21 */ imports.NewTable("TWkWebview_EnabledDevtools", 0), // procedure EnabledDevtools
+			/* 22 */ imports.NewTable("TWkWebview_ShowDevtools", 0), // procedure ShowDevtools
+			/* 23 */ imports.NewTable("TWkWebview_RegisterScriptCode", 0), // procedure RegisterScriptCode
+			/* 24 */ imports.NewTable("TWkWebview_RegisterScriptMessageHandler", 0), // procedure RegisterScriptMessageHandler
+			/* 25 */ imports.NewTable("TWkWebview_SetSettings", 0), // procedure SetSettings
+			/* 26 */ imports.NewTable("TWkWebview_FreeWebview", 0), // procedure FreeWebview
+			/* 27 */ imports.NewTable("TWkWebview_WebView", 0), // property WebView
+			/* 28 */ imports.NewTable("TWkWebview_OnLoadChange", 0), // event OnLoadChange
+			/* 29 */ imports.NewTable("TWkWebview_OnExecuteScriptFinished", 0), // event OnExecuteScriptFinished
+			/* 30 */ imports.NewTable("TWkWebview_OnLoadFailed", 0), // event OnLoadFailed
+			/* 31 */ imports.NewTable("TWkWebview_OnURISchemeRequest", 0), // event OnURISchemeRequest
+			/* 32 */ imports.NewTable("TWkWebview_OnProcessMessage", 0), // event OnProcessMessage
+			/* 33 */ imports.NewTable("TWkWebview_OnMousePress", 0), // event OnMousePress
+			/* 34 */ imports.NewTable("TWkWebview_OnMouseRelease", 0), // event OnMouseRelease
+			/* 35 */ imports.NewTable("TWkWebview_OnGetAcceptPolicyFinish", 0), // event OnGetAcceptPolicyFinish
+			/* 36 */ imports.NewTable("TWkWebview_OnAddCookieFinish", 0), // event OnAddCookieFinish
+			/* 37 */ imports.NewTable("TWkWebview_OnGetCookiesFinish", 0), // event OnGetCookiesFinish
+			/* 38 */ imports.NewTable("TWkWebview_OnDeleteCookieFinish", 0), // event OnDeleteCookieFinish
+			/* 39 */ imports.NewTable("TWkWebview_OnDecidePolicy", 0), // event OnDecidePolicy
+			/* 40 */ imports.NewTable("TWkWebview_OnWebProcessTerminated", 0), // event OnWebProcessTerminated
+			/* 41 */ imports.NewTable("TWkWebview_OnContextMenu", 0), // event OnContextMenu
+			/* 42 */ imports.NewTable("TWkWebview_OnContextMenuCommand", 0), // event OnContextMenuCommand
+			/* 43 */ imports.NewTable("TWkWebview_OnContextMenuDismissed", 0), // event OnContextMenuDismissed
+		}
+	})
 	return wkWebviewImport
 }

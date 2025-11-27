@@ -6,75 +6,87 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkInputStream Root Interface
+// IWkInputStream Parent: lcl.IObject
 type IWkInputStream interface {
-	IObject
-	Data() PInputStream                                                  // function
+	lcl.IObject
+	Data() wvTypes.PInputStream                                          // function
 	Read(buf uintptr, bufSize int32, readCount *int32, errorMsg *string) // procedure
 	Close()                                                              // procedure
 }
 
-// TWkInputStream Root Object
 type TWkInputStream struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkInputStream(aInputStream PInputStream) IWkInputStream {
-	r1 := wkInputStreamImportAPI().SysCallN(1, uintptr(aInputStream))
-	return AsWkInputStream(r1)
-}
-
-// WkInputStreamRef -> IWkInputStream
-var WkInputStreamRef wkInputStream
-
-// wkInputStream TWkInputStream Ref
-type wkInputStream uintptr
-
-func (m *wkInputStream) New(aBuf uintptr, aStreamLength int64) IWkInputStream {
-	r1 := wkInputStreamImportAPI().SysCallN(3, uintptr(aBuf), uintptr(unsafePointer(&aStreamLength)))
-	return AsWkInputStream(r1)
-}
-
-func (m *TWkInputStream) Data() PInputStream {
-	r1 := wkInputStreamImportAPI().SysCallN(2, m.Instance())
-	return PInputStream(r1)
+func (m *TWkInputStream) Data() wvTypes.PInputStream {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkInputStreamAPI().SysCallN(1, m.Instance())
+	return wvTypes.PInputStream(r)
 }
 
 func (m *TWkInputStream) Read(buf uintptr, bufSize int32, readCount *int32, errorMsg *string) {
-	var result2 uintptr
-	var result3 uintptr
-	wkInputStreamImportAPI().SysCallN(4, m.Instance(), uintptr(buf), uintptr(bufSize), uintptr(unsafePointer(&result2)), uintptr(unsafePointer(&result3)))
-	*readCount = int32(result2)
-	*errorMsg = GoStr(result3)
+	if !m.IsValid() {
+		return
+	}
+	readCountPtr := uintptr(*readCount)
+	errorMsgPtr := api.PasStr(*errorMsg)
+	wkInputStreamAPI().SysCallN(3, m.Instance(), uintptr(buf), uintptr(bufSize), uintptr(base.UnsafePointer(&readCountPtr)), uintptr(base.UnsafePointer(&errorMsgPtr)))
+	*readCount = int32(readCountPtr)
+	*errorMsg = api.GoStr(errorMsgPtr)
 }
 
 func (m *TWkInputStream) Close() {
-	wkInputStreamImportAPI().SysCallN(0, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkInputStreamAPI().SysCallN(4, m.Instance())
+}
+
+// InputStream  is static instance
+var InputStream _InputStreamClass
+
+// _InputStreamClass is class type defined by TWkInputStream
+type _InputStreamClass uintptr
+
+func (_InputStreamClass) New(buf uintptr, streamLength int64) IWkInputStream {
+	r := wkInputStreamAPI().SysCallN(2, uintptr(buf), uintptr(base.UnsafePointer(&streamLength)))
+	return AsWkInputStream(r)
+}
+
+// NewInputStream class constructor
+func NewInputStream(inputStream wvTypes.PInputStream) IWkInputStream {
+	r := wkInputStreamAPI().SysCallN(0, uintptr(inputStream))
+	return AsWkInputStream(r)
 }
 
 var (
-	wkInputStreamImport       *imports.Imports = nil
-	wkInputStreamImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkInputStream_Close", 0),
-		/*1*/ imports.NewTable("WkInputStream_Create", 0),
-		/*2*/ imports.NewTable("WkInputStream_Data", 0),
-		/*3*/ imports.NewTable("WkInputStream_New", 0),
-		/*4*/ imports.NewTable("WkInputStream_Read", 0),
-	}
+	wkInputStreamOnce   base.Once
+	wkInputStreamImport *imports.Imports = nil
 )
 
-func wkInputStreamImportAPI() *imports.Imports {
-	if wkInputStreamImport == nil {
-		wkInputStreamImport = NewDefaultImports()
-		wkInputStreamImport.SetImportTable(wkInputStreamImportTables)
-		wkInputStreamImportTables = nil
-	}
+func wkInputStreamAPI() *imports.Imports {
+	wkInputStreamOnce.Do(func() {
+		wkInputStreamImport = api.NewDefaultImports()
+		wkInputStreamImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkInputStream_Create", 0), // constructor NewInputStream
+			/* 1 */ imports.NewTable("TWkInputStream_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkInputStream_New", 0), // static function New
+			/* 3 */ imports.NewTable("TWkInputStream_Read", 0), // procedure Read
+			/* 4 */ imports.NewTable("TWkInputStream_Close", 0), // procedure Close
+		}
+	})
 	return wkInputStreamImport
 }

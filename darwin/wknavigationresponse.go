@@ -6,22 +6,23 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKNavigationResponse Root Interface
-//
-//	An object that contains the response to a navigation request, and which you use to make navigation-related policy decisions.
-//	https://developer.apple.com/documentation/webkit/wknavigationresponse?language=objc
-type IWKNavigationResponse interface {
-	IObject
+// IWkNavigationResponse Parent: lcl.IObject
+type IWkNavigationResponse interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKNavigationResponse // function
+	Data() wvTypes.WKNavigationResponse // function
 	// IsForMainFrame
 	//  A Boolean value that indicates whether the response targets the web view’s main frame.
 	IsForMainFrame() bool // function
@@ -36,75 +37,86 @@ type IWKNavigationResponse interface {
 	Release() // procedure
 }
 
-// TWKNavigationResponse Root Object
-//
-//	An object that contains the response to a navigation request, and which you use to make navigation-related policy decisions.
-//	https://developer.apple.com/documentation/webkit/wknavigationresponse?language=objc
-type TWKNavigationResponse struct {
-	TObject
+type TWkNavigationResponse struct {
+	lcl.TObject
 }
 
-func NewWKNavigationResponse(aData WKNavigationResponse) IWKNavigationResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(1, uintptr(aData))
-	return AsWKNavigationResponse(r1)
+func (m *TWkNavigationResponse) Data() wvTypes.WKNavigationResponse {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationResponseAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKNavigationResponse(r)
 }
 
-// WKNavigationResponseRef -> IWKNavigationResponse
-var WKNavigationResponseRef wKNavigationResponse
+func (m *TWkNavigationResponse) IsForMainFrame() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkNavigationResponseAPI().SysCallN(3, m.Instance())
+	return api.GoBool(r)
+}
 
-// wKNavigationResponse TWKNavigationResponse Ref
-type wKNavigationResponse uintptr
+func (m *TWkNavigationResponse) Response() NSURLResponse {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationResponseAPI().SysCallN(4, m.Instance())
+	return NSURLResponse(r)
+}
+
+func (m *TWkNavigationResponse) CanShowMIMEType() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkNavigationResponseAPI().SysCallN(5, m.Instance())
+	return api.GoBool(r)
+}
+
+func (m *TWkNavigationResponse) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkNavigationResponseAPI().SysCallN(6, m.Instance())
+}
+
+// NavigationResponse  is static instance
+var NavigationResponse _NavigationResponseClass
+
+// _NavigationResponseClass is class type defined by TWkNavigationResponse
+type _NavigationResponseClass uintptr
 
 // New
 //
 //	Creates and returns an WKNavigationResponse object.
-func (m *wKNavigationResponse) New() IWKNavigationResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(4)
-	return AsWKNavigationResponse(r1)
+func (_NavigationResponseClass) New() IWkNavigationResponse {
+	r := wkNavigationResponseAPI().SysCallN(2)
+	return AsWkNavigationResponse(r)
 }
 
-func (m *TWKNavigationResponse) Data() WKNavigationResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(2, m.Instance())
-	return WKNavigationResponse(r1)
-}
-
-func (m *TWKNavigationResponse) IsForMainFrame() bool {
-	r1 := wKNavigationResponseImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKNavigationResponse) Response() NSURLResponse {
-	r1 := wKNavigationResponseImportAPI().SysCallN(6, m.Instance())
-	return NSURLResponse(r1)
-}
-
-func (m *TWKNavigationResponse) CanShowMIMEType() bool {
-	r1 := wKNavigationResponseImportAPI().SysCallN(0, m.Instance())
-	return GoBool(r1)
-}
-
-func (m *TWKNavigationResponse) Release() {
-	wKNavigationResponseImportAPI().SysCallN(5, m.Instance())
+// NewNavigationResponse class constructor
+func NewNavigationResponse(data wvTypes.WKNavigationResponse) IWkNavigationResponse {
+	r := wkNavigationResponseAPI().SysCallN(0, uintptr(data))
+	return AsWkNavigationResponse(r)
 }
 
 var (
-	wKNavigationResponseImport       *imports.Imports = nil
-	wKNavigationResponseImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKNavigationResponse_CanShowMIMEType", 0),
-		/*1*/ imports.NewTable("WKNavigationResponse_Create", 0),
-		/*2*/ imports.NewTable("WKNavigationResponse_Data", 0),
-		/*3*/ imports.NewTable("WKNavigationResponse_IsForMainFrame", 0),
-		/*4*/ imports.NewTable("WKNavigationResponse_New", 0),
-		/*5*/ imports.NewTable("WKNavigationResponse_Release", 0),
-		/*6*/ imports.NewTable("WKNavigationResponse_Response", 0),
-	}
+	wkNavigationResponseOnce   base.Once
+	wkNavigationResponseImport *imports.Imports = nil
 )
 
-func wKNavigationResponseImportAPI() *imports.Imports {
-	if wKNavigationResponseImport == nil {
-		wKNavigationResponseImport = NewDefaultImports()
-		wKNavigationResponseImport.SetImportTable(wKNavigationResponseImportTables)
-		wKNavigationResponseImportTables = nil
-	}
-	return wKNavigationResponseImport
+func wkNavigationResponseAPI() *imports.Imports {
+	wkNavigationResponseOnce.Do(func() {
+		wkNavigationResponseImport = api.NewDefaultImports()
+		wkNavigationResponseImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkNavigationResponse_Create", 0), // constructor NewNavigationResponse
+			/* 1 */ imports.NewTable("TWkNavigationResponse_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkNavigationResponse_New", 0), // static function New
+			/* 3 */ imports.NewTable("TWkNavigationResponse_IsForMainFrame", 0), // function IsForMainFrame
+			/* 4 */ imports.NewTable("TWkNavigationResponse_Response", 0), // function Response
+			/* 5 */ imports.NewTable("TWkNavigationResponse_CanShowMIMEType", 0), // function CanShowMIMEType
+			/* 6 */ imports.NewTable("TWkNavigationResponse_Release", 0), // procedure Release
+		}
+	})
+	return wkNavigationResponseImport
 }

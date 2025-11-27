@@ -6,63 +6,66 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKDownloadDelegate Root Interface
-//
-//	A protocol you implement to track download progress and handle redirects, authentication challenges, and failures.
-//	https://developer.apple.com/documentation/webkit/wkdownloaddelegate?language=objc
-type IWKDownloadDelegate interface {
-	IObject
+// IWkDownloadDelegate Parent: lcl.IObject
+type IWkDownloadDelegate interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKDownloadDelegateProtocol // function
+	Data() wvTypes.WKDownloadDelegateProtocol // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
-// TWKDownloadDelegate Root Object
-//
-//	A protocol you implement to track download progress and handle redirects, authentication challenges, and failures.
-//	https://developer.apple.com/documentation/webkit/wkdownloaddelegate?language=objc
-type TWKDownloadDelegate struct {
-	TObject
+type TWkDownloadDelegate struct {
+	lcl.TObject
 }
 
-func NewWKDownloadDelegate(event IWKDownloadDelegateEvent) IWKDownloadDelegate {
-	r1 := wKDownloadDelegateImportAPI().SysCallN(0, GetObjectUintptr(event))
-	return AsWKDownloadDelegate(r1)
+func (m *TWkDownloadDelegate) Data() wvTypes.WKDownloadDelegateProtocol {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkDownloadDelegateAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKDownloadDelegateProtocol(r)
 }
 
-func (m *TWKDownloadDelegate) Data() WKDownloadDelegateProtocol {
-	r1 := wKDownloadDelegateImportAPI().SysCallN(1, m.Instance())
-	return WKDownloadDelegateProtocol(r1)
+func (m *TWkDownloadDelegate) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkDownloadDelegateAPI().SysCallN(2, m.Instance())
 }
 
-func (m *TWKDownloadDelegate) Release() {
-	wKDownloadDelegateImportAPI().SysCallN(2, m.Instance())
+// NewDownloadDelegate class constructor
+func NewDownloadDelegate(event IWkWebview) IWkDownloadDelegate {
+	r := wkDownloadDelegateAPI().SysCallN(0, base.GetObjectUintptr(event))
+	return AsWkDownloadDelegate(r)
 }
 
 var (
-	wKDownloadDelegateImport       *imports.Imports = nil
-	wKDownloadDelegateImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKDownloadDelegate_Create", 0),
-		/*1*/ imports.NewTable("WKDownloadDelegate_Data", 0),
-		/*2*/ imports.NewTable("WKDownloadDelegate_Release", 0),
-	}
+	wkDownloadDelegateOnce   base.Once
+	wkDownloadDelegateImport *imports.Imports = nil
 )
 
-func wKDownloadDelegateImportAPI() *imports.Imports {
-	if wKDownloadDelegateImport == nil {
-		wKDownloadDelegateImport = NewDefaultImports()
-		wKDownloadDelegateImport.SetImportTable(wKDownloadDelegateImportTables)
-		wKDownloadDelegateImportTables = nil
-	}
-	return wKDownloadDelegateImport
+func wkDownloadDelegateAPI() *imports.Imports {
+	wkDownloadDelegateOnce.Do(func() {
+		wkDownloadDelegateImport = api.NewDefaultImports()
+		wkDownloadDelegateImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkDownloadDelegate_Create", 0), // constructor NewDownloadDelegate
+			/* 1 */ imports.NewTable("TWkDownloadDelegate_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkDownloadDelegate_Release", 0), // procedure Release
+		}
+	})
+	return wkDownloadDelegateImport
 }

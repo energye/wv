@@ -6,235 +6,248 @@
 //
 //----------------------------------------
 
-package wv
+package linux
+
+import "github.com/energye/lcl/base"
 
 // AsWkContextMenu Convert a pointer object to an existing class object
-func AsWkContextMenu(obj interface{}) IWkContextMenu {
-	instance := GetInstance(obj)
+func AsWkContextMenu(obj any) IWkContextMenu {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkContextMenu := new(TWkContextMenu)
-	SetObjectInstance(wkContextMenu, instance)
-	return wkContextMenu
+	result := new(TWkContextMenu)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkContextMenuItem Convert a pointer object to an existing class object
-func AsWkContextMenuItem(obj interface{}) IWkContextMenuItem {
-	instance := GetInstance(obj)
+func AsWkContextMenuItem(obj any) IWkContextMenuItem {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkContextMenuItem := new(TWkContextMenuItem)
-	SetObjectInstance(wkContextMenuItem, instance)
-	return wkContextMenuItem
-}
-
-// AsWkCookie Convert a pointer object to an existing class object
-func AsWkCookie(obj interface{}) IWkCookie {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wkCookie := new(TWkCookie)
-	SetObjectInstance(wkCookie, instance)
-	return wkCookie
+	result := new(TWkContextMenuItem)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkCookieDate Convert a pointer object to an existing class object
-func AsWkCookieDate(obj interface{}) IWkCookieDate {
-	instance := GetInstance(obj)
+func AsWkCookieDate(obj any) IWkCookieDate {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkCookieDate := new(TWkCookieDate)
-	SetObjectInstance(wkCookieDate, instance)
-	return wkCookieDate
-}
-
-// AsWkCookieList Convert a pointer object to an existing class object
-func AsWkCookieList(obj interface{}) IWkCookieList {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wkCookieList := new(TWkCookieList)
-	SetObjectInstance(wkCookieList, instance)
-	return wkCookieList
-}
-
-// AsWkCookieManager Convert a pointer object to an existing class object
-func AsWkCookieManager(obj interface{}) IWkCookieManager {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wkCookieManager := new(TWkCookieManager)
-	SetObjectInstance(wkCookieManager, instance)
-	return wkCookieManager
+	result := new(TWkCookieDate)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkHeaders Convert a pointer object to an existing class object
-func AsWkHeaders(obj interface{}) IWkHeaders {
-	instance := GetInstance(obj)
+func AsWkHeaders(obj any) IWkHeaders {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkHeaders := new(TWkHeaders)
-	SetObjectInstance(wkHeaders, instance)
-	return wkHeaders
+	result := new(TWkHeaders)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkInputStream Convert a pointer object to an existing class object
-func AsWkInputStream(obj interface{}) IWkInputStream {
-	instance := GetInstance(obj)
+func AsWkInputStream(obj any) IWkInputStream {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkInputStream := new(TWkInputStream)
-	SetObjectInstance(wkInputStream, instance)
-	return wkInputStream
+	result := new(TWkInputStream)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkJSValue Convert a pointer object to an existing class object
-func AsWkJSValue(obj interface{}) IWkJSValue {
-	instance := GetInstance(obj)
+func AsWkJSValue(obj any) IWkJSValue {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkJSValue := new(TWkJSValue)
-	SetObjectInstance(wkJSValue, instance)
-	return wkJSValue
+	result := new(TWkJSValue)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkNavigationAction Convert a pointer object to an existing class object
-func AsWkNavigationAction(obj interface{}) IWkNavigationAction {
-	instance := GetInstance(obj)
+func AsWkNavigationAction(obj any) IWkNavigationAction {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkNavigationAction := new(TWkNavigationAction)
-	SetObjectInstance(wkNavigationAction, instance)
-	return wkNavigationAction
-}
-
-// AsWkNavigationPolicyDecision Convert a pointer object to an existing class object
-func AsWkNavigationPolicyDecision(obj interface{}) IWkNavigationPolicyDecision {
-	instance := GetInstance(obj)
-	if instance == nil {
-		return nil
-	}
-	wkNavigationPolicyDecision := new(TWkNavigationPolicyDecision)
-	SetObjectInstance(wkNavigationPolicyDecision, instance)
-	return wkNavigationPolicyDecision
+	result := new(TWkNavigationAction)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkPolicyDecision Convert a pointer object to an existing class object
-func AsWkPolicyDecision(obj interface{}) IWkPolicyDecision {
-	instance := GetInstance(obj)
+func AsWkPolicyDecision(obj any) IWkPolicyDecision {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkPolicyDecision := new(TWkPolicyDecision)
-	SetObjectInstance(wkPolicyDecision, instance)
-	return wkPolicyDecision
+	result := new(TWkPolicyDecision)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkNavigationPolicyDecision Convert a pointer object to an existing class object
+func AsWkNavigationPolicyDecision(obj any) IWkNavigationPolicyDecision {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkNavigationPolicyDecision)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkResponsePolicyDecision Convert a pointer object to an existing class object
-func AsWkResponsePolicyDecision(obj interface{}) IWkResponsePolicyDecision {
-	instance := GetInstance(obj)
+func AsWkResponsePolicyDecision(obj any) IWkResponsePolicyDecision {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkResponsePolicyDecision := new(TWkResponsePolicyDecision)
-	SetObjectInstance(wkResponsePolicyDecision, instance)
-	return wkResponsePolicyDecision
+	result := new(TWkResponsePolicyDecision)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkSettings Convert a pointer object to an existing class object
-func AsWkSettings(obj interface{}) IWkSettings {
-	instance := GetInstance(obj)
+func AsWkSettings(obj any) IWkSettings {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkSettings := new(TWkSettings)
-	SetObjectInstance(wkSettings, instance)
-	return wkSettings
+	result := new(TWkSettings)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkURIRequest Convert a pointer object to an existing class object
-func AsWkURIRequest(obj interface{}) IWkURIRequest {
-	instance := GetInstance(obj)
+func AsWkURIRequest(obj any) IWkURIRequest {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkURIRequest := new(TWkURIRequest)
-	SetObjectInstance(wkURIRequest, instance)
-	return wkURIRequest
+	result := new(TWkURIRequest)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkURIResponse Convert a pointer object to an existing class object
-func AsWkURIResponse(obj interface{}) IWkURIResponse {
-	instance := GetInstance(obj)
+func AsWkURIResponse(obj any) IWkURIResponse {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkURIResponse := new(TWkURIResponse)
-	SetObjectInstance(wkURIResponse, instance)
-	return wkURIResponse
+	result := new(TWkURIResponse)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkURISchemeRequest Convert a pointer object to an existing class object
-func AsWkURISchemeRequest(obj interface{}) IWkURISchemeRequest {
-	instance := GetInstance(obj)
+func AsWkURISchemeRequest(obj any) IWkURISchemeRequest {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkURISchemeRequest := new(TWkURISchemeRequest)
-	SetObjectInstance(wkURISchemeRequest, instance)
-	return wkURISchemeRequest
+	result := new(TWkURISchemeRequest)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkWebContext Convert a pointer object to an existing class object
-func AsWkWebContext(obj interface{}) IWkWebContext {
-	instance := GetInstance(obj)
+func AsWkWebContext(obj any) IWkWebContext {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkWebContext := new(TWkWebContext)
-	SetObjectInstance(wkWebContext, instance)
-	return wkWebContext
+	result := new(TWkWebContext)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkWebsitePolicies Convert a pointer object to an existing class object
-func AsWkWebsitePolicies(obj interface{}) IWkWebsitePolicies {
-	instance := GetInstance(obj)
+func AsWkWebsitePolicies(obj any) IWkWebsitePolicies {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkWebsitePolicies := new(TWkWebsitePolicies)
-	SetObjectInstance(wkWebsitePolicies, instance)
-	return wkWebsitePolicies
+	result := new(TWkWebsitePolicies)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkWebview Convert a pointer object to an existing class object
-func AsWkWebview(obj interface{}) IWkWebview {
-	instance := GetInstance(obj)
+func AsWkWebview(obj any) IWkWebview {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkWebview := new(TWkWebview)
-	SetObjectInstance(wkWebview, instance)
-	return wkWebview
+	result := new(TWkWebview)
+	base.SetObjectInstance(result, instance)
+	return result
 }
 
 // AsWkWebviewParent Convert a pointer object to an existing class object
-func AsWkWebviewParent(obj interface{}) IWkWebviewParent {
-	instance := GetInstance(obj)
+func AsWkWebviewParent(obj any) IWkWebviewParent {
+	instance := base.GetInstance(obj)
 	if instance == nil {
 		return nil
 	}
-	wkWebviewParent := new(TWkWebviewParent)
-	SetObjectInstance(wkWebviewParent, instance)
-	return wkWebviewParent
+	result := new(TWkWebviewParent)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkCookieManager Convert a pointer object to an existing class object
+func AsWkCookieManager(obj any) IWkCookieManager {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkCookieManager)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkCookie Convert a pointer object to an existing class object
+func AsWkCookie(obj any) IWkCookie {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkCookie)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkCookieList Convert a pointer object to an existing class object
+func AsWkCookieList(obj any) IWkCookieList {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkCookieList)
+	base.SetObjectInstance(result, instance)
+	return result
+}
+
+// AsWkLoader Convert a pointer object to an existing class object
+func AsWkLoader(obj any) IWkLoader {
+	instance := base.GetInstance(obj)
+	if instance == nil {
+		return nil
+	}
+	result := new(TWkLoader)
+	base.SetObjectInstance(result, instance)
+	return result
 }

@@ -6,52 +6,61 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkWebviewParent Parent: ICustomControl
+// IWkWebviewParent Parent: lcl.ICustomControl
 type IWkWebviewParent interface {
-	ICustomControl
-	Resize()                       // procedure
-	SetWebview(aWebview WkWebview) // procedure
+	lcl.ICustomControl
+	Resize()                              // procedure
+	SetWebview(webview wvTypes.WKWebView) // procedure
 }
 
-// TWkWebviewParent Parent: TCustomControl
 type TWkWebviewParent struct {
-	TCustomControl
-}
-
-func NewWkWebviewParent(aOwner IComponent) IWkWebviewParent {
-	r1 := wkWebviewParentImportAPI().SysCallN(0, GetObjectUintptr(aOwner))
-	return AsWkWebviewParent(r1)
+	lcl.TCustomControl
 }
 
 func (m *TWkWebviewParent) Resize() {
-	wkWebviewParentImportAPI().SysCallN(1, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewParentAPI().SysCallN(1, m.Instance())
 }
 
-func (m *TWkWebviewParent) SetWebview(aWebview WkWebview) {
-	wkWebviewParentImportAPI().SysCallN(2, m.Instance(), uintptr(aWebview))
+func (m *TWkWebviewParent) SetWebview(webview wvTypes.WKWebView) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewParentAPI().SysCallN(2, m.Instance(), uintptr(webview))
+}
+
+// NewWebviewParent class constructor
+func NewWebviewParent(owner lcl.IComponent) IWkWebviewParent {
+	r := wkWebviewParentAPI().SysCallN(0, base.GetObjectUintptr(owner))
+	return AsWkWebviewParent(r)
 }
 
 var (
-	wkWebviewParentImport       *imports.Imports = nil
-	wkWebviewParentImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkWebviewParent_Create", 0),
-		/*1*/ imports.NewTable("WkWebviewParent_Resize", 0),
-		/*2*/ imports.NewTable("WkWebviewParent_SetWebview", 0),
-	}
+	wkWebviewParentOnce   base.Once
+	wkWebviewParentImport *imports.Imports = nil
 )
 
-func wkWebviewParentImportAPI() *imports.Imports {
-	if wkWebviewParentImport == nil {
-		wkWebviewParentImport = NewDefaultImports()
-		wkWebviewParentImport.SetImportTable(wkWebviewParentImportTables)
-		wkWebviewParentImportTables = nil
-	}
+func wkWebviewParentAPI() *imports.Imports {
+	wkWebviewParentOnce.Do(func() {
+		wkWebviewParentImport = api.NewDefaultImports()
+		wkWebviewParentImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkWebviewParent_Create", 0), // constructor NewWebviewParent
+			/* 1 */ imports.NewTable("TWkWebviewParent_Resize", 0), // procedure Resize
+			/* 2 */ imports.NewTable("TWkWebviewParent_SetWebview", 0), // procedure SetWebview
+		}
+	})
 	return wkWebviewParentImport
 }

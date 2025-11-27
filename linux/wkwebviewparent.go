@@ -6,70 +6,88 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkWebviewParent Parent: ICustomPanel
+// IWkWebviewParent Parent: lcl.ICustomPanel
 type IWkWebviewParent interface {
-	ICustomPanel
-	ScrolledWindow() TScrolledWindow          // property
-	SetScrolledWindow(AValue TScrolledWindow) // property
-	Resize()                                  // procedure
-	SetWebview(aValue IWkWebview)             // procedure
-	FreeChild()                               // procedure
+	lcl.ICustomPanel
+	UpdateSize(width int32, height int32)            // procedure
+	SetWebview(value IWkWebview)                     // procedure
+	FreeChild()                                      // procedure
+	ScrolledWindow() wvTypes.TScrolledWindow         // property ScrolledWindow Getter
+	SetScrolledWindow(value wvTypes.TScrolledWindow) // property ScrolledWindow Setter
 }
 
-// TWkWebviewParent Parent: TCustomPanel
 type TWkWebviewParent struct {
-	TCustomPanel
+	lcl.TCustomPanel
 }
 
-func NewWkWebviewParent(aOwner IComponent) IWkWebviewParent {
-	r1 := wkWebviewParentImportAPI().SysCallN(0, GetObjectUintptr(aOwner))
-	return AsWkWebviewParent(r1)
+func (m *TWkWebviewParent) UpdateSize(width int32, height int32) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewParentAPI().SysCallN(1, m.Instance(), uintptr(width), uintptr(height))
 }
 
-func (m *TWkWebviewParent) ScrolledWindow() TScrolledWindow {
-	r1 := wkWebviewParentImportAPI().SysCallN(3, 0, m.Instance(), 0)
-	return TScrolledWindow(r1)
-}
-
-func (m *TWkWebviewParent) SetScrolledWindow(AValue TScrolledWindow) {
-	wkWebviewParentImportAPI().SysCallN(3, 1, m.Instance(), uintptr(AValue))
-}
-
-func (m *TWkWebviewParent) Resize() {
-	wkWebviewParentImportAPI().SysCallN(2, m.Instance())
-}
-
-func (m *TWkWebviewParent) SetWebview(aValue IWkWebview) {
-	wkWebviewParentImportAPI().SysCallN(4, m.Instance(), GetObjectUintptr(aValue))
+func (m *TWkWebviewParent) SetWebview(value IWkWebview) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewParentAPI().SysCallN(2, m.Instance(), base.GetObjectUintptr(value))
 }
 
 func (m *TWkWebviewParent) FreeChild() {
-	wkWebviewParentImportAPI().SysCallN(1, m.Instance())
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewParentAPI().SysCallN(3, m.Instance())
+}
+
+func (m *TWkWebviewParent) ScrolledWindow() wvTypes.TScrolledWindow {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkWebviewParentAPI().SysCallN(4, 0, m.Instance())
+	return wvTypes.TScrolledWindow(r)
+}
+
+func (m *TWkWebviewParent) SetScrolledWindow(value wvTypes.TScrolledWindow) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewParentAPI().SysCallN(4, 1, m.Instance(), uintptr(value))
+}
+
+// NewWebviewParent class constructor
+func NewWebviewParent(owner lcl.IComponent) IWkWebviewParent {
+	r := wkWebviewParentAPI().SysCallN(0, base.GetObjectUintptr(owner))
+	return AsWkWebviewParent(r)
 }
 
 var (
-	wkWebviewParentImport       *imports.Imports = nil
-	wkWebviewParentImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkWebviewParent_Create", 0),
-		/*1*/ imports.NewTable("WkWebviewParent_FreeChild", 0),
-		/*2*/ imports.NewTable("WkWebviewParent_Resize", 0),
-		/*3*/ imports.NewTable("WkWebviewParent_ScrolledWindow", 0),
-		/*4*/ imports.NewTable("WkWebviewParent_SetWebview", 0),
-	}
+	wkWebviewParentOnce   base.Once
+	wkWebviewParentImport *imports.Imports = nil
 )
 
-func wkWebviewParentImportAPI() *imports.Imports {
-	if wkWebviewParentImport == nil {
-		wkWebviewParentImport = NewDefaultImports()
-		wkWebviewParentImport.SetImportTable(wkWebviewParentImportTables)
-		wkWebviewParentImportTables = nil
-	}
+func wkWebviewParentAPI() *imports.Imports {
+	wkWebviewParentOnce.Do(func() {
+		wkWebviewParentImport = api.NewDefaultImports()
+		wkWebviewParentImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkWebviewParent_Create", 0), // constructor NewWebviewParent
+			/* 1 */ imports.NewTable("TWkWebviewParent_UpdateSize", 0), // procedure UpdateSize
+			/* 2 */ imports.NewTable("TWkWebviewParent_SetWebview", 0), // procedure SetWebview
+			/* 3 */ imports.NewTable("TWkWebviewParent_FreeChild", 0), // procedure FreeChild
+			/* 4 */ imports.NewTable("TWkWebviewParent_ScrolledWindow", 0), // property ScrolledWindow
+		}
+	})
 	return wkWebviewParentImport
 }

@@ -6,50 +6,70 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2BrowserExtensionEnableCompletedHandler Parent: IObject
-//
-//	The caller implements this interface to receive the result of setting the
-//	browser Extension as enabled or disabled. If enabled, the browser Extension is
-//	running in WebView instances. If disabled, the browser Extension is not running in WebView instances.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2browserextensionenablecompletedhandler">See the ICoreWebView2BrowserExtensionEnableCompletedHandler article.</a>
+// ICoreWebView2BrowserExtensionEnableCompletedHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2BrowserExtensionEnableCompletedHandler0 interface {
+	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the result of the corresponding asynchronous method.
+	Invoke(errorCode types.HRESULT) types.HRESULT // function
+}
+
+// ICoreWebView2BrowserExtensionEnableCompletedHandler Parent: ICoreWebView2BrowserExtensionEnableCompletedHandler0
 type ICoreWebView2BrowserExtensionEnableCompletedHandler interface {
-	IObject
+	ICoreWebView2BrowserExtensionEnableCompletedHandler0
+	AsIntfBrowserExtensionEnableCompletedHandler() uintptr
 }
 
-// TCoreWebView2BrowserExtensionEnableCompletedHandler Parent: TObject
-//
-//	The caller implements this interface to receive the result of setting the
-//	browser Extension as enabled or disabled. If enabled, the browser Extension is
-//	running in WebView instances. If disabled, the browser Extension is not running in WebView instances.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2browserextensionenablecompletedhandler">See the ICoreWebView2BrowserExtensionEnableCompletedHandler article.</a>
 type TCoreWebView2BrowserExtensionEnableCompletedHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2BrowserExtensionEnableCompletedHandler(aEvents IWVBrowserEvents, aExtensionID string) ICoreWebView2BrowserExtensionEnableCompletedHandler {
-	r1 := coreWebView2BrowserExtensionEnableCompletedHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents), PascalStr(aExtensionID))
-	return AsCoreWebView2BrowserExtensionEnableCompletedHandler(r1)
+func (m *TCoreWebView2BrowserExtensionEnableCompletedHandler) Invoke(errorCode types.HRESULT) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2BrowserExtensionEnableCompletedHandlerAPI().SysCallN(1, m.Instance(), uintptr(errorCode))
+	return types.HRESULT(r)
+}
+
+func (m *TCoreWebView2BrowserExtensionEnableCompletedHandler) AsIntfBrowserExtensionEnableCompletedHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2BrowserExtensionEnableCompletedHandler class constructor
+func NewCoreWebView2BrowserExtensionEnableCompletedHandler(events IWVBrowserBase, extensionID string) ICoreWebView2BrowserExtensionEnableCompletedHandler {
+	var browserExtensionEnableCompletedHandlerPtr uintptr // ICoreWebView2BrowserExtensionEnableCompletedHandler
+	r := coreWebView2BrowserExtensionEnableCompletedHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), api.PasStr(extensionID), uintptr(base.UnsafePointer(&browserExtensionEnableCompletedHandlerPtr)))
+	ret := AsCoreWebView2BrowserExtensionEnableCompletedHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, browserExtensionEnableCompletedHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2BrowserExtensionEnableCompletedHandlerImport       *imports.Imports = nil
-	coreWebView2BrowserExtensionEnableCompletedHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2BrowserExtensionEnableCompletedHandler_Create", 0),
-	}
+	coreWebView2BrowserExtensionEnableCompletedHandlerOnce   base.Once
+	coreWebView2BrowserExtensionEnableCompletedHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2BrowserExtensionEnableCompletedHandlerImportAPI() *imports.Imports {
-	if coreWebView2BrowserExtensionEnableCompletedHandlerImport == nil {
-		coreWebView2BrowserExtensionEnableCompletedHandlerImport = NewDefaultImports()
-		coreWebView2BrowserExtensionEnableCompletedHandlerImport.SetImportTable(coreWebView2BrowserExtensionEnableCompletedHandlerImportTables)
-		coreWebView2BrowserExtensionEnableCompletedHandlerImportTables = nil
-	}
+func coreWebView2BrowserExtensionEnableCompletedHandlerAPI() *imports.Imports {
+	coreWebView2BrowserExtensionEnableCompletedHandlerOnce.Do(func() {
+		coreWebView2BrowserExtensionEnableCompletedHandlerImport = api.NewDefaultImports()
+		coreWebView2BrowserExtensionEnableCompletedHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2BrowserExtensionEnableCompletedHandler_Create", 0), // constructor NewCoreWebView2BrowserExtensionEnableCompletedHandler
+			/* 1 */ imports.NewTable("TCoreWebView2BrowserExtensionEnableCompletedHandler_Invoke", 0), // function Invoke
+		}
+	})
 	return coreWebView2BrowserExtensionEnableCompletedHandlerImport
 }

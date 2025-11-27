@@ -6,91 +6,101 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2WebResourceResponseReceivedEventArgs Parent: IObject
-//
-//	Event args for the WebResourceResponseReceived event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponsereceivedeventargs">See the ICoreWebView2WebResourceResponseReceivedEventArgs article.</a>
+// ICoreWebView2WebResourceResponseReceivedEventArgs Parent: lcl.IObject
 type ICoreWebView2WebResourceResponseReceivedEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2WebResourceResponseReceivedEventArgs // property
+	BaseIntf() ICoreWebView2WebResourceResponseReceivedEventArgs // property BaseIntf Getter
 	// Request
 	//  The request object for the web resource, as committed. This includes
 	//  headers added by the network stack that were not be included during the
 	//  associated WebResourceRequested event, such as Authentication headers.
 	//  Modifications to this object have no effect on how the request is
 	//  processed as it has already been sent.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponsereceivedeventargs#get_request">See the ICoreWebView2WebResourceResponseReceivedEventArgs article.</a>
-	Request() ICoreWebView2WebResourceRequestRef // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponsereceivedeventargs#get_request">See the ICoreWebView2WebResourceResponseReceivedEventArgs article.</see>
+	Request() ICoreWebView2WebResourceRequest // property Request Getter
 	// Response
 	//  View of the response object received for the web resource.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponsereceivedeventargs#get_response">See the ICoreWebView2WebResourceResponseReceivedEventArgs article.</a>
-	Response() ICoreWebView2WebResourceResponseView // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponsereceivedeventargs#get_response">See the ICoreWebView2WebResourceResponseReceivedEventArgs article.</see>
+	Response() ICoreWebView2WebResourceResponseView // property Response Getter
 }
 
-// TCoreWebView2WebResourceResponseReceivedEventArgs Parent: TObject
-//
-//	Event args for the WebResourceResponseReceived event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponsereceivedeventargs">See the ICoreWebView2WebResourceResponseReceivedEventArgs article.</a>
 type TCoreWebView2WebResourceResponseReceivedEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2WebResourceResponseReceivedEventArgs(aArgs ICoreWebView2WebResourceResponseReceivedEventArgs) ICoreWebView2WebResourceResponseReceivedEventArgs {
-	r1 := coreWebView2WebResourceResponseReceivedEventArgsImportAPI().SysCallN(1, GetObjectUintptr(aArgs))
-	return AsCoreWebView2WebResourceResponseReceivedEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2WebResourceResponseReceivedEventArgs) Initialized() bool {
-	r1 := coreWebView2WebResourceResponseReceivedEventArgsImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2WebResourceResponseReceivedEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2WebResourceResponseReceivedEventArgs) BaseIntf() ICoreWebView2WebResourceResponseReceivedEventArgs {
-	var resultCoreWebView2WebResourceResponseReceivedEventArgs uintptr
-	coreWebView2WebResourceResponseReceivedEventArgsImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2WebResourceResponseReceivedEventArgs)))
-	return AsCoreWebView2WebResourceResponseReceivedEventArgs(resultCoreWebView2WebResourceResponseReceivedEventArgs)
+func (m *TCoreWebView2WebResourceResponseReceivedEventArgs) BaseIntf() (result ICoreWebView2WebResourceResponseReceivedEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2WebResourceResponseReceivedEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2WebResourceResponseReceivedEventArgs(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2WebResourceResponseReceivedEventArgs) Request() ICoreWebView2WebResourceRequestRef {
-	var resultCoreWebView2WebResourceRequest uintptr
-	coreWebView2WebResourceResponseReceivedEventArgsImportAPI().SysCallN(3, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2WebResourceRequest)))
-	return AsCoreWebView2WebResourceRequest(resultCoreWebView2WebResourceRequest)
+func (m *TCoreWebView2WebResourceResponseReceivedEventArgs) Request() (result ICoreWebView2WebResourceRequest) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2WebResourceResponseReceivedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2WebResourceRequestOwn(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2WebResourceResponseReceivedEventArgs) Response() ICoreWebView2WebResourceResponseView {
-	var resultCoreWebView2WebResourceResponseView uintptr
-	coreWebView2WebResourceResponseReceivedEventArgsImportAPI().SysCallN(4, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2WebResourceResponseView)))
-	return AsCoreWebView2WebResourceResponseView(resultCoreWebView2WebResourceResponseView)
+func (m *TCoreWebView2WebResourceResponseReceivedEventArgs) Response() (result ICoreWebView2WebResourceResponseView) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2WebResourceResponseReceivedEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2WebResourceResponseView(resultPtr)
+	return
+}
+
+// NewCoreWebView2WebResourceResponseReceivedEventArgs class constructor
+func NewCoreWebView2WebResourceResponseReceivedEventArgs(args ICoreWebView2WebResourceResponseReceivedEventArgs) ICoreWebView2WebResourceResponseReceivedEventArgs {
+	r := coreWebView2WebResourceResponseReceivedEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2WebResourceResponseReceivedEventArgs(r)
 }
 
 var (
-	coreWebView2WebResourceResponseReceivedEventArgsImport       *imports.Imports = nil
-	coreWebView2WebResourceResponseReceivedEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2WebResourceResponseReceivedEventArgs_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2WebResourceResponseReceivedEventArgs_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2WebResourceResponseReceivedEventArgs_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2WebResourceResponseReceivedEventArgs_Request", 0),
-		/*4*/ imports.NewTable("CoreWebView2WebResourceResponseReceivedEventArgs_Response", 0),
-	}
+	coreWebView2WebResourceResponseReceivedEventArgsOnce   base.Once
+	coreWebView2WebResourceResponseReceivedEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2WebResourceResponseReceivedEventArgsImportAPI() *imports.Imports {
-	if coreWebView2WebResourceResponseReceivedEventArgsImport == nil {
-		coreWebView2WebResourceResponseReceivedEventArgsImport = NewDefaultImports()
-		coreWebView2WebResourceResponseReceivedEventArgsImport.SetImportTable(coreWebView2WebResourceResponseReceivedEventArgsImportTables)
-		coreWebView2WebResourceResponseReceivedEventArgsImportTables = nil
-	}
+func coreWebView2WebResourceResponseReceivedEventArgsAPI() *imports.Imports {
+	coreWebView2WebResourceResponseReceivedEventArgsOnce.Do(func() {
+		coreWebView2WebResourceResponseReceivedEventArgsImport = api.NewDefaultImports()
+		coreWebView2WebResourceResponseReceivedEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2WebResourceResponseReceivedEventArgs_Create", 0), // constructor NewCoreWebView2WebResourceResponseReceivedEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2WebResourceResponseReceivedEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2WebResourceResponseReceivedEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2WebResourceResponseReceivedEventArgs_Request", 0), // property Request
+			/* 4 */ imports.NewTable("TCoreWebView2WebResourceResponseReceivedEventArgs_Response", 0), // property Response
+		}
+	})
 	return coreWebView2WebResourceResponseReceivedEventArgsImport
 }

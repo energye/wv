@@ -6,86 +6,95 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2CookieList Parent: IObject
-//
-//	A list of cookie objects. See ICoreWebView2Cookie.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2cookielist">See the ICoreWebView2CookieList article.</a>
+// ICoreWebView2CookieList Parent: lcl.IObject
 type ICoreWebView2CookieList interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2CookieList // property
+	BaseIntf() ICoreWebView2CookieList // property BaseIntf Getter
 	// Count
-	//  The number of cookies contained in the ICoreWebView2CookieList.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2cookielist#get_count">See the ICoreWebView2CookieList article.</a>
-	Count() uint32 // property
+	//  The number of elements contained in the collection.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2cookielist#get_count">See the ICoreWebView2CookieList article.</see>
+	Count() uint32 // property Count Getter
 	// Items
-	//  Gets the cookie object at the given index.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2cookielist#getvalueatindex">See the ICoreWebView2CookieList article.</a>
-	Items(idx uint32) ICoreWebView2Cookie // property
+	//  Gets the element at the given index.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2cookielist#getvalueatindex">See the ICoreWebView2CookieList article.</see>
+	Items(idx uint32) ICoreWebView2Cookie // property Items Getter
 }
 
-// TCoreWebView2CookieList Parent: TObject
-//
-//	A list of cookie objects. See ICoreWebView2Cookie.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2cookielist">See the ICoreWebView2CookieList article.</a>
 type TCoreWebView2CookieList struct {
-	TObject
-}
-
-func NewCoreWebView2CookieList(aBaseIntf ICoreWebView2CookieList) ICoreWebView2CookieList {
-	r1 := coreWebView2CookieListImportAPI().SysCallN(2, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2CookieList(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2CookieList) Initialized() bool {
-	r1 := coreWebView2CookieListImportAPI().SysCallN(3, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2CookieListAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2CookieList) BaseIntf() ICoreWebView2CookieList {
-	var resultCoreWebView2CookieList uintptr
-	coreWebView2CookieListImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2CookieList)))
-	return AsCoreWebView2CookieList(resultCoreWebView2CookieList)
+func (m *TCoreWebView2CookieList) BaseIntf() (result ICoreWebView2CookieList) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2CookieListAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2CookieList(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2CookieList) Count() uint32 {
-	r1 := coreWebView2CookieListImportAPI().SysCallN(1, m.Instance())
-	return uint32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2CookieListAPI().SysCallN(3, m.Instance())
+	return uint32(r)
 }
 
-func (m *TCoreWebView2CookieList) Items(idx uint32) ICoreWebView2Cookie {
-	var resultCoreWebView2Cookie uintptr
-	coreWebView2CookieListImportAPI().SysCallN(4, m.Instance(), uintptr(idx), uintptr(unsafePointer(&resultCoreWebView2Cookie)))
-	return AsCoreWebView2Cookie(resultCoreWebView2Cookie)
+func (m *TCoreWebView2CookieList) Items(idx uint32) (result ICoreWebView2Cookie) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2CookieListAPI().SysCallN(4, m.Instance(), uintptr(idx), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Cookie(resultPtr)
+	return
+}
+
+// NewCoreWebView2CookieList class constructor
+func NewCoreWebView2CookieList(baseIntf ICoreWebView2CookieList) ICoreWebView2CookieList {
+	r := coreWebView2CookieListAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2CookieList(r)
 }
 
 var (
-	coreWebView2CookieListImport       *imports.Imports = nil
-	coreWebView2CookieListImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2CookieList_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2CookieList_Count", 0),
-		/*2*/ imports.NewTable("CoreWebView2CookieList_Create", 0),
-		/*3*/ imports.NewTable("CoreWebView2CookieList_Initialized", 0),
-		/*4*/ imports.NewTable("CoreWebView2CookieList_Items", 0),
-	}
+	coreWebView2CookieListOnce   base.Once
+	coreWebView2CookieListImport *imports.Imports = nil
 )
 
-func coreWebView2CookieListImportAPI() *imports.Imports {
-	if coreWebView2CookieListImport == nil {
-		coreWebView2CookieListImport = NewDefaultImports()
-		coreWebView2CookieListImport.SetImportTable(coreWebView2CookieListImportTables)
-		coreWebView2CookieListImportTables = nil
-	}
+func coreWebView2CookieListAPI() *imports.Imports {
+	coreWebView2CookieListOnce.Do(func() {
+		coreWebView2CookieListImport = api.NewDefaultImports()
+		coreWebView2CookieListImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2CookieList_Create", 0), // constructor NewCoreWebView2CookieList
+			/* 1 */ imports.NewTable("TCoreWebView2CookieList_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2CookieList_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2CookieList_Count", 0), // property Count
+			/* 4 */ imports.NewTable("TCoreWebView2CookieList_Items", 0), // property Items
+		}
+	})
 	return coreWebView2CookieListImport
 }

@@ -6,22 +6,23 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKFrameInfo Root Interface
-//
-//	An object that contains information about a frame on a webpage.
-//	https://developer.apple.com/documentation/webkit/wkframeinfo?language=objc
-type IWKFrameInfo interface {
-	IObject
+// IWkFrameInfo Parent: lcl.IObject
+type IWkFrameInfo interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKFrameInfo // function
+	Data() wvTypes.WKFrameInfo // function
 	// IsMainFrame
 	//  A Boolean value indicating whether the frame is the web site's main frame or a subframe.
 	IsMainFrame() bool // function
@@ -33,54 +34,62 @@ type IWKFrameInfo interface {
 	Release() // procedure
 }
 
-// TWKFrameInfo Root Object
-//
-//	An object that contains information about a frame on a webpage.
-//	https://developer.apple.com/documentation/webkit/wkframeinfo?language=objc
-type TWKFrameInfo struct {
-	TObject
+type TWkFrameInfo struct {
+	lcl.TObject
 }
 
-func NewWKFrameInfo(aData WKFrameInfo) IWKFrameInfo {
-	r1 := wKFrameInfoImportAPI().SysCallN(0, uintptr(aData))
-	return AsWKFrameInfo(r1)
+func (m *TWkFrameInfo) Data() wvTypes.WKFrameInfo {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkFrameInfoAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKFrameInfo(r)
 }
 
-func (m *TWKFrameInfo) Data() WKFrameInfo {
-	r1 := wKFrameInfoImportAPI().SysCallN(1, m.Instance())
-	return WKFrameInfo(r1)
+func (m *TWkFrameInfo) IsMainFrame() bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := wkFrameInfoAPI().SysCallN(2, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TWKFrameInfo) IsMainFrame() bool {
-	r1 := wKFrameInfoImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+func (m *TWkFrameInfo) Request() NSURLRequest {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkFrameInfoAPI().SysCallN(3, m.Instance())
+	return NSURLRequest(r)
 }
 
-func (m *TWKFrameInfo) Request() NSURLRequest {
-	r1 := wKFrameInfoImportAPI().SysCallN(4, m.Instance())
-	return NSURLRequest(r1)
+func (m *TWkFrameInfo) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkFrameInfoAPI().SysCallN(4, m.Instance())
 }
 
-func (m *TWKFrameInfo) Release() {
-	wKFrameInfoImportAPI().SysCallN(3, m.Instance())
+// NewFrameInfo class constructor
+func NewFrameInfo(data wvTypes.WKFrameInfo) IWkFrameInfo {
+	r := wkFrameInfoAPI().SysCallN(0, uintptr(data))
+	return AsWkFrameInfo(r)
 }
 
 var (
-	wKFrameInfoImport       *imports.Imports = nil
-	wKFrameInfoImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKFrameInfo_Create", 0),
-		/*1*/ imports.NewTable("WKFrameInfo_Data", 0),
-		/*2*/ imports.NewTable("WKFrameInfo_IsMainFrame", 0),
-		/*3*/ imports.NewTable("WKFrameInfo_Release", 0),
-		/*4*/ imports.NewTable("WKFrameInfo_Request", 0),
-	}
+	wkFrameInfoOnce   base.Once
+	wkFrameInfoImport *imports.Imports = nil
 )
 
-func wKFrameInfoImportAPI() *imports.Imports {
-	if wKFrameInfoImport == nil {
-		wKFrameInfoImport = NewDefaultImports()
-		wKFrameInfoImport.SetImportTable(wKFrameInfoImportTables)
-		wKFrameInfoImportTables = nil
-	}
-	return wKFrameInfoImport
+func wkFrameInfoAPI() *imports.Imports {
+	wkFrameInfoOnce.Do(func() {
+		wkFrameInfoImport = api.NewDefaultImports()
+		wkFrameInfoImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkFrameInfo_Create", 0), // constructor NewFrameInfo
+			/* 1 */ imports.NewTable("TWkFrameInfo_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkFrameInfo_IsMainFrame", 0), // function IsMainFrame
+			/* 3 */ imports.NewTable("TWkFrameInfo_Request", 0), // function Request
+			/* 4 */ imports.NewTable("TWkFrameInfo_Release", 0), // procedure Release
+		}
+	})
+	return wkFrameInfoImport
 }

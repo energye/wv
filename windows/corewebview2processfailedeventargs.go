@@ -6,35 +6,36 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ProcessFailedEventArgs Parent: IObject
-//
-//	Event args for the ProcessFailed event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs">See the ICoreWebView2ProcessFailedEventArgs article.</a>
+// ICoreWebView2ProcessFailedEventArgs Parent: lcl.IObject
 type ICoreWebView2ProcessFailedEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2ProcessFailedEventArgs // property
+	BaseIntf() ICoreWebView2ProcessFailedEventArgs // property BaseIntf Getter
 	// ProcessFailedKind
 	//  The kind of process failure that has occurred. This is a combination of
-	//  process kind(for example, browser, renderer, gpu) and failure(exit,
+	//  process kind (for example, browser, renderer, gpu) and failure (exit,
 	//  unresponsiveness). Renderer processes are further divided in _main frame_
-	//  renderer(`RenderProcessExited`, `RenderProcessUnresponsive`) and
-	//  _subframe_ renderer(`FrameRenderProcessExited`). To learn about the
+	//  renderer (`RenderProcessExited`, `RenderProcessUnresponsive`) and
+	//  _subframe_ renderer (`FrameRenderProcessExited`). To learn about the
 	//  conditions under which each failure kind occurs, see
 	//  `COREWEBVIEW2_PROCESS_FAILED_KIND`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs#get_processfailedkind">See the ICoreWebView2ProcessFailedEventArgs article.</a>
-	ProcessFailedKind() TWVProcessFailedKind // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs#get_processfailedkind">See the ICoreWebView2ProcessFailedEventArgs article.</see>
+	ProcessFailedKind() wvTypes.TWVProcessFailedKind // property ProcessFailedKind Getter
 	// Reason
 	//  The reason for the process failure. Some of the reasons are only
 	//  applicable to specific values of
@@ -50,23 +51,23 @@ type ICoreWebView2ProcessFailedEventArgs interface {
 	//  For other `ProcessFailedKind` values, the reason may be any of the reason
 	//  values. To learn about what these values mean, see
 	//  `COREWEBVIEW2_PROCESS_FAILED_REASON`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_reason">See the ICoreWebView2ProcessFailedEventArgs2 article.</a>
-	Reason() TWVProcessFailedReason // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_reason">See the ICoreWebView2ProcessFailedEventArgs2 article.</see>
+	Reason() wvTypes.TWVProcessFailedReason // property Reason Getter
 	// ExtiCode
 	//  The exit code of the failing process, for telemetry purposes. The exit
-	//  code is always `STILL_ACTIVE`(`259`) when `ProcessFailedKind` is
+	//  code is always `STILL_ACTIVE` (`259`) when `ProcessFailedKind` is
 	//  `COREWEBVIEW2_PROCESS_FAILED_KIND_RENDER_PROCESS_UNRESPONSIVE`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_exitcode">See the ICoreWebView2ProcessFailedEventArgs2 article.</a>
-	ExtiCode() int32 // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_exitcode">See the ICoreWebView2ProcessFailedEventArgs2 article.</see>
+	ExtiCode() int32 // property ExtiCode Getter
 	// ProcessDescription
 	//  Description of the process assigned by the WebView2 Runtime. This is a
 	//  technical English term appropriate for logging or development purposes,
-	//  and not localized for the end user. It applies to utility processes(for
-	//  example, "Audio Service", "Video Capture") and plugin processes(for
+	//  and not localized for the end user. It applies to utility processes (for
+	//  example, "Audio Service", "Video Capture") and plugin processes (for
 	//  example, "Flash"). The returned `processDescription` is empty if the
 	//  WebView2 Runtime did not assign a description to the process.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_processdescription">See the ICoreWebView2ProcessFailedEventArgs2 article.</a>
-	ProcessDescription() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_processdescription">See the ICoreWebView2ProcessFailedEventArgs2 article.</see>
+	ProcessDescription() string // property ProcessDescription Getter
 	// FrameInfosForFailedProcess
 	//  The collection of `FrameInfo`s for frames in the `ICoreWebView2` that were
 	//  being rendered by the failed process. The content in these frames is
@@ -77,79 +78,132 @@ type ICoreWebView2ProcessFailedEventArgs interface {
 	//  in which the failed process was the renderer for the main frame and
 	//  subframes within it, for which the failure kind is
 	//  `COREWEBVIEW2_PROCESS_FAILED_KIND_RENDER_PROCESS_EXITED`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_frameinfosforfailedprocess">See the ICoreWebView2ProcessFailedEventArgs2 article.</a>
-	FrameInfosForFailedProcess() ICoreWebView2FrameInfoCollection // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs2#get_frameinfosforfailedprocess">See the ICoreWebView2ProcessFailedEventArgs2 article.</see>
+	FrameInfosForFailedProcess() ICoreWebView2FrameInfoCollection // property FrameInfosForFailedProcess Getter
+	// FailureSourceModulePath
+	//  This property is the full path of the module that caused the
+	//  crash in cases of Windows Code Integrity failures.
+	//  [Windows Code Integrity](/mem/intune/user-help/you-need-to-enable-code-integrity)
+	//  is a feature that verifies the integrity and
+	//  authenticity of dynamic-link libraries (DLLs)
+	//  on Windows systems. It ensures that only trusted
+	//  code can run on the system and prevents unauthorized or
+	//  malicious modifications.
+	//  When ProcessFailed occurred due to a failed Code Integrity check,
+	//  this property returns the full path of the file that was prevented from
+	//  loading on the system.
+	//  The webview2 process which tried to load the DLL will fail with
+	//  exit code STATUS_INVALID_IMAGE_HASH(-1073740760).
+	//  A file can fail integrity check for various
+	//  reasons, such as:
+	//  <code>
+	//  - It has an invalid or missing signature that does
+	//  not match the publisher or signer of the file.
+	//  - It has been tampered with or corrupted by malware or other software.
+	//  - It has been blocked by an administrator or a security policy.
+	//  </code>
+	//  This property always will be the empty string if failure is not caused by
+	//  STATUS_INVALID_IMAGE_HASH.
+	FailureSourceModulePath() string // property FailureSourceModulePath Getter
 }
 
-// TCoreWebView2ProcessFailedEventArgs Parent: TObject
-//
-//	Event args for the ProcessFailed event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2processfailedeventargs">See the ICoreWebView2ProcessFailedEventArgs article.</a>
 type TCoreWebView2ProcessFailedEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2ProcessFailedEventArgs(aArgs ICoreWebView2ProcessFailedEventArgs) ICoreWebView2ProcessFailedEventArgs {
-	r1 := coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(1, GetObjectUintptr(aArgs))
-	return AsCoreWebView2ProcessFailedEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2ProcessFailedEventArgs) Initialized() bool {
-	r1 := coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(4, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ProcessFailedEventArgs) BaseIntf() ICoreWebView2ProcessFailedEventArgs {
-	var resultCoreWebView2ProcessFailedEventArgs uintptr
-	coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2ProcessFailedEventArgs)))
-	return AsCoreWebView2ProcessFailedEventArgs(resultCoreWebView2ProcessFailedEventArgs)
+func (m *TCoreWebView2ProcessFailedEventArgs) BaseIntf() (result ICoreWebView2ProcessFailedEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ProcessFailedEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ProcessFailedEventArgs(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ProcessFailedEventArgs) ProcessFailedKind() TWVProcessFailedKind {
-	r1 := coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(6, m.Instance())
-	return TWVProcessFailedKind(r1)
+func (m *TCoreWebView2ProcessFailedEventArgs) ProcessFailedKind() wvTypes.TWVProcessFailedKind {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(3, m.Instance())
+	return wvTypes.TWVProcessFailedKind(r)
 }
 
-func (m *TCoreWebView2ProcessFailedEventArgs) Reason() TWVProcessFailedReason {
-	r1 := coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(7, m.Instance())
-	return TWVProcessFailedReason(r1)
+func (m *TCoreWebView2ProcessFailedEventArgs) Reason() wvTypes.TWVProcessFailedReason {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(4, m.Instance())
+	return wvTypes.TWVProcessFailedReason(r)
 }
 
 func (m *TCoreWebView2ProcessFailedEventArgs) ExtiCode() int32 {
-	r1 := coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(2, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(5, m.Instance())
+	return int32(r)
 }
 
 func (m *TCoreWebView2ProcessFailedEventArgs) ProcessDescription() string {
-	r1 := coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(5, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(6, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ProcessFailedEventArgs) FrameInfosForFailedProcess() ICoreWebView2FrameInfoCollection {
-	var resultCoreWebView2FrameInfoCollection uintptr
-	coreWebView2ProcessFailedEventArgsImportAPI().SysCallN(3, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2FrameInfoCollection)))
-	return AsCoreWebView2FrameInfoCollection(resultCoreWebView2FrameInfoCollection)
+func (m *TCoreWebView2ProcessFailedEventArgs) FrameInfosForFailedProcess() (result ICoreWebView2FrameInfoCollection) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ProcessFailedEventArgsAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2FrameInfoCollection(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2ProcessFailedEventArgs) FailureSourceModulePath() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(8, m.Instance())
+	return api.GoStr(r)
+}
+
+// NewCoreWebView2ProcessFailedEventArgs class constructor
+func NewCoreWebView2ProcessFailedEventArgs(args ICoreWebView2ProcessFailedEventArgs) ICoreWebView2ProcessFailedEventArgs {
+	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2ProcessFailedEventArgs(r)
 }
 
 var (
-	coreWebView2ProcessFailedEventArgsImport       *imports.Imports = nil
-	coreWebView2ProcessFailedEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_ExtiCode", 0),
-		/*3*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_FrameInfosForFailedProcess", 0),
-		/*4*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_Initialized", 0),
-		/*5*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_ProcessDescription", 0),
-		/*6*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_ProcessFailedKind", 0),
-		/*7*/ imports.NewTable("CoreWebView2ProcessFailedEventArgs_Reason", 0),
-	}
+	coreWebView2ProcessFailedEventArgsOnce   base.Once
+	coreWebView2ProcessFailedEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2ProcessFailedEventArgsImportAPI() *imports.Imports {
-	if coreWebView2ProcessFailedEventArgsImport == nil {
-		coreWebView2ProcessFailedEventArgsImport = NewDefaultImports()
-		coreWebView2ProcessFailedEventArgsImport.SetImportTable(coreWebView2ProcessFailedEventArgsImportTables)
-		coreWebView2ProcessFailedEventArgsImportTables = nil
-	}
+func coreWebView2ProcessFailedEventArgsAPI() *imports.Imports {
+	coreWebView2ProcessFailedEventArgsOnce.Do(func() {
+		coreWebView2ProcessFailedEventArgsImport = api.NewDefaultImports()
+		coreWebView2ProcessFailedEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_Create", 0), // constructor NewCoreWebView2ProcessFailedEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_ProcessFailedKind", 0), // property ProcessFailedKind
+			/* 4 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_Reason", 0), // property Reason
+			/* 5 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_ExtiCode", 0), // property ExtiCode
+			/* 6 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_ProcessDescription", 0), // property ProcessDescription
+			/* 7 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_FrameInfosForFailedProcess", 0), // property FrameInfosForFailedProcess
+			/* 8 */ imports.NewTable("TCoreWebView2ProcessFailedEventArgs_FailureSourceModulePath", 0), // property FailureSourceModulePath
+		}
+	})
 	return coreWebView2ProcessFailedEventArgsImport
 }

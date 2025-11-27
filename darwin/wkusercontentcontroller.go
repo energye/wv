@@ -6,120 +6,137 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKUserContentController Root Interface
-//
-//	An object for managing interactions between JavaScript code and your web view, and for filtering content in your web view.
-//	https://developer.apple.com/documentation/webkit/wkusercontentcontroller?language=objc
-type IWKUserContentController interface {
-	IObject
+// IWkUserContentController Parent: lcl.IObject
+type IWkUserContentController interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKUserContentController // function
+	Data() wvTypes.WKUserContentController // function
 	// UserScripts
 	//  The user scripts associated with the user content controller.
-	UserScripts() IStrings // function
+	UserScripts() lcl.IStrings // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 	// AddUserScript
 	//  Injects the specified script into the webpage’s content.
-	AddUserScript(userScript WKUserScript) // procedure
+	AddUserScript(userScript wvTypes.WKUserScript) // procedure
 	// RemoveAllUserScripts
 	//  Removes all user scripts from the web view.
 	RemoveAllUserScripts() // procedure
 	// AddScriptMessageHandlerName
 	//  Installs a message handler that you can call from your JavaScript code.
-	AddScriptMessageHandlerName(scriptMessageHandler IWKScriptMessageHandler, name string) // procedure
+	AddScriptMessageHandlerName(scriptMessageHandler IWkScriptMessageHandler, name string) // procedure
 	// RemoveScriptMessageHandlerForName
 	//  Uninstalls the custom message handler with the specified name from your JavaScript code.
 	RemoveScriptMessageHandlerForName(name string) // procedure
 }
 
-// TWKUserContentController Root Object
-//
-//	An object for managing interactions between JavaScript code and your web view, and for filtering content in your web view.
-//	https://developer.apple.com/documentation/webkit/wkusercontentcontroller?language=objc
-type TWKUserContentController struct {
-	TObject
+type TWkUserContentController struct {
+	lcl.TObject
 }
 
-func NewWKUserContentController(aData WKUserContentController) IWKUserContentController {
-	r1 := wKUserContentControllerImportAPI().SysCallN(2, uintptr(aData))
-	return AsWKUserContentController(r1)
+func (m *TWkUserContentController) Data() wvTypes.WKUserContentController {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkUserContentControllerAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKUserContentController(r)
 }
 
-// WKUserContentControllerRef -> IWKUserContentController
-var WKUserContentControllerRef wKUserContentController
+func (m *TWkUserContentController) UserScripts() lcl.IStrings {
+	if !m.IsValid() {
+		return nil
+	}
+	r := wkUserContentControllerAPI().SysCallN(3, m.Instance())
+	return lcl.AsStrings(r)
+}
 
-// wKUserContentController TWKUserContentController Ref
-type wKUserContentController uintptr
+func (m *TWkUserContentController) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkUserContentControllerAPI().SysCallN(4, m.Instance())
+}
+
+func (m *TWkUserContentController) AddUserScript(userScript wvTypes.WKUserScript) {
+	if !m.IsValid() {
+		return
+	}
+	wkUserContentControllerAPI().SysCallN(5, m.Instance(), uintptr(userScript))
+}
+
+func (m *TWkUserContentController) RemoveAllUserScripts() {
+	if !m.IsValid() {
+		return
+	}
+	wkUserContentControllerAPI().SysCallN(6, m.Instance())
+}
+
+func (m *TWkUserContentController) AddScriptMessageHandlerName(scriptMessageHandler IWkScriptMessageHandler, name string) {
+	if !m.IsValid() {
+		return
+	}
+	wkUserContentControllerAPI().SysCallN(7, m.Instance(), base.GetObjectUintptr(scriptMessageHandler), api.PasStr(name))
+}
+
+func (m *TWkUserContentController) RemoveScriptMessageHandlerForName(name string) {
+	if !m.IsValid() {
+		return
+	}
+	wkUserContentControllerAPI().SysCallN(8, m.Instance(), api.PasStr(name))
+}
+
+// UserContentController  is static instance
+var UserContentController _UserContentControllerClass
+
+// _UserContentControllerClass is class type defined by TWkUserContentController
+type _UserContentControllerClass uintptr
 
 // New
 //
 //	Creates and returns an WKUserContentController object.
-func (m *wKUserContentController) New() IWKUserContentController {
-	r1 := wKUserContentControllerImportAPI().SysCallN(4)
-	return AsWKUserContentController(r1)
+func (_UserContentControllerClass) New() IWkUserContentController {
+	r := wkUserContentControllerAPI().SysCallN(2)
+	return AsWkUserContentController(r)
 }
 
-func (m *TWKUserContentController) Data() WKUserContentController {
-	r1 := wKUserContentControllerImportAPI().SysCallN(3, m.Instance())
-	return WKUserContentController(r1)
-}
-
-func (m *TWKUserContentController) UserScripts() IStrings {
-	var resultStrings uintptr
-	wKUserContentControllerImportAPI().SysCallN(8, m.Instance(), uintptr(unsafePointer(&resultStrings)))
-	return AsStrings(resultStrings)
-}
-
-func (m *TWKUserContentController) Release() {
-	wKUserContentControllerImportAPI().SysCallN(5, m.Instance())
-}
-
-func (m *TWKUserContentController) AddUserScript(userScript WKUserScript) {
-	wKUserContentControllerImportAPI().SysCallN(1, m.Instance(), uintptr(userScript))
-}
-
-func (m *TWKUserContentController) RemoveAllUserScripts() {
-	wKUserContentControllerImportAPI().SysCallN(6, m.Instance())
-}
-
-func (m *TWKUserContentController) AddScriptMessageHandlerName(scriptMessageHandler IWKScriptMessageHandler, name string) {
-	wKUserContentControllerImportAPI().SysCallN(0, m.Instance(), GetObjectUintptr(scriptMessageHandler), PascalStr(name))
-}
-
-func (m *TWKUserContentController) RemoveScriptMessageHandlerForName(name string) {
-	wKUserContentControllerImportAPI().SysCallN(7, m.Instance(), PascalStr(name))
+// NewUserContentController class constructor
+func NewUserContentController(data wvTypes.WKUserContentController) IWkUserContentController {
+	r := wkUserContentControllerAPI().SysCallN(0, uintptr(data))
+	return AsWkUserContentController(r)
 }
 
 var (
-	wKUserContentControllerImport       *imports.Imports = nil
-	wKUserContentControllerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKUserContentController_AddScriptMessageHandlerName", 0),
-		/*1*/ imports.NewTable("WKUserContentController_AddUserScript", 0),
-		/*2*/ imports.NewTable("WKUserContentController_Create", 0),
-		/*3*/ imports.NewTable("WKUserContentController_Data", 0),
-		/*4*/ imports.NewTable("WKUserContentController_New", 0),
-		/*5*/ imports.NewTable("WKUserContentController_Release", 0),
-		/*6*/ imports.NewTable("WKUserContentController_RemoveAllUserScripts", 0),
-		/*7*/ imports.NewTable("WKUserContentController_RemoveScriptMessageHandlerForName", 0),
-		/*8*/ imports.NewTable("WKUserContentController_UserScripts", 0),
-	}
+	wkUserContentControllerOnce   base.Once
+	wkUserContentControllerImport *imports.Imports = nil
 )
 
-func wKUserContentControllerImportAPI() *imports.Imports {
-	if wKUserContentControllerImport == nil {
-		wKUserContentControllerImport = NewDefaultImports()
-		wKUserContentControllerImport.SetImportTable(wKUserContentControllerImportTables)
-		wKUserContentControllerImportTables = nil
-	}
-	return wKUserContentControllerImport
+func wkUserContentControllerAPI() *imports.Imports {
+	wkUserContentControllerOnce.Do(func() {
+		wkUserContentControllerImport = api.NewDefaultImports()
+		wkUserContentControllerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkUserContentController_Create", 0), // constructor NewUserContentController
+			/* 1 */ imports.NewTable("TWkUserContentController_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkUserContentController_New", 0), // static function New
+			/* 3 */ imports.NewTable("TWkUserContentController_UserScripts", 0), // function UserScripts
+			/* 4 */ imports.NewTable("TWkUserContentController_Release", 0), // procedure Release
+			/* 5 */ imports.NewTable("TWkUserContentController_AddUserScript", 0), // procedure AddUserScript
+			/* 6 */ imports.NewTable("TWkUserContentController_RemoveAllUserScripts", 0), // procedure RemoveAllUserScripts
+			/* 7 */ imports.NewTable("TWkUserContentController_AddScriptMessageHandlerName", 0), // procedure AddScriptMessageHandlerName
+			/* 8 */ imports.NewTable("TWkUserContentController_RemoveScriptMessageHandlerForName", 0), // procedure RemoveScriptMessageHandlerForName
+		}
+	})
+	return wkUserContentControllerImport
 }

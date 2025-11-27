@@ -6,112 +6,405 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
-	"github.com/energye/lcl/emfs"
-	"github.com/energye/lcl/inits"
+	"github.com/energye/lcl/api"
+	"github.com/energye/lcl/base"
 	"github.com/energye/lcl/lcl"
-	"unsafe"
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// getParam 从指定索引和地址获取事件中的参数
-func getParamOf(index int, ptr uintptr) uintptr {
-	return *(*uintptr)(unsafePointer(ptr + uintptr(index)*unsafe.Sizeof(ptr)))
+type callback struct {
+	name string
+	cb   func(getVal func(i int) uintptr)
 }
 
-// 移除事件，释放相关的引用
-func removeEventCallbackProc(f uintptr) uintptr {
-	RemoveEventElement(f)
-	return 0
+func getPtr(val uintptr) base.UnsafePointer {
+	return base.UnsafePointer(val)
 }
 
-// 回调过程
-func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
-	fn := PtrToElementValue(f)
-	if fn != nil {
-		// 获取值
-		getVal := func(i int) uintptr {
-			return getParamOf(i, args)
-		}
-
-		// 指针
-		getPtr := func(i int) unsafePointer {
-			return unsafePointer(getVal(i))
-		}
-
-		switch fn.(type) {
-		case TWkProcessMessageEvent:
-			name, data := GoStr(getVal(2)), GoStr(getVal(3))
-			fn.(TWkProcessMessageEvent)(AsObject(getPtr(0)), WKUserContentController(getVal(1)), name, data)
-		case TWKDecidePolicyForNavigationActionPreferences:
-			actionPolicy := (*WKNavigationActionPolicy)(getPtr(2))
-			preferences := (*WKWebpagePreferences)(getPtr(3))
-			fn.(TWKDecidePolicyForNavigationActionPreferences)(AsObject(getPtr(0)), WKNavigationAction(getVal(1)),
-				actionPolicy, preferences)
-		case TWKDecidePolicyForNavigationResponse:
-			responsePolicy := (*WKNavigationResponsePolicy)(getPtr(2))
-			fn.(TWKDecidePolicyForNavigationResponse)(AsObject(getPtr(0)), WKNavigationResponse(getVal(1)), responsePolicy)
-		case TWkStartProvisionalNavigation:
-			fn.(TWkStartProvisionalNavigation)(AsObject(getPtr(0)), WKNavigation(getVal(1)))
-		case TWkReceiveServerRedirectForProvisionalNavigation:
-			fn.(TWkReceiveServerRedirectForProvisionalNavigation)(AsObject(getPtr(0)), WKNavigation(getVal(1)))
-		case TWkFailProvisionalNavigationWithError:
-			fn.(TWkFailProvisionalNavigationWithError)(AsObject(getPtr(0)), WKNavigation(getVal(1)), GoStr(getVal(2)))
-		case TWkCommitNavigation:
-			fn.(TWkCommitNavigation)(AsObject(getPtr(0)), WKNavigation(getVal(1)))
-		case TWkFinishNavigation:
-			fn.(TWkFinishNavigation)(AsObject(getPtr(0)), WKNavigation(getVal(1)))
-		case TWkFailNavigationWithError:
-			fn.(TWkFailNavigationWithError)(AsObject(getPtr(0)), WKNavigation(getVal(1)), GoStr(getVal(2)))
-		case TWkWebContentProcessDidTerminate:
-			fn.(TWkWebContentProcessDidTerminate)(AsObject(getPtr(0)))
-		case TWkNavigationActionDidBecomeDownload:
-			fn.(TWkNavigationActionDidBecomeDownload)(AsObject(getPtr(0)), WKNavigationAction(getVal(1)), WKDownload(getVal(2)))
-		case TWkNavigationResponseDidBecomeDownload:
-			fn.(TWkNavigationResponseDidBecomeDownload)(AsObject(getPtr(0)), WKNavigationResponse(getVal(1)), WKDownload(getVal(2)))
-		case TWKStartURLSchemeTask:
-			fn.(TWKStartURLSchemeTask)(AsObject(getPtr(0)), WKURLSchemeTask(getVal(1)))
-		case TWKStopURLSchemeTask:
-			fn.(TWKStopURLSchemeTask)(AsObject(getPtr(0)), WKURLSchemeTask(getVal(1)))
-		case TWKCreateWebView:
-			webview := (*WkWebview)(getPtr(4))
-			*webview = fn.(TWKCreateWebView)(AsObject(getPtr(0)), WKWebViewConfiguration(getVal(1)), WKNavigationAction(getVal(2)),
-				WKWindowFeatures(getVal(3)))
-		case TWKRunJavaScriptAlert:
-			fn.(TWKRunJavaScriptAlert)(AsObject(getPtr(0)), GoStr(getVal(1)), WKFrameInfo(getVal(2)))
-		case TWKRunJavaScriptConfirmCompletion:
-			fn.(TWKRunJavaScriptConfirmCompletion)(AsObject(getPtr(0)), GoStr(getVal(1)), WKFrameInfo(getVal(2)))
-		case TWKRunJavaScriptTextInputCompletion:
-			result := lcl.AsTString(getVal(4))
-			newValue := fn.(TWKRunJavaScriptTextInputCompletion)(AsObject(getPtr(0)), GoStr(getVal(1)), GoStr(getVal(2)), WKFrameInfo(getVal(3)))
-			result.SetValue(newValue)
-		case TWKWebViewDidClose:
-			fn.(TWKWebViewDidClose)(AsObject(getPtr(0)))
-		case TWKDownloadCancelCompletionHandler:
-			fn.(TWKDownloadCancelCompletionHandler)(AsObject(getPtr(0)), WKDownload(getVal(1)), getVal(2), int32(getVal(3)))
-		case TWKDownloadDecideDestinationUsingResponseSuggestedFilename:
-			fn.(TWKDownloadDecideDestinationUsingResponseSuggestedFilename)(AsObject(getPtr(0)), WKDownload(getVal(1)),
-				NSURLResponse(getVal(2)), GoStr(getVal(3)))
-		case TWKDownloadWillPerformHTTPRedirectionNewRequest:
-			fn.(TWKDownloadWillPerformHTTPRedirectionNewRequest)(AsObject(getPtr(0)), WKDownload(getVal(1)), NSHTTPURLResponse(getVal(2)),
-				NSURLRequest(getVal(3)))
-		case TWKDownloadFinish:
-			fn.(TWKDownloadFinish)(AsObject(getPtr(0)), WKDownload(getVal(1)))
-		case TWKDownloadFailWithError:
-			fn.(TWKDownloadFailWithError)(AsObject(getPtr(0)), WKDownload(getVal(1)), GoStr(getVal(2)), getVal(3), int32(getVal(4)))
-		default:
-		}
+func makeTWKCreateWebView(cb TWKCreateWebView) *callback {
+	if cb == nil {
+		return nil
 	}
-	return 0
+	return &callback{
+		name: "TWKCreateWebView",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : function(sender: TObject; configuration_: WKWebViewConfiguration; navigationAction: WKNavigationAction; windowFeatures: WKWindowFeatures): WKWebView;
+			sender := lcl.AsObject(getVal(0))
+			configuration := wvTypes.WKWebViewConfiguration(getVal(1))
+			navigationAction := wvTypes.WKNavigationAction(getVal(2))
+			windowFeatures := wvTypes.WKWindowFeatures(getVal(3))
+			ret := cb(sender, configuration, navigationAction, windowFeatures)
+			*(*wvTypes.WKWebView)(getPtr(getVal(4))) = ret
+		},
+	}
 }
 
-// Init
-//
-//	Webkit2初始化
-func Init(libs emfs.IEmbedFS, resources emfs.IEmbedFS) {
-	inits.Init(libs, resources)
-	SetWKEventCallback(eventCallback)
-	SetWKRemoveEventCallback(removeEventCallback)
+func makeTWKDecidePolicyForNavigationActionPreferences(cb TWKDecidePolicyForNavigationActionPreferences) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDecidePolicyForNavigationActionPreferences",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : procedure(sender: TObject; navigationAction: WKNavigationAction; var actionPolicy: WKNavigationActionPolicy; var preferences: WKWebpagePreferences);
+			sender := lcl.AsObject(getVal(0))
+			navigationAction := wvTypes.WKNavigationAction(getVal(1))
+			actionPolicy := (*wvTypes.WKNavigationActionPolicy)(getPtr(getVal(2)))
+			preferences := (*wvTypes.WKWebpagePreferences)(getPtr(getVal(3)))
+			cb(sender, navigationAction, actionPolicy, preferences)
+		},
+	}
+}
+
+func makeTWKDecidePolicyForNavigationResponse(cb TWKDecidePolicyForNavigationResponse) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDecidePolicyForNavigationResponse",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(sender: TObject; navigationResponse: WKNavigationResponse; var responsePolicy: WKNavigationResponsePolicy);
+			sender := lcl.AsObject(getVal(0))
+			navigationResponse := wvTypes.WKNavigationResponse(getVal(1))
+			responsePolicy := (*wvTypes.WKNavigationResponsePolicy)(getPtr(getVal(2)))
+			cb(sender, navigationResponse, responsePolicy)
+		},
+	}
+}
+
+func makeTWKDownloadCancelCompletionHandler(cb TWKDownloadCancelCompletionHandler) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDownloadCancelCompletionHandler",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : procedure(sender: TObject; download: WKDownload; aData: Pointer; aLength: Integer );
+			sender := lcl.AsObject(getVal(0))
+			download := wvTypes.WKDownload(getVal(1))
+			data := uintptr(getVal(2))
+			length := int32(getVal(3))
+			cb(sender, download, data, length)
+		},
+	}
+}
+
+func makeTWKDownloadDecideDestinationUsingResponseSuggestedFilename(cb TWKDownloadDecideDestinationUsingResponseSuggestedFilename) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDownloadDecideDestinationUsingResponseSuggestedFilename",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : procedure(sender: TObject; download: WKDownload; response: NSURLResponse; suggestedFilename: string);
+			sender := lcl.AsObject(getVal(0))
+			download := wvTypes.WKDownload(getVal(1))
+			response := NSURLResponse(getVal(2))
+			suggestedFilename := api.GoStr(getVal(3))
+			cb(sender, download, response, suggestedFilename)
+		},
+	}
+}
+
+func makeTWKDownloadFailWithError(cb TWKDownloadFailWithError) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDownloadFailWithError",
+		cb: func(getVal func(i int) uintptr) {
+			// 5 : procedure(sender: TObject; download: WKDownload; error: string; aData: Pointer; aLength: Integer );
+			sender := lcl.AsObject(getVal(0))
+			download := wvTypes.WKDownload(getVal(1))
+			error_ := api.GoStr(getVal(2))
+			data := uintptr(getVal(3))
+			length := int32(getVal(4))
+			cb(sender, download, error_, data, length)
+		},
+	}
+}
+
+func makeTWKDownloadFinish(cb TWKDownloadFinish) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDownloadFinish",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: TObject; download: WKDownload);
+			sender := lcl.AsObject(getVal(0))
+			download := wvTypes.WKDownload(getVal(1))
+			cb(sender, download)
+		},
+	}
+}
+
+func makeTWKDownloadWillPerformHTTPRedirectionNewRequest(cb TWKDownloadWillPerformHTTPRedirectionNewRequest) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDownloadWillPerformHTTPRedirectionNewRequest",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : procedure(sender: TObject; download: WKDownload; response: NSHTTPURLResponse; request: NSURLRequest);
+			sender := lcl.AsObject(getVal(0))
+			download := wvTypes.WKDownload(getVal(1))
+			response := NSHTTPURLResponse(getVal(2))
+			request := NSURLRequest(getVal(3))
+			cb(sender, download, response, request)
+		},
+	}
+}
+
+func makeTWKRunJavaScriptAlert(cb TWKRunJavaScriptAlert) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKRunJavaScriptAlert",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(sender: TObject; message_: string; frame: WKFrameInfo);
+			sender := lcl.AsObject(getVal(0))
+			message := api.GoStr(getVal(1))
+			frame := wvTypes.WKFrameInfo(getVal(2))
+			cb(sender, message, frame)
+		},
+	}
+}
+
+func makeTWKRunJavaScriptConfirmCompletion(cb TWKRunJavaScriptConfirmCompletion) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKRunJavaScriptConfirmCompletion",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : function(sender: TObject; message_: string; frame: WKFrameInfo): Boolean;
+			sender := lcl.AsObject(getVal(0))
+			message := api.GoStr(getVal(1))
+			frame := wvTypes.WKFrameInfo(getVal(2))
+			ret := cb(sender, message, frame)
+			*(*bool)(getPtr(getVal(3))) = ret
+		},
+	}
+}
+
+func makeTWKRunJavaScriptTextInputCompletion(cb TWKRunJavaScriptTextInputCompletion) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKRunJavaScriptTextInputCompletion",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : function(sender: TObject; prompt: string; defaultText: string; frame: WKFrameInfo): string;
+			sender := lcl.AsObject(getVal(0))
+			prompt := api.GoStr(getVal(1))
+			defaultText := api.GoStr(getVal(2))
+			frame := wvTypes.WKFrameInfo(getVal(3))
+			ret := cb(sender, prompt, defaultText, frame)
+			*(*uintptr)(getPtr(getVal(4))) = api.PasStr(ret)
+		},
+	}
+}
+
+func makeTWKStartURLSchemeTask(cb TWKStartURLSchemeTask) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKStartURLSchemeTask",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: TObject; urlSchemeTask: WKURLSchemeTask);
+			sender := lcl.AsObject(getVal(0))
+			urlSchemeTask := wvTypes.WKURLSchemeTask(getVal(1))
+			cb(sender, urlSchemeTask)
+		},
+	}
+}
+
+func makeTWKStopURLSchemeTask(cb TWKStopURLSchemeTask) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKStopURLSchemeTask",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: TObject; urlSchemeTask: WKURLSchemeTask);
+			sender := lcl.AsObject(getVal(0))
+			urlSchemeTask := wvTypes.WKURLSchemeTask(getVal(1))
+			cb(sender, urlSchemeTask)
+		},
+	}
+}
+
+func makeTWKWebViewDidClose(cb TWKWebViewDidClose) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKWebViewDidClose",
+		cb: func(getVal func(i int) uintptr) {
+			// 1 : procedure(sender: TObject);
+			sender := lcl.AsObject(getVal(0))
+			cb(sender)
+		},
+	}
+}
+
+func makeTWkCommitNavigation(cb TWkCommitNavigation) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkCommitNavigation",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: TObject; navigation: WKNavigation);
+			sender := lcl.AsObject(getVal(0))
+			navigation := wvTypes.WKNavigation(getVal(1))
+			cb(sender, navigation)
+		},
+	}
+}
+
+func makeTWkFailNavigationWithError(cb TWkFailNavigationWithError) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkFailNavigationWithError",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(sender: TObject; navigation: WKNavigation; error: string);
+			sender := lcl.AsObject(getVal(0))
+			navigation := wvTypes.WKNavigation(getVal(1))
+			error_ := api.GoStr(getVal(2))
+			cb(sender, navigation, error_)
+		},
+	}
+}
+
+func makeTWkFailProvisionalNavigationWithError(cb TWkFailProvisionalNavigationWithError) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkFailProvisionalNavigationWithError",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(sender: TObject; navigation: WKNavigation; error: string);
+			sender := lcl.AsObject(getVal(0))
+			navigation := wvTypes.WKNavigation(getVal(1))
+			error_ := api.GoStr(getVal(2))
+			cb(sender, navigation, error_)
+		},
+	}
+}
+
+func makeTWkFinishNavigation(cb TWkFinishNavigation) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkFinishNavigation",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: TObject; navigation: WKNavigation);
+			sender := lcl.AsObject(getVal(0))
+			navigation := wvTypes.WKNavigation(getVal(1))
+			cb(sender, navigation)
+		},
+	}
+}
+
+func makeTWkNavigationActionDidBecomeDownload(cb TWkNavigationActionDidBecomeDownload) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkNavigationActionDidBecomeDownload",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(sender: TObject; navigationAction: WKNavigationAction; download: WKDownload);
+			sender := lcl.AsObject(getVal(0))
+			navigationAction := wvTypes.WKNavigationAction(getVal(1))
+			download := wvTypes.WKDownload(getVal(2))
+			cb(sender, navigationAction, download)
+		},
+	}
+}
+
+func makeTWkNavigationResponseDidBecomeDownload(cb TWkNavigationResponseDidBecomeDownload) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkNavigationResponseDidBecomeDownload",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(sender: TObject; navigationResponse: WKNavigationResponse; download: WKDownload);
+			sender := lcl.AsObject(getVal(0))
+			navigationResponse := wvTypes.WKNavigationResponse(getVal(1))
+			download := wvTypes.WKDownload(getVal(2))
+			cb(sender, navigationResponse, download)
+		},
+	}
+}
+
+func makeTWkProcessMessageEvent(cb TWkProcessMessageEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkProcessMessageEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : procedure(sender: TObject; userContentController: WKUserContentController; name, data: string);
+			sender := lcl.AsObject(getVal(0))
+			userContentController := wvTypes.WKUserContentController(getVal(1))
+			name := api.GoStr(getVal(2))
+			data := api.GoStr(getVal(3))
+			cb(sender, userContentController, name, data)
+		},
+	}
+}
+
+func makeTWkReceiveServerRedirectForProvisionalNavigation(cb TWkReceiveServerRedirectForProvisionalNavigation) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkReceiveServerRedirectForProvisionalNavigation",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: TObject; navigation: WKNavigation);
+			sender := lcl.AsObject(getVal(0))
+			navigation := wvTypes.WKNavigation(getVal(1))
+			cb(sender, navigation)
+		},
+	}
+}
+
+func makeTWkStartProvisionalNavigation(cb TWkStartProvisionalNavigation) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkStartProvisionalNavigation",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: TObject; navigation: WKNavigation);
+			sender := lcl.AsObject(getVal(0))
+			navigation := wvTypes.WKNavigation(getVal(1))
+			cb(sender, navigation)
+		},
+	}
+}
+
+func makeTWkWebContentProcessDidTerminate(cb TWkWebContentProcessDidTerminate) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkWebContentProcessDidTerminate",
+		cb: func(getVal func(i int) uintptr) {
+			// 1 : procedure(sender: TObject);
+			sender := lcl.AsObject(getVal(0))
+			cb(sender)
+		},
+	}
 }

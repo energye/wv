@@ -6,48 +6,43 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ControllerOptions Parent: IObject
-//
-//	This class is a ICoreWebView2ControllerOptions wrapper.
-//	ICoreWebView2ControllerOptions is used to manage profile options that created by 'CreateCoreWebView2ControllerOptions'.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions">See the ICoreWebView2ControllerOptions article.</a>
+// ICoreWebView2ControllerOptions Parent: lcl.IObject
 type ICoreWebView2ControllerOptions interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2ControllerOptions // property
-	// SetBaseIntf Set BaseIntf
-	SetBaseIntf(AValue ICoreWebView2ControllerOptions) // property
+	BaseIntf() ICoreWebView2ControllerOptions         // property BaseIntf Getter
+	SetBaseIntf(value ICoreWebView2ControllerOptions) // property BaseIntf Setter
 	// ProfileName
 	//  `ProfileName` property is to specify a profile name, which is only allowed to contain
 	//  the following ASCII characters. It has a maximum length of 64 characters excluding the null-terminator.
 	//  It is ASCII case insensitive.
 	//  * alphabet characters: a-z and A-Z
 	//  * digit characters: 0-9
-	//  * and '#', '@', '$', '(', ')', '+', '-', '_', '~', '.', ' '(space).
-	//  Note: the text must not end with a period '.' or ' '(space). And, although upper-case letters are
+	//  * and '#', '@', '$', '(', ')', '+', '-', '_', '~', '.', ' ' (space).
+	//  Note: the text must not end with a period '.' or ' ' (space). And, although upper-case letters are
 	//  allowed, they're treated just as lower-case counterparts because the profile name will be mapped to
 	//  the real profile directory path on disk and Windows file system handles path names in a case-insensitive way.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions#get_profilename">See the ICoreWebView2ControllerOptions article.</a>
-	ProfileName() string // property
-	// SetProfileName Set ProfileName
-	SetProfileName(AValue string) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions#get_profilename">See the ICoreWebView2ControllerOptions article.</see>
+	ProfileName() string         // property ProfileName Getter
+	SetProfileName(value string) // property ProfileName Setter
 	// IsInPrivateModeEnabled
 	//  `IsInPrivateModeEnabled` property is to enable/disable InPrivate mode.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions#get_isinprivatemodeenabled">See the ICoreWebView2ControllerOptions article.</a>
-	IsInPrivateModeEnabled() bool // property
-	// SetIsInPrivateModeEnabled Set IsInPrivateModeEnabled
-	SetIsInPrivateModeEnabled(AValue bool) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions#get_isinprivatemodeenabled">See the ICoreWebView2ControllerOptions article.</see>
+	IsInPrivateModeEnabled() bool         // property IsInPrivateModeEnabled Getter
+	SetIsInPrivateModeEnabled(value bool) // property IsInPrivateModeEnabled Setter
 	// ScriptLocale
 	//  The default locale for the WebView2. It sets the default locale for all
 	//  Intl JavaScript APIs and other JavaScript APIs that depend on it, namely
@@ -67,85 +62,107 @@ type ICoreWebView2ControllerOptions interface {
 	//  and OS region. If the language portions of the WebView2 language and OS region
 	//  match, then it will use the OS region. Otherwise, it will use the WebView2
 	//  language.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions2#get_scriptlocale">See the ICoreWebView2ControllerOptions2 article.</a>
-	ScriptLocale() string // property
-	// SetScriptLocale Set ScriptLocale
-	SetScriptLocale(AValue string) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions2#get_scriptlocale">See the ICoreWebView2ControllerOptions2 article.</see>
+	ScriptLocale() string         // property ScriptLocale Getter
+	SetScriptLocale(value string) // property ScriptLocale Setter
 }
 
-// TCoreWebView2ControllerOptions Parent: TObject
-//
-//	This class is a ICoreWebView2ControllerOptions wrapper.
-//	ICoreWebView2ControllerOptions is used to manage profile options that created by 'CreateCoreWebView2ControllerOptions'.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2controlleroptions">See the ICoreWebView2ControllerOptions article.</a>
 type TCoreWebView2ControllerOptions struct {
-	TObject
-}
-
-func NewCoreWebView2ControllerOptions(aBaseIntf ICoreWebView2ControllerOptions) ICoreWebView2ControllerOptions {
-	r1 := coreWebView2ControllerOptionsImportAPI().SysCallN(1, GetObjectUintptr(aBaseIntf))
-	return AsCoreWebView2ControllerOptions(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2ControllerOptions) Initialized() bool {
-	r1 := coreWebView2ControllerOptionsImportAPI().SysCallN(2, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ControllerOptionsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ControllerOptions) BaseIntf() ICoreWebView2ControllerOptions {
-	var resultCoreWebView2ControllerOptions uintptr
-	coreWebView2ControllerOptionsImportAPI().SysCallN(0, 0, m.Instance(), 0, uintptr(unsafePointer(&resultCoreWebView2ControllerOptions)))
-	return AsCoreWebView2ControllerOptions(resultCoreWebView2ControllerOptions)
+func (m *TCoreWebView2ControllerOptions) BaseIntf() (result ICoreWebView2ControllerOptions) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ControllerOptionsAPI().SysCallN(2, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ControllerOptions(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ControllerOptions) SetBaseIntf(AValue ICoreWebView2ControllerOptions) {
-	coreWebView2ControllerOptionsImportAPI().SysCallN(0, 1, m.Instance(), GetObjectUintptr(AValue), GetObjectUintptr(AValue))
+func (m *TCoreWebView2ControllerOptions) SetBaseIntf(value ICoreWebView2ControllerOptions) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ControllerOptionsAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
 func (m *TCoreWebView2ControllerOptions) ProfileName() string {
-	r1 := coreWebView2ControllerOptionsImportAPI().SysCallN(4, 0, m.Instance(), 0)
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ControllerOptionsAPI().SysCallN(3, 0, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ControllerOptions) SetProfileName(AValue string) {
-	coreWebView2ControllerOptionsImportAPI().SysCallN(4, 1, m.Instance(), PascalStr(AValue))
+func (m *TCoreWebView2ControllerOptions) SetProfileName(value string) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ControllerOptionsAPI().SysCallN(3, 1, m.Instance(), api.PasStr(value))
 }
 
 func (m *TCoreWebView2ControllerOptions) IsInPrivateModeEnabled() bool {
-	r1 := coreWebView2ControllerOptionsImportAPI().SysCallN(3, 0, m.Instance(), 0)
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ControllerOptionsAPI().SysCallN(4, 0, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ControllerOptions) SetIsInPrivateModeEnabled(AValue bool) {
-	coreWebView2ControllerOptionsImportAPI().SysCallN(3, 1, m.Instance(), PascalBool(AValue))
+func (m *TCoreWebView2ControllerOptions) SetIsInPrivateModeEnabled(value bool) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ControllerOptionsAPI().SysCallN(4, 1, m.Instance(), api.PasBool(value))
 }
 
 func (m *TCoreWebView2ControllerOptions) ScriptLocale() string {
-	r1 := coreWebView2ControllerOptionsImportAPI().SysCallN(5, 0, m.Instance(), 0)
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ControllerOptionsAPI().SysCallN(5, 0, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ControllerOptions) SetScriptLocale(AValue string) {
-	coreWebView2ControllerOptionsImportAPI().SysCallN(5, 1, m.Instance(), PascalStr(AValue))
+func (m *TCoreWebView2ControllerOptions) SetScriptLocale(value string) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ControllerOptionsAPI().SysCallN(5, 1, m.Instance(), api.PasStr(value))
+}
+
+// NewCoreWebView2ControllerOptions class constructor
+func NewCoreWebView2ControllerOptions(baseIntf ICoreWebView2ControllerOptions) ICoreWebView2ControllerOptions {
+	r := coreWebView2ControllerOptionsAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
+	return AsCoreWebView2ControllerOptions(r)
 }
 
 var (
-	coreWebView2ControllerOptionsImport       *imports.Imports = nil
-	coreWebView2ControllerOptionsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2ControllerOptions_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2ControllerOptions_Create", 0),
-		/*2*/ imports.NewTable("CoreWebView2ControllerOptions_Initialized", 0),
-		/*3*/ imports.NewTable("CoreWebView2ControllerOptions_IsInPrivateModeEnabled", 0),
-		/*4*/ imports.NewTable("CoreWebView2ControllerOptions_ProfileName", 0),
-		/*5*/ imports.NewTable("CoreWebView2ControllerOptions_ScriptLocale", 0),
-	}
+	coreWebView2ControllerOptionsOnce   base.Once
+	coreWebView2ControllerOptionsImport *imports.Imports = nil
 )
 
-func coreWebView2ControllerOptionsImportAPI() *imports.Imports {
-	if coreWebView2ControllerOptionsImport == nil {
-		coreWebView2ControllerOptionsImport = NewDefaultImports()
-		coreWebView2ControllerOptionsImport.SetImportTable(coreWebView2ControllerOptionsImportTables)
-		coreWebView2ControllerOptionsImportTables = nil
-	}
+func coreWebView2ControllerOptionsAPI() *imports.Imports {
+	coreWebView2ControllerOptionsOnce.Do(func() {
+		coreWebView2ControllerOptionsImport = api.NewDefaultImports()
+		coreWebView2ControllerOptionsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2ControllerOptions_Create", 0), // constructor NewCoreWebView2ControllerOptions
+			/* 1 */ imports.NewTable("TCoreWebView2ControllerOptions_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2ControllerOptions_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2ControllerOptions_ProfileName", 0), // property ProfileName
+			/* 4 */ imports.NewTable("TCoreWebView2ControllerOptions_IsInPrivateModeEnabled", 0), // property IsInPrivateModeEnabled
+			/* 5 */ imports.NewTable("TCoreWebView2ControllerOptions_ScriptLocale", 0), // property ScriptLocale
+		}
+	})
 	return coreWebView2ControllerOptionsImport
 }

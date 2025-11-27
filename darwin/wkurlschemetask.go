@@ -6,22 +6,23 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKURLSchemeTask Root Interface
-//
-//	An interface that WebKit uses to request custom resources from your app.
-//	https://developer.apple.com/documentation/webkit/wkurlschemetask?language=objc
-type IWKURLSchemeTask interface {
-	IObject
+// IWkURLSchemeTask Parent: lcl.IObject
+type IWkURLSchemeTask interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKURLSchemeTask // function
+	Data() wvTypes.WKURLSchemeTask // function
 	// Request
 	//  Information about the resource to load.
 	Request() NSURLRequest // function
@@ -33,79 +34,94 @@ type IWKURLSchemeTask interface {
 	ReceiveResponse(response NSURLResponse) // procedure
 	// ReceiveData
 	//  Sends some or all of the resource data to WebKit.
-	//  NSData
-	ReceiveData(aDataBytes uintptr, aLength int32) // procedure
+	ReceiveData(dataBytes uintptr, length int32) // procedure
 	// Finish
 	//  Signals the successful completion of the task.
 	Finish() // procedure
 	// FailWithError
 	//  Completes the task and reports the specified error back to WebKit.
-	//  NSError
-	FailWithError(error string) // procedure
+	FailWithError(error_ string) // procedure
 }
 
-// TWKURLSchemeTask Root Object
-//
-//	An interface that WebKit uses to request custom resources from your app.
-//	https://developer.apple.com/documentation/webkit/wkurlschemetask?language=objc
-type TWKURLSchemeTask struct {
-	TObject
+type TWkURLSchemeTask struct {
+	lcl.TObject
 }
 
-func NewWKURLSchemeTask(aData WKURLSchemeTask) IWKURLSchemeTask {
-	r1 := wKURLSchemeTaskImportAPI().SysCallN(0, uintptr(aData))
-	return AsWKURLSchemeTask(r1)
+func (m *TWkURLSchemeTask) Data() wvTypes.WKURLSchemeTask {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURLSchemeTaskAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKURLSchemeTask(r)
 }
 
-func (m *TWKURLSchemeTask) Data() WKURLSchemeTask {
-	r1 := wKURLSchemeTaskImportAPI().SysCallN(1, m.Instance())
-	return WKURLSchemeTask(r1)
+func (m *TWkURLSchemeTask) Request() NSURLRequest {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURLSchemeTaskAPI().SysCallN(2, m.Instance())
+	return NSURLRequest(r)
 }
 
-func (m *TWKURLSchemeTask) Request() NSURLRequest {
-	r1 := wKURLSchemeTaskImportAPI().SysCallN(7, m.Instance())
-	return NSURLRequest(r1)
+func (m *TWkURLSchemeTask) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkURLSchemeTaskAPI().SysCallN(3, m.Instance())
 }
 
-func (m *TWKURLSchemeTask) Release() {
-	wKURLSchemeTaskImportAPI().SysCallN(6, m.Instance())
+func (m *TWkURLSchemeTask) ReceiveResponse(response NSURLResponse) {
+	if !m.IsValid() {
+		return
+	}
+	wkURLSchemeTaskAPI().SysCallN(4, m.Instance(), uintptr(response))
 }
 
-func (m *TWKURLSchemeTask) ReceiveResponse(response NSURLResponse) {
-	wKURLSchemeTaskImportAPI().SysCallN(5, m.Instance(), uintptr(response))
+func (m *TWkURLSchemeTask) ReceiveData(dataBytes uintptr, length int32) {
+	if !m.IsValid() {
+		return
+	}
+	wkURLSchemeTaskAPI().SysCallN(5, m.Instance(), uintptr(dataBytes), uintptr(length))
 }
 
-func (m *TWKURLSchemeTask) ReceiveData(aDataBytes uintptr, aLength int32) {
-	wKURLSchemeTaskImportAPI().SysCallN(4, m.Instance(), uintptr(aDataBytes), uintptr(aLength))
+func (m *TWkURLSchemeTask) Finish() {
+	if !m.IsValid() {
+		return
+	}
+	wkURLSchemeTaskAPI().SysCallN(6, m.Instance())
 }
 
-func (m *TWKURLSchemeTask) Finish() {
-	wKURLSchemeTaskImportAPI().SysCallN(3, m.Instance())
+func (m *TWkURLSchemeTask) FailWithError(error_ string) {
+	if !m.IsValid() {
+		return
+	}
+	wkURLSchemeTaskAPI().SysCallN(7, m.Instance(), api.PasStr(error_))
 }
 
-func (m *TWKURLSchemeTask) FailWithError(error string) {
-	wKURLSchemeTaskImportAPI().SysCallN(2, m.Instance(), PascalStr(error))
+// NewURLSchemeTask class constructor
+func NewURLSchemeTask(data wvTypes.WKURLSchemeTask) IWkURLSchemeTask {
+	r := wkURLSchemeTaskAPI().SysCallN(0, uintptr(data))
+	return AsWkURLSchemeTask(r)
 }
 
 var (
-	wKURLSchemeTaskImport       *imports.Imports = nil
-	wKURLSchemeTaskImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKURLSchemeTask_Create", 0),
-		/*1*/ imports.NewTable("WKURLSchemeTask_Data", 0),
-		/*2*/ imports.NewTable("WKURLSchemeTask_FailWithError", 0),
-		/*3*/ imports.NewTable("WKURLSchemeTask_Finish", 0),
-		/*4*/ imports.NewTable("WKURLSchemeTask_ReceiveData", 0),
-		/*5*/ imports.NewTable("WKURLSchemeTask_ReceiveResponse", 0),
-		/*6*/ imports.NewTable("WKURLSchemeTask_Release", 0),
-		/*7*/ imports.NewTable("WKURLSchemeTask_Request", 0),
-	}
+	wkURLSchemeTaskOnce   base.Once
+	wkURLSchemeTaskImport *imports.Imports = nil
 )
 
-func wKURLSchemeTaskImportAPI() *imports.Imports {
-	if wKURLSchemeTaskImport == nil {
-		wKURLSchemeTaskImport = NewDefaultImports()
-		wKURLSchemeTaskImport.SetImportTable(wKURLSchemeTaskImportTables)
-		wKURLSchemeTaskImportTables = nil
-	}
-	return wKURLSchemeTaskImport
+func wkURLSchemeTaskAPI() *imports.Imports {
+	wkURLSchemeTaskOnce.Do(func() {
+		wkURLSchemeTaskImport = api.NewDefaultImports()
+		wkURLSchemeTaskImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkURLSchemeTask_Create", 0), // constructor NewURLSchemeTask
+			/* 1 */ imports.NewTable("TWkURLSchemeTask_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkURLSchemeTask_Request", 0), // function Request
+			/* 3 */ imports.NewTable("TWkURLSchemeTask_Release", 0), // procedure Release
+			/* 4 */ imports.NewTable("TWkURLSchemeTask_ReceiveResponse", 0), // procedure ReceiveResponse
+			/* 5 */ imports.NewTable("TWkURLSchemeTask_ReceiveData", 0), // procedure ReceiveData
+			/* 6 */ imports.NewTable("TWkURLSchemeTask_Finish", 0), // procedure Finish
+			/* 7 */ imports.NewTable("TWkURLSchemeTask_FailWithError", 0), // procedure FailWithError
+		}
+	})
+	return wkURLSchemeTaskImport
 }

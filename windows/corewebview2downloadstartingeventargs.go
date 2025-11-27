@@ -6,145 +6,170 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2DownloadStartingEventArgs Parent: IObject
-//
-//	Event args for the DownloadStarting event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs">See the ICoreWebView2DownloadStartingEventArgs article.</a>
+// ICoreWebView2DownloadStartingEventArgs Parent: lcl.IObject
 type ICoreWebView2DownloadStartingEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2DownloadStartingEventArgs // property
+	BaseIntf() ICoreWebView2DownloadStartingEventArgs // property BaseIntf Getter
 	// DownloadOperation
 	//  Returns the `ICoreWebView2DownloadOperation` for the download that
 	//  has started.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_downloadoperation">See the ICoreWebView2DownloadStartingEventArgs article.</a>
-	DownloadOperation() ICoreWebView2DownloadOperation // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_downloadoperation">See the ICoreWebView2DownloadStartingEventArgs article.</see>
+	DownloadOperation() ICoreWebView2DownloadOperation // property DownloadOperation Getter
 	// Cancel
 	//  The host may set this flag to cancel the download. If canceled, the
 	//  download save dialog is not displayed regardless of the
 	//  `Handled` property.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_cancel">See the ICoreWebView2DownloadStartingEventArgs article.</a>
-	Cancel() bool // property
-	// SetCancel Set Cancel
-	SetCancel(AValue bool) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_cancel">See the ICoreWebView2DownloadStartingEventArgs article.</see>
+	Cancel() bool         // property Cancel Getter
+	SetCancel(value bool) // property Cancel Setter
 	// ResultFilePath
 	//  The path to the file. If setting the path, the host should ensure that it
 	//  is an absolute path, including the file name, and that the path does not
 	//  point to an existing file. If the path points to an existing file, the
 	//  file will be overwritten. If the directory does not exist, it is created.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_resultfilepath">See the ICoreWebView2DownloadStartingEventArgs article.</a>
-	ResultFilePath() string // property
-	// SetResultFilePath Set ResultFilePath
-	SetResultFilePath(AValue string) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_resultfilepath">See the ICoreWebView2DownloadStartingEventArgs article.</see>
+	ResultFilePath() string         // property ResultFilePath Getter
+	SetResultFilePath(value string) // property ResultFilePath Setter
 	// Handled
 	//  The host may set this flag to `TRUE` to hide the default download dialog
 	//  for this download. The download will progress as normal if it is not
 	//  canceled, there will just be no default UI shown. By default the value is
 	//  `FALSE` and the default download dialog is shown.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_handled">See the ICoreWebView2DownloadStartingEventArgs article.</a>
-	Handled() bool // property
-	// SetHandled Set Handled
-	SetHandled(AValue bool) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#get_handled">See the ICoreWebView2DownloadStartingEventArgs article.</see>
+	Handled() bool         // property Handled Getter
+	SetHandled(value bool) // property Handled Setter
 	// Deferral
 	//  Returns an `ICoreWebView2Deferral` object. Use this operation to
 	//  complete the event at a later time.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#getdeferral">See the ICoreWebView2DownloadStartingEventArgs article.</a>
-	Deferral() ICoreWebView2Deferral // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs#getdeferral">See the ICoreWebView2DownloadStartingEventArgs article.</see>
+	Deferral() ICoreWebView2Deferral // property Deferral Getter
 }
 
-// TCoreWebView2DownloadStartingEventArgs Parent: TObject
-//
-//	Event args for the DownloadStarting event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2downloadstartingeventargs">See the ICoreWebView2DownloadStartingEventArgs article.</a>
 type TCoreWebView2DownloadStartingEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2DownloadStartingEventArgs(aArgs ICoreWebView2DownloadStartingEventArgs) ICoreWebView2DownloadStartingEventArgs {
-	r1 := coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(2, GetObjectUintptr(aArgs))
-	return AsCoreWebView2DownloadStartingEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2DownloadStartingEventArgs) Initialized() bool {
-	r1 := coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(6, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2DownloadStartingEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2DownloadStartingEventArgs) BaseIntf() ICoreWebView2DownloadStartingEventArgs {
-	var resultCoreWebView2DownloadStartingEventArgs uintptr
-	coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(0, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2DownloadStartingEventArgs)))
-	return AsCoreWebView2DownloadStartingEventArgs(resultCoreWebView2DownloadStartingEventArgs)
+func (m *TCoreWebView2DownloadStartingEventArgs) BaseIntf() (result ICoreWebView2DownloadStartingEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2DownloadStartingEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2DownloadStartingEventArgs(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2DownloadStartingEventArgs) DownloadOperation() ICoreWebView2DownloadOperation {
-	var resultCoreWebView2DownloadOperation uintptr
-	coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(4, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2DownloadOperation)))
-	return AsCoreWebView2DownloadOperation(resultCoreWebView2DownloadOperation)
+func (m *TCoreWebView2DownloadStartingEventArgs) DownloadOperation() (result ICoreWebView2DownloadOperation) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2DownloadStartingEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2DownloadOperation(resultPtr)
+	return
 }
 
 func (m *TCoreWebView2DownloadStartingEventArgs) Cancel() bool {
-	r1 := coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(1, 0, m.Instance(), 0)
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2DownloadStartingEventArgsAPI().SysCallN(4, 0, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2DownloadStartingEventArgs) SetCancel(AValue bool) {
-	coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(1, 1, m.Instance(), PascalBool(AValue))
+func (m *TCoreWebView2DownloadStartingEventArgs) SetCancel(value bool) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2DownloadStartingEventArgsAPI().SysCallN(4, 1, m.Instance(), api.PasBool(value))
 }
 
 func (m *TCoreWebView2DownloadStartingEventArgs) ResultFilePath() string {
-	r1 := coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(7, 0, m.Instance(), 0)
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2DownloadStartingEventArgsAPI().SysCallN(5, 0, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2DownloadStartingEventArgs) SetResultFilePath(AValue string) {
-	coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(7, 1, m.Instance(), PascalStr(AValue))
+func (m *TCoreWebView2DownloadStartingEventArgs) SetResultFilePath(value string) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2DownloadStartingEventArgsAPI().SysCallN(5, 1, m.Instance(), api.PasStr(value))
 }
 
 func (m *TCoreWebView2DownloadStartingEventArgs) Handled() bool {
-	r1 := coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(5, 0, m.Instance(), 0)
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2DownloadStartingEventArgsAPI().SysCallN(6, 0, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2DownloadStartingEventArgs) SetHandled(AValue bool) {
-	coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(5, 1, m.Instance(), PascalBool(AValue))
+func (m *TCoreWebView2DownloadStartingEventArgs) SetHandled(value bool) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2DownloadStartingEventArgsAPI().SysCallN(6, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TCoreWebView2DownloadStartingEventArgs) Deferral() ICoreWebView2Deferral {
-	var resultCoreWebView2Deferral uintptr
-	coreWebView2DownloadStartingEventArgsImportAPI().SysCallN(3, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Deferral)))
-	return AsCoreWebView2Deferral(resultCoreWebView2Deferral)
+func (m *TCoreWebView2DownloadStartingEventArgs) Deferral() (result ICoreWebView2Deferral) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2DownloadStartingEventArgsAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Deferral(resultPtr)
+	return
+}
+
+// NewCoreWebView2DownloadStartingEventArgs class constructor
+func NewCoreWebView2DownloadStartingEventArgs(args ICoreWebView2DownloadStartingEventArgs) ICoreWebView2DownloadStartingEventArgs {
+	r := coreWebView2DownloadStartingEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2DownloadStartingEventArgs(r)
 }
 
 var (
-	coreWebView2DownloadStartingEventArgsImport       *imports.Imports = nil
-	coreWebView2DownloadStartingEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_BaseIntf", 0),
-		/*1*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_Cancel", 0),
-		/*2*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_Create", 0),
-		/*3*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_Deferral", 0),
-		/*4*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_DownloadOperation", 0),
-		/*5*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_Handled", 0),
-		/*6*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_Initialized", 0),
-		/*7*/ imports.NewTable("CoreWebView2DownloadStartingEventArgs_ResultFilePath", 0),
-	}
+	coreWebView2DownloadStartingEventArgsOnce   base.Once
+	coreWebView2DownloadStartingEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2DownloadStartingEventArgsImportAPI() *imports.Imports {
-	if coreWebView2DownloadStartingEventArgsImport == nil {
-		coreWebView2DownloadStartingEventArgsImport = NewDefaultImports()
-		coreWebView2DownloadStartingEventArgsImport.SetImportTable(coreWebView2DownloadStartingEventArgsImportTables)
-		coreWebView2DownloadStartingEventArgsImportTables = nil
-	}
+func coreWebView2DownloadStartingEventArgsAPI() *imports.Imports {
+	coreWebView2DownloadStartingEventArgsOnce.Do(func() {
+		coreWebView2DownloadStartingEventArgsImport = api.NewDefaultImports()
+		coreWebView2DownloadStartingEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_Create", 0), // constructor NewCoreWebView2DownloadStartingEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_DownloadOperation", 0), // property DownloadOperation
+			/* 4 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_Cancel", 0), // property Cancel
+			/* 5 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_ResultFilePath", 0), // property ResultFilePath
+			/* 6 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_Handled", 0), // property Handled
+			/* 7 */ imports.NewTable("TCoreWebView2DownloadStartingEventArgs_Deferral", 0), // property Deferral
+		}
+	})
 	return coreWebView2DownloadStartingEventArgsImport
 }

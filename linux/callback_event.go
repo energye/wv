@@ -6,110 +6,273 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
-	"github.com/energye/lcl/emfs"
-	"github.com/energye/lcl/inits"
+	"github.com/energye/lcl/api"
+	"github.com/energye/lcl/base"
 	"github.com/energye/lcl/lcl"
-	"unsafe"
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// getParam 从指定索引和地址获取事件中的参数
-func getParamOf(index int, ptr uintptr) uintptr {
-	return *(*uintptr)(unsafePointer(ptr + uintptr(index)*unsafe.Sizeof(ptr)))
+type callback struct {
+	name string
+	cb   func(getVal func(i int) uintptr)
 }
 
-// 移除事件，释放相关的引用
-func removeEventCallbackProc(f uintptr) uintptr {
-	RemoveEventElement(f)
-	return 0
+func getPtr(val uintptr) base.UnsafePointer {
+	return base.UnsafePointer(val)
 }
 
-// 回调过程
-func eventCallbackProc(f uintptr, args uintptr, _ int) uintptr {
-	fn := PtrToElementValue(f)
-	if fn != nil {
-		// 获取值
-		getVal := func(i int) uintptr {
-			return getParamOf(i, args)
-		}
-
-		// 指针
-		getPtr := func(i int) unsafePointer {
-			return unsafePointer(getVal(i))
-		}
-
-		switch fn.(type) {
-		case TWkLoadChangeEvent:
-			fn.(TWkLoadChangeEvent)(lcl.AsObject(getPtr(0)), WebKitLoadEvent(getVal(1)))
-
-		case TWkExecuteScriptFinishedEvent:
-			fn.(TWkExecuteScriptFinishedEvent)(lcl.AsObject(getPtr(0)), AsWkJSValue(getVal(1)))
-
-		case TWkLoadFailedEvent:
-			failingUri := GoStr(getVal(2))
-			error_ := GoStr(getVal(3))
-			result := (*bool)(getPtr(4))
-			*result = fn.(TWkLoadFailedEvent)(lcl.AsObject(getPtr(0)), WebKitLoadEvent(getVal(1)), failingUri, error_)
-
-		case TWkURISchemeRequestEvent:
-			fn.(TWkURISchemeRequestEvent)(lcl.AsObject(getPtr(0)), WebKitURISchemeRequest(getVal(1)))
-
-		case TWkProcessMessageEvent:
-			fn.(TWkProcessMessageEvent)(lcl.AsObject(getPtr(0)), AsWkJSValue(getVal(1)), TWkProcessId(getVal(2)))
-
-		case TWkMousePressEvent:
-			event := *(*TWkButtonEvent)(getPtr(1))
-			result := (*bool)(getPtr(2))
-			*result = fn.(TWkMousePressEvent)(lcl.AsObject(getPtr(0)), event)
-
-		case TWkMouseReleaseEvent:
-			event := *(*TWkButtonEvent)(getPtr(1))
-			result := (*bool)(getPtr(2))
-			*result = fn.(TWkMouseReleaseEvent)(lcl.AsObject(getPtr(0)), event)
-
-		case TWkGetAcceptPolicyFinishEvent:
-			fn.(TWkGetAcceptPolicyFinishEvent)(lcl.AsObject(getPtr(0)), WebKitCookieAcceptPolicy(getVal(1)), GoStr(getVal(2)))
-
-		case TWkAddCookieFinishEvent:
-			fn.(TWkAddCookieFinishEvent)(lcl.AsObject(getPtr(0)), GoBool(getVal(1)), GoStr(getVal(2)))
-
-		case TWkGetCookiesFinishEvent:
-			fn.(TWkGetCookiesFinishEvent)(lcl.AsObject(getPtr(0)), PList(getVal(1)), GoStr(getVal(2)))
-
-		case TWkDeleteCookieFinishEvent:
-			fn.(TWkDeleteCookieFinishEvent)(lcl.AsObject(getPtr(0)), GoBool(getVal(1)), GoStr(getVal(2)))
-
-		case TWkDecidePolicyEvent:
-			result := (*bool)(getPtr(3))
-			*result = fn.(TWkDecidePolicyEvent)(lcl.AsObject(getPtr(0)), WebKitPolicyDecision(getVal(1)), WebKitPolicyDecisionType(getVal(2)))
-
-		case TWkWebProcessTerminatedEvent:
-			fn.(TWkWebProcessTerminatedEvent)(lcl.AsObject(getPtr(0)), WebKitWebProcessTerminationReason(getVal(1)))
-
-		case TWkContextMenuEvent:
-			result := (*bool)(getPtr(3))
-			*result = fn.(TWkContextMenuEvent)(lcl.AsObject(getPtr(0)), WebKitContextMenu(getVal(1)), PWkAction(getVal(2)))
-
-		case TWkContextMenuCommandEvent:
-			fn.(TWkContextMenuCommandEvent)(lcl.AsObject(getPtr(0)), int32(getVal(1)))
-
-		case TWkContextMenuDismissedEvent:
-			fn.(TWkContextMenuDismissedEvent)(lcl.AsObject(getPtr(0)))
-
-		default:
-		}
+func makeTWkAddCookieFinishEvent(cb TWkAddCookieFinishEvent) *callback {
+	if cb == nil {
+		return nil
 	}
-	return 0
+	return &callback{
+		name: "TWkAddCookieFinishEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(Sender: TObject; Result: boolean; error: string);
+			sender := lcl.AsObject(getVal(0))
+			result := api.GoBool(getVal(1))
+			error_ := api.GoStr(getVal(2))
+			cb(sender, result, error_)
+		},
+	}
 }
 
-// Init
-//
-//	Webkit2初始化
-func Init(libs emfs.IEmbedFS, resources emfs.IEmbedFS) {
-	inits.Init(libs, resources)
-	SetWKEventCallback(eventCallback)
-	SetWKRemoveEventCallback(removeEventCallback)
+func makeTWkContextMenuCommandEvent(cb TWkContextMenuCommandEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkContextMenuCommandEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(Sender: TObject; menuID: integer);
+			sender := lcl.AsObject(getVal(0))
+			menuID := int32(getVal(1))
+			cb(sender, menuID)
+		},
+	}
+}
+
+func makeTWkContextMenuDismissedEvent(cb TWkContextMenuDismissedEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkContextMenuDismissedEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 1 : procedure(Sender: TObject);
+			sender := lcl.AsObject(getVal(0))
+			cb(sender)
+		},
+	}
+}
+
+func makeTWkContextMenuEvent(cb TWkContextMenuEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkContextMenuEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : function(Sender: TObject; contextMenu: WebKitContextMenu; defaultAction: PWkAction): boolean;
+			sender := lcl.AsObject(getVal(0))
+			contextMenu := wvTypes.WebKitContextMenu(getVal(1))
+			defaultAction := wvTypes.PWkAction(getVal(2))
+			ret := cb(sender, contextMenu, defaultAction)
+			*(*bool)(getPtr(getVal(3))) = ret
+		},
+	}
+}
+
+func makeTWkDecidePolicyEvent(cb TWkDecidePolicyEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkDecidePolicyEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : function(Sender: TObject; decision: WebKitPolicyDecision; type_: WebKitPolicyDecisionType): boolean;
+			sender := lcl.AsObject(getVal(0))
+			decision := wvTypes.WebKitPolicyDecision(getVal(1))
+			type_ := wvTypes.WebKitPolicyDecisionType(getVal(2))
+			ret := cb(sender, decision, type_)
+			*(*bool)(getPtr(getVal(3))) = ret
+		},
+	}
+}
+
+func makeTWkDeleteCookieFinishEvent(cb TWkDeleteCookieFinishEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkDeleteCookieFinishEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(Sender: TObject; Result: boolean; error: string);
+			sender := lcl.AsObject(getVal(0))
+			result := api.GoBool(getVal(1))
+			error_ := api.GoStr(getVal(2))
+			cb(sender, result, error_)
+		},
+	}
+}
+
+func makeTWkExecuteScriptFinishedEvent(cb TWkExecuteScriptFinishedEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkExecuteScriptFinishedEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(Sender: TObject; const jsValue: TWkJSValue);
+			sender := lcl.AsObject(getVal(0))
+			jsValue := AsWkJSValue(getVal(1))
+			cb(sender, jsValue)
+		},
+	}
+}
+
+func makeTWkGetAcceptPolicyFinishEvent(cb TWkGetAcceptPolicyFinishEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkGetAcceptPolicyFinishEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(Sender: TObject; policy: WebKitCookieAcceptPolicy; error: string);
+			sender := lcl.AsObject(getVal(0))
+			policy := wvTypes.WebKitCookieAcceptPolicy(getVal(1))
+			error_ := api.GoStr(getVal(2))
+			cb(sender, policy, error_)
+		},
+	}
+}
+
+func makeTWkGetCookiesFinishEvent(cb TWkGetCookiesFinishEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkGetCookiesFinishEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(Sender: TObject; cookieList: PList; error: string);
+			sender := lcl.AsObject(getVal(0))
+			cookieList := wvTypes.PList(getVal(1))
+			error_ := api.GoStr(getVal(2))
+			cb(sender, cookieList, error_)
+		},
+	}
+}
+
+func makeTWkLoadChangeEvent(cb TWkLoadChangeEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkLoadChangeEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(Sender: TObject; loadEvent: WebKitLoadEvent);
+			sender := lcl.AsObject(getVal(0))
+			loadEvent := wvTypes.WebKitLoadEvent(getVal(1))
+			cb(sender, loadEvent)
+		},
+	}
+}
+
+func makeTWkLoadFailedEvent(cb TWkLoadFailedEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkLoadFailedEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 4 : function(Sender: TObject; loadEvent: WebKitLoadEvent; failingUri: string; error: string): boolean;
+			sender := lcl.AsObject(getVal(0))
+			loadEvent := wvTypes.WebKitLoadEvent(getVal(1))
+			failingUri := api.GoStr(getVal(2))
+			error_ := api.GoStr(getVal(3))
+			ret := cb(sender, loadEvent, failingUri, error_)
+			*(*bool)(getPtr(getVal(4))) = ret
+		},
+	}
+}
+
+func makeTWkMousePressEvent(cb TWkMousePressEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkMousePressEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : function(Sender: TObject; event: PWkButtonEvent): boolean;
+			sender := lcl.AsObject(getVal(0))
+			event := *(*TWkButtonEvent)(getPtr(getVal(1)))
+			ret := cb(sender, event)
+			*(*bool)(getPtr(getVal(2))) = ret
+		},
+	}
+}
+
+func makeTWkMouseReleaseEvent(cb TWkMouseReleaseEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkMouseReleaseEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : function(Sender: TObject; event: PWkButtonEvent): boolean;
+			sender := lcl.AsObject(getVal(0))
+			event := *(*TWkButtonEvent)(getPtr(getVal(1)))
+			ret := cb(sender, event)
+			*(*bool)(getPtr(getVal(2))) = ret
+		},
+	}
+}
+
+func makeTWkProcessMessageEvent(cb TWkProcessMessageEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkProcessMessageEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 3 : procedure(Sender: TObject; const jsValue: TWkJSValue; processId: TWkProcessId);
+			sender := lcl.AsObject(getVal(0))
+			jsValue := AsWkJSValue(getVal(1))
+			processId := wvTypes.TWkProcessId(getVal(2))
+			cb(sender, jsValue, processId)
+		},
+	}
+}
+
+func makeTWkURISchemeRequestEvent(cb TWkURISchemeRequestEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkURISchemeRequestEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(Sender: TObject; const uriSchemeRequest: WebKitURISchemeRequest);
+			sender := lcl.AsObject(getVal(0))
+			uriSchemeRequest := wvTypes.WebKitURISchemeRequest(getVal(1))
+			cb(sender, uriSchemeRequest)
+		},
+	}
+}
+
+func makeTWkWebProcessTerminatedEvent(cb TWkWebProcessTerminatedEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkWebProcessTerminatedEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(Sender: TObject; reason: WebKitWebProcessTerminationReason);
+			sender := lcl.AsObject(getVal(0))
+			reason := wvTypes.WebKitWebProcessTerminationReason(getVal(1))
+			cb(sender, reason)
+		},
+	}
 }

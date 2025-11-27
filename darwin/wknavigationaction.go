@@ -6,37 +6,38 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKNavigationAction Root Interface
-//
-//	An object that contains information about an action that causes navigation to occur.
-//	https://developer.apple.com/documentation/webkit/wknavigationaction?language=objc
-type IWKNavigationAction interface {
-	IObject
+// IWkNavigationAction Parent: lcl.IObject
+type IWkNavigationAction interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKNavigationAction // function
+	Data() wvTypes.WKNavigationAction // function
 	// SourceFrame
 	//  The frame that requested the navigation.
-	SourceFrame() WKFrameInfo // function
+	SourceFrame() wvTypes.WKFrameInfo // function
 	// TargetFrame
 	//  The frame in which to display the new content.
-	TargetFrame() WKFrameInfo // function
+	TargetFrame() wvTypes.WKFrameInfo // function
 	// NavigationType
 	//  The type of action that triggered the navigation.
-	NavigationType() WKNavigationType // function
+	NavigationType() wvTypes.WKNavigationType // function
 	// Request
 	//  The URL request object associated with the navigation action.
 	Request() NSURLRequest // function
 	// ModifierFlags
 	//  The modifier keys that were pressed at the time of the navigation request.
-	ModifierFlags() NSEventModifierFlags // function
+	ModifierFlags() wvTypes.NSEventModifierFlags // function
 	// ButtonNumber
 	//  The number of the mouse button that caused the navigation request.
 	ButtonNumber() int32 // function
@@ -45,78 +46,98 @@ type IWKNavigationAction interface {
 	Release() // procedure
 }
 
-// TWKNavigationAction Root Object
-//
-//	An object that contains information about an action that causes navigation to occur.
-//	https://developer.apple.com/documentation/webkit/wknavigationaction?language=objc
-type TWKNavigationAction struct {
-	TObject
+type TWkNavigationAction struct {
+	lcl.TObject
 }
 
-func NewWKNavigationAction(aData WKNavigationAction) IWKNavigationAction {
-	r1 := wKNavigationActionImportAPI().SysCallN(1, uintptr(aData))
-	return AsWKNavigationAction(r1)
+func (m *TWkNavigationAction) Data() wvTypes.WKNavigationAction {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationActionAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKNavigationAction(r)
 }
 
-func (m *TWKNavigationAction) Data() WKNavigationAction {
-	r1 := wKNavigationActionImportAPI().SysCallN(2, m.Instance())
-	return WKNavigationAction(r1)
+func (m *TWkNavigationAction) SourceFrame() wvTypes.WKFrameInfo {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationActionAPI().SysCallN(2, m.Instance())
+	return wvTypes.WKFrameInfo(r)
 }
 
-func (m *TWKNavigationAction) SourceFrame() WKFrameInfo {
-	r1 := wKNavigationActionImportAPI().SysCallN(7, m.Instance())
-	return WKFrameInfo(r1)
+func (m *TWkNavigationAction) TargetFrame() wvTypes.WKFrameInfo {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationActionAPI().SysCallN(3, m.Instance())
+	return wvTypes.WKFrameInfo(r)
 }
 
-func (m *TWKNavigationAction) TargetFrame() WKFrameInfo {
-	r1 := wKNavigationActionImportAPI().SysCallN(8, m.Instance())
-	return WKFrameInfo(r1)
+func (m *TWkNavigationAction) NavigationType() wvTypes.WKNavigationType {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationActionAPI().SysCallN(4, m.Instance())
+	return wvTypes.WKNavigationType(r)
 }
 
-func (m *TWKNavigationAction) NavigationType() WKNavigationType {
-	r1 := wKNavigationActionImportAPI().SysCallN(4, m.Instance())
-	return WKNavigationType(r1)
+func (m *TWkNavigationAction) Request() NSURLRequest {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationActionAPI().SysCallN(5, m.Instance())
+	return NSURLRequest(r)
 }
 
-func (m *TWKNavigationAction) Request() NSURLRequest {
-	r1 := wKNavigationActionImportAPI().SysCallN(6, m.Instance())
-	return NSURLRequest(r1)
+func (m *TWkNavigationAction) ModifierFlags() wvTypes.NSEventModifierFlags {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationActionAPI().SysCallN(6, m.Instance())
+	return wvTypes.NSEventModifierFlags(r)
 }
 
-func (m *TWKNavigationAction) ModifierFlags() NSEventModifierFlags {
-	r1 := wKNavigationActionImportAPI().SysCallN(3, m.Instance())
-	return NSEventModifierFlags(r1)
+func (m *TWkNavigationAction) ButtonNumber() int32 {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkNavigationActionAPI().SysCallN(7, m.Instance())
+	return int32(r)
 }
 
-func (m *TWKNavigationAction) ButtonNumber() int32 {
-	r1 := wKNavigationActionImportAPI().SysCallN(0, m.Instance())
-	return int32(r1)
+func (m *TWkNavigationAction) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkNavigationActionAPI().SysCallN(8, m.Instance())
 }
 
-func (m *TWKNavigationAction) Release() {
-	wKNavigationActionImportAPI().SysCallN(5, m.Instance())
+// NewNavigationAction class constructor
+func NewNavigationAction(data wvTypes.WKNavigationAction) IWkNavigationAction {
+	r := wkNavigationActionAPI().SysCallN(0, uintptr(data))
+	return AsWkNavigationAction(r)
 }
 
 var (
-	wKNavigationActionImport       *imports.Imports = nil
-	wKNavigationActionImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKNavigationAction_ButtonNumber", 0),
-		/*1*/ imports.NewTable("WKNavigationAction_Create", 0),
-		/*2*/ imports.NewTable("WKNavigationAction_Data", 0),
-		/*3*/ imports.NewTable("WKNavigationAction_ModifierFlags", 0),
-		/*4*/ imports.NewTable("WKNavigationAction_NavigationType", 0),
-		/*5*/ imports.NewTable("WKNavigationAction_Release", 0),
-		/*6*/ imports.NewTable("WKNavigationAction_Request", 0),
-		/*7*/ imports.NewTable("WKNavigationAction_SourceFrame", 0),
-		/*8*/ imports.NewTable("WKNavigationAction_TargetFrame", 0),
-	}
+	wkNavigationActionOnce   base.Once
+	wkNavigationActionImport *imports.Imports = nil
 )
 
-func wKNavigationActionImportAPI() *imports.Imports {
-	if wKNavigationActionImport == nil {
-		wKNavigationActionImport = NewDefaultImports()
-		wKNavigationActionImport.SetImportTable(wKNavigationActionImportTables)
-		wKNavigationActionImportTables = nil
-	}
-	return wKNavigationActionImport
+func wkNavigationActionAPI() *imports.Imports {
+	wkNavigationActionOnce.Do(func() {
+		wkNavigationActionImport = api.NewDefaultImports()
+		wkNavigationActionImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkNavigationAction_Create", 0), // constructor NewNavigationAction
+			/* 1 */ imports.NewTable("TWkNavigationAction_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkNavigationAction_SourceFrame", 0), // function SourceFrame
+			/* 3 */ imports.NewTable("TWkNavigationAction_TargetFrame", 0), // function TargetFrame
+			/* 4 */ imports.NewTable("TWkNavigationAction_NavigationType", 0), // function NavigationType
+			/* 5 */ imports.NewTable("TWkNavigationAction_Request", 0), // function Request
+			/* 6 */ imports.NewTable("TWkNavigationAction_ModifierFlags", 0), // function ModifierFlags
+			/* 7 */ imports.NewTable("TWkNavigationAction_ButtonNumber", 0), // function ButtonNumber
+			/* 8 */ imports.NewTable("TWkNavigationAction_Release", 0), // procedure Release
+		}
+	})
+	return wkNavigationActionImport
 }

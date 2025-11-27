@@ -6,48 +6,70 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler Parent: IObject
-//
-//	The caller implements this interface to handle the result of
-//	GetNonDefaultPermissionSettings.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2getnondefaultpermissionsettingscompletedhandler">See the ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler article.</a>
+// ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0 interface {
+	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the result of the corresponding asynchronous method.
+	Invoke(errorCode types.HRESULT, result ICoreWebView2PermissionSettingCollectionView) types.HRESULT // function
+}
+
+// ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler Parent: ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0
 type ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler interface {
-	IObject
+	ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0
+	AsIntfGetNonDefaultPermissionSettingsCompletedHandler() uintptr
 }
 
-// TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler Parent: TObject
-//
-//	The caller implements this interface to handle the result of
-//	GetNonDefaultPermissionSettings.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2getnondefaultpermissionsettingscompletedhandler">See the ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler article.</a>
 type TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler(aEvents IWVBrowserEvents) ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler {
-	r1 := coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents))
-	return AsCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler(r1)
+func (m *TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler) Invoke(errorCode types.HRESULT, result ICoreWebView2PermissionSettingCollectionView) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerAPI().SysCallN(1, m.Instance(), uintptr(errorCode), base.GetObjectUintptr(result))
+	return types.HRESULT(r)
+}
+
+func (m *TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler) AsIntfGetNonDefaultPermissionSettingsCompletedHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler class constructor
+func NewCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler(events IWVBrowserBase) ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler {
+	var getNonDefaultPermissionSettingsCompletedHandlerPtr uintptr // ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler
+	r := coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), uintptr(base.UnsafePointer(&getNonDefaultPermissionSettingsCompletedHandlerPtr)))
+	ret := AsCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, getNonDefaultPermissionSettingsCompletedHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport       *imports.Imports = nil
-	coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2GetNonDefaultPermissionSettingsCompletedHandler_Create", 0),
-	}
+	coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerOnce   base.Once
+	coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImportAPI() *imports.Imports {
-	if coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport == nil {
-		coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport = NewDefaultImports()
-		coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport.SetImportTable(coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImportTables)
-		coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImportTables = nil
-	}
+func coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerAPI() *imports.Imports {
+	coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerOnce.Do(func() {
+		coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport = api.NewDefaultImports()
+		coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler_Create", 0), // constructor NewCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler
+			/* 1 */ imports.NewTable("TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler_Invoke", 0), // function Invoke
+		}
+	})
 	return coreWebView2GetNonDefaultPermissionSettingsCompletedHandlerImport
 }

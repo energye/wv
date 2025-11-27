@@ -6,54 +6,62 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkResponsePolicyDecision Root Interface
+// IWkResponsePolicyDecision Parent: IWkPolicyDecision
 type IWkResponsePolicyDecision interface {
-	IObject
-	GetRequest() WebKitURIRequest   // function
-	GetResponse() WebKitURIResponse // function
+	IWkPolicyDecision
+	GetRequest() wvTypes.WebKitURIRequest   // function
+	GetResponse() wvTypes.WebKitURIResponse // function
 }
 
-// TWkResponsePolicyDecision Root Object
 type TWkResponsePolicyDecision struct {
-	TObject
+	TWkPolicyDecision
 }
 
-func NewWkResponsePolicyDecision(aDecision WebKitResponsePolicyDecision) IWkResponsePolicyDecision {
-	r1 := wkResponsePolicyDecisionImportAPI().SysCallN(0, uintptr(aDecision))
-	return AsWkResponsePolicyDecision(r1)
+func (m *TWkResponsePolicyDecision) GetRequest() wvTypes.WebKitURIRequest {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkResponsePolicyDecisionAPI().SysCallN(1, m.Instance())
+	return wvTypes.WebKitURIRequest(r)
 }
 
-func (m *TWkResponsePolicyDecision) GetRequest() WebKitURIRequest {
-	r1 := wkResponsePolicyDecisionImportAPI().SysCallN(1, m.Instance())
-	return WebKitURIRequest(r1)
+func (m *TWkResponsePolicyDecision) GetResponse() wvTypes.WebKitURIResponse {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkResponsePolicyDecisionAPI().SysCallN(2, m.Instance())
+	return wvTypes.WebKitURIResponse(r)
 }
 
-func (m *TWkResponsePolicyDecision) GetResponse() WebKitURIResponse {
-	r1 := wkResponsePolicyDecisionImportAPI().SysCallN(2, m.Instance())
-	return WebKitURIResponse(r1)
+// NewResponsePolicyDecision class constructor
+func NewResponsePolicyDecision(decision wvTypes.WebKitResponsePolicyDecision) IWkResponsePolicyDecision {
+	r := wkResponsePolicyDecisionAPI().SysCallN(0, uintptr(decision))
+	return AsWkResponsePolicyDecision(r)
 }
 
 var (
-	wkResponsePolicyDecisionImport       *imports.Imports = nil
-	wkResponsePolicyDecisionImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkResponsePolicyDecision_Create", 0),
-		/*1*/ imports.NewTable("WkResponsePolicyDecision_GetRequest", 0),
-		/*2*/ imports.NewTable("WkResponsePolicyDecision_GetResponse", 0),
-	}
+	wkResponsePolicyDecisionOnce   base.Once
+	wkResponsePolicyDecisionImport *imports.Imports = nil
 )
 
-func wkResponsePolicyDecisionImportAPI() *imports.Imports {
-	if wkResponsePolicyDecisionImport == nil {
-		wkResponsePolicyDecisionImport = NewDefaultImports()
-		wkResponsePolicyDecisionImport.SetImportTable(wkResponsePolicyDecisionImportTables)
-		wkResponsePolicyDecisionImportTables = nil
-	}
+func wkResponsePolicyDecisionAPI() *imports.Imports {
+	wkResponsePolicyDecisionOnce.Do(func() {
+		wkResponsePolicyDecisionImport = api.NewDefaultImports()
+		wkResponsePolicyDecisionImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkResponsePolicyDecision_Create", 0), // constructor NewResponsePolicyDecision
+			/* 1 */ imports.NewTable("TWkResponsePolicyDecision_GetRequest", 0), // function GetRequest
+			/* 2 */ imports.NewTable("TWkResponsePolicyDecision_GetResponse", 0), // function GetResponse
+		}
+	})
 	return wkResponsePolicyDecisionImport
 }

@@ -6,125 +6,148 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ServerCertificateErrorDetectedEventArgs Parent: IObject
-//
-//	Event args for the ServerCertificateErrorDetected event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</a>
+// ICoreWebView2ServerCertificateErrorDetectedEventArgs Parent: lcl.IObject
 type ICoreWebView2ServerCertificateErrorDetectedEventArgs interface {
-	IObject
+	lcl.IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
-	Initialized() bool // property
+	Initialized() bool // property Initialized Getter
 	// BaseIntf
 	//  Returns the interface implemented by this class.
-	BaseIntf() ICoreWebView2ServerCertificateErrorDetectedEventArgs // property
+	BaseIntf() ICoreWebView2ServerCertificateErrorDetectedEventArgs // property BaseIntf Getter
 	// ErrorStatus
 	//  The TLS error code for the invalid certificate.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_errorstatus">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</a>
-	ErrorStatus() TWVWebErrorStatus // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_errorstatus">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</see>
+	ErrorStatus() wvTypes.TWVWebErrorStatus // property ErrorStatus Getter
 	// RequestUri
 	//  URI associated with the request for the invalid certificate.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_requesturi">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</a>
-	RequestUri() string // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_requesturi">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</see>
+	RequestUri() string // property RequestUri Getter
 	// ServerCertificate
 	//  Returns the server certificate.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_servercertificate">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</a>
-	ServerCertificate() ICoreWebView2Certificate // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_servercertificate">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</see>
+	ServerCertificate() ICoreWebView2Certificate // property ServerCertificate Getter
 	// Action
 	//  The action of the server certificate error detection.
 	//  The default value is `COREWEBVIEW2_SERVER_CERTIFICATE_ERROR_ACTION_DEFAULT`.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_action">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</a>
-	Action() TWVServerCertificateErrorAction // property
-	// SetAction Set Action
-	SetAction(AValue TWVServerCertificateErrorAction) // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#get_action">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</see>
+	Action() wvTypes.TWVServerCertificateErrorAction         // property Action Getter
+	SetAction(value wvTypes.TWVServerCertificateErrorAction) // property Action Setter
 	// Deferral
 	//  Returns an `ICoreWebView2Deferral` object. Use this operation to
 	//  complete the event at a later time.
-	//  <a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#getdeferral">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</a>
-	Deferral() ICoreWebView2Deferral // property
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs#getdeferral">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</see>
+	Deferral() ICoreWebView2Deferral // property Deferral Getter
 }
 
-// TCoreWebView2ServerCertificateErrorDetectedEventArgs Parent: TObject
-//
-//	Event args for the ServerCertificateErrorDetected event.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2servercertificateerrordetectedeventargs">See the ICoreWebView2ServerCertificateErrorDetectedEventArgs article.</a>
 type TCoreWebView2ServerCertificateErrorDetectedEventArgs struct {
-	TObject
-}
-
-func NewCoreWebView2ServerCertificateErrorDetectedEventArgs(aArgs ICoreWebView2ServerCertificateErrorDetectedEventArgs) ICoreWebView2ServerCertificateErrorDetectedEventArgs {
-	r1 := coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(2, GetObjectUintptr(aArgs))
-	return AsCoreWebView2ServerCertificateErrorDetectedEventArgs(r1)
+	lcl.TObject
 }
 
 func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) Initialized() bool {
-	r1 := coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(5, m.Instance())
-	return GoBool(r1)
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(1, m.Instance())
+	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) BaseIntf() ICoreWebView2ServerCertificateErrorDetectedEventArgs {
-	var resultCoreWebView2ServerCertificateErrorDetectedEventArgs uintptr
-	coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(1, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2ServerCertificateErrorDetectedEventArgs)))
-	return AsCoreWebView2ServerCertificateErrorDetectedEventArgs(resultCoreWebView2ServerCertificateErrorDetectedEventArgs)
+func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) BaseIntf() (result ICoreWebView2ServerCertificateErrorDetectedEventArgs) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2ServerCertificateErrorDetectedEventArgs(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) ErrorStatus() TWVWebErrorStatus {
-	r1 := coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(4, m.Instance())
-	return TWVWebErrorStatus(r1)
+func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) ErrorStatus() wvTypes.TWVWebErrorStatus {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(3, m.Instance())
+	return wvTypes.TWVWebErrorStatus(r)
 }
 
 func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) RequestUri() string {
-	r1 := coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(6, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(4, m.Instance())
+	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) ServerCertificate() ICoreWebView2Certificate {
-	var resultCoreWebView2Certificate uintptr
-	coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(7, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Certificate)))
-	return AsCoreWebView2Certificate(resultCoreWebView2Certificate)
+func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) ServerCertificate() (result ICoreWebView2Certificate) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Certificate(resultPtr)
+	return
 }
 
-func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) Action() TWVServerCertificateErrorAction {
-	r1 := coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(0, 0, m.Instance(), 0)
-	return TWVServerCertificateErrorAction(r1)
+func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) Action() wvTypes.TWVServerCertificateErrorAction {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(6, 0, m.Instance())
+	return wvTypes.TWVServerCertificateErrorAction(r)
 }
 
-func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) SetAction(AValue TWVServerCertificateErrorAction) {
-	coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(0, 1, m.Instance(), uintptr(AValue))
+func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) SetAction(value wvTypes.TWVServerCertificateErrorAction) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(6, 1, m.Instance(), uintptr(value))
 }
 
-func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) Deferral() ICoreWebView2Deferral {
-	var resultCoreWebView2Deferral uintptr
-	coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI().SysCallN(3, m.Instance(), uintptr(unsafePointer(&resultCoreWebView2Deferral)))
-	return AsCoreWebView2Deferral(resultCoreWebView2Deferral)
+func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) Deferral() (result ICoreWebView2Deferral) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = AsCoreWebView2Deferral(resultPtr)
+	return
+}
+
+// NewCoreWebView2ServerCertificateErrorDetectedEventArgs class constructor
+func NewCoreWebView2ServerCertificateErrorDetectedEventArgs(args ICoreWebView2ServerCertificateErrorDetectedEventArgs) ICoreWebView2ServerCertificateErrorDetectedEventArgs {
+	r := coreWebView2ServerCertificateErrorDetectedEventArgsAPI().SysCallN(0, base.GetObjectUintptr(args))
+	return AsCoreWebView2ServerCertificateErrorDetectedEventArgs(r)
 }
 
 var (
-	coreWebView2ServerCertificateErrorDetectedEventArgsImport       *imports.Imports = nil
-	coreWebView2ServerCertificateErrorDetectedEventArgsImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_Action", 0),
-		/*1*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_BaseIntf", 0),
-		/*2*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_Create", 0),
-		/*3*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_Deferral", 0),
-		/*4*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_ErrorStatus", 0),
-		/*5*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_Initialized", 0),
-		/*6*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_RequestUri", 0),
-		/*7*/ imports.NewTable("CoreWebView2ServerCertificateErrorDetectedEventArgs_ServerCertificate", 0),
-	}
+	coreWebView2ServerCertificateErrorDetectedEventArgsOnce   base.Once
+	coreWebView2ServerCertificateErrorDetectedEventArgsImport *imports.Imports = nil
 )
 
-func coreWebView2ServerCertificateErrorDetectedEventArgsImportAPI() *imports.Imports {
-	if coreWebView2ServerCertificateErrorDetectedEventArgsImport == nil {
-		coreWebView2ServerCertificateErrorDetectedEventArgsImport = NewDefaultImports()
-		coreWebView2ServerCertificateErrorDetectedEventArgsImport.SetImportTable(coreWebView2ServerCertificateErrorDetectedEventArgsImportTables)
-		coreWebView2ServerCertificateErrorDetectedEventArgsImportTables = nil
-	}
+func coreWebView2ServerCertificateErrorDetectedEventArgsAPI() *imports.Imports {
+	coreWebView2ServerCertificateErrorDetectedEventArgsOnce.Do(func() {
+		coreWebView2ServerCertificateErrorDetectedEventArgsImport = api.NewDefaultImports()
+		coreWebView2ServerCertificateErrorDetectedEventArgsImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_Create", 0), // constructor NewCoreWebView2ServerCertificateErrorDetectedEventArgs
+			/* 1 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_Initialized", 0), // property Initialized
+			/* 2 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_BaseIntf", 0), // property BaseIntf
+			/* 3 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_ErrorStatus", 0), // property ErrorStatus
+			/* 4 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_RequestUri", 0), // property RequestUri
+			/* 5 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_ServerCertificate", 0), // property ServerCertificate
+			/* 6 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_Action", 0), // property Action
+			/* 7 */ imports.NewTable("TCoreWebView2ServerCertificateErrorDetectedEventArgs_Deferral", 0), // property Deferral
+		}
+	})
 	return coreWebView2ServerCertificateErrorDetectedEventArgsImport
 }

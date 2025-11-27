@@ -6,63 +6,66 @@
 //
 //----------------------------------------
 
-package wv
+package darwin
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWKScriptMessageHandler Root Interface
-//
-//	An interface for receiving messages from JavaScript code running in a webpage.
-//	https://developer.apple.com/documentation/webkit/wkscriptmessagehandler?language=objc
-type IWKScriptMessageHandler interface {
-	IObject
+// IWkScriptMessageHandler Parent: lcl.IObject
+type IWkScriptMessageHandler interface {
+	lcl.IObject
 	// Data
 	//  Returns the object implemented by this class.
-	Data() WKScriptMessageHandlerProtocol // function
+	Data() wvTypes.WKScriptMessageHandlerProtocol // function
 	// Release
 	//  Freeing the class and the objects it implements.
 	Release() // procedure
 }
 
-// TWKScriptMessageHandler Root Object
-//
-//	An interface for receiving messages from JavaScript code running in a webpage.
-//	https://developer.apple.com/documentation/webkit/wkscriptmessagehandler?language=objc
-type TWKScriptMessageHandler struct {
-	TObject
+type TWkScriptMessageHandler struct {
+	lcl.TObject
 }
 
-func NewWKScriptMessageHandler(event IReceiveScriptMessageDelegateEvent) IWKScriptMessageHandler {
-	r1 := wKScriptMessageHandlerImportAPI().SysCallN(0, GetObjectUintptr(event))
-	return AsWKScriptMessageHandler(r1)
+func (m *TWkScriptMessageHandler) Data() wvTypes.WKScriptMessageHandlerProtocol {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkScriptMessageHandlerAPI().SysCallN(1, m.Instance())
+	return wvTypes.WKScriptMessageHandlerProtocol(r)
 }
 
-func (m *TWKScriptMessageHandler) Data() WKScriptMessageHandlerProtocol {
-	r1 := wKScriptMessageHandlerImportAPI().SysCallN(1, m.Instance())
-	return WKScriptMessageHandlerProtocol(r1)
+func (m *TWkScriptMessageHandler) Release() {
+	if !m.IsValid() {
+		return
+	}
+	wkScriptMessageHandlerAPI().SysCallN(2, m.Instance())
 }
 
-func (m *TWKScriptMessageHandler) Release() {
-	wKScriptMessageHandlerImportAPI().SysCallN(2, m.Instance())
+// NewScriptMessageHandler class constructor
+func NewScriptMessageHandler(event IWkWebview) IWkScriptMessageHandler {
+	r := wkScriptMessageHandlerAPI().SysCallN(0, base.GetObjectUintptr(event))
+	return AsWkScriptMessageHandler(r)
 }
 
 var (
-	wKScriptMessageHandlerImport       *imports.Imports = nil
-	wKScriptMessageHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WKScriptMessageHandler_Create", 0),
-		/*1*/ imports.NewTable("WKScriptMessageHandler_Data", 0),
-		/*2*/ imports.NewTable("WKScriptMessageHandler_Release", 0),
-	}
+	wkScriptMessageHandlerOnce   base.Once
+	wkScriptMessageHandlerImport *imports.Imports = nil
 )
 
-func wKScriptMessageHandlerImportAPI() *imports.Imports {
-	if wKScriptMessageHandlerImport == nil {
-		wKScriptMessageHandlerImport = NewDefaultImports()
-		wKScriptMessageHandlerImport.SetImportTable(wKScriptMessageHandlerImportTables)
-		wKScriptMessageHandlerImportTables = nil
-	}
-	return wKScriptMessageHandlerImport
+func wkScriptMessageHandlerAPI() *imports.Imports {
+	wkScriptMessageHandlerOnce.Do(func() {
+		wkScriptMessageHandlerImport = api.NewDefaultImports()
+		wkScriptMessageHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkScriptMessageHandler_Create", 0), // constructor NewScriptMessageHandler
+			/* 1 */ imports.NewTable("TWkScriptMessageHandler_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkScriptMessageHandler_Release", 0), // procedure Release
+		}
+	})
+	return wkScriptMessageHandlerImport
 }

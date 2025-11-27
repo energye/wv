@@ -6,53 +6,79 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2WebResourceResponseViewGetContentCompletedHandler Parent: IObject
-//
-//	Receives the result of the ICoreWebView2WebResourceResponseView.GetContent method.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponseviewgetcontentcompletedhandler">See the ICoreWebView2WebResourceResponseViewGetContentCompletedHandler article.</a>
+// ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0 Parent: lcl.IInterfacedObject
+type ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0 interface {
+	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the result of the corresponding asynchronous method.
+	Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT // function
+}
+
+// ICoreWebView2WebResourceResponseViewGetContentCompletedHandler Parent: ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0
 type ICoreWebView2WebResourceResponseViewGetContentCompletedHandler interface {
-	IObject
-	ResourceID() int32 // property
+	ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0
+	AsIntfWebResourceResponseViewGetContentCompletedHandler() uintptr
 }
 
-// TCoreWebView2WebResourceResponseViewGetContentCompletedHandler Parent: TObject
-//
-//	Receives the result of the ICoreWebView2WebResourceResponseView.GetContent method.
-//	<a href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2webresourceresponseviewgetcontentcompletedhandler">See the ICoreWebView2WebResourceResponseViewGetContentCompletedHandler article.</a>
 type TCoreWebView2WebResourceResponseViewGetContentCompletedHandler struct {
-	TObject
+	lcl.TInterfacedObject
 }
 
-func NewCoreWebView2WebResourceResponseViewGetContentCompletedHandler(aEvents IWVBrowserEvents, aResourceID int32) ICoreWebView2WebResourceResponseViewGetContentCompletedHandler {
-	r1 := coreWebView2WebResourceResponseViewGetContentCompletedHandlerImportAPI().SysCallN(0, GetObjectUintptr(aEvents), uintptr(aResourceID))
-	return AsCoreWebView2WebResourceResponseViewGetContentCompletedHandler(r1)
+func (m *TCoreWebView2WebResourceResponseViewGetContentCompletedHandler) Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2WebResourceResponseViewGetContentCompletedHandlerAPI().SysCallN(1, m.Instance(), uintptr(errorCode), base.GetObjectUintptr(result))
+	return types.HRESULT(r)
 }
 
 func (m *TCoreWebView2WebResourceResponseViewGetContentCompletedHandler) ResourceID() int32 {
-	r1 := coreWebView2WebResourceResponseViewGetContentCompletedHandlerImportAPI().SysCallN(1, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2WebResourceResponseViewGetContentCompletedHandlerAPI().SysCallN(2, m.Instance())
+	return int32(r)
+}
+
+func (m *TCoreWebView2WebResourceResponseViewGetContentCompletedHandler) AsIntfWebResourceResponseViewGetContentCompletedHandler() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewCoreWebView2WebResourceResponseViewGetContentCompletedHandler class constructor
+func NewCoreWebView2WebResourceResponseViewGetContentCompletedHandler(events IWVBrowserBase, resourceID int32) ICoreWebView2WebResourceResponseViewGetContentCompletedHandler {
+	var webResourceResponseViewGetContentCompletedHandlerPtr uintptr // ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
+	r := coreWebView2WebResourceResponseViewGetContentCompletedHandlerAPI().SysCallN(0, base.GetObjectUintptr(events), uintptr(resourceID), uintptr(base.UnsafePointer(&webResourceResponseViewGetContentCompletedHandlerPtr)))
+	ret := AsCoreWebView2WebResourceResponseViewGetContentCompletedHandler(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, webResourceResponseViewGetContentCompletedHandlerPtr)
+	}
+	return ret
 }
 
 var (
-	coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport       *imports.Imports = nil
-	coreWebView2WebResourceResponseViewGetContentCompletedHandlerImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("CoreWebView2WebResourceResponseViewGetContentCompletedHandler_Create", 0),
-		/*1*/ imports.NewTable("CoreWebView2WebResourceResponseViewGetContentCompletedHandler_ResourceID", 0),
-	}
+	coreWebView2WebResourceResponseViewGetContentCompletedHandlerOnce   base.Once
+	coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport *imports.Imports = nil
 )
 
-func coreWebView2WebResourceResponseViewGetContentCompletedHandlerImportAPI() *imports.Imports {
-	if coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport == nil {
-		coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport = NewDefaultImports()
-		coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport.SetImportTable(coreWebView2WebResourceResponseViewGetContentCompletedHandlerImportTables)
-		coreWebView2WebResourceResponseViewGetContentCompletedHandlerImportTables = nil
-	}
+func coreWebView2WebResourceResponseViewGetContentCompletedHandlerAPI() *imports.Imports {
+	coreWebView2WebResourceResponseViewGetContentCompletedHandlerOnce.Do(func() {
+		coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport = api.NewDefaultImports()
+		coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TCoreWebView2WebResourceResponseViewGetContentCompletedHandler_Create", 0), // constructor NewCoreWebView2WebResourceResponseViewGetContentCompletedHandler
+			/* 1 */ imports.NewTable("TCoreWebView2WebResourceResponseViewGetContentCompletedHandler_Invoke", 0), // function Invoke
+			/* 2 */ imports.NewTable("TCoreWebView2WebResourceResponseViewGetContentCompletedHandler_ResourceID", 0), // property ResourceID
+		}
+	})
 	return coreWebView2WebResourceResponseViewGetContentCompletedHandlerImport
 }

@@ -6,89 +6,113 @@
 //
 //----------------------------------------
 
-package wv
+package linux
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
+
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkURIResponse Root Interface
+// IWkURIResponse Parent: lcl.IObject
 type IWkURIResponse interface {
-	IObject
-	URI() string                             // property
-	Data() WebKitURIResponse                 // function
-	Headers() PSoupMessageHeaders            // function
-	GetStatusCode() int32                    // function
-	GetContentLength() (resultUint64 uint64) // function
-	GetMimeType() string                     // function
-	GetSuggestedFilename() string            // function
+	lcl.IObject
+	Data() wvTypes.WebKitURIResponse      // function
+	Headers() wvTypes.PSoupMessageHeaders // function
+	GetStatusCode() int32                 // function
+	GetContentLength() uint64             // function
+	GetMimeType() string                  // function
+	GetSuggestedFilename() string         // function
+	URI() string                          // property URI Getter
 }
 
-// TWkURIResponse Root Object
 type TWkURIResponse struct {
-	TObject
+	lcl.TObject
 }
 
-func NewWkURIResponse(aURIResponse WebKitURIResponse) IWkURIResponse {
-	r1 := wkURIResponseImportAPI().SysCallN(0, uintptr(aURIResponse))
-	return AsWkURIResponse(r1)
+func (m *TWkURIResponse) Data() wvTypes.WebKitURIResponse {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURIResponseAPI().SysCallN(1, m.Instance())
+	return wvTypes.WebKitURIResponse(r)
 }
 
-func (m *TWkURIResponse) URI() string {
-	r1 := wkURIResponseImportAPI().SysCallN(7, m.Instance())
-	return GoStr(r1)
-}
-
-func (m *TWkURIResponse) Data() WebKitURIResponse {
-	r1 := wkURIResponseImportAPI().SysCallN(1, m.Instance())
-	return WebKitURIResponse(r1)
-}
-
-func (m *TWkURIResponse) Headers() PSoupMessageHeaders {
-	r1 := wkURIResponseImportAPI().SysCallN(6, m.Instance())
-	return PSoupMessageHeaders(r1)
+func (m *TWkURIResponse) Headers() wvTypes.PSoupMessageHeaders {
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURIResponseAPI().SysCallN(2, m.Instance())
+	return wvTypes.PSoupMessageHeaders(r)
 }
 
 func (m *TWkURIResponse) GetStatusCode() int32 {
-	r1 := wkURIResponseImportAPI().SysCallN(4, m.Instance())
-	return int32(r1)
+	if !m.IsValid() {
+		return 0
+	}
+	r := wkURIResponseAPI().SysCallN(3, m.Instance())
+	return int32(r)
 }
 
-func (m *TWkURIResponse) GetContentLength() (resultUint64 uint64) {
-	wkURIResponseImportAPI().SysCallN(2, m.Instance(), uintptr(unsafePointer(&resultUint64)))
+func (m *TWkURIResponse) GetContentLength() (result uint64) {
+	if !m.IsValid() {
+		return
+	}
+	wkURIResponseAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&result)))
 	return
 }
 
 func (m *TWkURIResponse) GetMimeType() string {
-	r1 := wkURIResponseImportAPI().SysCallN(3, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkURIResponseAPI().SysCallN(5, m.Instance())
+	return api.GoStr(r)
 }
 
 func (m *TWkURIResponse) GetSuggestedFilename() string {
-	r1 := wkURIResponseImportAPI().SysCallN(5, m.Instance())
-	return GoStr(r1)
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkURIResponseAPI().SysCallN(6, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWkURIResponse) URI() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkURIResponseAPI().SysCallN(7, m.Instance())
+	return api.GoStr(r)
+}
+
+// NewURIResponse class constructor
+func NewURIResponse(uRIResponse wvTypes.WebKitURIResponse) IWkURIResponse {
+	r := wkURIResponseAPI().SysCallN(0, uintptr(uRIResponse))
+	return AsWkURIResponse(r)
 }
 
 var (
-	wkURIResponseImport       *imports.Imports = nil
-	wkURIResponseImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WkURIResponse_Create", 0),
-		/*1*/ imports.NewTable("WkURIResponse_Data", 0),
-		/*2*/ imports.NewTable("WkURIResponse_GetContentLength", 0),
-		/*3*/ imports.NewTable("WkURIResponse_GetMimeType", 0),
-		/*4*/ imports.NewTable("WkURIResponse_GetStatusCode", 0),
-		/*5*/ imports.NewTable("WkURIResponse_GetSuggestedFilename", 0),
-		/*6*/ imports.NewTable("WkURIResponse_Headers", 0),
-		/*7*/ imports.NewTable("WkURIResponse_URI", 0),
-	}
+	wkURIResponseOnce   base.Once
+	wkURIResponseImport *imports.Imports = nil
 )
 
-func wkURIResponseImportAPI() *imports.Imports {
-	if wkURIResponseImport == nil {
-		wkURIResponseImport = NewDefaultImports()
-		wkURIResponseImport.SetImportTable(wkURIResponseImportTables)
-		wkURIResponseImportTables = nil
-	}
+func wkURIResponseAPI() *imports.Imports {
+	wkURIResponseOnce.Do(func() {
+		wkURIResponseImport = api.NewDefaultImports()
+		wkURIResponseImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWkURIResponse_Create", 0), // constructor NewURIResponse
+			/* 1 */ imports.NewTable("TWkURIResponse_Data", 0), // function Data
+			/* 2 */ imports.NewTable("TWkURIResponse_Headers", 0), // function Headers
+			/* 3 */ imports.NewTable("TWkURIResponse_GetStatusCode", 0), // function GetStatusCode
+			/* 4 */ imports.NewTable("TWkURIResponse_GetContentLength", 0), // function GetContentLength
+			/* 5 */ imports.NewTable("TWkURIResponse_GetMimeType", 0), // function GetMimeType
+			/* 6 */ imports.NewTable("TWkURIResponse_GetSuggestedFilename", 0), // function GetSuggestedFilename
+			/* 7 */ imports.NewTable("TWkURIResponse_URI", 0), // property URI
+		}
+	})
 	return wkURIResponseImport
 }

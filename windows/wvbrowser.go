@@ -6,46 +6,52 @@
 //
 //----------------------------------------
 
-package wv
+package windows
 
 import (
-	. "github.com/energye/lcl/api"
+	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
+	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
 // IWVBrowser Parent: IWVBrowserBase
-//
-//	VCL and LCL version of TWVBrowserBase that puts together all browser procedures, functions, properties and events in one place.
-//	It has all you need to create, modify and destroy a web browser.
 type IWVBrowser interface {
 	IWVBrowserBase
+	AsIntfWVBrowserEvents() uintptr
 }
 
-// TWVBrowser Parent: TWVBrowserBase
-//
-//	VCL and LCL version of TWVBrowserBase that puts together all browser procedures, functions, properties and events in one place.
-//	It has all you need to create, modify and destroy a web browser.
 type TWVBrowser struct {
 	TWVBrowserBase
 }
 
-func NewWVBrowser(AOwner IComponent) IWVBrowser {
-	r1 := wVBrowserImportAPI().SysCallN(0, GetObjectUintptr(AOwner))
-	return AsWVBrowser(r1)
+func (m *TWVBrowser) AsIntfWVBrowserEvents() uintptr {
+	return m.GetIntfPointer(0)
+}
+
+// NewBrowser class constructor
+func NewBrowser(owner lcl.IComponent) IWVBrowser {
+	var wVBrowserEventsPtr uintptr // IWVBrowserEvents
+	r := wVBrowserAPI().SysCallN(0, base.GetObjectUintptr(owner), uintptr(base.UnsafePointer(&wVBrowserEventsPtr)))
+	ret := AsWVBrowser(r)
+	if intf, ok := ret.(base.IIntfs); ok {
+		intf.Create(1)
+		intf.SetIntfPointer(0, wVBrowserEventsPtr)
+	}
+	return ret
 }
 
 var (
-	wVBrowserImport       *imports.Imports = nil
-	wVBrowserImportTables                  = []*imports.Table{
-		/*0*/ imports.NewTable("WVBrowser_Create", 0),
-	}
+	wVBrowserOnce   base.Once
+	wVBrowserImport *imports.Imports = nil
 )
 
-func wVBrowserImportAPI() *imports.Imports {
-	if wVBrowserImport == nil {
-		wVBrowserImport = NewDefaultImports()
-		wVBrowserImport.SetImportTable(wVBrowserImportTables)
-		wVBrowserImportTables = nil
-	}
+func wVBrowserAPI() *imports.Imports {
+	wVBrowserOnce.Do(func() {
+		wVBrowserImport = api.NewDefaultImports()
+		wVBrowserImport.Table = []*imports.Table{
+			/* 0 */ imports.NewTable("TWVBrowser_Create", 0), // constructor NewBrowser
+		}
+	})
 	return wVBrowserImport
 }
