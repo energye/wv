@@ -32,13 +32,13 @@ type ICoreWebView2ExecuteScriptResult interface {
 	// BaseIntf
 	//  Returns the interface implemented by this class.
 	BaseIntf() ICoreWebView2ExecuteScriptResult // property BaseIntf Getter
-	// Succeeded_
+	// Succeeded
 	//  This property is true if ExecuteScriptWithResult successfully executed script with
 	//  no unhandled exceptions and the result is available in the ResultAsJson property
 	//  or via the TryGetResultAsString method.
 	//  If it is false then the script execution had an unhandled exception which you
 	//  can get via the Exception property.
-	Succeeded_() bool // property Succeeded_ Getter
+	Succeeded() bool // property Succeeded_ Getter
 	// ResultAsJson
 	//  A function that has no explicit return value returns undefined. If the
 	//  script that was run throws an unhandled exception, then the result is
@@ -89,7 +89,7 @@ func (m *TCoreWebView2ExecuteScriptResult) BaseIntf() (result ICoreWebView2Execu
 	return
 }
 
-func (m *TCoreWebView2ExecuteScriptResult) Succeeded_() bool {
+func (m *TCoreWebView2ExecuteScriptResult) Succeeded() bool {
 	if !m.IsValid() {
 		return false
 	}
@@ -134,7 +134,7 @@ func coreWebView2ExecuteScriptResultAPI() *imports.Imports {
 			/* 1 */ imports.NewTable("TCoreWebView2ExecuteScriptResult_TryGetResultAsString", 0), // function TryGetResultAsString
 			/* 2 */ imports.NewTable("TCoreWebView2ExecuteScriptResult_Initialized", 0), // property Initialized
 			/* 3 */ imports.NewTable("TCoreWebView2ExecuteScriptResult_BaseIntf", 0), // property BaseIntf
-			/* 4 */ imports.NewTable("TCoreWebView2ExecuteScriptResult_Succeeded_", 0), // property Succeeded_
+			/* 4 */ imports.NewTable("TCoreWebView2ExecuteScriptResult_Succeeded_", 0), // property Succeeded
 			/* 5 */ imports.NewTable("TCoreWebView2ExecuteScriptResult_ResultAsJson", 0), // property ResultAsJson
 			/* 6 */ imports.NewTable("TCoreWebView2ExecuteScriptResult_Exception", 0), // property Exception
 		}

@@ -44,12 +44,12 @@ type ICoreWebView2ScriptDialogOpeningEventArgs interface {
 	//  `beforeunload`.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2scriptdialogopeningeventargs#get_kind">See the ICoreWebView2ScriptDialogOpeningEventArgs article.</see>
 	Kind() wvTypes.TWVScriptDialogKind // property Kind Getter
-	// Message_
+	// Message
 	//  The message of the dialog box. From JavaScript this is the first
 	//  parameter passed to `alert`, `confirm`, and `prompt` and is empty for
 	//  `beforeunload`.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2scriptdialogopeningeventargs#get_message">See the ICoreWebView2ScriptDialogOpeningEventArgs article.</see>
-	Message_() string // property Message_ Getter
+	Message() string // property Message_ Getter
 	// DefaultText
 	//  The second parameter passed to the JavaScript prompt dialog.
 	//  The result of the prompt JavaScript function uses this value as the
@@ -116,7 +116,7 @@ func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Kind() wvTypes.TWVScriptDial
 	return wvTypes.TWVScriptDialogKind(r)
 }
 
-func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Message_() string {
+func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Message() string {
 	if !m.IsValid() {
 		return ""
 	}
@@ -178,7 +178,7 @@ func coreWebView2ScriptDialogOpeningEventArgsAPI() *imports.Imports {
 			/* 3 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_BaseIntf", 0), // property BaseIntf
 			/* 4 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_URI", 0), // property URI
 			/* 5 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_Kind", 0), // property Kind
-			/* 6 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_Message_", 0), // property Message_
+			/* 6 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_Message_", 0), // property Message
 			/* 7 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_DefaultText", 0), // property DefaultText
 			/* 8 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_ResultText", 0), // property ResultText
 			/* 9 */ imports.NewTable("TCoreWebView2ScriptDialogOpeningEventArgs_Deferral", 0), // property Deferral

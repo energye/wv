@@ -23,6 +23,7 @@ type IWVCustomSchemeInfoArrayWrap interface {
 	Size() int32                                                 // function
 	GetValue(index int32) TWVCustomSchemeInfo                    // function
 	SetValue(index int32, value TWVCustomSchemeInfo)             // procedure
+	AddValue(value TWVCustomSchemeInfo)                          // procedure
 }
 
 type TWVCustomSchemeInfoArrayWrap struct {
@@ -63,6 +64,14 @@ func (m *TWVCustomSchemeInfoArrayWrap) SetValue(index int32, value TWVCustomSche
 	wVCustomSchemeInfoArrayWrapAPI().SysCallN(4, m.Instance(), uintptr(index), uintptr(base.UnsafePointer(valuePtr)))
 }
 
+func (m *TWVCustomSchemeInfoArrayWrap) AddValue(value TWVCustomSchemeInfo) {
+	if !m.IsValid() {
+		return
+	}
+	valuePtr := value.ToPas()
+	wVCustomSchemeInfoArrayWrapAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(valuePtr)))
+}
+
 // NewCustomSchemeInfoArrayWrapWithInt class constructor
 func NewCustomSchemeInfoArrayWrapWithInt(size int32) IWVCustomSchemeInfoArrayWrap {
 	r := wVCustomSchemeInfoArrayWrapAPI().SysCallN(0, uintptr(size))
@@ -83,6 +92,7 @@ func wVCustomSchemeInfoArrayWrapAPI() *imports.Imports {
 			/* 2 */ imports.NewTable("TWVCustomSchemeInfoArrayWrap_Size", 0), // function Size
 			/* 3 */ imports.NewTable("TWVCustomSchemeInfoArrayWrap_GetValue", 0), // function GetValue
 			/* 4 */ imports.NewTable("TWVCustomSchemeInfoArrayWrap_SetValue", 0), // procedure SetValue
+			/* 5 */ imports.NewTable("TWVCustomSchemeInfoArrayWrap_AddValue", 0), // procedure AddValue
 		}
 	})
 	return wVCustomSchemeInfoArrayWrapImport

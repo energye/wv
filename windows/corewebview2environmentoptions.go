@@ -21,7 +21,7 @@ import (
 // ICoreWebView2EnvironmentOptions0 Parent: lcl.IInterfacedObject
 type ICoreWebView2EnvironmentOptions0 interface {
 	lcl.IInterfacedObject
-	// Get_AdditionalBrowserArguments
+	// GetAdditionalBrowserArguments
 	//  Changes the behavior of the WebView. The arguments are passed to the
 	//  browser process as part of the command. For more information about
 	//  using command-line switches with Chromium browser processes, navigate to
@@ -48,8 +48,8 @@ type ICoreWebView2EnvironmentOptions0 interface {
 	//
 	//  The caller must free the returned string with `CoTaskMemFree`. See
 	//  [API Conventions](/microsoft-edge/webview2/concepts/win32-api-conventions#strings).
-	Get_AdditionalBrowserArguments(outValue *string) types.HRESULT // function
-	// Set_AdditionalBrowserArguments
+	GetAdditionalBrowserArguments(outValue *string) types.HRESULT // function
+	// SetAdditionalBrowserArguments
 	//  Sets the `AdditionalBrowserArguments` property.
 	//
 	//  Please note that calling this API twice will replace the previous value
@@ -58,8 +58,8 @@ type ICoreWebView2EnvironmentOptions0 interface {
 	//  features are being enabled/disabled for a single switch, in which
 	//  case the features should be comma-seperated.
 	//  Ex. "--disable-features=feature1,feature2 --some-other-switch --do-something"
-	Set_AdditionalBrowserArguments(value string) types.HRESULT // function
-	// Get_Language
+	SetAdditionalBrowserArguments(value string) types.HRESULT // function
+	// GetLanguage
 	//  The default display language for WebView. It applies to browser UI such as
 	//  context menu and dialogs. It also applies to the `accept-languages` HTTP
 	//  header that WebView sends to websites. The intended locale value is in the
@@ -68,11 +68,11 @@ type ICoreWebView2EnvironmentOptions0 interface {
 	//
 	//  The caller must free the returned string with `CoTaskMemFree`. See
 	//  [API Conventions](/microsoft-edge/webview2/concepts/win32-api-conventions#strings).
-	Get_Language(outValue *string) types.HRESULT // function
-	// Set_Language
+	GetLanguage(outValue *string) types.HRESULT // function
+	// SetLanguage
 	//  Sets the `Language` property.
-	Set_Language(value string) types.HRESULT // function
-	// Get_TargetCompatibleBrowserVersion
+	SetLanguage(value string) types.HRESULT // function
+	// GetTargetCompatibleBrowserVersion
 	//  Specifies the version of the WebView2 Runtime binaries required to be
 	//  compatible with your app. This defaults to the WebView2 Runtime version
 	//  that corresponds with the version of the SDK the app is using. The
@@ -87,11 +87,11 @@ type ICoreWebView2EnvironmentOptions0 interface {
 	//
 	//  The caller must free the returned string with `CoTaskMemFree`. See
 	//  [API Conventions](/microsoft-edge/webview2/concepts/win32-api-conventions#strings).
-	Get_TargetCompatibleBrowserVersion(outValue *string) types.HRESULT // function
-	// Set_TargetCompatibleBrowserVersion
+	GetTargetCompatibleBrowserVersion(outValue *string) types.HRESULT // function
+	// SetTargetCompatibleBrowserVersion
 	//  Sets the `TargetCompatibleBrowserVersion` property.
-	Set_TargetCompatibleBrowserVersion(value string) types.HRESULT // function
-	// Get_AllowSingleSignOnUsingOSPrimaryAccount
+	SetTargetCompatibleBrowserVersion(value string) types.HRESULT // function
+	// GetAllowSingleSignOnUsingOSPrimaryAccount
 	//  The `AllowSingleSignOnUsingOSPrimaryAccount` property is used to enable
 	//  single sign on with Azure Active Directory (AAD) and personal Microsoft
 	//  Account (MSA) resources inside WebView. All AAD accounts, connected to
@@ -101,21 +101,21 @@ type ICoreWebView2EnvironmentOptions0 interface {
 	//  `enterpriseCloudSSO`
 	//  [Restricted capabilities](/windows/uwp/packaging/app-capability-declarations\#restricted-capabilities)
 	//  for the single sign on (SSO) to work.
-	Get_AllowSingleSignOnUsingOSPrimaryAccount(outAllow *int32) types.HRESULT // function
-	// Set_AllowSingleSignOnUsingOSPrimaryAccount
+	GetAllowSingleSignOnUsingOSPrimaryAccount(outAllow *int32) types.HRESULT // function
+	// SetAllowSingleSignOnUsingOSPrimaryAccount
 	//  Sets the `AllowSingleSignOnUsingOSPrimaryAccount` property.
-	Set_AllowSingleSignOnUsingOSPrimaryAccount(allow int32) types.HRESULT // function
+	SetAllowSingleSignOnUsingOSPrimaryAccount(allow int32) types.HRESULT // function
 }
 
 // ICoreWebView2EnvironmentOptions2 Parent: lcl.IInterfacedObject
 type ICoreWebView2EnvironmentOptions2 interface {
 	lcl.IInterfacedObject
-	// Get_ExclusiveUserDataFolderAccess
+	// GetExclusiveUserDataFolderAccess
 	//  Whether other processes can create WebView2 from WebView2Environment created with the
 	//  same user data folder and therefore sharing the same WebView browser process instance.
 	//  Default is FALSE.
-	Get_ExclusiveUserDataFolderAccess(outValue *int32) types.HRESULT // function
-	// Set_ExclusiveUserDataFolderAccess
+	GetExclusiveUserDataFolderAccess(outValue *int32) types.HRESULT // function
+	// SetExclusiveUserDataFolderAccess
 	//  Sets the `ExclusiveUserDataFolderAccess` property.
 	//  The `ExclusiveUserDataFolderAccess` property specifies that the WebView environment
 	//  obtains exclusive access to the user data folder.
@@ -128,19 +128,19 @@ type ICoreWebView2EnvironmentOptions2 interface {
 	//  WebViews that have the same UserDataFolder. When another process tries to create a
 	//  WebView2Controller from an WebView2Environment object created with the same user data folder,
 	//  it will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
-	Set_ExclusiveUserDataFolderAccess(value int32) types.HRESULT // function
+	SetExclusiveUserDataFolderAccess(value int32) types.HRESULT // function
 }
 
 // ICoreWebView2EnvironmentOptions3 Parent: lcl.IInterfacedObject
 type ICoreWebView2EnvironmentOptions3 interface {
 	lcl.IInterfacedObject
-	// Get_IsCustomCrashReportingEnabled
+	// GetIsCustomCrashReportingEnabled
 	//  When `IsCustomCrashReportingEnabled` is set to `TRUE`, Windows won't send crash data to Microsoft endpoint.
 	//  `IsCustomCrashReportingEnabled` is default to be `FALSE`, in this case, WebView will respect OS consent.
-	Get_IsCustomCrashReportingEnabled(outValue *int32) types.HRESULT // function
-	// Set_IsCustomCrashReportingEnabled
+	GetIsCustomCrashReportingEnabled(outValue *int32) types.HRESULT // function
+	// SetIsCustomCrashReportingEnabled
 	//  Sets the `IsCustomCrashReportingEnabled` property.
-	Set_IsCustomCrashReportingEnabled(value int32) types.HRESULT // function
+	SetIsCustomCrashReportingEnabled(value int32) types.HRESULT // function
 }
 
 // ICoreWebView2EnvironmentOptions4 Parent: lcl.IInterfacedObject
@@ -162,7 +162,7 @@ type ICoreWebView2EnvironmentOptions4 interface {
 // ICoreWebView2EnvironmentOptions5 Parent: lcl.IInterfacedObject
 type ICoreWebView2EnvironmentOptions5 interface {
 	lcl.IInterfacedObject
-	// Get_EnableTrackingPrevention
+	// GetEnableTrackingPrevention
 	//  The `EnableTrackingPrevention` property is used to enable/disable tracking prevention
 	//  feature in WebView2. This property enable/disable tracking prevention for all the
 	//  WebView2's created in the same environment. By default this feature is enabled to block
@@ -186,16 +186,16 @@ type ICoreWebView2EnvironmentOptions5 interface {
 	//
 	//  Tracking prevention protects users from online tracking by restricting the ability of trackers to
 	//  access browser-based storage as well as the network. See [Tracking prevention](/microsoft-edge/web-platform/tracking-prevention).
-	Get_EnableTrackingPrevention(outValue *int32) types.HRESULT // function
-	// Set_EnableTrackingPrevention
+	GetEnableTrackingPrevention(outValue *int32) types.HRESULT // function
+	// SetEnableTrackingPrevention
 	//  Sets the `EnableTrackingPrevention` property.
-	Set_EnableTrackingPrevention(value int32) types.HRESULT // function
+	SetEnableTrackingPrevention(value int32) types.HRESULT // function
 }
 
 // ICoreWebView2EnvironmentOptions6 Parent: lcl.IInterfacedObject
 type ICoreWebView2EnvironmentOptions6 interface {
 	lcl.IInterfacedObject
-	// Get_AreBrowserExtensionsEnabled
+	// GetAreBrowserExtensionsEnabled
 	//  When `AreBrowserExtensionsEnabled` is set to `TRUE`, new extensions can be added to user
 	//  profile and used. `AreBrowserExtensionsEnabled` is default to be `FALSE`, in this case,
 	//  new extensions can't be installed, and already installed extension won't be
@@ -203,19 +203,19 @@ type ICoreWebView2EnvironmentOptions6 interface {
 	//  If connecting to an already running environment with a different value for `AreBrowserExtensionsEnabled`
 	//  property, it will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
 	//  See `ICoreWebView2BrowserExtension` for Extensions API details.
-	Get_AreBrowserExtensionsEnabled(outValue *int32) types.HRESULT // function
-	// Set_AreBrowserExtensionsEnabled
+	GetAreBrowserExtensionsEnabled(outValue *int32) types.HRESULT // function
+	// SetAreBrowserExtensionsEnabled
 	//  Sets the `AreBrowserExtensionsEnabled` property.
-	Set_AreBrowserExtensionsEnabled(value int32) types.HRESULT // function
+	SetAreBrowserExtensionsEnabled(value int32) types.HRESULT // function
 }
 
 // ICoreWebView2EnvironmentOptions7 Parent: lcl.IInterfacedObject
 type ICoreWebView2EnvironmentOptions7 interface {
 	lcl.IInterfacedObject
-	// Get_ChannelSearchKind
+	// GetChannelSearchKind
 	//  Gets the `ChannelSearchKind` property.
-	Get_ChannelSearchKind(outValue *wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
-	// Set_ChannelSearchKind
+	GetChannelSearchKind(outValue *wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
+	// SetChannelSearchKind
 	//  The `ChannelSearchKind` property is `COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE`
 	//  by default; environment creation searches for a release channel on the machine
 	//  from most to least stable using the first channel found. The default search order is:
@@ -230,11 +230,11 @@ type ICoreWebView2EnvironmentOptions7 interface {
 	//  `WEBVIEW2_CHANNEL_SEARCH_KIND`. Set the value to `1` to set the search kind to
 	//  `COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE`. See
 	//  `CreateCoreWebView2EnvironmentWithOptions` for more details on overrides.
-	Set_ChannelSearchKind(value wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
-	// Get_ReleaseChannels
+	SetChannelSearchKind(value wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
+	// GetReleaseChannels
 	//  Gets the `ReleaseChannels` property.
-	Get_ReleaseChannels(outValue *wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
-	// Set_ReleaseChannels
+	GetReleaseChannels(outValue *wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
+	// SetReleaseChannels
 	//  Sets the `ReleaseChannels`, which is a mask of one or more
 	//  `COREWEBVIEW2_RELEASE_CHANNELS` indicating which channels environment
 	//  creation should search for. OR operation(s) can be applied to multiple
@@ -273,16 +273,16 @@ type ICoreWebView2EnvironmentOptions7 interface {
 	//  order indicated by `ChannelSearchKind`. Environment creation attempts to
 	//  interpret each integer and treats any invalid entry as Stable channel. See
 	//  `CreateCoreWebView2EnvironmentWithOptions` for more details on overrides.
-	Set_ReleaseChannels(value wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
+	SetReleaseChannels(value wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
 }
 
 // ICoreWebView2EnvironmentOptions8 Parent: lcl.IInterfacedObject
 type ICoreWebView2EnvironmentOptions8 interface {
 	lcl.IInterfacedObject
-	// Get_ScrollBarStyle
+	// GetScrollBarStyle
 	//  Gets the `ScrollBarStyle` property.
-	Get_ScrollBarStyle(outValue *wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
-	// Set_ScrollBarStyle
+	GetScrollBarStyle(outValue *wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
+	// SetScrollBarStyle
 	//  The ScrollBar style being set on the WebView2 Environment.
 	//  The default value is `COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT`
 	//  which specifies the default browser ScrollBar style.
@@ -292,7 +292,7 @@ type ICoreWebView2EnvironmentOptions8 interface {
 	//  for how `color-scheme` can be set.
 	//  CSS styles that modify the ScrollBar applied on top of native ScrollBar styling
 	//  that is selected with `ScrollBarStyle`.
-	Set_ScrollBarStyle(value wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
+	SetScrollBarStyle(value wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
 }
 
 // ICoreWebView2EnvironmentOptions Parent: ICoreWebView2EnvironmentOptions0 ICoreWebView2EnvironmentOptions2 ICoreWebView2EnvironmentOptions3 ICoreWebView2EnvironmentOptions4 ICoreWebView2EnvironmentOptions5 ICoreWebView2EnvironmentOptions6 ICoreWebView2EnvironmentOptions7 ICoreWebView2EnvironmentOptions8
@@ -319,7 +319,7 @@ type TCoreWebView2EnvironmentOptions struct {
 	lcl.TInterfacedObject
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_AdditionalBrowserArguments(outValue *string) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetAdditionalBrowserArguments(outValue *string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -329,7 +329,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_AdditionalBrowserArguments(outValu
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_AdditionalBrowserArguments(value string) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetAdditionalBrowserArguments(value string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -337,7 +337,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_AdditionalBrowserArguments(value s
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_Language(outValue *string) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetLanguage(outValue *string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -347,7 +347,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_Language(outValue *string) types.H
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_Language(value string) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetLanguage(value string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -355,7 +355,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_Language(value string) types.HRESU
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_TargetCompatibleBrowserVersion(outValue *string) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetTargetCompatibleBrowserVersion(outValue *string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -365,7 +365,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_TargetCompatibleBrowserVersion(out
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_TargetCompatibleBrowserVersion(value string) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetTargetCompatibleBrowserVersion(value string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -373,7 +373,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_TargetCompatibleBrowserVersion(val
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_AllowSingleSignOnUsingOSPrimaryAccount(outAllow *int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetAllowSingleSignOnUsingOSPrimaryAccount(outAllow *int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -383,7 +383,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_AllowSingleSignOnUsingOSPrimaryAcc
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_AllowSingleSignOnUsingOSPrimaryAccount(allow int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetAllowSingleSignOnUsingOSPrimaryAccount(allow int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -391,7 +391,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_AllowSingleSignOnUsingOSPrimaryAcc
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_ExclusiveUserDataFolderAccess(outValue *int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetExclusiveUserDataFolderAccess(outValue *int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -401,7 +401,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_ExclusiveUserDataFolderAccess(outV
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_ExclusiveUserDataFolderAccess(value int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetExclusiveUserDataFolderAccess(value int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -409,7 +409,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_ExclusiveUserDataFolderAccess(valu
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_IsCustomCrashReportingEnabled(outValue *int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetIsCustomCrashReportingEnabled(outValue *int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -419,7 +419,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_IsCustomCrashReportingEnabled(outV
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_IsCustomCrashReportingEnabled(value int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetIsCustomCrashReportingEnabled(value int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -447,7 +447,7 @@ func (m *TCoreWebView2EnvironmentOptions) SetCustomSchemeRegistrations(count uin
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_EnableTrackingPrevention(outValue *int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetEnableTrackingPrevention(outValue *int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -457,7 +457,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_EnableTrackingPrevention(outValue 
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_EnableTrackingPrevention(value int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetEnableTrackingPrevention(value int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -465,7 +465,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_EnableTrackingPrevention(value int
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_AreBrowserExtensionsEnabled(outValue *int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetAreBrowserExtensionsEnabled(outValue *int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -475,7 +475,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_AreBrowserExtensionsEnabled(outVal
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_AreBrowserExtensionsEnabled(value int32) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetAreBrowserExtensionsEnabled(value int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -483,7 +483,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_AreBrowserExtensionsEnabled(value 
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_ChannelSearchKind(outValue *wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetChannelSearchKind(outValue *wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -493,7 +493,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_ChannelSearchKind(outValue *wvType
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_ChannelSearchKind(value wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetChannelSearchKind(value wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -501,7 +501,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_ChannelSearchKind(value wvTypes.CO
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_ReleaseChannels(outValue *wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetReleaseChannels(outValue *wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -511,7 +511,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_ReleaseChannels(outValue *wvTypes.
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_ReleaseChannels(value wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetReleaseChannels(value wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -519,7 +519,7 @@ func (m *TCoreWebView2EnvironmentOptions) Set_ReleaseChannels(value wvTypes.CORE
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Get_ScrollBarStyle(outValue *wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) GetScrollBarStyle(outValue *wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -529,7 +529,7 @@ func (m *TCoreWebView2EnvironmentOptions) Get_ScrollBarStyle(outValue *wvTypes.C
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2EnvironmentOptions) Set_ScrollBarStyle(value wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT {
+func (m *TCoreWebView2EnvironmentOptions) SetScrollBarStyle(value wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -598,30 +598,30 @@ func coreWebView2EnvironmentOptionsAPI() *imports.Imports {
 		coreWebView2EnvironmentOptionsImport = api.NewDefaultImports()
 		coreWebView2EnvironmentOptionsImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Create", 0), // constructor NewCoreWebView2EnvironmentOptions
-			/* 1 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_AdditionalBrowserArguments", 0), // function Get_AdditionalBrowserArguments
-			/* 2 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_AdditionalBrowserArguments", 0), // function Set_AdditionalBrowserArguments
-			/* 3 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_Language", 0), // function Get_Language
-			/* 4 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_Language", 0), // function Set_Language
-			/* 5 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_TargetCompatibleBrowserVersion", 0), // function Get_TargetCompatibleBrowserVersion
-			/* 6 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_TargetCompatibleBrowserVersion", 0), // function Set_TargetCompatibleBrowserVersion
-			/* 7 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_AllowSingleSignOnUsingOSPrimaryAccount", 0), // function Get_AllowSingleSignOnUsingOSPrimaryAccount
-			/* 8 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_AllowSingleSignOnUsingOSPrimaryAccount", 0), // function Set_AllowSingleSignOnUsingOSPrimaryAccount
-			/* 9 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ExclusiveUserDataFolderAccess", 0), // function Get_ExclusiveUserDataFolderAccess
-			/* 10 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ExclusiveUserDataFolderAccess", 0), // function Set_ExclusiveUserDataFolderAccess
-			/* 11 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_IsCustomCrashReportingEnabled", 0), // function Get_IsCustomCrashReportingEnabled
-			/* 12 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_IsCustomCrashReportingEnabled", 0), // function Set_IsCustomCrashReportingEnabled
+			/* 1 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_AdditionalBrowserArguments", 0), // function GetAdditionalBrowserArguments
+			/* 2 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_AdditionalBrowserArguments", 0), // function SetAdditionalBrowserArguments
+			/* 3 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_Language", 0), // function GetLanguage
+			/* 4 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_Language", 0), // function SetLanguage
+			/* 5 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_TargetCompatibleBrowserVersion", 0), // function GetTargetCompatibleBrowserVersion
+			/* 6 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_TargetCompatibleBrowserVersion", 0), // function SetTargetCompatibleBrowserVersion
+			/* 7 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_AllowSingleSignOnUsingOSPrimaryAccount", 0), // function GetAllowSingleSignOnUsingOSPrimaryAccount
+			/* 8 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_AllowSingleSignOnUsingOSPrimaryAccount", 0), // function SetAllowSingleSignOnUsingOSPrimaryAccount
+			/* 9 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ExclusiveUserDataFolderAccess", 0), // function GetExclusiveUserDataFolderAccess
+			/* 10 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ExclusiveUserDataFolderAccess", 0), // function SetExclusiveUserDataFolderAccess
+			/* 11 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_IsCustomCrashReportingEnabled", 0), // function GetIsCustomCrashReportingEnabled
+			/* 12 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_IsCustomCrashReportingEnabled", 0), // function SetIsCustomCrashReportingEnabled
 			/* 13 */ imports.NewTable("TCoreWebView2EnvironmentOptions_GetCustomSchemeRegistrations", 0), // function GetCustomSchemeRegistrations
 			/* 14 */ imports.NewTable("TCoreWebView2EnvironmentOptions_SetCustomSchemeRegistrations", 0), // function SetCustomSchemeRegistrations
-			/* 15 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_EnableTrackingPrevention", 0), // function Get_EnableTrackingPrevention
-			/* 16 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_EnableTrackingPrevention", 0), // function Set_EnableTrackingPrevention
-			/* 17 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_AreBrowserExtensionsEnabled", 0), // function Get_AreBrowserExtensionsEnabled
-			/* 18 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_AreBrowserExtensionsEnabled", 0), // function Set_AreBrowserExtensionsEnabled
-			/* 19 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ChannelSearchKind", 0), // function Get_ChannelSearchKind
-			/* 20 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ChannelSearchKind", 0), // function Set_ChannelSearchKind
-			/* 21 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ReleaseChannels", 0), // function Get_ReleaseChannels
-			/* 22 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ReleaseChannels", 0), // function Set_ReleaseChannels
-			/* 23 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ScrollBarStyle", 0), // function Get_ScrollBarStyle
-			/* 24 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ScrollBarStyle", 0), // function Set_ScrollBarStyle
+			/* 15 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_EnableTrackingPrevention", 0), // function GetEnableTrackingPrevention
+			/* 16 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_EnableTrackingPrevention", 0), // function SetEnableTrackingPrevention
+			/* 17 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_AreBrowserExtensionsEnabled", 0), // function GetAreBrowserExtensionsEnabled
+			/* 18 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_AreBrowserExtensionsEnabled", 0), // function SetAreBrowserExtensionsEnabled
+			/* 19 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ChannelSearchKind", 0), // function GetChannelSearchKind
+			/* 20 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ChannelSearchKind", 0), // function SetChannelSearchKind
+			/* 21 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ReleaseChannels", 0), // function GetReleaseChannels
+			/* 22 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ReleaseChannels", 0), // function SetReleaseChannels
+			/* 23 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Get_ScrollBarStyle", 0), // function GetScrollBarStyle
+			/* 24 */ imports.NewTable("TCoreWebView2EnvironmentOptions_Set_ScrollBarStyle", 0), // function SetScrollBarStyle
 		}
 	})
 	return coreWebView2EnvironmentOptionsImport

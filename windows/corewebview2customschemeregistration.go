@@ -19,19 +19,19 @@ import (
 // ICoreWebView2CustomSchemeRegistration0 Parent: lcl.IInterfacedObject
 type ICoreWebView2CustomSchemeRegistration0 interface {
 	lcl.IInterfacedObject
-	// Get_SchemeName
+	// GetSchemeName
 	//  The name of the custom scheme to register.
-	Get_SchemeName(outSchemeName *string) types.HRESULT // function
-	// Get_TreatAsSecure
+	GetSchemeName(outSchemeName *string) types.HRESULT // function
+	// GetTreatAsSecure
 	//  Whether the sites with this scheme will be treated as a
 	//  [Secure Context](https://developer.mozilla.org/docs/Web/Security/Secure_Contexts)
 	//  like an HTTPS site. This flag is only effective when HasAuthorityComponent
 	//  is also set to `true`.
 	//  `false` by default.
-	Get_TreatAsSecure(outTreatAsSecure *int32) types.HRESULT // function
-	// Set_TreatAsSecure
+	GetTreatAsSecure(outTreatAsSecure *int32) types.HRESULT // function
+	// SetTreatAsSecure
 	//  Set if the scheme will be treated as a Secure Context.
-	Set_TreatAsSecure(treatAsSecure int32) types.HRESULT // function
+	SetTreatAsSecure(treatAsSecure int32) types.HRESULT // function
 	// GetAllowedOrigins
 	//  List of origins that are allowed to issue requests with the custom
 	//  scheme, such as XHRs and subresource requests that have an Origin header.
@@ -74,7 +74,7 @@ type ICoreWebView2CustomSchemeRegistration0 interface {
 	//  Set the array of origins that are allowed to use the scheme.
 	//  * var allowedOrigins: PWideChar --> allowedOrigins: PPWideChar ************** WEBVIEW4DELPHI ************** *
 	SetAllowedOrigins(allowedOriginsCount uint32, allowedOrigins types.PPWideChar) types.HRESULT // function
-	// Get_HasAuthorityComponent
+	// GetHasAuthorityComponent
 	//  Set this property to `true` if the URIs with this custom
 	//  scheme will have an authority component (a host for custom schemes).
 	//  Specifically, if you have a URI of the following form you should set the
@@ -107,10 +107,10 @@ type ICoreWebView2CustomSchemeRegistration0 interface {
 	//  as `custom-scheme-with-authority://host/path`.
 	//  However, this behavior cannot be guaranteed to remain in future
 	//  releases so it is recommended not to rely on this behavior.
-	Get_HasAuthorityComponent(outHasAuthorityComponent *int32) types.HRESULT // function
-	// Set_HasAuthorityComponent
+	GetHasAuthorityComponent(outHasAuthorityComponent *int32) types.HRESULT // function
+	// SetHasAuthorityComponent
 	//  Get has authority component.
-	Set_HasAuthorityComponent(hasAuthorityComponent int32) types.HRESULT // function
+	SetHasAuthorityComponent(hasAuthorityComponent int32) types.HRESULT // function
 }
 
 // ICoreWebView2CustomSchemeRegistration Parent: ICoreWebView2CustomSchemeRegistration0
@@ -123,7 +123,7 @@ type TCoreWebView2CustomSchemeRegistration struct {
 	lcl.TInterfacedObject
 }
 
-func (m *TCoreWebView2CustomSchemeRegistration) Get_SchemeName(outSchemeName *string) types.HRESULT {
+func (m *TCoreWebView2CustomSchemeRegistration) GetSchemeName(outSchemeName *string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -133,7 +133,7 @@ func (m *TCoreWebView2CustomSchemeRegistration) Get_SchemeName(outSchemeName *st
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2CustomSchemeRegistration) Get_TreatAsSecure(outTreatAsSecure *int32) types.HRESULT {
+func (m *TCoreWebView2CustomSchemeRegistration) GetTreatAsSecure(outTreatAsSecure *int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -143,7 +143,7 @@ func (m *TCoreWebView2CustomSchemeRegistration) Get_TreatAsSecure(outTreatAsSecu
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2CustomSchemeRegistration) Set_TreatAsSecure(treatAsSecure int32) types.HRESULT {
+func (m *TCoreWebView2CustomSchemeRegistration) SetTreatAsSecure(treatAsSecure int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -171,7 +171,7 @@ func (m *TCoreWebView2CustomSchemeRegistration) SetAllowedOrigins(allowedOrigins
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2CustomSchemeRegistration) Get_HasAuthorityComponent(outHasAuthorityComponent *int32) types.HRESULT {
+func (m *TCoreWebView2CustomSchemeRegistration) GetHasAuthorityComponent(outHasAuthorityComponent *int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -181,7 +181,7 @@ func (m *TCoreWebView2CustomSchemeRegistration) Get_HasAuthorityComponent(outHas
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2CustomSchemeRegistration) Set_HasAuthorityComponent(hasAuthorityComponent int32) types.HRESULT {
+func (m *TCoreWebView2CustomSchemeRegistration) SetHasAuthorityComponent(hasAuthorityComponent int32) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -229,13 +229,13 @@ func coreWebView2CustomSchemeRegistrationAPI() *imports.Imports {
 		coreWebView2CustomSchemeRegistrationImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Create", 0), // constructor NewCoreWebView2CustomSchemeRegistration
 			/* 1 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_CreateWithStringX2BoolX2", 0), // constructor NewCoreWebView2CustomSchemeRegistrationWithStringX2BoolX2
-			/* 2 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_SchemeName", 0), // function Get_SchemeName
-			/* 3 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_TreatAsSecure", 0), // function Get_TreatAsSecure
-			/* 4 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Set_TreatAsSecure", 0), // function Set_TreatAsSecure
+			/* 2 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_SchemeName", 0), // function GetSchemeName
+			/* 3 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_TreatAsSecure", 0), // function GetTreatAsSecure
+			/* 4 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Set_TreatAsSecure", 0), // function SetTreatAsSecure
 			/* 5 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_GetAllowedOrigins", 0), // function GetAllowedOrigins
 			/* 6 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_SetAllowedOrigins", 0), // function SetAllowedOrigins
-			/* 7 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_HasAuthorityComponent", 0), // function Get_HasAuthorityComponent
-			/* 8 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Set_HasAuthorityComponent", 0), // function Set_HasAuthorityComponent
+			/* 7 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_HasAuthorityComponent", 0), // function GetHasAuthorityComponent
+			/* 8 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Set_HasAuthorityComponent", 0), // function SetHasAuthorityComponent
 		}
 	})
 	return coreWebView2CustomSchemeRegistrationImport

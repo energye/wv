@@ -19,25 +19,25 @@ import (
 // ICoreWebView2WebResourceRequest Parent: lcl.IInterfacedObject
 type ICoreWebView2WebResourceRequest interface {
 	lcl.IInterfacedObject
-	// Get_uri
+	// GetUri
 	//  The request URI.
 	//
 	//  The caller must free the returned string with `CoTaskMemFree`. See
 	//  [API Conventions](/microsoft-edge/webview2/concepts/win32-api-conventions#strings).
-	Get_uri(outUri *string) types.HRESULT // function
-	// Set_uri
+	GetUri(outUri *string) types.HRESULT // function
+	// SetUri
 	//  Sets the `Uri` property.
-	Set_uri(uri string) types.HRESULT // function
-	// Get_Method
+	SetUri(uri string) types.HRESULT // function
+	// GetMethod
 	//  The HTTP request method.
 	//
 	//  The caller must free the returned string with `CoTaskMemFree`. See
 	//  [API Conventions](/microsoft-edge/webview2/concepts/win32-api-conventions#strings).
-	Get_Method(outMethod *string) types.HRESULT // function
-	// Set_Method
+	GetMethod(outMethod *string) types.HRESULT // function
+	// SetMethod
 	//  Sets the `Method` property.
-	Set_Method(method string) types.HRESULT // function
-	// Get_Content
+	SetMethod(method string) types.HRESULT // function
+	// GetContent
 	//  The HTTP request message body as stream. POST data should be here. If a
 	//  stream is set, which overrides the message body, the stream must have
 	//  all the content data available by the time the `WebResourceRequested`
@@ -45,13 +45,13 @@ type ICoreWebView2WebResourceRequest interface {
 	//  be created from a background STA to prevent performance impact to the UI
 	//  thread. `Null` means no content data. `IStream` semantics apply
 	//  (return `S_OK` to `Read` runs until all data is exhausted).
-	Get_Content(outContent *lcl.IStreamAdapter) types.HRESULT // function
-	// Set_Content
+	GetContent(outContent *lcl.IStreamAdapter) types.HRESULT // function
+	// SetContent
 	//  Sets the `Content` property.
-	Set_Content(content lcl.IStreamAdapter) types.HRESULT // function
-	// Get_Headers
+	SetContent(content lcl.IStreamAdapter) types.HRESULT // function
+	// GetHeaders
 	//  The mutable HTTP request headers
-	Get_Headers(outHeaders *ICoreWebView2HttpRequestHeaders) types.HRESULT // function
+	GetHeaders(outHeaders *ICoreWebView2HttpRequestHeaders) types.HRESULT // function
 }
 
 // ICoreWebView2WebResourceRequestOwn Parent: ICoreWebView2WebResourceRequest
@@ -64,7 +64,7 @@ type TCoreWebView2WebResourceRequestOwn struct {
 	lcl.TInterfacedObject
 }
 
-func (m *TCoreWebView2WebResourceRequestOwn) Get_uri(outUri *string) types.HRESULT {
+func (m *TCoreWebView2WebResourceRequestOwn) GetUri(outUri *string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -74,7 +74,7 @@ func (m *TCoreWebView2WebResourceRequestOwn) Get_uri(outUri *string) types.HRESU
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2WebResourceRequestOwn) Set_uri(uri string) types.HRESULT {
+func (m *TCoreWebView2WebResourceRequestOwn) SetUri(uri string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -82,7 +82,7 @@ func (m *TCoreWebView2WebResourceRequestOwn) Set_uri(uri string) types.HRESULT {
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2WebResourceRequestOwn) Get_Method(outMethod *string) types.HRESULT {
+func (m *TCoreWebView2WebResourceRequestOwn) GetMethod(outMethod *string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -92,7 +92,7 @@ func (m *TCoreWebView2WebResourceRequestOwn) Get_Method(outMethod *string) types
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2WebResourceRequestOwn) Set_Method(method string) types.HRESULT {
+func (m *TCoreWebView2WebResourceRequestOwn) SetMethod(method string) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -100,7 +100,7 @@ func (m *TCoreWebView2WebResourceRequestOwn) Set_Method(method string) types.HRE
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2WebResourceRequestOwn) Get_Content(outContent *lcl.IStreamAdapter) types.HRESULT {
+func (m *TCoreWebView2WebResourceRequestOwn) GetContent(outContent *lcl.IStreamAdapter) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -110,7 +110,7 @@ func (m *TCoreWebView2WebResourceRequestOwn) Get_Content(outContent *lcl.IStream
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2WebResourceRequestOwn) Set_Content(content lcl.IStreamAdapter) types.HRESULT {
+func (m *TCoreWebView2WebResourceRequestOwn) SetContent(content lcl.IStreamAdapter) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -118,7 +118,7 @@ func (m *TCoreWebView2WebResourceRequestOwn) Set_Content(content lcl.IStreamAdap
 	return types.HRESULT(r)
 }
 
-func (m *TCoreWebView2WebResourceRequestOwn) Get_Headers(outHeaders *ICoreWebView2HttpRequestHeaders) types.HRESULT {
+func (m *TCoreWebView2WebResourceRequestOwn) GetHeaders(outHeaders *ICoreWebView2HttpRequestHeaders) types.HRESULT {
 	if !m.IsValid() {
 		return 0
 	}
@@ -154,13 +154,13 @@ func coreWebView2WebResourceRequestOwnAPI() *imports.Imports {
 		coreWebView2WebResourceRequestOwnImport = api.NewDefaultImports()
 		coreWebView2WebResourceRequestOwnImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Create", 0), // constructor NewCoreWebView2WebResourceRequestOwn
-			/* 1 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_uri", 0), // function Get_uri
-			/* 2 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Set_uri", 0), // function Set_uri
-			/* 3 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_Method", 0), // function Get_Method
-			/* 4 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Set_Method", 0), // function Set_Method
-			/* 5 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_Content", 0), // function Get_Content
-			/* 6 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Set_Content", 0), // function Set_Content
-			/* 7 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_Headers", 0), // function Get_Headers
+			/* 1 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_uri", 0), // function GetUri
+			/* 2 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Set_uri", 0), // function SetUri
+			/* 3 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_Method", 0), // function GetMethod
+			/* 4 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Set_Method", 0), // function SetMethod
+			/* 5 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_Content", 0), // function GetContent
+			/* 6 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Set_Content", 0), // function SetContent
+			/* 7 */ imports.NewTable("TCoreWebView2WebResourceRequestOwn_Get_Headers", 0), // function GetHeaders
 		}
 	})
 	return coreWebView2WebResourceRequestOwnImport

@@ -40,11 +40,11 @@ type ICoreWebView2ContextMenuItem interface {
 	//  "spellCheck".
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_name">See the ICoreWebView2ContextMenuItem article.</see>
 	Name() string // property Name Getter
-	// Label_
+	// Label
 	//  Gets the localized label for the `ContextMenuItem`. Will contain an
 	//  ampersand for characters to be used as keyboard accelerator.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitem#get_label">See the ICoreWebView2ContextMenuItem article.</see>
-	Label_() string // property Label_ Getter
+	Label() string // property Label_ Getter
 	// CommandId
 	//  Gets the Command ID for the `ContextMenuItem`. Use this to report the
 	//  `SelectedCommandId` in `ContextMenuRequested` event.
@@ -128,7 +128,7 @@ func (m *TCoreWebView2ContextMenuItem) Name() string {
 	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ContextMenuItem) Label_() string {
+func (m *TCoreWebView2ContextMenuItem) Label() string {
 	if !m.IsValid() {
 		return ""
 	}
@@ -229,7 +229,7 @@ func coreWebView2ContextMenuItemAPI() *imports.Imports {
 			/* 2 */ imports.NewTable("TCoreWebView2ContextMenuItem_Initialized", 0), // property Initialized
 			/* 3 */ imports.NewTable("TCoreWebView2ContextMenuItem_BaseIntf", 0), // property BaseIntf
 			/* 4 */ imports.NewTable("TCoreWebView2ContextMenuItem_Name", 0), // property Name
-			/* 5 */ imports.NewTable("TCoreWebView2ContextMenuItem_Label_", 0), // property Label_
+			/* 5 */ imports.NewTable("TCoreWebView2ContextMenuItem_Label_", 0), // property Label
 			/* 6 */ imports.NewTable("TCoreWebView2ContextMenuItem_CommandId", 0), // property CommandId
 			/* 7 */ imports.NewTable("TCoreWebView2ContextMenuItem_ShortcutKeyDescription", 0), // property ShortcutKeyDescription
 			/* 8 */ imports.NewTable("TCoreWebView2ContextMenuItem_Icon", 0), // property Icon

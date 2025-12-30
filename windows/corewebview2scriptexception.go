@@ -45,12 +45,12 @@ type ICoreWebView2ScriptException interface {
 	//  This is the empty string if the exception doesn't have a class name.
 	//  This can happen if the script throws a non-Error object such as `throw "abc";`
 	Name() string // property Name Getter
-	// Message_
+	// Message
 	//  The Message is the exception's message and potentially stack.
 	//  In the JSON it is exceptionDetail.exception.description.
 	//  This is the empty string if the exception doesn't have a description.
 	//  This can happen if the script throws a non-Error object such as throw "abc";.
-	Message_() string // property Message_ Getter
+	Message() string // property Message_ Getter
 }
 
 type TCoreWebView2ScriptException struct {
@@ -107,7 +107,7 @@ func (m *TCoreWebView2ScriptException) Name() string {
 	return api.GoStr(r)
 }
 
-func (m *TCoreWebView2ScriptException) Message_() string {
+func (m *TCoreWebView2ScriptException) Message() string {
 	if !m.IsValid() {
 		return ""
 	}
@@ -137,7 +137,7 @@ func coreWebView2ScriptExceptionAPI() *imports.Imports {
 			/* 4 */ imports.NewTable("TCoreWebView2ScriptException_LineNumber", 0), // property LineNumber
 			/* 5 */ imports.NewTable("TCoreWebView2ScriptException_ColumnNumber", 0), // property ColumnNumber
 			/* 6 */ imports.NewTable("TCoreWebView2ScriptException_Name", 0), // property Name
-			/* 7 */ imports.NewTable("TCoreWebView2ScriptException_Message_", 0), // property Message_
+			/* 7 */ imports.NewTable("TCoreWebView2ScriptException_Message_", 0), // property Message
 		}
 	})
 	return coreWebView2ScriptExceptionImport
