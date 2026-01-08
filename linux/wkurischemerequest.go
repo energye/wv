@@ -30,7 +30,7 @@ type IWkURISchemeRequest interface {
 	Body() wvTypes.PInputStream                                                 // function
 	Finish(stream wvTypes.PInputStream, streamLength int64, contentType string) // procedure
 	FinishWithResponse(response wvTypes.WebKitURISchemeResponse)                // procedure
-	FinishError(domain, code int32, errorMessage string)                        // procedure
+	FinishError(domain int32, code int32, errorMessage string)                  // procedure
 }
 
 type TWkURISchemeRequest struct {
@@ -115,7 +115,7 @@ func (m *TWkURISchemeRequest) FinishWithResponse(response wvTypes.WebKitURISchem
 	wkURISchemeRequestAPI().SysCallN(10, m.Instance(), uintptr(response))
 }
 
-func (m *TWkURISchemeRequest) FinishError(domain, code int32, errorMessage string) {
+func (m *TWkURISchemeRequest) FinishError(domain int32, code int32, errorMessage string) {
 	if !m.IsValid() {
 		return
 	}

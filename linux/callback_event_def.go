@@ -25,8 +25,7 @@ type TWkGetAcceptPolicyFinishEvent func(sender lcl.IObject, policy wvTypes.WebKi
 type TWkGetCookiesFinishEvent func(sender lcl.IObject, cookieList wvTypes.PList, error_ string)
 type TWkLoadChangeEvent func(sender lcl.IObject, loadEvent wvTypes.WebKitLoadEvent)
 type TWkLoadFailedEvent func(sender lcl.IObject, loadEvent wvTypes.WebKitLoadEvent, failingUri string, error_ string) bool
-type TWkMousePressEvent func(sender lcl.IObject, event TWkButtonEvent) bool
-type TWkMouseReleaseEvent func(sender lcl.IObject, event TWkButtonEvent) bool
+type TWkMouseEvent func(sender lcl.IObject, event TWkButtonEvent) bool
 type TWkProcessMessageEvent func(sender lcl.IObject, jsValue IWkJSValue, processId wvTypes.TWkProcessId)
 type TWkURISchemeRequestEvent func(sender lcl.IObject, uriSchemeRequest wvTypes.WebKitURISchemeRequest)
 type TWkWebProcessTerminatedEvent func(sender lcl.IObject, reason wvTypes.WebKitWebProcessTerminationReason)

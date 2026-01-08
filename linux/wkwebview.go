@@ -55,8 +55,9 @@ type IWkWebview interface {
 	SetOnLoadFailed(fn TWkLoadFailedEvent)                       // property event
 	SetOnURISchemeRequest(fn TWkURISchemeRequestEvent)           // property event
 	SetOnProcessMessage(fn TWkProcessMessageEvent)               // property event
-	SetOnMousePress(fn TWkMousePressEvent)                       // property event
-	SetOnMouseRelease(fn TWkMouseReleaseEvent)                   // property event
+	SetOnMouseMove(fn TWkMouseEvent)                             // property event
+	SetOnMousePress(fn TWkMouseEvent)                            // property event
+	SetOnMouseRelease(fn TWkMouseEvent)                          // property event
 	SetOnGetAcceptPolicyFinish(fn TWkGetAcceptPolicyFinishEvent) // property event
 	SetOnAddCookieFinish(fn TWkAddCookieFinishEvent)             // property event
 	SetOnGetCookiesFinish(fn TWkGetCookiesFinishEvent)           // property event
@@ -315,20 +316,28 @@ func (m *TWkWebview) SetOnProcessMessage(fn TWkProcessMessageEvent) {
 	base.SetEvent(m, 32, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
-func (m *TWkWebview) SetOnMousePress(fn TWkMousePressEvent) {
+func (m *TWkWebview) SetOnMouseMove(fn TWkMouseEvent) {
 	if !m.IsValid() {
 		return
 	}
-	cb := makeTWkMousePressEvent(fn)
+	cb := makeTWkMouseEvent(fn)
 	base.SetEvent(m, 33, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
-func (m *TWkWebview) SetOnMouseRelease(fn TWkMouseReleaseEvent) {
+func (m *TWkWebview) SetOnMousePress(fn TWkMouseEvent) {
 	if !m.IsValid() {
 		return
 	}
-	cb := makeTWkMouseReleaseEvent(fn)
+	cb := makeTWkMouseEvent(fn)
 	base.SetEvent(m, 34, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnMouseRelease(fn TWkMouseEvent) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWkMouseEvent(fn)
+	base.SetEvent(m, 35, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnGetAcceptPolicyFinish(fn TWkGetAcceptPolicyFinishEvent) {
@@ -336,7 +345,7 @@ func (m *TWkWebview) SetOnGetAcceptPolicyFinish(fn TWkGetAcceptPolicyFinishEvent
 		return
 	}
 	cb := makeTWkGetAcceptPolicyFinishEvent(fn)
-	base.SetEvent(m, 35, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 36, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnAddCookieFinish(fn TWkAddCookieFinishEvent) {
@@ -344,7 +353,7 @@ func (m *TWkWebview) SetOnAddCookieFinish(fn TWkAddCookieFinishEvent) {
 		return
 	}
 	cb := makeTWkAddCookieFinishEvent(fn)
-	base.SetEvent(m, 36, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 37, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnGetCookiesFinish(fn TWkGetCookiesFinishEvent) {
@@ -352,7 +361,7 @@ func (m *TWkWebview) SetOnGetCookiesFinish(fn TWkGetCookiesFinishEvent) {
 		return
 	}
 	cb := makeTWkGetCookiesFinishEvent(fn)
-	base.SetEvent(m, 37, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 38, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnDeleteCookieFinish(fn TWkDeleteCookieFinishEvent) {
@@ -360,7 +369,7 @@ func (m *TWkWebview) SetOnDeleteCookieFinish(fn TWkDeleteCookieFinishEvent) {
 		return
 	}
 	cb := makeTWkDeleteCookieFinishEvent(fn)
-	base.SetEvent(m, 38, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 39, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnDecidePolicy(fn TWkDecidePolicyEvent) {
@@ -368,7 +377,7 @@ func (m *TWkWebview) SetOnDecidePolicy(fn TWkDecidePolicyEvent) {
 		return
 	}
 	cb := makeTWkDecidePolicyEvent(fn)
-	base.SetEvent(m, 39, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 40, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnWebProcessTerminated(fn TWkWebProcessTerminatedEvent) {
@@ -376,7 +385,7 @@ func (m *TWkWebview) SetOnWebProcessTerminated(fn TWkWebProcessTerminatedEvent) 
 		return
 	}
 	cb := makeTWkWebProcessTerminatedEvent(fn)
-	base.SetEvent(m, 40, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 41, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnContextMenu(fn TWkContextMenuEvent) {
@@ -384,7 +393,7 @@ func (m *TWkWebview) SetOnContextMenu(fn TWkContextMenuEvent) {
 		return
 	}
 	cb := makeTWkContextMenuEvent(fn)
-	base.SetEvent(m, 41, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 42, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnContextMenuCommand(fn TWkContextMenuCommandEvent) {
@@ -392,7 +401,7 @@ func (m *TWkWebview) SetOnContextMenuCommand(fn TWkContextMenuCommandEvent) {
 		return
 	}
 	cb := makeTWkContextMenuCommandEvent(fn)
-	base.SetEvent(m, 42, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 43, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) SetOnContextMenuDismissed(fn TWkContextMenuDismissedEvent) {
@@ -400,7 +409,7 @@ func (m *TWkWebview) SetOnContextMenuDismissed(fn TWkContextMenuDismissedEvent) 
 		return
 	}
 	cb := makeTWkContextMenuDismissedEvent(fn)
-	base.SetEvent(m, 43, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 44, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) AsIntfWkCookieManagerDelegateEvent() uintptr {
@@ -466,17 +475,18 @@ func wkWebviewAPI() *imports.Imports {
 			/* 30 */ imports.NewTable("TWkWebview_OnLoadFailed", 0), // event OnLoadFailed
 			/* 31 */ imports.NewTable("TWkWebview_OnURISchemeRequest", 0), // event OnURISchemeRequest
 			/* 32 */ imports.NewTable("TWkWebview_OnProcessMessage", 0), // event OnProcessMessage
-			/* 33 */ imports.NewTable("TWkWebview_OnMousePress", 0), // event OnMousePress
-			/* 34 */ imports.NewTable("TWkWebview_OnMouseRelease", 0), // event OnMouseRelease
-			/* 35 */ imports.NewTable("TWkWebview_OnGetAcceptPolicyFinish", 0), // event OnGetAcceptPolicyFinish
-			/* 36 */ imports.NewTable("TWkWebview_OnAddCookieFinish", 0), // event OnAddCookieFinish
-			/* 37 */ imports.NewTable("TWkWebview_OnGetCookiesFinish", 0), // event OnGetCookiesFinish
-			/* 38 */ imports.NewTable("TWkWebview_OnDeleteCookieFinish", 0), // event OnDeleteCookieFinish
-			/* 39 */ imports.NewTable("TWkWebview_OnDecidePolicy", 0), // event OnDecidePolicy
-			/* 40 */ imports.NewTable("TWkWebview_OnWebProcessTerminated", 0), // event OnWebProcessTerminated
-			/* 41 */ imports.NewTable("TWkWebview_OnContextMenu", 0), // event OnContextMenu
-			/* 42 */ imports.NewTable("TWkWebview_OnContextMenuCommand", 0), // event OnContextMenuCommand
-			/* 43 */ imports.NewTable("TWkWebview_OnContextMenuDismissed", 0), // event OnContextMenuDismissed
+			/* 33 */ imports.NewTable("TWkWebview_OnMouseMove", 0), // event OnMouseMove
+			/* 34 */ imports.NewTable("TWkWebview_OnMousePress", 0), // event OnMousePress
+			/* 35 */ imports.NewTable("TWkWebview_OnMouseRelease", 0), // event OnMouseRelease
+			/* 36 */ imports.NewTable("TWkWebview_OnGetAcceptPolicyFinish", 0), // event OnGetAcceptPolicyFinish
+			/* 37 */ imports.NewTable("TWkWebview_OnAddCookieFinish", 0), // event OnAddCookieFinish
+			/* 38 */ imports.NewTable("TWkWebview_OnGetCookiesFinish", 0), // event OnGetCookiesFinish
+			/* 39 */ imports.NewTable("TWkWebview_OnDeleteCookieFinish", 0), // event OnDeleteCookieFinish
+			/* 40 */ imports.NewTable("TWkWebview_OnDecidePolicy", 0), // event OnDecidePolicy
+			/* 41 */ imports.NewTable("TWkWebview_OnWebProcessTerminated", 0), // event OnWebProcessTerminated
+			/* 42 */ imports.NewTable("TWkWebview_OnContextMenu", 0), // event OnContextMenu
+			/* 43 */ imports.NewTable("TWkWebview_OnContextMenuCommand", 0), // event OnContextMenuCommand
+			/* 44 */ imports.NewTable("TWkWebview_OnContextMenuDismissed", 0), // event OnContextMenuDismissed
 		}
 	})
 	return wkWebviewImport

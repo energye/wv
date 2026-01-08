@@ -199,28 +199,12 @@ func makeTWkLoadFailedEvent(cb TWkLoadFailedEvent) *callback {
 	}
 }
 
-func makeTWkMousePressEvent(cb TWkMousePressEvent) *callback {
+func makeTWkMouseEvent(cb TWkMouseEvent) *callback {
 	if cb == nil {
 		return nil
 	}
 	return &callback{
-		name: "TWkMousePressEvent",
-		cb: func(getVal func(i int) uintptr) {
-			// 2 : function(Sender: TObject; event: PWkButtonEvent): boolean;
-			sender := lcl.AsObject(getVal(0))
-			event := *(*TWkButtonEvent)(getPtr(getVal(1)))
-			ret := cb(sender, event)
-			*(*bool)(getPtr(getVal(2))) = ret
-		},
-	}
-}
-
-func makeTWkMouseReleaseEvent(cb TWkMouseReleaseEvent) *callback {
-	if cb == nil {
-		return nil
-	}
-	return &callback{
-		name: "TWkMouseReleaseEvent",
+		name: "TWkMouseEvent",
 		cb: func(getVal func(i int) uintptr) {
 			// 2 : function(Sender: TObject; event: PWkButtonEvent): boolean;
 			sender := lcl.AsObject(getVal(0))
