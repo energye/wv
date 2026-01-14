@@ -40,7 +40,7 @@ type IWkURLSchemeTask interface {
 	Finish() // procedure
 	// FailWithError
 	//  Completes the task and reports the specified error back to WebKit.
-	FailWithError(error_ string) // procedure
+	FailWithError(code int32, error_ string) // procedure
 }
 
 type TWkURLSchemeTask struct {
@@ -91,11 +91,11 @@ func (m *TWkURLSchemeTask) Finish() {
 	wkURLSchemeTaskAPI().SysCallN(6, m.Instance())
 }
 
-func (m *TWkURLSchemeTask) FailWithError(error_ string) {
+func (m *TWkURLSchemeTask) FailWithError(code int32, error_ string) {
 	if !m.IsValid() {
 		return
 	}
-	wkURLSchemeTaskAPI().SysCallN(7, m.Instance(), api.PasStr(error_))
+	wkURLSchemeTaskAPI().SysCallN(7, m.Instance(), uintptr(code), api.PasStr(error_))
 }
 
 // NewURLSchemeTask class constructor
