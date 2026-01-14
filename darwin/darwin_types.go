@@ -12,6 +12,7 @@ import wvTypes "github.com/energye/wv/types/darwin"
 
 type NSURLRequest uintptr
 type NSURLResponse uintptr
+type NSObject uintptr
 type NSHTTPURLResponse uintptr
 type NSProgress uintptr
 type NSURL uintptr

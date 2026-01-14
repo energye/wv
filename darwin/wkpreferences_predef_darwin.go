@@ -27,8 +27,9 @@ void EnableDeveloperExtras(void* wkPreferences) {
 */
 import "C"
 import (
-	wvTypes "github.com/energye/wv/types/darwin"
 	"unsafe"
+
+	wvTypes "github.com/energye/wv/types/darwin"
 )
 
 func EnableDevtools(wkPreferences wvTypes.WKPreferences) {

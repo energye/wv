@@ -70,7 +70,19 @@ type IWkPreferences interface {
 	SetElementFullscreenEnabled(newValue bool) // procedure
 	// SetValueForKey
 	//  Writes a custom value to a field
-	SetValueForKey(value bool, key string) // procedure
+	SetValueForKey(value NSObject, key string) // procedure
+	// SetBoolValueForKey
+	//  Writes a custom value to a field
+	SetBoolValueForKey(value bool, key string) // procedure
+	// SetStringValueForKey
+	//  Writes a custom value to a field
+	SetStringValueForKey(value string, key string) // procedure
+	// SetNumberValueForKey
+	//  Writes a custom value to a field
+	SetNumberValueForKey(value int32, key string) // procedure
+	// SetDoubleValueForKey
+	//  Writes a custom value to a field
+	SetDoubleValueForKey(value float64, key string) // procedure
 }
 
 type TWkPreferences struct {
@@ -195,11 +207,39 @@ func (m *TWkPreferences) SetElementFullscreenEnabled(newValue bool) {
 	wkPreferencesAPI().SysCallN(17, m.Instance(), api.PasBool(newValue))
 }
 
-func (m *TWkPreferences) SetValueForKey(value bool, key string) {
+func (m *TWkPreferences) SetValueForKey(value NSObject, key string) {
 	if !m.IsValid() {
 		return
 	}
-	wkPreferencesAPI().SysCallN(18, m.Instance(), api.PasBool(value), api.PasStr(key))
+	wkPreferencesAPI().SysCallN(18, m.Instance(), uintptr(value), api.PasStr(key))
+}
+
+func (m *TWkPreferences) SetBoolValueForKey(value bool, key string) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(19, m.Instance(), api.PasBool(value), api.PasStr(key))
+}
+
+func (m *TWkPreferences) SetStringValueForKey(value string, key string) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(20, m.Instance(), api.PasStr(value), api.PasStr(key))
+}
+
+func (m *TWkPreferences) SetNumberValueForKey(value int32, key string) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(21, m.Instance(), uintptr(value), api.PasStr(key))
+}
+
+func (m *TWkPreferences) SetDoubleValueForKey(value float64, key string) {
+	if !m.IsValid() {
+		return
+	}
+	wkPreferencesAPI().SysCallN(22, m.Instance(), uintptr(base.UnsafePointer(&value)), api.PasStr(key))
 }
 
 // Preferences  is static instance
@@ -250,6 +290,10 @@ func wkPreferencesAPI() *imports.Imports {
 			/* 16 */ imports.NewTable("TWkPreferences_SetTextInteractionEnabled", 0), // procedure SetTextInteractionEnabled
 			/* 17 */ imports.NewTable("TWkPreferences_SetElementFullscreenEnabled", 0), // procedure SetElementFullscreenEnabled
 			/* 18 */ imports.NewTable("TWkPreferences_SetValueForKey", 0), // procedure SetValueForKey
+			/* 19 */ imports.NewTable("TWkPreferences_SetBoolValueForKey", 0), // procedure SetBoolValueForKey
+			/* 20 */ imports.NewTable("TWkPreferences_SetStringValueForKey", 0), // procedure SetStringValueForKey
+			/* 21 */ imports.NewTable("TWkPreferences_SetNumberValueForKey", 0), // procedure SetNumberValueForKey
+			/* 22 */ imports.NewTable("TWkPreferences_SetDoubleValueForKey", 0), // procedure SetDoubleValueForKey
 		}
 	})
 	return wkPreferencesImport
