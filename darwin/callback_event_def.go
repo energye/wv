@@ -32,6 +32,7 @@ type TWkCommitNavigation func(sender lcl.IObject, navigation wvTypes.WKNavigatio
 type TWkFailNavigationWithError func(sender lcl.IObject, navigation wvTypes.WKNavigation, error_ string)
 type TWkFailProvisionalNavigationWithError func(sender lcl.IObject, navigation wvTypes.WKNavigation, error_ string)
 type TWkFinishNavigation func(sender lcl.IObject, navigation wvTypes.WKNavigation)
+type TWkMouseEvent func(sender lcl.IObject, event TWKButtonEvent)
 type TWkNavigationActionDidBecomeDownload func(sender lcl.IObject, navigationAction wvTypes.WKNavigationAction, download wvTypes.WKDownload)
 type TWkNavigationResponseDidBecomeDownload func(sender lcl.IObject, navigationResponse wvTypes.WKNavigationResponse, download wvTypes.WKDownload)
 type TWkProcessMessageEvent func(sender lcl.IObject, userContentController wvTypes.WKUserContentController, name string, data string)

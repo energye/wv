@@ -316,6 +316,21 @@ func makeTWkFinishNavigation(cb TWkFinishNavigation) *callback {
 	}
 }
 
+func makeTWkMouseEvent(cb TWkMouseEvent) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWkMouseEvent",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(Sender: TObject; event: PWKButtonEvent);
+			sender := lcl.AsObject(getVal(0))
+			event := *(*TWKButtonEvent)(getPtr(getVal(1)))
+			cb(sender, event)
+		},
+	}
+}
+
 func makeTWkNavigationActionDidBecomeDownload(cb TWkNavigationActionDidBecomeDownload) *callback {
 	if cb == nil {
 		return nil
