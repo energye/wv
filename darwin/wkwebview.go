@@ -165,6 +165,7 @@ type IWkWebview interface {
 	SetOnDownloadWillPerformHTTPRedirectionNewRequest(fn TWKDownloadWillPerformHTTPRedirectionNewRequest)                       // property event
 	SetOnDownloadFinish(fn TWKDownloadFinish)                                                                                   // property event
 	SetOnDownloadFailWithError(fn TWKDownloadFailWithError)                                                                     // property event
+	SetOnEvaluateJavaScriptCallback(fn TWKEvaluateJavaScriptCallback)                                                           // property event
 	AsIntfReceiveScriptMessageDelegateEvent() uintptr
 	AsIntfWKNavigationDelegateEvent() uintptr
 	AsIntfWKURLSchemeHandlerDelegateEvent() uintptr
@@ -727,6 +728,14 @@ func (m *TWkWebview) SetOnDownloadFailWithError(fn TWKDownloadFailWithError) {
 	base.SetEvent(m, 70, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
+func (m *TWkWebview) SetOnEvaluateJavaScriptCallback(fn TWKEvaluateJavaScriptCallback) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKEvaluateJavaScriptCallback(fn)
+	base.SetEvent(m, 71, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
 func (m *TWkWebview) AsIntfReceiveScriptMessageDelegateEvent() uintptr {
 	return m.GetIntfPointer(0)
 }
@@ -843,6 +852,7 @@ func wkWebviewAPI() *imports.Imports {
 			/* 68 */ imports.NewTable("TWkWebview_OnDownloadWillPerformHTTPRedirectionNewRequest", 0), // event OnDownloadWillPerformHTTPRedirectionNewRequest
 			/* 69 */ imports.NewTable("TWkWebview_OnDownloadFinish", 0), // event OnDownloadFinish
 			/* 70 */ imports.NewTable("TWkWebview_OnDownloadFailWithError", 0), // event OnDownloadFailWithError
+			/* 71 */ imports.NewTable("TWkWebview_OnEvaluateJavaScriptCallback", 0), // event OnEvaluateJavaScriptCallback
 		}
 	})
 	return wkWebviewImport

@@ -159,6 +159,21 @@ func makeTWKDownloadWillPerformHTTPRedirectionNewRequest(cb TWKDownloadWillPerfo
 	}
 }
 
+func makeTWKEvaluateJavaScriptCallback(cb TWKEvaluateJavaScriptCallback) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKEvaluateJavaScriptCallback",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(data: Pointer; error_: string);
+			data := uintptr(getVal(0))
+			error_ := api.GoStr(getVal(1))
+			cb(data, error_)
+		},
+	}
+}
+
 func makeTWKRunJavaScriptAlert(cb TWKRunJavaScriptAlert) *callback {
 	if cb == nil {
 		return nil

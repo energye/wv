@@ -22,6 +22,7 @@ type TWKDownloadDecideDestinationUsingResponseSuggestedFilename func(sender lcl.
 type TWKDownloadFailWithError func(sender lcl.IObject, download wvTypes.WKDownload, error_ string, data uintptr, length int32)
 type TWKDownloadFinish func(sender lcl.IObject, download wvTypes.WKDownload)
 type TWKDownloadWillPerformHTTPRedirectionNewRequest func(sender lcl.IObject, download wvTypes.WKDownload, response NSHTTPURLResponse, request NSURLRequest)
+type TWKEvaluateJavaScriptCallback func(data uintptr, error_ string)
 type TWKRunJavaScriptAlert func(sender lcl.IObject, message string, frame wvTypes.WKFrameInfo)
 type TWKRunJavaScriptConfirmCompletion func(sender lcl.IObject, message string, frame wvTypes.WKFrameInfo) bool
 type TWKRunJavaScriptTextInputCompletion func(sender lcl.IObject, prompt string, defaultText string, frame wvTypes.WKFrameInfo) string
