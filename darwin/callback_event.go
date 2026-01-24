@@ -24,6 +24,21 @@ func getPtr(val uintptr) base.UnsafePointer {
 	return base.UnsafePointer(val)
 }
 
+func makeTWKConcludeDragOperation(cb TWKConcludeDragOperation) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKConcludeDragOperation",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: NSDraggingInfoProtocol; var handle: Boolean);
+			sender := NSDraggingInfoProtocol(getVal(0))
+			handle := (*bool)(getPtr(getVal(1)))
+			cb(sender, handle)
+		},
+	}
+}
+
 func makeTWKCreateWebView(cb TWKCreateWebView) *callback {
 	if cb == nil {
 		return nil
@@ -159,17 +174,94 @@ func makeTWKDownloadWillPerformHTTPRedirectionNewRequest(cb TWKDownloadWillPerfo
 	}
 }
 
-func makeTWKEvaluateJavaScriptCallback(cb TWKEvaluateJavaScriptCallback) *callback {
+func makeTWKDraggingEnded(cb TWKDraggingEnded) *callback {
 	if cb == nil {
 		return nil
 	}
 	return &callback{
-		name: "TWKEvaluateJavaScriptCallback",
+		name: "TWKDraggingEnded",
 		cb: func(getVal func(i int) uintptr) {
-			// 2 : procedure(data: Pointer; error_: string);
-			data := uintptr(getVal(0))
-			error_ := api.GoStr(getVal(1))
-			cb(data, error_)
+			// 2 : procedure(sender: NSDraggingInfoProtocol; var handle: Boolean);
+			sender := NSDraggingInfoProtocol(getVal(0))
+			handle := (*bool)(getPtr(getVal(1)))
+			cb(sender, handle)
+		},
+	}
+}
+
+func makeTWKDraggingEntered(cb TWKDraggingEntered) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDraggingEntered",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : function(sender: NSDraggingInfoProtocol; var handle: Boolean): Integer;
+			sender := NSDraggingInfoProtocol(getVal(0))
+			handle := (*bool)(getPtr(getVal(1)))
+			ret := cb(sender, handle)
+			*(*int32)(getPtr(getVal(2))) = ret
+		},
+	}
+}
+
+func makeTWKDraggingExited(cb TWKDraggingExited) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDraggingExited",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: NSDraggingInfoProtocol; var handle: Boolean);
+			sender := NSDraggingInfoProtocol(getVal(0))
+			handle := (*bool)(getPtr(getVal(1)))
+			cb(sender, handle)
+		},
+	}
+}
+
+func makeTWKDraggingUpdated(cb TWKDraggingUpdated) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKDraggingUpdated",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : function(sender: NSDraggingInfoProtocol; var handle: Boolean): Integer;
+			sender := NSDraggingInfoProtocol(getVal(0))
+			handle := (*bool)(getPtr(getVal(1)))
+			ret := cb(sender, handle)
+			*(*int32)(getPtr(getVal(2))) = ret
+		},
+	}
+}
+
+func makeTWKPerformDragOperation(cb TWKPerformDragOperation) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKPerformDragOperation",
+		cb: func(getVal func(i int) uintptr) {
+			// 1 : function(sender: NSDraggingInfoProtocol): Boolean;
+			sender := NSDraggingInfoProtocol(getVal(0))
+			ret := cb(sender)
+			*(*bool)(getPtr(getVal(1))) = ret
+		},
+	}
+}
+
+func makeTWKPrepareForDragOperation(cb TWKPrepareForDragOperation) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKPrepareForDragOperation",
+		cb: func(getVal func(i int) uintptr) {
+			// 1 : function(sender: NSDraggingInfoProtocol): Boolean;
+			sender := NSDraggingInfoProtocol(getVal(0))
+			ret := cb(sender)
+			*(*bool)(getPtr(getVal(1))) = ret
 		},
 	}
 }
@@ -251,6 +343,35 @@ func makeTWKStopURLSchemeTask(cb TWKStopURLSchemeTask) *callback {
 			sender := lcl.AsObject(getVal(0))
 			urlSchemeTask := wvTypes.WKURLSchemeTask(getVal(1))
 			cb(sender, urlSchemeTask)
+		},
+	}
+}
+
+func makeTWKUpdateDraggingItemsForDrag(cb TWKUpdateDraggingItemsForDrag) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKUpdateDraggingItemsForDrag",
+		cb: func(getVal func(i int) uintptr) {
+			// 2 : procedure(sender: NSDraggingInfoProtocol; var handle: Boolean);
+			sender := NSDraggingInfoProtocol(getVal(0))
+			handle := (*bool)(getPtr(getVal(1)))
+			cb(sender, handle)
+		},
+	}
+}
+
+func makeTWKWantsPeriodicDraggingUpdates(cb TWKWantsPeriodicDraggingUpdates) *callback {
+	if cb == nil {
+		return nil
+	}
+	return &callback{
+		name: "TWKWantsPeriodicDraggingUpdates",
+		cb: func(getVal func(i int) uintptr) {
+			// 0 : function(): Boolean;
+			ret := cb()
+			*(*bool)(getPtr(getVal(0))) = ret
 		},
 	}
 }

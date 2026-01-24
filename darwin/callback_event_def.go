@@ -14,6 +14,7 @@ import (
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
+type TWKConcludeDragOperation func(sender NSDraggingInfoProtocol, handle *bool)
 type TWKCreateWebView func(sender lcl.IObject, configuration wvTypes.WKWebViewConfiguration, navigationAction wvTypes.WKNavigationAction, windowFeatures wvTypes.WKWindowFeatures) wvTypes.WKWebView
 type TWKDecidePolicyForNavigationActionPreferences func(sender lcl.IObject, navigationAction wvTypes.WKNavigationAction, actionPolicy *wvTypes.WKNavigationActionPolicy, preferences *wvTypes.WKWebpagePreferences)
 type TWKDecidePolicyForNavigationResponse func(sender lcl.IObject, navigationResponse wvTypes.WKNavigationResponse, responsePolicy *wvTypes.WKNavigationResponsePolicy)
@@ -22,12 +23,19 @@ type TWKDownloadDecideDestinationUsingResponseSuggestedFilename func(sender lcl.
 type TWKDownloadFailWithError func(sender lcl.IObject, download wvTypes.WKDownload, error_ string, data uintptr, length int32)
 type TWKDownloadFinish func(sender lcl.IObject, download wvTypes.WKDownload)
 type TWKDownloadWillPerformHTTPRedirectionNewRequest func(sender lcl.IObject, download wvTypes.WKDownload, response NSHTTPURLResponse, request NSURLRequest)
-type TWKEvaluateJavaScriptCallback func(data uintptr, error_ string)
+type TWKDraggingEnded func(sender NSDraggingInfoProtocol, handle *bool)
+type TWKDraggingEntered func(sender NSDraggingInfoProtocol, handle *bool) int32
+type TWKDraggingExited func(sender NSDraggingInfoProtocol, handle *bool)
+type TWKDraggingUpdated func(sender NSDraggingInfoProtocol, handle *bool) int32
+type TWKPerformDragOperation func(sender NSDraggingInfoProtocol) bool
+type TWKPrepareForDragOperation func(sender NSDraggingInfoProtocol) bool
 type TWKRunJavaScriptAlert func(sender lcl.IObject, message string, frame wvTypes.WKFrameInfo)
 type TWKRunJavaScriptConfirmCompletion func(sender lcl.IObject, message string, frame wvTypes.WKFrameInfo) bool
 type TWKRunJavaScriptTextInputCompletion func(sender lcl.IObject, prompt string, defaultText string, frame wvTypes.WKFrameInfo) string
 type TWKStartURLSchemeTask func(sender lcl.IObject, urlSchemeTask wvTypes.WKURLSchemeTask)
 type TWKStopURLSchemeTask func(sender lcl.IObject, urlSchemeTask wvTypes.WKURLSchemeTask)
+type TWKUpdateDraggingItemsForDrag func(sender NSDraggingInfoProtocol, handle *bool)
+type TWKWantsPeriodicDraggingUpdates func() bool
 type TWKWebViewDidClose func(sender lcl.IObject)
 type TWkCommitNavigation func(sender lcl.IObject, navigation wvTypes.WKNavigation)
 type TWkFailNavigationWithError func(sender lcl.IObject, navigation wvTypes.WKNavigation, error_ string)

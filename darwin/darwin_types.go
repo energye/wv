@@ -34,6 +34,7 @@ type NSMutableURLRequest uintptr
 type NSURLAuthenticationChallenge uintptr
 type NSURLCredential uintptr
 type NSURLCredentialPersistence uintptr
+type NSDraggingInfoProtocol uintptr
 type NSURLRequestCachePolicy = wvTypes.NSURLRequestCachePolicy
 type NSURLRequestNetworkServiceType = wvTypes.NSURLRequestNetworkServiceType
 type NSTimeInterval = float64

@@ -165,7 +165,15 @@ type IWkWebview interface {
 	SetOnDownloadWillPerformHTTPRedirectionNewRequest(fn TWKDownloadWillPerformHTTPRedirectionNewRequest)                       // property event
 	SetOnDownloadFinish(fn TWKDownloadFinish)                                                                                   // property event
 	SetOnDownloadFailWithError(fn TWKDownloadFailWithError)                                                                     // property event
-	SetOnEvaluateJavaScriptCallback(fn TWKEvaluateJavaScriptCallback)                                                           // property event
+	SetOnDraggingEntered(fn TWKDraggingEntered)                                                                                 // property event
+	SetOnDraggingUpdated(fn TWKDraggingUpdated)                                                                                 // property event
+	SetOnDraggingExited(fn TWKDraggingExited)                                                                                   // property event
+	SetOnPrepareForDragOperation(fn TWKPrepareForDragOperation)                                                                 // property event
+	SetOnPerformDragOperation(fn TWKPerformDragOperation)                                                                       // property event
+	SetOnConcludeDragOperation(fn TWKConcludeDragOperation)                                                                     // property event
+	SetOnDraggingEnded(fn TWKDraggingEnded)                                                                                     // property event
+	SetOnWantsPeriodicDraggingUpdates(fn TWKWantsPeriodicDraggingUpdates)                                                       // property event
+	SetOnUpdateDraggingItemsForDrag(fn TWKUpdateDraggingItemsForDrag)                                                           // property event
 	AsIntfReceiveScriptMessageDelegateEvent() uintptr
 	AsIntfWKNavigationDelegateEvent() uintptr
 	AsIntfWKURLSchemeHandlerDelegateEvent() uintptr
@@ -728,12 +736,76 @@ func (m *TWkWebview) SetOnDownloadFailWithError(fn TWKDownloadFailWithError) {
 	base.SetEvent(m, 70, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
-func (m *TWkWebview) SetOnEvaluateJavaScriptCallback(fn TWKEvaluateJavaScriptCallback) {
+func (m *TWkWebview) SetOnDraggingEntered(fn TWKDraggingEntered) {
 	if !m.IsValid() {
 		return
 	}
-	cb := makeTWKEvaluateJavaScriptCallback(fn)
+	cb := makeTWKDraggingEntered(fn)
 	base.SetEvent(m, 71, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnDraggingUpdated(fn TWKDraggingUpdated) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKDraggingUpdated(fn)
+	base.SetEvent(m, 72, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnDraggingExited(fn TWKDraggingExited) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKDraggingExited(fn)
+	base.SetEvent(m, 73, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnPrepareForDragOperation(fn TWKPrepareForDragOperation) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKPrepareForDragOperation(fn)
+	base.SetEvent(m, 74, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnPerformDragOperation(fn TWKPerformDragOperation) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKPerformDragOperation(fn)
+	base.SetEvent(m, 75, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnConcludeDragOperation(fn TWKConcludeDragOperation) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKConcludeDragOperation(fn)
+	base.SetEvent(m, 76, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnDraggingEnded(fn TWKDraggingEnded) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKDraggingEnded(fn)
+	base.SetEvent(m, 77, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnWantsPeriodicDraggingUpdates(fn TWKWantsPeriodicDraggingUpdates) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKWantsPeriodicDraggingUpdates(fn)
+	base.SetEvent(m, 78, wkWebviewAPI(), api.MakeEventDataPtr(cb))
+}
+
+func (m *TWkWebview) SetOnUpdateDraggingItemsForDrag(fn TWKUpdateDraggingItemsForDrag) {
+	if !m.IsValid() {
+		return
+	}
+	cb := makeTWKUpdateDraggingItemsForDrag(fn)
+	base.SetEvent(m, 79, wkWebviewAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWkWebview) AsIntfReceiveScriptMessageDelegateEvent() uintptr {
@@ -852,7 +924,15 @@ func wkWebviewAPI() *imports.Imports {
 			/* 68 */ imports.NewTable("TWkWebview_OnDownloadWillPerformHTTPRedirectionNewRequest", 0), // event OnDownloadWillPerformHTTPRedirectionNewRequest
 			/* 69 */ imports.NewTable("TWkWebview_OnDownloadFinish", 0), // event OnDownloadFinish
 			/* 70 */ imports.NewTable("TWkWebview_OnDownloadFailWithError", 0), // event OnDownloadFailWithError
-			/* 71 */ imports.NewTable("TWkWebview_OnEvaluateJavaScriptCallback", 0), // event OnEvaluateJavaScriptCallback
+			/* 71 */ imports.NewTable("TWkWebview_OnDraggingEntered", 0), // event OnDraggingEntered
+			/* 72 */ imports.NewTable("TWkWebview_OnDraggingUpdated", 0), // event OnDraggingUpdated
+			/* 73 */ imports.NewTable("TWkWebview_OnDraggingExited", 0), // event OnDraggingExited
+			/* 74 */ imports.NewTable("TWkWebview_OnPrepareForDragOperation", 0), // event OnPrepareForDragOperation
+			/* 75 */ imports.NewTable("TWkWebview_OnPerformDragOperation", 0), // event OnPerformDragOperation
+			/* 76 */ imports.NewTable("TWkWebview_OnConcludeDragOperation", 0), // event OnConcludeDragOperation
+			/* 77 */ imports.NewTable("TWkWebview_OnDraggingEnded", 0), // event OnDraggingEnded
+			/* 78 */ imports.NewTable("TWkWebview_OnWantsPeriodicDraggingUpdates", 0), // event OnWantsPeriodicDraggingUpdates
+			/* 79 */ imports.NewTable("TWkWebview_OnUpdateDraggingItemsForDrag", 0), // event OnUpdateDraggingItemsForDrag
 		}
 	})
 	return wkWebviewImport
