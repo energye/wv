@@ -20,29 +20,29 @@ import (
 // IWkWebview Parent: lcl.IComponent
 type IWkWebview interface {
 	lcl.IComponent
-	CanGoBack() bool                      // function
-	CanGoForward() bool                   // function
-	IsLoading() bool                      // function
-	GetTitle() string                     // function
-	GetURI() string                       // function
-	CookieManager() IWkCookieManager      // function
-	GetSettings() IWkSettings             // function
-	AsCookieManagerDelegate() IWkWebview  // function
-	AsSchemeRequestDelegate() IWkWebview  // function
-	CreateBrowser()                       // procedure
-	GoBack()                              // procedure
-	GoForward()                           // procedure
-	Reload()                              // procedure
-	Stop()                                // procedure
-	StartDrag(formWindow lcl.IWinControl) // procedure
-	TerminateWebProcess()                 // procedure
-	TryClose()                            // procedure
-	ExecuteScript(script string)          // procedure
-	LoadHTML(hTML string)                 // procedure
-	LoadURL(uRL string)                   // procedure
-	EnabledDevtools(enabled bool)         // procedure
-	ShowDevtools()                        // procedure
-	RegisterScriptCode(scriptCode string) // procedure
+	CanGoBack() bool                       // function
+	CanGoForward() bool                    // function
+	IsLoading() bool                       // function
+	GetTitle() string                      // function
+	GetURI() string                        // function
+	CookieManager() IWkCookieManager       // function
+	GetSettings() IWkSettings              // function
+	AsCookieManagerDelegate() IWkWebview   // function
+	AsSchemeRequestDelegate() IWkWebview   // function
+	CreateBrowser()                        // procedure
+	GoBack()                               // procedure
+	GoForward()                            // procedure
+	Reload()                               // procedure
+	Stop()                                 // procedure
+	StartDrag(formWindow lcl.IWinControl)  // procedure
+	TerminateWebProcess()                  // procedure
+	TryClose()                             // procedure
+	ExecuteScript(script string, id int32) // procedure
+	LoadHTML(hTML string)                  // procedure
+	LoadURL(uRL string)                    // procedure
+	EnabledDevtools(enabled bool)          // procedure
+	ShowDevtools()                         // procedure
+	RegisterScriptCode(scriptCode string)  // procedure
 	// RegisterScriptMessageHandler
 	//  注册JS消息处理器
 	//  window.webkit.messageHandlers.<name>.postMessage()
@@ -205,11 +205,11 @@ func (m *TWkWebview) TryClose() {
 	wkWebviewAPI().SysCallN(17, m.Instance())
 }
 
-func (m *TWkWebview) ExecuteScript(script string) {
+func (m *TWkWebview) ExecuteScript(script string, id int32) {
 	if !m.IsValid() {
 		return
 	}
-	wkWebviewAPI().SysCallN(18, m.Instance(), api.PasStr(script))
+	wkWebviewAPI().SysCallN(18, m.Instance(), api.PasStr(script), uintptr(id))
 }
 
 func (m *TWkWebview) LoadHTML(hTML string) {

@@ -126,10 +126,11 @@ func makeTWkExecuteScriptFinishedEvent(cb TWkExecuteScriptFinishedEvent) *callba
 	return &callback{
 		name: "TWkExecuteScriptFinishedEvent",
 		cb: func(getVal func(i int) uintptr) {
-			// 2 : procedure(Sender: TObject; const jsValue: TWkJSValue);
+			// 3 : procedure(Sender: TObject; const jsValue: TWkJSValue; aId: Integer);
 			sender := lcl.AsObject(getVal(0))
 			jsValue := AsWkJSValue(getVal(1))
-			cb(sender, jsValue)
+			id := int32(getVal(2))
+			cb(sender, jsValue, id)
 		},
 	}
 }

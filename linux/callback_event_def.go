@@ -20,7 +20,7 @@ type TWkContextMenuDismissedEvent func(sender lcl.IObject)
 type TWkContextMenuEvent func(sender lcl.IObject, contextMenu wvTypes.WebKitContextMenu, defaultAction wvTypes.PWkAction) bool
 type TWkDecidePolicyEvent func(sender lcl.IObject, decision wvTypes.WebKitPolicyDecision, type_ wvTypes.WebKitPolicyDecisionType) bool
 type TWkDeleteCookieFinishEvent func(sender lcl.IObject, result bool, error_ string)
-type TWkExecuteScriptFinishedEvent func(sender lcl.IObject, jsValue IWkJSValue)
+type TWkExecuteScriptFinishedEvent func(sender lcl.IObject, jsValue IWkJSValue, id int32)
 type TWkGetAcceptPolicyFinishEvent func(sender lcl.IObject, policy wvTypes.WebKitCookieAcceptPolicy, error_ string)
 type TWkGetCookiesFinishEvent func(sender lcl.IObject, cookieList wvTypes.PList, error_ string)
 type TWkLoadChangeEvent func(sender lcl.IObject, loadEvent wvTypes.WebKitLoadEvent)
