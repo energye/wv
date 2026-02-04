@@ -13,11 +13,15 @@ import (
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
 	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 )
 
 // ICoreWebView2CustomItemSelectedEventHandler0 Parent: lcl.IInterfacedObject
 type ICoreWebView2CustomItemSelectedEventHandler0 interface {
 	lcl.IInterfacedObject
+	// Invoke
+	//  Provides the event args for the corresponding event.
+	Invoke(sender ICoreWebView2ContextMenuItem, args lcl.IUnknown) types.HRESULT // function
 }
 
 // ICoreWebView2CustomItemSelectedEventHandler Parent: ICoreWebView2CustomItemSelectedEventHandler0
@@ -28,6 +32,14 @@ type ICoreWebView2CustomItemSelectedEventHandler interface {
 
 type TCoreWebView2CustomItemSelectedEventHandler struct {
 	lcl.TInterfacedObject
+}
+
+func (m *TCoreWebView2CustomItemSelectedEventHandler) Invoke(sender ICoreWebView2ContextMenuItem, args lcl.IUnknown) types.HRESULT {
+	if !m.IsValid() {
+		return 0
+	}
+	r := coreWebView2CustomItemSelectedEventHandlerAPI().SysCallN(1, m.Instance(), base.GetObjectUintptr(sender), base.GetObjectUintptr(args))
+	return types.HRESULT(r)
 }
 
 func (m *TCoreWebView2CustomItemSelectedEventHandler) AsIntfCustomItemSelectedEventHandler() uintptr {
@@ -56,6 +68,7 @@ func coreWebView2CustomItemSelectedEventHandlerAPI() *imports.Imports {
 		coreWebView2CustomItemSelectedEventHandlerImport = api.NewDefaultImports()
 		coreWebView2CustomItemSelectedEventHandlerImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TCoreWebView2CustomItemSelectedEventHandler_Create", 0), // constructor NewCoreWebView2CustomItemSelectedEventHandler
+			/* 1 */ imports.NewTable("TCoreWebView2CustomItemSelectedEventHandler_Invoke", 0), // function Invoke
 		}
 	})
 	return coreWebView2CustomItemSelectedEventHandlerImport

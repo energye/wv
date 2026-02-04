@@ -79,6 +79,17 @@ type ICoreWebView2Environment interface {
 	//  <returns>True if successfull.</return>
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment3#createcorewebview2pointerinfo">See the ICoreWebView2Environment3 article.</see>
 	CreateCoreWebView2PointerInfo(pointerInfo *ICoreWebView2PointerInfo) bool // function
+	// GetAutomationProviderForWindow
+	//  Returns the Automation Provider for the WebView that matches the provided
+	//  window. Host apps are expected to implement
+	//  IRawElementProviderHwndOverride. When GetOverrideProviderForHwnd is
+	//  called, the app can pass the HWND to GetAutomationProviderForWindow to
+	//  find the matching WebView Automation Provider.
+	//  <param name="aHandle">Handle used to find the matching WebView Automation Provider.</param>
+	//  <param name="aProvider">The Automation Provider for the WebView that matches the provided window.</param>
+	//  <returns>True if successfull.</return>
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment4#getautomationproviderforwindow">See the ICoreWebView2Environment4 article.</see>
+	GetAutomationProviderForWindow(handle types.THandle, provider *lcl.IUnknown) bool // function
 	// CreatePrintSettings
 	//  Creates the `ICoreWebView2PrintSettings` used by the `PrintToPdf` method.
 	//  <param name="aPrintSettings">The new ICoreWebView2PrintSettings instance.</param>
@@ -279,6 +290,14 @@ type ICoreWebView2Environment interface {
 	//  <returns>True if successfull.</return>
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment14#createwebfilesystemdirectoryhandle">See the ICoreWebView2Environment14 article.</see>
 	CreateWebFileSystemDirectoryHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool // function
+	// CreateObjectCollection
+	//  Create a generic object collection.
+	//  <param name="aLength">Amount of items.</param>
+	//  <param name="aItems">Used to specify whether the Handle should be created with a Read-only or Read-and-write web permission.</param>
+	//  <param name="aObjectCollection">The ICoreWebView2ObjectCollection object created with aItems.</param>
+	//  <returns>True if successfull.</return>
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2environment14#createobjectcollection">See the ICoreWebView2Environment14 article.</see>
+	CreateObjectCollection(length uint32, items *lcl.IUnknown, objectCollection *ICoreWebView2ObjectCollection) bool // function
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -397,12 +416,22 @@ func (m *TCoreWebView2Environment) CreateCoreWebView2PointerInfo(pointerInfo *IC
 	return api.GoBool(r)
 }
 
+func (m *TCoreWebView2Environment) GetAutomationProviderForWindow(handle types.THandle, provider *lcl.IUnknown) bool {
+	if !m.IsValid() {
+		return false
+	}
+	providerPtr := base.GetObjectUintptr(*provider)
+	r := coreWebView2EnvironmentAPI().SysCallN(8, m.Instance(), uintptr(handle), uintptr(base.UnsafePointer(&providerPtr)))
+	*provider = lcl.AsUnknown(providerPtr)
+	return api.GoBool(r)
+}
+
 func (m *TCoreWebView2Environment) CreatePrintSettings(printSettings *ICoreWebView2PrintSettings) bool {
 	if !m.IsValid() {
 		return false
 	}
 	printSettingsPtr := base.GetObjectUintptr(*printSettings)
-	r := coreWebView2EnvironmentAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&printSettingsPtr)))
+	r := coreWebView2EnvironmentAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&printSettingsPtr)))
 	*printSettings = AsCoreWebView2PrintSettings(printSettingsPtr)
 	return api.GoBool(r)
 }
@@ -412,7 +441,7 @@ func (m *TCoreWebView2Environment) CreateContextMenuItem(label string, iconStrea
 		return false
 	}
 	menuItemPtr := base.GetObjectUintptr(*menuItem)
-	r := coreWebView2EnvironmentAPI().SysCallN(9, m.Instance(), api.PasStr(label), base.GetObjectUintptr(iconStream), uintptr(kind), uintptr(base.UnsafePointer(&menuItemPtr)))
+	r := coreWebView2EnvironmentAPI().SysCallN(10, m.Instance(), api.PasStr(label), base.GetObjectUintptr(iconStream), uintptr(kind), uintptr(base.UnsafePointer(&menuItemPtr)))
 	*menuItem = AsCoreWebView2ContextMenuItem(menuItemPtr)
 	return api.GoBool(r)
 }
@@ -423,7 +452,7 @@ func (m *TCoreWebView2Environment) CreateCoreWebView2ControllerOptions(options *
 	}
 	optionsPtr := base.GetObjectUintptr(*options)
 	resultPtr := uintptr(*result)
-	r := coreWebView2EnvironmentAPI().SysCallN(10, m.Instance(), uintptr(base.UnsafePointer(&optionsPtr)), uintptr(base.UnsafePointer(&resultPtr)))
+	r := coreWebView2EnvironmentAPI().SysCallN(11, m.Instance(), uintptr(base.UnsafePointer(&optionsPtr)), uintptr(base.UnsafePointer(&resultPtr)))
 	*options = AsCoreWebView2ControllerOptions(optionsPtr)
 	*result = types.HRESULT(resultPtr)
 	return api.GoBool(r)
@@ -434,7 +463,7 @@ func (m *TCoreWebView2Environment) CreateCoreWebView2ControllerWithOptions(paren
 		return false
 	}
 	resultPtr := uintptr(*result)
-	r := coreWebView2EnvironmentAPI().SysCallN(11, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(options), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
+	r := coreWebView2EnvironmentAPI().SysCallN(12, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(options), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
 	*result = types.HRESULT(resultPtr)
 	return api.GoBool(r)
 }
@@ -444,7 +473,7 @@ func (m *TCoreWebView2Environment) CreateCoreWebView2CompositionControllerWithOp
 		return false
 	}
 	resultPtr := uintptr(*result)
-	r := coreWebView2EnvironmentAPI().SysCallN(12, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(options), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
+	r := coreWebView2EnvironmentAPI().SysCallN(13, m.Instance(), uintptr(parentWindow), base.GetObjectUintptr(options), base.GetObjectUintptr(browserEvents), uintptr(base.UnsafePointer(&resultPtr)))
 	*result = types.HRESULT(resultPtr)
 	return api.GoBool(r)
 }
@@ -454,7 +483,7 @@ func (m *TCoreWebView2Environment) CreateSharedBuffer(size int64, sharedBuffer *
 		return false
 	}
 	sharedBufferPtr := base.GetObjectUintptr(*sharedBuffer)
-	r := coreWebView2EnvironmentAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&size)), uintptr(base.UnsafePointer(&sharedBufferPtr)))
+	r := coreWebView2EnvironmentAPI().SysCallN(14, m.Instance(), uintptr(base.UnsafePointer(&size)), uintptr(base.UnsafePointer(&sharedBufferPtr)))
 	*sharedBuffer = AsCoreWebView2SharedBuffer(sharedBufferPtr)
 	return api.GoBool(r)
 }
@@ -463,21 +492,11 @@ func (m *TCoreWebView2Environment) GetProcessExtendedInfos(browserEvents IWVBrow
 	if !m.IsValid() {
 		return false
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(14, m.Instance(), base.GetObjectUintptr(browserEvents))
+	r := coreWebView2EnvironmentAPI().SysCallN(15, m.Instance(), base.GetObjectUintptr(browserEvents))
 	return api.GoBool(r)
 }
 
 func (m *TCoreWebView2Environment) CreateWebFileSystemFileHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool {
-	if !m.IsValid() {
-		return false
-	}
-	valuePtr := base.GetObjectUintptr(*value)
-	r := coreWebView2EnvironmentAPI().SysCallN(15, m.Instance(), api.PasStr(path), uintptr(permission), uintptr(base.UnsafePointer(&valuePtr)))
-	*value = AsCoreWebView2FileSystemHandle(valuePtr)
-	return api.GoBool(r)
-}
-
-func (m *TCoreWebView2Environment) CreateWebFileSystemDirectoryHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool {
 	if !m.IsValid() {
 		return false
 	}
@@ -487,11 +506,33 @@ func (m *TCoreWebView2Environment) CreateWebFileSystemDirectoryHandle(path strin
 	return api.GoBool(r)
 }
 
+func (m *TCoreWebView2Environment) CreateWebFileSystemDirectoryHandle(path string, permission wvTypes.TWVFileSystemHandlePermission, value *ICoreWebView2FileSystemHandle) bool {
+	if !m.IsValid() {
+		return false
+	}
+	valuePtr := base.GetObjectUintptr(*value)
+	r := coreWebView2EnvironmentAPI().SysCallN(17, m.Instance(), api.PasStr(path), uintptr(permission), uintptr(base.UnsafePointer(&valuePtr)))
+	*value = AsCoreWebView2FileSystemHandle(valuePtr)
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2Environment) CreateObjectCollection(length uint32, items *lcl.IUnknown, objectCollection *ICoreWebView2ObjectCollection) bool {
+	if !m.IsValid() {
+		return false
+	}
+	itemsPtr := base.GetObjectUintptr(*items)
+	objectCollectionPtr := base.GetObjectUintptr(*objectCollection)
+	r := coreWebView2EnvironmentAPI().SysCallN(18, m.Instance(), uintptr(length), uintptr(base.UnsafePointer(&itemsPtr)), uintptr(base.UnsafePointer(&objectCollectionPtr)))
+	*items = lcl.AsUnknown(itemsPtr)
+	*objectCollection = AsCoreWebView2ObjectCollection(objectCollectionPtr)
+	return api.GoBool(r)
+}
+
 func (m *TCoreWebView2Environment) Initialized() bool {
 	if !m.IsValid() {
 		return false
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(17, m.Instance())
+	r := coreWebView2EnvironmentAPI().SysCallN(19, m.Instance())
 	return api.GoBool(r)
 }
 
@@ -500,7 +541,7 @@ func (m *TCoreWebView2Environment) BaseIntf() (result ICoreWebView2Environment) 
 		return
 	}
 	var resultPtr uintptr
-	coreWebView2EnvironmentAPI().SysCallN(18, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	coreWebView2EnvironmentAPI().SysCallN(20, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
 	result = AsCoreWebView2Environment(resultPtr)
 	return
 }
@@ -509,7 +550,7 @@ func (m *TCoreWebView2Environment) BrowserVersionInfo() string {
 	if !m.IsValid() {
 		return ""
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(19, m.Instance())
+	r := coreWebView2EnvironmentAPI().SysCallN(21, m.Instance())
 	return api.GoStr(r)
 }
 
@@ -517,7 +558,7 @@ func (m *TCoreWebView2Environment) SupportsCompositionController() bool {
 	if !m.IsValid() {
 		return false
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(20, m.Instance())
+	r := coreWebView2EnvironmentAPI().SysCallN(22, m.Instance())
 	return api.GoBool(r)
 }
 
@@ -525,7 +566,7 @@ func (m *TCoreWebView2Environment) SupportsControllerOptions() bool {
 	if !m.IsValid() {
 		return false
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(21, m.Instance())
+	r := coreWebView2EnvironmentAPI().SysCallN(23, m.Instance())
 	return api.GoBool(r)
 }
 
@@ -533,7 +574,7 @@ func (m *TCoreWebView2Environment) UserDataFolder() string {
 	if !m.IsValid() {
 		return ""
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(22, m.Instance())
+	r := coreWebView2EnvironmentAPI().SysCallN(24, m.Instance())
 	return api.GoStr(r)
 }
 
@@ -542,7 +583,7 @@ func (m *TCoreWebView2Environment) ProcessInfos() (result ICoreWebView2ProcessIn
 		return
 	}
 	var resultPtr uintptr
-	coreWebView2EnvironmentAPI().SysCallN(23, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	coreWebView2EnvironmentAPI().SysCallN(25, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
 	result = AsCoreWebView2ProcessInfoCollection(resultPtr)
 	return
 }
@@ -551,7 +592,7 @@ func (m *TCoreWebView2Environment) FailureReportFolderPath() string {
 	if !m.IsValid() {
 		return ""
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(24, m.Instance())
+	r := coreWebView2EnvironmentAPI().SysCallN(26, m.Instance())
 	return api.GoStr(r)
 }
 
@@ -578,23 +619,25 @@ func coreWebView2EnvironmentAPI() *imports.Imports {
 			/* 5 */ imports.NewTable("TCoreWebView2Environment_CreateWebResourceRequest", 0), // function CreateWebResourceRequest
 			/* 6 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2CompositionController", 0), // function CreateCoreWebView2CompositionController
 			/* 7 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2PointerInfo", 0), // function CreateCoreWebView2PointerInfo
-			/* 8 */ imports.NewTable("TCoreWebView2Environment_CreatePrintSettings", 0), // function CreatePrintSettings
-			/* 9 */ imports.NewTable("TCoreWebView2Environment_CreateContextMenuItem", 0), // function CreateContextMenuItem
-			/* 10 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2ControllerOptions", 0), // function CreateCoreWebView2ControllerOptions
-			/* 11 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2ControllerWithOptions", 0), // function CreateCoreWebView2ControllerWithOptions
-			/* 12 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2CompositionControllerWithOptions", 0), // function CreateCoreWebView2CompositionControllerWithOptions
-			/* 13 */ imports.NewTable("TCoreWebView2Environment_CreateSharedBuffer", 0), // function CreateSharedBuffer
-			/* 14 */ imports.NewTable("TCoreWebView2Environment_GetProcessExtendedInfos", 0), // function GetProcessExtendedInfos
-			/* 15 */ imports.NewTable("TCoreWebView2Environment_CreateWebFileSystemFileHandle", 0), // function CreateWebFileSystemFileHandle
-			/* 16 */ imports.NewTable("TCoreWebView2Environment_CreateWebFileSystemDirectoryHandle", 0), // function CreateWebFileSystemDirectoryHandle
-			/* 17 */ imports.NewTable("TCoreWebView2Environment_Initialized", 0), // property Initialized
-			/* 18 */ imports.NewTable("TCoreWebView2Environment_BaseIntf", 0), // property BaseIntf
-			/* 19 */ imports.NewTable("TCoreWebView2Environment_BrowserVersionInfo", 0), // property BrowserVersionInfo
-			/* 20 */ imports.NewTable("TCoreWebView2Environment_SupportsCompositionController", 0), // property SupportsCompositionController
-			/* 21 */ imports.NewTable("TCoreWebView2Environment_SupportsControllerOptions", 0), // property SupportsControllerOptions
-			/* 22 */ imports.NewTable("TCoreWebView2Environment_UserDataFolder", 0), // property UserDataFolder
-			/* 23 */ imports.NewTable("TCoreWebView2Environment_ProcessInfos", 0), // property ProcessInfos
-			/* 24 */ imports.NewTable("TCoreWebView2Environment_FailureReportFolderPath", 0), // property FailureReportFolderPath
+			/* 8 */ imports.NewTable("TCoreWebView2Environment_GetAutomationProviderForWindow", 0), // function GetAutomationProviderForWindow
+			/* 9 */ imports.NewTable("TCoreWebView2Environment_CreatePrintSettings", 0), // function CreatePrintSettings
+			/* 10 */ imports.NewTable("TCoreWebView2Environment_CreateContextMenuItem", 0), // function CreateContextMenuItem
+			/* 11 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2ControllerOptions", 0), // function CreateCoreWebView2ControllerOptions
+			/* 12 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2ControllerWithOptions", 0), // function CreateCoreWebView2ControllerWithOptions
+			/* 13 */ imports.NewTable("TCoreWebView2Environment_CreateCoreWebView2CompositionControllerWithOptions", 0), // function CreateCoreWebView2CompositionControllerWithOptions
+			/* 14 */ imports.NewTable("TCoreWebView2Environment_CreateSharedBuffer", 0), // function CreateSharedBuffer
+			/* 15 */ imports.NewTable("TCoreWebView2Environment_GetProcessExtendedInfos", 0), // function GetProcessExtendedInfos
+			/* 16 */ imports.NewTable("TCoreWebView2Environment_CreateWebFileSystemFileHandle", 0), // function CreateWebFileSystemFileHandle
+			/* 17 */ imports.NewTable("TCoreWebView2Environment_CreateWebFileSystemDirectoryHandle", 0), // function CreateWebFileSystemDirectoryHandle
+			/* 18 */ imports.NewTable("TCoreWebView2Environment_CreateObjectCollection", 0), // function CreateObjectCollection
+			/* 19 */ imports.NewTable("TCoreWebView2Environment_Initialized", 0), // property Initialized
+			/* 20 */ imports.NewTable("TCoreWebView2Environment_BaseIntf", 0), // property BaseIntf
+			/* 21 */ imports.NewTable("TCoreWebView2Environment_BrowserVersionInfo", 0), // property BrowserVersionInfo
+			/* 22 */ imports.NewTable("TCoreWebView2Environment_SupportsCompositionController", 0), // property SupportsCompositionController
+			/* 23 */ imports.NewTable("TCoreWebView2Environment_SupportsControllerOptions", 0), // property SupportsControllerOptions
+			/* 24 */ imports.NewTable("TCoreWebView2Environment_UserDataFolder", 0), // property UserDataFolder
+			/* 25 */ imports.NewTable("TCoreWebView2Environment_ProcessInfos", 0), // property ProcessInfos
+			/* 26 */ imports.NewTable("TCoreWebView2Environment_FailureReportFolderPath", 0), // property FailureReportFolderPath
 		}
 	})
 	return coreWebView2EnvironmentImport

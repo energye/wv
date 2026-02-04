@@ -12,6 +12,7 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
+	"github.com/energye/lcl/lcl"
 )
 
 // ICoreWebView2ObjectCollection Parent: ICoreWebView2ObjectCollectionView
@@ -20,6 +21,9 @@ type ICoreWebView2ObjectCollection interface {
 	// RemoveValueAtIndex
 	//  Removes the object at the specified index.
 	RemoveValueAtIndex(index uint32) bool // function
+	// InsertValueAtIndex
+	//  Inserts the object at the specified index.
+	InsertValueAtIndex(index uint32, value lcl.IUnknown) bool // function
 }
 
 type TCoreWebView2ObjectCollection struct {
@@ -31,6 +35,14 @@ func (m *TCoreWebView2ObjectCollection) RemoveValueAtIndex(index uint32) bool {
 		return false
 	}
 	r := coreWebView2ObjectCollectionAPI().SysCallN(1, m.Instance(), uintptr(index))
+	return api.GoBool(r)
+}
+
+func (m *TCoreWebView2ObjectCollection) InsertValueAtIndex(index uint32, value lcl.IUnknown) bool {
+	if !m.IsValid() {
+		return false
+	}
+	r := coreWebView2ObjectCollectionAPI().SysCallN(2, m.Instance(), uintptr(index), base.GetObjectUintptr(value))
 	return api.GoBool(r)
 }
 
@@ -51,6 +63,7 @@ func coreWebView2ObjectCollectionAPI() *imports.Imports {
 		coreWebView2ObjectCollectionImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TCoreWebView2ObjectCollection_Create", 0), // constructor NewCoreWebView2ObjectCollection
 			/* 1 */ imports.NewTable("TCoreWebView2ObjectCollection_RemoveValueAtIndex", 0), // function RemoveValueAtIndex
+			/* 2 */ imports.NewTable("TCoreWebView2ObjectCollection_InsertValueAtIndex", 0), // function InsertValueAtIndex
 		}
 	})
 	return coreWebView2ObjectCollectionImport

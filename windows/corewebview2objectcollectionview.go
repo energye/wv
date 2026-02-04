@@ -28,6 +28,10 @@ type ICoreWebView2ObjectCollectionView interface {
 	//  The number of elements contained in the collection.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2objectcollectionview#get_count">See the ICoreWebView2ObjectCollectionView article.</see>
 	Count() uint32 // property Count Getter
+	// Items
+	//  Gets the element at the given index.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2objectcollectionview#getvalueatindex">See the ICoreWebView2ObjectCollectionView article.</see>
+	Items(idx uint32) lcl.IUnknown // property Items Getter
 }
 
 type TCoreWebView2ObjectCollectionView struct {
@@ -60,6 +64,16 @@ func (m *TCoreWebView2ObjectCollectionView) Count() uint32 {
 	return uint32(r)
 }
 
+func (m *TCoreWebView2ObjectCollectionView) Items(idx uint32) (result lcl.IUnknown) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2ObjectCollectionViewAPI().SysCallN(4, m.Instance(), uintptr(idx), uintptr(base.UnsafePointer(&resultPtr)))
+	result = lcl.AsUnknown(resultPtr)
+	return
+}
+
 // NewCoreWebView2ObjectCollectionView class constructor
 func NewCoreWebView2ObjectCollectionView(baseIntf ICoreWebView2ObjectCollectionView) ICoreWebView2ObjectCollectionView {
 	r := coreWebView2ObjectCollectionViewAPI().SysCallN(0, base.GetObjectUintptr(baseIntf))
@@ -79,6 +93,7 @@ func coreWebView2ObjectCollectionViewAPI() *imports.Imports {
 			/* 1 */ imports.NewTable("TCoreWebView2ObjectCollectionView_Initialized", 0), // property Initialized
 			/* 2 */ imports.NewTable("TCoreWebView2ObjectCollectionView_BaseIntf", 0), // property BaseIntf
 			/* 3 */ imports.NewTable("TCoreWebView2ObjectCollectionView_Count", 0), // property Count
+			/* 4 */ imports.NewTable("TCoreWebView2ObjectCollectionView_Items", 0), // property Items
 		}
 	})
 	return coreWebView2ObjectCollectionViewImport

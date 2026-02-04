@@ -1755,6 +1755,20 @@ type IWVBrowserBase interface {
 	//  copy if you are doing more than immediately setting the cursor.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2compositioncontroller#get_cursor">See the ICoreWebView2CompositionController article.</see>
 	Cursor() types.HCURSOR // property Cursor Getter
+	// RootVisualTarget
+	//  The RootVisualTarget is a visual in the hosting app's visual tree. This
+	//  visual is where the WebView will connect its visual tree. The app uses
+	//  this visual to position the WebView within the app. The app still needs
+	//  to use the Bounds property to size the WebView. The RootVisualTarget
+	//  property can be an IDCompositionVisual or a
+	//  Windows::UI::Composition::ContainerVisual. WebView will connect its visual
+	//  tree to the provided visual before returning from the property setter. The
+	//  app needs to commit on its device setting the RootVisualTarget property.
+	//  The RootVisualTarget property supports being set to nullptr to disconnect
+	//  the WebView from the app's visual tree.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2compositioncontroller#get_rootvisualtarget">See the ICoreWebView2CompositionController article.</see>
+	RootVisualTarget() lcl.IUnknown         // property RootVisualTarget Getter
+	SetRootVisualTarget(value lcl.IUnknown) // property RootVisualTarget Setter
 	// SystemCursorID
 	//  The current system cursor ID reported by the underlying rendering engine
 	//  for WebView. For example, most of the time, when the cursor is over text,
@@ -1767,6 +1781,11 @@ type IWVBrowserBase interface {
 	//  MAKEINTRESOURCE must be called on it first.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2compositioncontroller#get_systemcursorid">See the ICoreWebView2CompositionController article.</see>
 	SystemCursorID() uint32 // property SystemCursorID Getter
+	// AutomationProvider
+	//  Returns the Automation Provider for the WebView. This object implements
+	//  IRawElementProviderSimple.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2compositioncontroller2#get_automationprovider">See the ICoreWebView2CompositionController2 article.</see>
+	AutomationProvider() lcl.IUnknown // property AutomationProvider Getter
 	// ProcessInfos
 	//  Returns the `ICoreWebView2ProcessInfoCollection`. Provide a list of all
 	//  process using same user data folder except for crashpad process.
@@ -3735,12 +3754,39 @@ func (m *TWVBrowserBase) Cursor() types.HCURSOR {
 	return types.HCURSOR(r)
 }
 
+func (m *TWVBrowserBase) RootVisualTarget() (result lcl.IUnknown) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	wVBrowserBaseAPI().SysCallN(172, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&resultPtr)))
+	result = lcl.AsUnknown(resultPtr)
+	return
+}
+
+func (m *TWVBrowserBase) SetRootVisualTarget(value lcl.IUnknown) {
+	if !m.IsValid() {
+		return
+	}
+	wVBrowserBaseAPI().SysCallN(172, 1, m.Instance(), base.GetObjectUintptr(value))
+}
+
 func (m *TWVBrowserBase) SystemCursorID() uint32 {
 	if !m.IsValid() {
 		return 0
 	}
-	r := wVBrowserBaseAPI().SysCallN(172, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(173, m.Instance())
 	return uint32(r)
+}
+
+func (m *TWVBrowserBase) AutomationProvider() (result lcl.IUnknown) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	wVBrowserBaseAPI().SysCallN(174, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = lcl.AsUnknown(resultPtr)
+	return
 }
 
 func (m *TWVBrowserBase) ProcessInfos() (result ICoreWebView2ProcessInfoCollection) {
@@ -3748,7 +3794,7 @@ func (m *TWVBrowserBase) ProcessInfos() (result ICoreWebView2ProcessInfoCollecti
 		return
 	}
 	var resultPtr uintptr
-	wVBrowserBaseAPI().SysCallN(173, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	wVBrowserBaseAPI().SysCallN(175, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
 	result = AsCoreWebView2ProcessInfoCollection(resultPtr)
 	return
 }
@@ -3757,7 +3803,7 @@ func (m *TWVBrowserBase) ProfileName() string {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wVBrowserBaseAPI().SysCallN(174, 0, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(176, 0, m.Instance())
 	return api.GoStr(r)
 }
 
@@ -3765,14 +3811,14 @@ func (m *TWVBrowserBase) SetProfileName(value string) {
 	if !m.IsValid() {
 		return
 	}
-	wVBrowserBaseAPI().SysCallN(174, 1, m.Instance(), api.PasStr(value))
+	wVBrowserBaseAPI().SysCallN(176, 1, m.Instance(), api.PasStr(value))
 }
 
 func (m *TWVBrowserBase) IsInPrivateModeEnabled() bool {
 	if !m.IsValid() {
 		return false
 	}
-	r := wVBrowserBaseAPI().SysCallN(175, 0, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(177, 0, m.Instance())
 	return api.GoBool(r)
 }
 
@@ -3780,33 +3826,10 @@ func (m *TWVBrowserBase) SetIsInPrivateModeEnabled(value bool) {
 	if !m.IsValid() {
 		return
 	}
-	wVBrowserBaseAPI().SysCallN(175, 1, m.Instance(), api.PasBool(value))
+	wVBrowserBaseAPI().SysCallN(177, 1, m.Instance(), api.PasBool(value))
 }
 
 func (m *TWVBrowserBase) ScriptLocale() string {
-	if !m.IsValid() {
-		return ""
-	}
-	r := wVBrowserBaseAPI().SysCallN(176, 0, m.Instance())
-	return api.GoStr(r)
-}
-
-func (m *TWVBrowserBase) SetScriptLocale(value string) {
-	if !m.IsValid() {
-		return
-	}
-	wVBrowserBaseAPI().SysCallN(176, 1, m.Instance(), api.PasStr(value))
-}
-
-func (m *TWVBrowserBase) ProfilePath() string {
-	if !m.IsValid() {
-		return ""
-	}
-	r := wVBrowserBaseAPI().SysCallN(177, m.Instance())
-	return api.GoStr(r)
-}
-
-func (m *TWVBrowserBase) DefaultDownloadFolderPath() string {
 	if !m.IsValid() {
 		return ""
 	}
@@ -3814,18 +3837,41 @@ func (m *TWVBrowserBase) DefaultDownloadFolderPath() string {
 	return api.GoStr(r)
 }
 
-func (m *TWVBrowserBase) SetDefaultDownloadFolderPath(value string) {
+func (m *TWVBrowserBase) SetScriptLocale(value string) {
 	if !m.IsValid() {
 		return
 	}
 	wVBrowserBaseAPI().SysCallN(178, 1, m.Instance(), api.PasStr(value))
 }
 
+func (m *TWVBrowserBase) ProfilePath() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := wVBrowserBaseAPI().SysCallN(179, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWVBrowserBase) DefaultDownloadFolderPath() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := wVBrowserBaseAPI().SysCallN(180, 0, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWVBrowserBase) SetDefaultDownloadFolderPath(value string) {
+	if !m.IsValid() {
+		return
+	}
+	wVBrowserBaseAPI().SysCallN(180, 1, m.Instance(), api.PasStr(value))
+}
+
 func (m *TWVBrowserBase) PreferredColorScheme() wvTypes.TWVPreferredColorScheme {
 	if !m.IsValid() {
 		return 0
 	}
-	r := wVBrowserBaseAPI().SysCallN(179, 0, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(181, 0, m.Instance())
 	return wvTypes.TWVPreferredColorScheme(r)
 }
 
@@ -3833,14 +3879,14 @@ func (m *TWVBrowserBase) SetPreferredColorScheme(value wvTypes.TWVPreferredColor
 	if !m.IsValid() {
 		return
 	}
-	wVBrowserBaseAPI().SysCallN(179, 1, m.Instance(), uintptr(value))
+	wVBrowserBaseAPI().SysCallN(181, 1, m.Instance(), uintptr(value))
 }
 
 func (m *TWVBrowserBase) PreferredTrackingPreventionLevel() wvTypes.TWVTrackingPreventionLevel {
 	if !m.IsValid() {
 		return 0
 	}
-	r := wVBrowserBaseAPI().SysCallN(180, 0, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(182, 0, m.Instance())
 	return wvTypes.TWVTrackingPreventionLevel(r)
 }
 
@@ -3848,7 +3894,7 @@ func (m *TWVBrowserBase) SetPreferredTrackingPreventionLevel(value wvTypes.TWVTr
 	if !m.IsValid() {
 		return
 	}
-	wVBrowserBaseAPI().SysCallN(180, 1, m.Instance(), uintptr(value))
+	wVBrowserBaseAPI().SysCallN(182, 1, m.Instance(), uintptr(value))
 }
 
 func (m *TWVBrowserBase) ProfileCookieManager() (result ICoreWebView2CookieManager) {
@@ -3856,7 +3902,7 @@ func (m *TWVBrowserBase) ProfileCookieManager() (result ICoreWebView2CookieManag
 		return
 	}
 	var resultPtr uintptr
-	wVBrowserBaseAPI().SysCallN(181, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	wVBrowserBaseAPI().SysCallN(183, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
 	result = AsCoreWebView2CookieManager(resultPtr)
 	return
 }
@@ -3865,7 +3911,7 @@ func (m *TWVBrowserBase) ProfileIsPasswordAutosaveEnabled() bool {
 	if !m.IsValid() {
 		return false
 	}
-	r := wVBrowserBaseAPI().SysCallN(182, 0, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(184, 0, m.Instance())
 	return api.GoBool(r)
 }
 
@@ -3873,14 +3919,14 @@ func (m *TWVBrowserBase) SetProfileIsPasswordAutosaveEnabled(value bool) {
 	if !m.IsValid() {
 		return
 	}
-	wVBrowserBaseAPI().SysCallN(182, 1, m.Instance(), api.PasBool(value))
+	wVBrowserBaseAPI().SysCallN(184, 1, m.Instance(), api.PasBool(value))
 }
 
 func (m *TWVBrowserBase) ProfileIsGeneralAutofillEnabled() bool {
 	if !m.IsValid() {
 		return false
 	}
-	r := wVBrowserBaseAPI().SysCallN(183, 0, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(185, 0, m.Instance())
 	return api.GoBool(r)
 }
 
@@ -3888,14 +3934,14 @@ func (m *TWVBrowserBase) SetProfileIsGeneralAutofillEnabled(value bool) {
 	if !m.IsValid() {
 		return
 	}
-	wVBrowserBaseAPI().SysCallN(183, 1, m.Instance(), api.PasBool(value))
+	wVBrowserBaseAPI().SysCallN(185, 1, m.Instance(), api.PasBool(value))
 }
 
 func (m *TWVBrowserBase) FrameId() uint32 {
 	if !m.IsValid() {
 		return 0
 	}
-	r := wVBrowserBaseAPI().SysCallN(184, m.Instance())
+	r := wVBrowserBaseAPI().SysCallN(186, m.Instance())
 	return uint32(r)
 }
 
@@ -3904,7 +3950,7 @@ func (m *TWVBrowserBase) SetOnBrowserProcessExited(fn TOnBrowserProcessExitedEve
 		return
 	}
 	cb := makeTOnBrowserProcessExitedEvent(fn)
-	base.SetEvent(m, 185, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 187, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnProcessInfosChanged(fn TOnProcessInfosChangedEvent) {
@@ -3912,7 +3958,7 @@ func (m *TWVBrowserBase) SetOnProcessInfosChanged(fn TOnProcessInfosChangedEvent
 		return
 	}
 	cb := makeTOnProcessInfosChangedEvent(fn)
-	base.SetEvent(m, 186, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 188, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnContainsFullScreenElementChanged(fn TNotifyEvent) {
@@ -3920,7 +3966,7 @@ func (m *TWVBrowserBase) SetOnContainsFullScreenElementChanged(fn TNotifyEvent) 
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 187, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 189, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnContentLoading(fn TOnContentLoadingEvent) {
@@ -3928,7 +3974,7 @@ func (m *TWVBrowserBase) SetOnContentLoading(fn TOnContentLoadingEvent) {
 		return
 	}
 	cb := makeTOnContentLoadingEvent(fn)
-	base.SetEvent(m, 188, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 190, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnDocumentTitleChanged(fn TNotifyEvent) {
@@ -3936,7 +3982,7 @@ func (m *TWVBrowserBase) SetOnDocumentTitleChanged(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 189, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 191, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameNavigationCompleted(fn TOnNavigationCompletedEvent) {
@@ -3944,7 +3990,7 @@ func (m *TWVBrowserBase) SetOnFrameNavigationCompleted(fn TOnNavigationCompleted
 		return
 	}
 	cb := makeTOnNavigationCompletedEvent(fn)
-	base.SetEvent(m, 190, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 192, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameNavigationStarting(fn TOnNavigationStartingEvent) {
@@ -3952,7 +3998,7 @@ func (m *TWVBrowserBase) SetOnFrameNavigationStarting(fn TOnNavigationStartingEv
 		return
 	}
 	cb := makeTOnNavigationStartingEvent(fn)
-	base.SetEvent(m, 191, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 193, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnHistoryChanged(fn TNotifyEvent) {
@@ -3960,7 +4006,7 @@ func (m *TWVBrowserBase) SetOnHistoryChanged(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 192, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 194, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnNavigationCompleted(fn TOnNavigationCompletedEvent) {
@@ -3968,7 +4014,7 @@ func (m *TWVBrowserBase) SetOnNavigationCompleted(fn TOnNavigationCompletedEvent
 		return
 	}
 	cb := makeTOnNavigationCompletedEvent(fn)
-	base.SetEvent(m, 193, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 195, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnNavigationStarting(fn TOnNavigationStartingEvent) {
@@ -3976,7 +4022,7 @@ func (m *TWVBrowserBase) SetOnNavigationStarting(fn TOnNavigationStartingEvent) 
 		return
 	}
 	cb := makeTOnNavigationStartingEvent(fn)
-	base.SetEvent(m, 194, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 196, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnNewWindowRequested(fn TOnNewWindowRequestedEvent) {
@@ -3984,7 +4030,7 @@ func (m *TWVBrowserBase) SetOnNewWindowRequested(fn TOnNewWindowRequestedEvent) 
 		return
 	}
 	cb := makeTOnNewWindowRequestedEvent(fn)
-	base.SetEvent(m, 195, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 197, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnPermissionRequested(fn TOnPermissionRequestedEvent) {
@@ -3992,7 +4038,7 @@ func (m *TWVBrowserBase) SetOnPermissionRequested(fn TOnPermissionRequestedEvent
 		return
 	}
 	cb := makeTOnPermissionRequestedEvent(fn)
-	base.SetEvent(m, 196, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 198, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnProcessFailed(fn TOnProcessFailedEvent) {
@@ -4000,7 +4046,7 @@ func (m *TWVBrowserBase) SetOnProcessFailed(fn TOnProcessFailedEvent) {
 		return
 	}
 	cb := makeTOnProcessFailedEvent(fn)
-	base.SetEvent(m, 197, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 199, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnScriptDialogOpening(fn TOnScriptDialogOpeningEvent) {
@@ -4008,7 +4054,7 @@ func (m *TWVBrowserBase) SetOnScriptDialogOpening(fn TOnScriptDialogOpeningEvent
 		return
 	}
 	cb := makeTOnScriptDialogOpeningEvent(fn)
-	base.SetEvent(m, 198, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 200, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnSourceChanged(fn TOnSourceChangedEvent) {
@@ -4016,7 +4062,7 @@ func (m *TWVBrowserBase) SetOnSourceChanged(fn TOnSourceChangedEvent) {
 		return
 	}
 	cb := makeTOnSourceChangedEvent(fn)
-	base.SetEvent(m, 199, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 201, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnWebMessageReceived(fn TOnWebMessageReceivedEvent) {
@@ -4024,7 +4070,7 @@ func (m *TWVBrowserBase) SetOnWebMessageReceived(fn TOnWebMessageReceivedEvent) 
 		return
 	}
 	cb := makeTOnWebMessageReceivedEvent(fn)
-	base.SetEvent(m, 200, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 202, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnWebResourceRequested(fn TOnWebResourceRequestedEvent) {
@@ -4032,7 +4078,7 @@ func (m *TWVBrowserBase) SetOnWebResourceRequested(fn TOnWebResourceRequestedEve
 		return
 	}
 	cb := makeTOnWebResourceRequestedEvent(fn)
-	base.SetEvent(m, 201, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 203, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnWindowCloseRequested(fn TNotifyEvent) {
@@ -4040,7 +4086,7 @@ func (m *TWVBrowserBase) SetOnWindowCloseRequested(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 202, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 204, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnDOMContentLoaded(fn TOnDOMContentLoadedEvent) {
@@ -4048,7 +4094,7 @@ func (m *TWVBrowserBase) SetOnDOMContentLoaded(fn TOnDOMContentLoadedEvent) {
 		return
 	}
 	cb := makeTOnDOMContentLoadedEvent(fn)
-	base.SetEvent(m, 203, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 205, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnWebResourceResponseReceived(fn TOnWebResourceResponseReceivedEvent) {
@@ -4056,7 +4102,7 @@ func (m *TWVBrowserBase) SetOnWebResourceResponseReceived(fn TOnWebResourceRespo
 		return
 	}
 	cb := makeTOnWebResourceResponseReceivedEvent(fn)
-	base.SetEvent(m, 204, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 206, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnDownloadStarting(fn TOnDownloadStartingEvent) {
@@ -4064,7 +4110,7 @@ func (m *TWVBrowserBase) SetOnDownloadStarting(fn TOnDownloadStartingEvent) {
 		return
 	}
 	cb := makeTOnDownloadStartingEvent(fn)
-	base.SetEvent(m, 205, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 207, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameCreated(fn TOnFrameCreatedEvent) {
@@ -4072,7 +4118,7 @@ func (m *TWVBrowserBase) SetOnFrameCreated(fn TOnFrameCreatedEvent) {
 		return
 	}
 	cb := makeTOnFrameCreatedEvent(fn)
-	base.SetEvent(m, 206, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 208, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnClientCertificateRequested(fn TOnClientCertificateRequestedEvent) {
@@ -4080,7 +4126,7 @@ func (m *TWVBrowserBase) SetOnClientCertificateRequested(fn TOnClientCertificate
 		return
 	}
 	cb := makeTOnClientCertificateRequestedEvent(fn)
-	base.SetEvent(m, 207, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 209, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnIsDocumentPlayingAudioChanged(fn TOnIsDocumentPlayingAudioChangedEvent) {
@@ -4088,7 +4134,7 @@ func (m *TWVBrowserBase) SetOnIsDocumentPlayingAudioChanged(fn TOnIsDocumentPlay
 		return
 	}
 	cb := makeTOnIsDocumentPlayingAudioChangedEvent(fn)
-	base.SetEvent(m, 208, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 210, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnIsMutedChanged(fn TOnIsMutedChangedEvent) {
@@ -4096,7 +4142,7 @@ func (m *TWVBrowserBase) SetOnIsMutedChanged(fn TOnIsMutedChangedEvent) {
 		return
 	}
 	cb := makeTOnIsMutedChangedEvent(fn)
-	base.SetEvent(m, 209, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 211, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnIsDefaultDownloadDialogOpenChanged(fn TOnIsDefaultDownloadDialogOpenChangedEvent) {
@@ -4104,7 +4150,7 @@ func (m *TWVBrowserBase) SetOnIsDefaultDownloadDialogOpenChanged(fn TOnIsDefault
 		return
 	}
 	cb := makeTOnIsDefaultDownloadDialogOpenChangedEvent(fn)
-	base.SetEvent(m, 210, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 212, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnBasicAuthenticationRequested(fn TOnBasicAuthenticationRequestedEvent) {
@@ -4112,7 +4158,7 @@ func (m *TWVBrowserBase) SetOnBasicAuthenticationRequested(fn TOnBasicAuthentica
 		return
 	}
 	cb := makeTOnBasicAuthenticationRequestedEvent(fn)
-	base.SetEvent(m, 211, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 213, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnContextMenuRequested(fn TOnContextMenuRequestedEvent) {
@@ -4120,7 +4166,7 @@ func (m *TWVBrowserBase) SetOnContextMenuRequested(fn TOnContextMenuRequestedEve
 		return
 	}
 	cb := makeTOnContextMenuRequestedEvent(fn)
-	base.SetEvent(m, 212, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 214, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnStatusBarTextChanged(fn TOnStatusBarTextChangedEvent) {
@@ -4128,7 +4174,7 @@ func (m *TWVBrowserBase) SetOnStatusBarTextChanged(fn TOnStatusBarTextChangedEve
 		return
 	}
 	cb := makeTOnStatusBarTextChangedEvent(fn)
-	base.SetEvent(m, 213, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 215, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnServerCertificateErrorActionsCompleted(fn TOnServerCertificateErrorActionsCompletedEvent) {
@@ -4136,7 +4182,7 @@ func (m *TWVBrowserBase) SetOnServerCertificateErrorActionsCompleted(fn TOnServe
 		return
 	}
 	cb := makeTOnServerCertificateErrorActionsCompletedEvent(fn)
-	base.SetEvent(m, 214, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 216, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnServerCertificateErrorDetected(fn TOnServerCertificateErrorDetectedEvent) {
@@ -4144,7 +4190,7 @@ func (m *TWVBrowserBase) SetOnServerCertificateErrorDetected(fn TOnServerCertifi
 		return
 	}
 	cb := makeTOnServerCertificateErrorDetectedEvent(fn)
-	base.SetEvent(m, 215, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 217, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFaviconChanged(fn TOnFaviconChangedEvent) {
@@ -4152,7 +4198,7 @@ func (m *TWVBrowserBase) SetOnFaviconChanged(fn TOnFaviconChangedEvent) {
 		return
 	}
 	cb := makeTOnFaviconChangedEvent(fn)
-	base.SetEvent(m, 216, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 218, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnGetFaviconCompleted(fn TOnGetFaviconCompletedEvent) {
@@ -4160,7 +4206,7 @@ func (m *TWVBrowserBase) SetOnGetFaviconCompleted(fn TOnGetFaviconCompletedEvent
 		return
 	}
 	cb := makeTOnGetFaviconCompletedEvent(fn)
-	base.SetEvent(m, 217, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 219, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnPrintCompleted(fn TOnPrintCompletedEvent) {
@@ -4168,7 +4214,7 @@ func (m *TWVBrowserBase) SetOnPrintCompleted(fn TOnPrintCompletedEvent) {
 		return
 	}
 	cb := makeTOnPrintCompletedEvent(fn)
-	base.SetEvent(m, 218, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 220, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnPrintToPdfStreamCompleted(fn TOnPrintToPdfStreamCompletedEvent) {
@@ -4176,7 +4222,7 @@ func (m *TWVBrowserBase) SetOnPrintToPdfStreamCompleted(fn TOnPrintToPdfStreamCo
 		return
 	}
 	cb := makeTOnPrintToPdfStreamCompletedEvent(fn)
-	base.SetEvent(m, 219, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 221, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnAcceleratorKeyPressed(fn TOnAcceleratorKeyPressedEvent) {
@@ -4184,7 +4230,7 @@ func (m *TWVBrowserBase) SetOnAcceleratorKeyPressed(fn TOnAcceleratorKeyPressedE
 		return
 	}
 	cb := makeTOnAcceleratorKeyPressedEvent(fn)
-	base.SetEvent(m, 220, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 222, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnGotFocus(fn TNotifyEvent) {
@@ -4192,7 +4238,7 @@ func (m *TWVBrowserBase) SetOnGotFocus(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 221, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 223, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnLostFocus(fn TNotifyEvent) {
@@ -4200,7 +4246,7 @@ func (m *TWVBrowserBase) SetOnLostFocus(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 222, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 224, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnMoveFocusRequested(fn TOnMoveFocusRequestedEvent) {
@@ -4208,7 +4254,7 @@ func (m *TWVBrowserBase) SetOnMoveFocusRequested(fn TOnMoveFocusRequestedEvent) 
 		return
 	}
 	cb := makeTOnMoveFocusRequestedEvent(fn)
-	base.SetEvent(m, 223, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 225, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnZoomFactorChanged(fn TNotifyEvent) {
@@ -4216,7 +4262,7 @@ func (m *TWVBrowserBase) SetOnZoomFactorChanged(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 224, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 226, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnRasterizationScaleChanged(fn TNotifyEvent) {
@@ -4224,7 +4270,7 @@ func (m *TWVBrowserBase) SetOnRasterizationScaleChanged(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 225, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 227, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnCursorChanged(fn TNotifyEvent) {
@@ -4232,7 +4278,7 @@ func (m *TWVBrowserBase) SetOnCursorChanged(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 226, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 228, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnBytesReceivedChanged(fn TOnBytesReceivedChangedEvent) {
@@ -4240,7 +4286,7 @@ func (m *TWVBrowserBase) SetOnBytesReceivedChanged(fn TOnBytesReceivedChangedEve
 		return
 	}
 	cb := makeTOnBytesReceivedChangedEvent(fn)
-	base.SetEvent(m, 227, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 229, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnEstimatedEndTimeChanged(fn TOnEstimatedEndTimeChangedEvent) {
@@ -4248,7 +4294,7 @@ func (m *TWVBrowserBase) SetOnEstimatedEndTimeChanged(fn TOnEstimatedEndTimeChan
 		return
 	}
 	cb := makeTOnEstimatedEndTimeChangedEvent(fn)
-	base.SetEvent(m, 228, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 230, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnDownloadStateChanged(fn TOnDownloadStateChangedEvent) {
@@ -4256,7 +4302,7 @@ func (m *TWVBrowserBase) SetOnDownloadStateChanged(fn TOnDownloadStateChangedEve
 		return
 	}
 	cb := makeTOnDownloadStateChangedEvent(fn)
-	base.SetEvent(m, 229, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 231, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameDestroyed(fn TOnFrameDestroyedEvent) {
@@ -4264,7 +4310,7 @@ func (m *TWVBrowserBase) SetOnFrameDestroyed(fn TOnFrameDestroyedEvent) {
 		return
 	}
 	cb := makeTOnFrameDestroyedEvent(fn)
-	base.SetEvent(m, 230, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 232, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameNameChanged(fn TOnFrameNameChangedEvent) {
@@ -4272,7 +4318,7 @@ func (m *TWVBrowserBase) SetOnFrameNameChanged(fn TOnFrameNameChangedEvent) {
 		return
 	}
 	cb := makeTOnFrameNameChangedEvent(fn)
-	base.SetEvent(m, 231, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 233, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameNavigationStarting2(fn TOnFrameNavigationStartingEvent) {
@@ -4280,7 +4326,7 @@ func (m *TWVBrowserBase) SetOnFrameNavigationStarting2(fn TOnFrameNavigationStar
 		return
 	}
 	cb := makeTOnFrameNavigationStartingEvent(fn)
-	base.SetEvent(m, 232, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 234, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameNavigationCompleted2(fn TOnFrameNavigationCompletedEvent) {
@@ -4288,7 +4334,7 @@ func (m *TWVBrowserBase) SetOnFrameNavigationCompleted2(fn TOnFrameNavigationCom
 		return
 	}
 	cb := makeTOnFrameNavigationCompletedEvent(fn)
-	base.SetEvent(m, 233, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 235, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameContentLoading(fn TOnFrameContentLoadingEvent) {
@@ -4296,7 +4342,7 @@ func (m *TWVBrowserBase) SetOnFrameContentLoading(fn TOnFrameContentLoadingEvent
 		return
 	}
 	cb := makeTOnFrameContentLoadingEvent(fn)
-	base.SetEvent(m, 234, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 236, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameDOMContentLoaded(fn TOnFrameDOMContentLoadedEvent) {
@@ -4304,7 +4350,7 @@ func (m *TWVBrowserBase) SetOnFrameDOMContentLoaded(fn TOnFrameDOMContentLoadedE
 		return
 	}
 	cb := makeTOnFrameDOMContentLoadedEvent(fn)
-	base.SetEvent(m, 235, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 237, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameWebMessageReceived(fn TOnFrameWebMessageReceivedEvent) {
@@ -4312,7 +4358,7 @@ func (m *TWVBrowserBase) SetOnFrameWebMessageReceived(fn TOnFrameWebMessageRecei
 		return
 	}
 	cb := makeTOnFrameWebMessageReceivedEvent(fn)
-	base.SetEvent(m, 236, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 238, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFramePermissionRequested(fn TOnFramePermissionRequestedEvent) {
@@ -4320,7 +4366,7 @@ func (m *TWVBrowserBase) SetOnFramePermissionRequested(fn TOnFramePermissionRequ
 		return
 	}
 	cb := makeTOnFramePermissionRequestedEvent(fn)
-	base.SetEvent(m, 237, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 239, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnDevToolsProtocolEventReceived(fn TOnDevToolsProtocolEventReceivedEvent) {
@@ -4328,7 +4374,7 @@ func (m *TWVBrowserBase) SetOnDevToolsProtocolEventReceived(fn TOnDevToolsProtoc
 		return
 	}
 	cb := makeTOnDevToolsProtocolEventReceivedEvent(fn)
-	base.SetEvent(m, 238, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 240, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnCustomItemSelected(fn TOnCustomItemSelectedEvent) {
@@ -4336,7 +4382,7 @@ func (m *TWVBrowserBase) SetOnCustomItemSelected(fn TOnCustomItemSelectedEvent) 
 		return
 	}
 	cb := makeTOnCustomItemSelectedEvent(fn)
-	base.SetEvent(m, 239, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 241, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnClearBrowsingDataCompleted(fn TOnClearBrowsingDataCompletedEvent) {
@@ -4344,7 +4390,7 @@ func (m *TWVBrowserBase) SetOnClearBrowsingDataCompleted(fn TOnClearBrowsingData
 		return
 	}
 	cb := makeTOnClearBrowsingDataCompletedEvent(fn)
-	base.SetEvent(m, 240, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 242, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnInitializationError(fn TOnInitializationErrorEvent) {
@@ -4352,7 +4398,7 @@ func (m *TWVBrowserBase) SetOnInitializationError(fn TOnInitializationErrorEvent
 		return
 	}
 	cb := makeTOnInitializationErrorEvent(fn)
-	base.SetEvent(m, 241, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 243, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnEnvironmentCompleted(fn TNotifyEvent) {
@@ -4360,7 +4406,7 @@ func (m *TWVBrowserBase) SetOnEnvironmentCompleted(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 242, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 244, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnControllerCompleted(fn TNotifyEvent) {
@@ -4368,7 +4414,7 @@ func (m *TWVBrowserBase) SetOnControllerCompleted(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 243, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 245, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnAfterCreated(fn TNotifyEvent) {
@@ -4376,7 +4422,7 @@ func (m *TWVBrowserBase) SetOnAfterCreated(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 244, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 246, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnExecuteScriptCompleted(fn TOnExecuteScriptCompletedEvent) {
@@ -4384,7 +4430,7 @@ func (m *TWVBrowserBase) SetOnExecuteScriptCompleted(fn TOnExecuteScriptComplete
 		return
 	}
 	cb := makeTOnExecuteScriptCompletedEvent(fn)
-	base.SetEvent(m, 245, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 247, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnCapturePreviewCompleted(fn TOnCapturePreviewCompletedEvent) {
@@ -4392,7 +4438,7 @@ func (m *TWVBrowserBase) SetOnCapturePreviewCompleted(fn TOnCapturePreviewComple
 		return
 	}
 	cb := makeTOnCapturePreviewCompletedEvent(fn)
-	base.SetEvent(m, 246, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 248, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnGetCookiesCompleted(fn TOnGetCookiesCompletedEvent) {
@@ -4400,7 +4446,7 @@ func (m *TWVBrowserBase) SetOnGetCookiesCompleted(fn TOnGetCookiesCompletedEvent
 		return
 	}
 	cb := makeTOnGetCookiesCompletedEvent(fn)
-	base.SetEvent(m, 247, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 249, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnTrySuspendCompleted(fn TOnTrySuspendCompletedEvent) {
@@ -4408,7 +4454,7 @@ func (m *TWVBrowserBase) SetOnTrySuspendCompleted(fn TOnTrySuspendCompletedEvent
 		return
 	}
 	cb := makeTOnTrySuspendCompletedEvent(fn)
-	base.SetEvent(m, 248, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 250, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnPrintToPdfCompleted(fn TOnPrintToPdfCompletedEvent) {
@@ -4416,7 +4462,7 @@ func (m *TWVBrowserBase) SetOnPrintToPdfCompleted(fn TOnPrintToPdfCompletedEvent
 		return
 	}
 	cb := makeTOnPrintToPdfCompletedEvent(fn)
-	base.SetEvent(m, 249, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 251, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnCompositionControllerCompleted(fn TNotifyEvent) {
@@ -4424,7 +4470,7 @@ func (m *TWVBrowserBase) SetOnCompositionControllerCompleted(fn TNotifyEvent) {
 		return
 	}
 	cb := makeTNotifyEvent(fn)
-	base.SetEvent(m, 250, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 252, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnCallDevToolsProtocolMethodCompleted(fn TOnCallDevToolsProtocolMethodCompletedEvent) {
@@ -4432,7 +4478,7 @@ func (m *TWVBrowserBase) SetOnCallDevToolsProtocolMethodCompleted(fn TOnCallDevT
 		return
 	}
 	cb := makeTOnCallDevToolsProtocolMethodCompletedEvent(fn)
-	base.SetEvent(m, 251, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 253, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnAddScriptToExecuteOnDocumentCreatedCompleted(fn TOnAddScriptToExecuteOnDocumentCreatedCompletedEvent) {
@@ -4440,7 +4486,7 @@ func (m *TWVBrowserBase) SetOnAddScriptToExecuteOnDocumentCreatedCompleted(fn TO
 		return
 	}
 	cb := makeTOnAddScriptToExecuteOnDocumentCreatedCompletedEvent(fn)
-	base.SetEvent(m, 252, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 254, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnWebResourceResponseViewGetContentCompleted(fn TOnWebResourceResponseViewGetContentCompletedEvent) {
@@ -4448,7 +4494,7 @@ func (m *TWVBrowserBase) SetOnWebResourceResponseViewGetContentCompleted(fn TOnW
 		return
 	}
 	cb := makeTOnWebResourceResponseViewGetContentCompletedEvent(fn)
-	base.SetEvent(m, 253, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 255, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnWidget0CompMsg(fn TOnCompMsgEvent) {
@@ -4456,7 +4502,7 @@ func (m *TWVBrowserBase) SetOnWidget0CompMsg(fn TOnCompMsgEvent) {
 		return
 	}
 	cb := makeTOnCompMsgEvent(fn)
-	base.SetEvent(m, 254, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 256, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnWidget1CompMsg(fn TOnCompMsgEvent) {
@@ -4464,7 +4510,7 @@ func (m *TWVBrowserBase) SetOnWidget1CompMsg(fn TOnCompMsgEvent) {
 		return
 	}
 	cb := makeTOnCompMsgEvent(fn)
-	base.SetEvent(m, 255, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 257, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnRenderCompMsg(fn TOnCompMsgEvent) {
@@ -4472,7 +4518,7 @@ func (m *TWVBrowserBase) SetOnRenderCompMsg(fn TOnCompMsgEvent) {
 		return
 	}
 	cb := makeTOnCompMsgEvent(fn)
-	base.SetEvent(m, 256, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 258, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnD3DWindowCompMsg(fn TOnCompMsgEvent) {
@@ -4480,7 +4526,7 @@ func (m *TWVBrowserBase) SetOnD3DWindowCompMsg(fn TOnCompMsgEvent) {
 		return
 	}
 	cb := makeTOnCompMsgEvent(fn)
-	base.SetEvent(m, 257, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 259, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnRetrieveHTMLCompleted(fn TOnRetrieveHTMLCompletedEvent) {
@@ -4488,7 +4534,7 @@ func (m *TWVBrowserBase) SetOnRetrieveHTMLCompleted(fn TOnRetrieveHTMLCompletedE
 		return
 	}
 	cb := makeTOnRetrieveHTMLCompletedEvent(fn)
-	base.SetEvent(m, 258, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 260, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnRetrieveTextCompleted(fn TOnRetrieveTextCompletedEvent) {
@@ -4496,7 +4542,7 @@ func (m *TWVBrowserBase) SetOnRetrieveTextCompleted(fn TOnRetrieveTextCompletedE
 		return
 	}
 	cb := makeTOnRetrieveTextCompletedEvent(fn)
-	base.SetEvent(m, 259, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 261, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnRetrieveMHTMLCompleted(fn TOnRetrieveMHTMLCompletedEvent) {
@@ -4504,7 +4550,7 @@ func (m *TWVBrowserBase) SetOnRetrieveMHTMLCompleted(fn TOnRetrieveMHTMLComplete
 		return
 	}
 	cb := makeTOnRetrieveMHTMLCompletedEvent(fn)
-	base.SetEvent(m, 260, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 262, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnClearCacheCompleted(fn TOnClearCacheCompletedEvent) {
@@ -4512,7 +4558,7 @@ func (m *TWVBrowserBase) SetOnClearCacheCompleted(fn TOnClearCacheCompletedEvent
 		return
 	}
 	cb := makeTOnClearCacheCompletedEvent(fn)
-	base.SetEvent(m, 261, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 263, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnClearDataForOriginCompleted(fn TOnClearDataForOriginCompletedEvent) {
@@ -4520,7 +4566,7 @@ func (m *TWVBrowserBase) SetOnClearDataForOriginCompleted(fn TOnClearDataForOrig
 		return
 	}
 	cb := makeTOnClearDataForOriginCompletedEvent(fn)
-	base.SetEvent(m, 262, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 264, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnOfflineCompleted(fn TOnOfflineCompletedEvent) {
@@ -4528,7 +4574,7 @@ func (m *TWVBrowserBase) SetOnOfflineCompleted(fn TOnOfflineCompletedEvent) {
 		return
 	}
 	cb := makeTOnOfflineCompletedEvent(fn)
-	base.SetEvent(m, 263, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 265, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnIgnoreCertificateErrorsCompleted(fn TOnIgnoreCertificateErrorsCompletedEvent) {
@@ -4536,7 +4582,7 @@ func (m *TWVBrowserBase) SetOnIgnoreCertificateErrorsCompleted(fn TOnIgnoreCerti
 		return
 	}
 	cb := makeTOnIgnoreCertificateErrorsCompletedEvent(fn)
-	base.SetEvent(m, 264, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 266, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnRefreshIgnoreCacheCompleted(fn TOnRefreshIgnoreCacheCompletedEvent) {
@@ -4544,7 +4590,7 @@ func (m *TWVBrowserBase) SetOnRefreshIgnoreCacheCompleted(fn TOnRefreshIgnoreCac
 		return
 	}
 	cb := makeTOnRefreshIgnoreCacheCompletedEvent(fn)
-	base.SetEvent(m, 265, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 267, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnSimulateKeyEventCompleted(fn TOnSimulateKeyEventCompletedEvent) {
@@ -4552,7 +4598,7 @@ func (m *TWVBrowserBase) SetOnSimulateKeyEventCompleted(fn TOnSimulateKeyEventCo
 		return
 	}
 	cb := makeTOnSimulateKeyEventCompletedEvent(fn)
-	base.SetEvent(m, 266, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 268, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnGetCustomSchemes(fn TOnGetCustomSchemesEvent) {
@@ -4560,7 +4606,7 @@ func (m *TWVBrowserBase) SetOnGetCustomSchemes(fn TOnGetCustomSchemesEvent) {
 		return
 	}
 	cb := makeTOnGetCustomSchemesEvent(fn)
-	base.SetEvent(m, 267, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 269, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnGetNonDefaultPermissionSettingsCompleted(fn TOnGetNonDefaultPermissionSettingsCompletedEvent) {
@@ -4568,7 +4614,7 @@ func (m *TWVBrowserBase) SetOnGetNonDefaultPermissionSettingsCompleted(fn TOnGet
 		return
 	}
 	cb := makeTOnGetNonDefaultPermissionSettingsCompletedEvent(fn)
-	base.SetEvent(m, 268, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 270, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnSetPermissionStateCompleted(fn TOnSetPermissionStateCompletedEvent) {
@@ -4576,7 +4622,7 @@ func (m *TWVBrowserBase) SetOnSetPermissionStateCompleted(fn TOnSetPermissionSta
 		return
 	}
 	cb := makeTOnSetPermissionStateCompletedEvent(fn)
-	base.SetEvent(m, 269, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 271, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnLaunchingExternalUriScheme(fn TOnLaunchingExternalUriSchemeEvent) {
@@ -4584,7 +4630,7 @@ func (m *TWVBrowserBase) SetOnLaunchingExternalUriScheme(fn TOnLaunchingExternal
 		return
 	}
 	cb := makeTOnLaunchingExternalUriSchemeEvent(fn)
-	base.SetEvent(m, 270, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 272, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnGetProcessExtendedInfosCompleted(fn TOnGetProcessExtendedInfosCompletedEvent) {
@@ -4592,7 +4638,7 @@ func (m *TWVBrowserBase) SetOnGetProcessExtendedInfosCompleted(fn TOnGetProcessE
 		return
 	}
 	cb := makeTOnGetProcessExtendedInfosCompletedEvent(fn)
-	base.SetEvent(m, 271, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 273, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnBrowserExtensionRemoveCompleted(fn TOnBrowserExtensionRemoveCompletedEvent) {
@@ -4600,7 +4646,7 @@ func (m *TWVBrowserBase) SetOnBrowserExtensionRemoveCompleted(fn TOnBrowserExten
 		return
 	}
 	cb := makeTOnBrowserExtensionRemoveCompletedEvent(fn)
-	base.SetEvent(m, 272, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 274, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnBrowserExtensionEnableCompleted(fn TOnBrowserExtensionEnableCompletedEvent) {
@@ -4608,7 +4654,7 @@ func (m *TWVBrowserBase) SetOnBrowserExtensionEnableCompleted(fn TOnBrowserExten
 		return
 	}
 	cb := makeTOnBrowserExtensionEnableCompletedEvent(fn)
-	base.SetEvent(m, 273, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 275, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnProfileAddBrowserExtensionCompleted(fn TOnProfileAddBrowserExtensionCompletedEvent) {
@@ -4616,7 +4662,7 @@ func (m *TWVBrowserBase) SetOnProfileAddBrowserExtensionCompleted(fn TOnProfileA
 		return
 	}
 	cb := makeTOnProfileAddBrowserExtensionCompletedEvent(fn)
-	base.SetEvent(m, 274, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 276, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnProfileGetBrowserExtensionsCompleted(fn TOnProfileGetBrowserExtensionsCompletedEvent) {
@@ -4624,7 +4670,7 @@ func (m *TWVBrowserBase) SetOnProfileGetBrowserExtensionsCompleted(fn TOnProfile
 		return
 	}
 	cb := makeTOnProfileGetBrowserExtensionsCompletedEvent(fn)
-	base.SetEvent(m, 275, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 277, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnProfileDeleted(fn TOnProfileDeletedEvent) {
@@ -4632,7 +4678,7 @@ func (m *TWVBrowserBase) SetOnProfileDeleted(fn TOnProfileDeletedEvent) {
 		return
 	}
 	cb := makeTOnProfileDeletedEvent(fn)
-	base.SetEvent(m, 276, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 278, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnExecuteScriptWithResultCompleted(fn TOnExecuteScriptWithResultCompletedEvent) {
@@ -4640,7 +4686,7 @@ func (m *TWVBrowserBase) SetOnExecuteScriptWithResultCompleted(fn TOnExecuteScri
 		return
 	}
 	cb := makeTOnExecuteScriptWithResultCompletedEvent(fn)
-	base.SetEvent(m, 277, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 279, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnNonClientRegionChanged(fn TOnNonClientRegionChangedEvent) {
@@ -4648,7 +4694,7 @@ func (m *TWVBrowserBase) SetOnNonClientRegionChanged(fn TOnNonClientRegionChange
 		return
 	}
 	cb := makeTOnNonClientRegionChangedEvent(fn)
-	base.SetEvent(m, 278, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 280, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnNotificationReceived(fn TOnNotificationReceivedEvent) {
@@ -4656,7 +4702,7 @@ func (m *TWVBrowserBase) SetOnNotificationReceived(fn TOnNotificationReceivedEve
 		return
 	}
 	cb := makeTOnNotificationReceivedEvent(fn)
-	base.SetEvent(m, 279, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 281, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnNotificationCloseRequested(fn TOnNotificationCloseRequestedEvent) {
@@ -4664,7 +4710,7 @@ func (m *TWVBrowserBase) SetOnNotificationCloseRequested(fn TOnNotificationClose
 		return
 	}
 	cb := makeTOnNotificationCloseRequestedEvent(fn)
-	base.SetEvent(m, 280, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 282, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnSaveAsUIShowing(fn TOnSaveAsUIShowingEvent) {
@@ -4672,7 +4718,7 @@ func (m *TWVBrowserBase) SetOnSaveAsUIShowing(fn TOnSaveAsUIShowingEvent) {
 		return
 	}
 	cb := makeTOnSaveAsUIShowingEvent(fn)
-	base.SetEvent(m, 281, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 283, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnShowSaveAsUICompleted(fn TOnShowSaveAsUICompletedEvent) {
@@ -4680,7 +4726,7 @@ func (m *TWVBrowserBase) SetOnShowSaveAsUICompleted(fn TOnShowSaveAsUICompletedE
 		return
 	}
 	cb := makeTOnShowSaveAsUICompletedEvent(fn)
-	base.SetEvent(m, 282, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 284, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnSaveFileSecurityCheckStarting(fn TOnSaveFileSecurityCheckStartingEvent) {
@@ -4688,7 +4734,7 @@ func (m *TWVBrowserBase) SetOnSaveFileSecurityCheckStarting(fn TOnSaveFileSecuri
 		return
 	}
 	cb := makeTOnSaveFileSecurityCheckStartingEvent(fn)
-	base.SetEvent(m, 283, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 285, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnScreenCaptureStarting(fn TOnScreenCaptureStartingEvent) {
@@ -4696,7 +4742,7 @@ func (m *TWVBrowserBase) SetOnScreenCaptureStarting(fn TOnScreenCaptureStartingE
 		return
 	}
 	cb := makeTOnScreenCaptureStartingEvent(fn)
-	base.SetEvent(m, 284, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 286, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 func (m *TWVBrowserBase) SetOnFrameScreenCaptureStarting(fn TOnFrameScreenCaptureStartingEvent) {
@@ -4704,7 +4750,7 @@ func (m *TWVBrowserBase) SetOnFrameScreenCaptureStarting(fn TOnFrameScreenCaptur
 		return
 	}
 	cb := makeTOnFrameScreenCaptureStartingEvent(fn)
-	base.SetEvent(m, 285, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
+	base.SetEvent(m, 287, wVBrowserBaseAPI(), api.MakeEventDataPtr(cb))
 }
 
 var (
@@ -4888,120 +4934,122 @@ func wVBrowserBaseAPI() *imports.Imports {
 			/* 169 */ imports.NewTable("TWVBrowserBase_IsReputationCheckingRequired", 0), // property IsReputationCheckingRequired
 			/* 170 */ imports.NewTable("TWVBrowserBase_IsNonClientRegionSupportEnabled", 0), // property IsNonClientRegionSupportEnabled
 			/* 171 */ imports.NewTable("TWVBrowserBase_Cursor", 0), // property Cursor
-			/* 172 */ imports.NewTable("TWVBrowserBase_SystemCursorID", 0), // property SystemCursorID
-			/* 173 */ imports.NewTable("TWVBrowserBase_ProcessInfos", 0), // property ProcessInfos
-			/* 174 */ imports.NewTable("TWVBrowserBase_ProfileName", 0), // property ProfileName
-			/* 175 */ imports.NewTable("TWVBrowserBase_IsInPrivateModeEnabled", 0), // property IsInPrivateModeEnabled
-			/* 176 */ imports.NewTable("TWVBrowserBase_ScriptLocale", 0), // property ScriptLocale
-			/* 177 */ imports.NewTable("TWVBrowserBase_ProfilePath", 0), // property ProfilePath
-			/* 178 */ imports.NewTable("TWVBrowserBase_DefaultDownloadFolderPath", 0), // property DefaultDownloadFolderPath
-			/* 179 */ imports.NewTable("TWVBrowserBase_PreferredColorScheme", 0), // property PreferredColorScheme
-			/* 180 */ imports.NewTable("TWVBrowserBase_PreferredTrackingPreventionLevel", 0), // property PreferredTrackingPreventionLevel
-			/* 181 */ imports.NewTable("TWVBrowserBase_ProfileCookieManager", 0), // property ProfileCookieManager
-			/* 182 */ imports.NewTable("TWVBrowserBase_ProfileIsPasswordAutosaveEnabled", 0), // property ProfileIsPasswordAutosaveEnabled
-			/* 183 */ imports.NewTable("TWVBrowserBase_ProfileIsGeneralAutofillEnabled", 0), // property ProfileIsGeneralAutofillEnabled
-			/* 184 */ imports.NewTable("TWVBrowserBase_FrameId", 0), // property FrameId
-			/* 185 */ imports.NewTable("TWVBrowserBase_OnBrowserProcessExited", 0), // event OnBrowserProcessExited
-			/* 186 */ imports.NewTable("TWVBrowserBase_OnProcessInfosChanged", 0), // event OnProcessInfosChanged
-			/* 187 */ imports.NewTable("TWVBrowserBase_OnContainsFullScreenElementChanged", 0), // event OnContainsFullScreenElementChanged
-			/* 188 */ imports.NewTable("TWVBrowserBase_OnContentLoading", 0), // event OnContentLoading
-			/* 189 */ imports.NewTable("TWVBrowserBase_OnDocumentTitleChanged", 0), // event OnDocumentTitleChanged
-			/* 190 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationCompleted", 0), // event OnFrameNavigationCompleted
-			/* 191 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationStarting", 0), // event OnFrameNavigationStarting
-			/* 192 */ imports.NewTable("TWVBrowserBase_OnHistoryChanged", 0), // event OnHistoryChanged
-			/* 193 */ imports.NewTable("TWVBrowserBase_OnNavigationCompleted", 0), // event OnNavigationCompleted
-			/* 194 */ imports.NewTable("TWVBrowserBase_OnNavigationStarting", 0), // event OnNavigationStarting
-			/* 195 */ imports.NewTable("TWVBrowserBase_OnNewWindowRequested", 0), // event OnNewWindowRequested
-			/* 196 */ imports.NewTable("TWVBrowserBase_OnPermissionRequested", 0), // event OnPermissionRequested
-			/* 197 */ imports.NewTable("TWVBrowserBase_OnProcessFailed", 0), // event OnProcessFailed
-			/* 198 */ imports.NewTable("TWVBrowserBase_OnScriptDialogOpening", 0), // event OnScriptDialogOpening
-			/* 199 */ imports.NewTable("TWVBrowserBase_OnSourceChanged", 0), // event OnSourceChanged
-			/* 200 */ imports.NewTable("TWVBrowserBase_OnWebMessageReceived", 0), // event OnWebMessageReceived
-			/* 201 */ imports.NewTable("TWVBrowserBase_OnWebResourceRequested", 0), // event OnWebResourceRequested
-			/* 202 */ imports.NewTable("TWVBrowserBase_OnWindowCloseRequested", 0), // event OnWindowCloseRequested
-			/* 203 */ imports.NewTable("TWVBrowserBase_OnDOMContentLoaded", 0), // event OnDOMContentLoaded
-			/* 204 */ imports.NewTable("TWVBrowserBase_OnWebResourceResponseReceived", 0), // event OnWebResourceResponseReceived
-			/* 205 */ imports.NewTable("TWVBrowserBase_OnDownloadStarting", 0), // event OnDownloadStarting
-			/* 206 */ imports.NewTable("TWVBrowserBase_OnFrameCreated", 0), // event OnFrameCreated
-			/* 207 */ imports.NewTable("TWVBrowserBase_OnClientCertificateRequested", 0), // event OnClientCertificateRequested
-			/* 208 */ imports.NewTable("TWVBrowserBase_OnIsDocumentPlayingAudioChanged", 0), // event OnIsDocumentPlayingAudioChanged
-			/* 209 */ imports.NewTable("TWVBrowserBase_OnIsMutedChanged", 0), // event OnIsMutedChanged
-			/* 210 */ imports.NewTable("TWVBrowserBase_OnIsDefaultDownloadDialogOpenChanged", 0), // event OnIsDefaultDownloadDialogOpenChanged
-			/* 211 */ imports.NewTable("TWVBrowserBase_OnBasicAuthenticationRequested", 0), // event OnBasicAuthenticationRequested
-			/* 212 */ imports.NewTable("TWVBrowserBase_OnContextMenuRequested", 0), // event OnContextMenuRequested
-			/* 213 */ imports.NewTable("TWVBrowserBase_OnStatusBarTextChanged", 0), // event OnStatusBarTextChanged
-			/* 214 */ imports.NewTable("TWVBrowserBase_OnServerCertificateErrorActionsCompleted", 0), // event OnServerCertificateErrorActionsCompleted
-			/* 215 */ imports.NewTable("TWVBrowserBase_OnServerCertificateErrorDetected", 0), // event OnServerCertificateErrorDetected
-			/* 216 */ imports.NewTable("TWVBrowserBase_OnFaviconChanged", 0), // event OnFaviconChanged
-			/* 217 */ imports.NewTable("TWVBrowserBase_OnGetFaviconCompleted", 0), // event OnGetFaviconCompleted
-			/* 218 */ imports.NewTable("TWVBrowserBase_OnPrintCompleted", 0), // event OnPrintCompleted
-			/* 219 */ imports.NewTable("TWVBrowserBase_OnPrintToPdfStreamCompleted", 0), // event OnPrintToPdfStreamCompleted
-			/* 220 */ imports.NewTable("TWVBrowserBase_OnAcceleratorKeyPressed", 0), // event OnAcceleratorKeyPressed
-			/* 221 */ imports.NewTable("TWVBrowserBase_OnGotFocus", 0), // event OnGotFocus
-			/* 222 */ imports.NewTable("TWVBrowserBase_OnLostFocus", 0), // event OnLostFocus
-			/* 223 */ imports.NewTable("TWVBrowserBase_OnMoveFocusRequested", 0), // event OnMoveFocusRequested
-			/* 224 */ imports.NewTable("TWVBrowserBase_OnZoomFactorChanged", 0), // event OnZoomFactorChanged
-			/* 225 */ imports.NewTable("TWVBrowserBase_OnRasterizationScaleChanged", 0), // event OnRasterizationScaleChanged
-			/* 226 */ imports.NewTable("TWVBrowserBase_OnCursorChanged", 0), // event OnCursorChanged
-			/* 227 */ imports.NewTable("TWVBrowserBase_OnBytesReceivedChanged", 0), // event OnBytesReceivedChanged
-			/* 228 */ imports.NewTable("TWVBrowserBase_OnEstimatedEndTimeChanged", 0), // event OnEstimatedEndTimeChanged
-			/* 229 */ imports.NewTable("TWVBrowserBase_OnDownloadStateChanged", 0), // event OnDownloadStateChanged
-			/* 230 */ imports.NewTable("TWVBrowserBase_OnFrameDestroyed", 0), // event OnFrameDestroyed
-			/* 231 */ imports.NewTable("TWVBrowserBase_OnFrameNameChanged", 0), // event OnFrameNameChanged
-			/* 232 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationStarting2", 0), // event OnFrameNavigationStarting2
-			/* 233 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationCompleted2", 0), // event OnFrameNavigationCompleted2
-			/* 234 */ imports.NewTable("TWVBrowserBase_OnFrameContentLoading", 0), // event OnFrameContentLoading
-			/* 235 */ imports.NewTable("TWVBrowserBase_OnFrameDOMContentLoaded", 0), // event OnFrameDOMContentLoaded
-			/* 236 */ imports.NewTable("TWVBrowserBase_OnFrameWebMessageReceived", 0), // event OnFrameWebMessageReceived
-			/* 237 */ imports.NewTable("TWVBrowserBase_OnFramePermissionRequested", 0), // event OnFramePermissionRequested
-			/* 238 */ imports.NewTable("TWVBrowserBase_OnDevToolsProtocolEventReceived", 0), // event OnDevToolsProtocolEventReceived
-			/* 239 */ imports.NewTable("TWVBrowserBase_OnCustomItemSelected", 0), // event OnCustomItemSelected
-			/* 240 */ imports.NewTable("TWVBrowserBase_OnClearBrowsingDataCompleted", 0), // event OnClearBrowsingDataCompleted
-			/* 241 */ imports.NewTable("TWVBrowserBase_OnInitializationError", 0), // event OnInitializationError
-			/* 242 */ imports.NewTable("TWVBrowserBase_OnEnvironmentCompleted", 0), // event OnEnvironmentCompleted
-			/* 243 */ imports.NewTable("TWVBrowserBase_OnControllerCompleted", 0), // event OnControllerCompleted
-			/* 244 */ imports.NewTable("TWVBrowserBase_OnAfterCreated", 0), // event OnAfterCreated
-			/* 245 */ imports.NewTable("TWVBrowserBase_OnExecuteScriptCompleted", 0), // event OnExecuteScriptCompleted
-			/* 246 */ imports.NewTable("TWVBrowserBase_OnCapturePreviewCompleted", 0), // event OnCapturePreviewCompleted
-			/* 247 */ imports.NewTable("TWVBrowserBase_OnGetCookiesCompleted", 0), // event OnGetCookiesCompleted
-			/* 248 */ imports.NewTable("TWVBrowserBase_OnTrySuspendCompleted", 0), // event OnTrySuspendCompleted
-			/* 249 */ imports.NewTable("TWVBrowserBase_OnPrintToPdfCompleted", 0), // event OnPrintToPdfCompleted
-			/* 250 */ imports.NewTable("TWVBrowserBase_OnCompositionControllerCompleted", 0), // event OnCompositionControllerCompleted
-			/* 251 */ imports.NewTable("TWVBrowserBase_OnCallDevToolsProtocolMethodCompleted", 0), // event OnCallDevToolsProtocolMethodCompleted
-			/* 252 */ imports.NewTable("TWVBrowserBase_OnAddScriptToExecuteOnDocumentCreatedCompleted", 0), // event OnAddScriptToExecuteOnDocumentCreatedCompleted
-			/* 253 */ imports.NewTable("TWVBrowserBase_OnWebResourceResponseViewGetContentCompleted", 0), // event OnWebResourceResponseViewGetContentCompleted
-			/* 254 */ imports.NewTable("TWVBrowserBase_OnWidget0CompMsg", 0), // event OnWidget0CompMsg
-			/* 255 */ imports.NewTable("TWVBrowserBase_OnWidget1CompMsg", 0), // event OnWidget1CompMsg
-			/* 256 */ imports.NewTable("TWVBrowserBase_OnRenderCompMsg", 0), // event OnRenderCompMsg
-			/* 257 */ imports.NewTable("TWVBrowserBase_OnD3DWindowCompMsg", 0), // event OnD3DWindowCompMsg
-			/* 258 */ imports.NewTable("TWVBrowserBase_OnRetrieveHTMLCompleted", 0), // event OnRetrieveHTMLCompleted
-			/* 259 */ imports.NewTable("TWVBrowserBase_OnRetrieveTextCompleted", 0), // event OnRetrieveTextCompleted
-			/* 260 */ imports.NewTable("TWVBrowserBase_OnRetrieveMHTMLCompleted", 0), // event OnRetrieveMHTMLCompleted
-			/* 261 */ imports.NewTable("TWVBrowserBase_OnClearCacheCompleted", 0), // event OnClearCacheCompleted
-			/* 262 */ imports.NewTable("TWVBrowserBase_OnClearDataForOriginCompleted", 0), // event OnClearDataForOriginCompleted
-			/* 263 */ imports.NewTable("TWVBrowserBase_OnOfflineCompleted", 0), // event OnOfflineCompleted
-			/* 264 */ imports.NewTable("TWVBrowserBase_OnIgnoreCertificateErrorsCompleted", 0), // event OnIgnoreCertificateErrorsCompleted
-			/* 265 */ imports.NewTable("TWVBrowserBase_OnRefreshIgnoreCacheCompleted", 0), // event OnRefreshIgnoreCacheCompleted
-			/* 266 */ imports.NewTable("TWVBrowserBase_OnSimulateKeyEventCompleted", 0), // event OnSimulateKeyEventCompleted
-			/* 267 */ imports.NewTable("TWVBrowserBase_OnGetCustomSchemes", 0), // event OnGetCustomSchemes
-			/* 268 */ imports.NewTable("TWVBrowserBase_OnGetNonDefaultPermissionSettingsCompleted", 0), // event OnGetNonDefaultPermissionSettingsCompleted
-			/* 269 */ imports.NewTable("TWVBrowserBase_OnSetPermissionStateCompleted", 0), // event OnSetPermissionStateCompleted
-			/* 270 */ imports.NewTable("TWVBrowserBase_OnLaunchingExternalUriScheme", 0), // event OnLaunchingExternalUriScheme
-			/* 271 */ imports.NewTable("TWVBrowserBase_OnGetProcessExtendedInfosCompleted", 0), // event OnGetProcessExtendedInfosCompleted
-			/* 272 */ imports.NewTable("TWVBrowserBase_OnBrowserExtensionRemoveCompleted", 0), // event OnBrowserExtensionRemoveCompleted
-			/* 273 */ imports.NewTable("TWVBrowserBase_OnBrowserExtensionEnableCompleted", 0), // event OnBrowserExtensionEnableCompleted
-			/* 274 */ imports.NewTable("TWVBrowserBase_OnProfileAddBrowserExtensionCompleted", 0), // event OnProfileAddBrowserExtensionCompleted
-			/* 275 */ imports.NewTable("TWVBrowserBase_OnProfileGetBrowserExtensionsCompleted", 0), // event OnProfileGetBrowserExtensionsCompleted
-			/* 276 */ imports.NewTable("TWVBrowserBase_OnProfileDeleted", 0), // event OnProfileDeleted
-			/* 277 */ imports.NewTable("TWVBrowserBase_OnExecuteScriptWithResultCompleted", 0), // event OnExecuteScriptWithResultCompleted
-			/* 278 */ imports.NewTable("TWVBrowserBase_OnNonClientRegionChanged", 0), // event OnNonClientRegionChanged
-			/* 279 */ imports.NewTable("TWVBrowserBase_OnNotificationReceived", 0), // event OnNotificationReceived
-			/* 280 */ imports.NewTable("TWVBrowserBase_OnNotificationCloseRequested", 0), // event OnNotificationCloseRequested
-			/* 281 */ imports.NewTable("TWVBrowserBase_OnSaveAsUIShowing", 0), // event OnSaveAsUIShowing
-			/* 282 */ imports.NewTable("TWVBrowserBase_OnShowSaveAsUICompleted", 0), // event OnShowSaveAsUICompleted
-			/* 283 */ imports.NewTable("TWVBrowserBase_OnSaveFileSecurityCheckStarting", 0), // event OnSaveFileSecurityCheckStarting
-			/* 284 */ imports.NewTable("TWVBrowserBase_OnScreenCaptureStarting", 0), // event OnScreenCaptureStarting
-			/* 285 */ imports.NewTable("TWVBrowserBase_OnFrameScreenCaptureStarting", 0), // event OnFrameScreenCaptureStarting
+			/* 172 */ imports.NewTable("TWVBrowserBase_RootVisualTarget", 0), // property RootVisualTarget
+			/* 173 */ imports.NewTable("TWVBrowserBase_SystemCursorID", 0), // property SystemCursorID
+			/* 174 */ imports.NewTable("TWVBrowserBase_AutomationProvider", 0), // property AutomationProvider
+			/* 175 */ imports.NewTable("TWVBrowserBase_ProcessInfos", 0), // property ProcessInfos
+			/* 176 */ imports.NewTable("TWVBrowserBase_ProfileName", 0), // property ProfileName
+			/* 177 */ imports.NewTable("TWVBrowserBase_IsInPrivateModeEnabled", 0), // property IsInPrivateModeEnabled
+			/* 178 */ imports.NewTable("TWVBrowserBase_ScriptLocale", 0), // property ScriptLocale
+			/* 179 */ imports.NewTable("TWVBrowserBase_ProfilePath", 0), // property ProfilePath
+			/* 180 */ imports.NewTable("TWVBrowserBase_DefaultDownloadFolderPath", 0), // property DefaultDownloadFolderPath
+			/* 181 */ imports.NewTable("TWVBrowserBase_PreferredColorScheme", 0), // property PreferredColorScheme
+			/* 182 */ imports.NewTable("TWVBrowserBase_PreferredTrackingPreventionLevel", 0), // property PreferredTrackingPreventionLevel
+			/* 183 */ imports.NewTable("TWVBrowserBase_ProfileCookieManager", 0), // property ProfileCookieManager
+			/* 184 */ imports.NewTable("TWVBrowserBase_ProfileIsPasswordAutosaveEnabled", 0), // property ProfileIsPasswordAutosaveEnabled
+			/* 185 */ imports.NewTable("TWVBrowserBase_ProfileIsGeneralAutofillEnabled", 0), // property ProfileIsGeneralAutofillEnabled
+			/* 186 */ imports.NewTable("TWVBrowserBase_FrameId", 0), // property FrameId
+			/* 187 */ imports.NewTable("TWVBrowserBase_OnBrowserProcessExited", 0), // event OnBrowserProcessExited
+			/* 188 */ imports.NewTable("TWVBrowserBase_OnProcessInfosChanged", 0), // event OnProcessInfosChanged
+			/* 189 */ imports.NewTable("TWVBrowserBase_OnContainsFullScreenElementChanged", 0), // event OnContainsFullScreenElementChanged
+			/* 190 */ imports.NewTable("TWVBrowserBase_OnContentLoading", 0), // event OnContentLoading
+			/* 191 */ imports.NewTable("TWVBrowserBase_OnDocumentTitleChanged", 0), // event OnDocumentTitleChanged
+			/* 192 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationCompleted", 0), // event OnFrameNavigationCompleted
+			/* 193 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationStarting", 0), // event OnFrameNavigationStarting
+			/* 194 */ imports.NewTable("TWVBrowserBase_OnHistoryChanged", 0), // event OnHistoryChanged
+			/* 195 */ imports.NewTable("TWVBrowserBase_OnNavigationCompleted", 0), // event OnNavigationCompleted
+			/* 196 */ imports.NewTable("TWVBrowserBase_OnNavigationStarting", 0), // event OnNavigationStarting
+			/* 197 */ imports.NewTable("TWVBrowserBase_OnNewWindowRequested", 0), // event OnNewWindowRequested
+			/* 198 */ imports.NewTable("TWVBrowserBase_OnPermissionRequested", 0), // event OnPermissionRequested
+			/* 199 */ imports.NewTable("TWVBrowserBase_OnProcessFailed", 0), // event OnProcessFailed
+			/* 200 */ imports.NewTable("TWVBrowserBase_OnScriptDialogOpening", 0), // event OnScriptDialogOpening
+			/* 201 */ imports.NewTable("TWVBrowserBase_OnSourceChanged", 0), // event OnSourceChanged
+			/* 202 */ imports.NewTable("TWVBrowserBase_OnWebMessageReceived", 0), // event OnWebMessageReceived
+			/* 203 */ imports.NewTable("TWVBrowserBase_OnWebResourceRequested", 0), // event OnWebResourceRequested
+			/* 204 */ imports.NewTable("TWVBrowserBase_OnWindowCloseRequested", 0), // event OnWindowCloseRequested
+			/* 205 */ imports.NewTable("TWVBrowserBase_OnDOMContentLoaded", 0), // event OnDOMContentLoaded
+			/* 206 */ imports.NewTable("TWVBrowserBase_OnWebResourceResponseReceived", 0), // event OnWebResourceResponseReceived
+			/* 207 */ imports.NewTable("TWVBrowserBase_OnDownloadStarting", 0), // event OnDownloadStarting
+			/* 208 */ imports.NewTable("TWVBrowserBase_OnFrameCreated", 0), // event OnFrameCreated
+			/* 209 */ imports.NewTable("TWVBrowserBase_OnClientCertificateRequested", 0), // event OnClientCertificateRequested
+			/* 210 */ imports.NewTable("TWVBrowserBase_OnIsDocumentPlayingAudioChanged", 0), // event OnIsDocumentPlayingAudioChanged
+			/* 211 */ imports.NewTable("TWVBrowserBase_OnIsMutedChanged", 0), // event OnIsMutedChanged
+			/* 212 */ imports.NewTable("TWVBrowserBase_OnIsDefaultDownloadDialogOpenChanged", 0), // event OnIsDefaultDownloadDialogOpenChanged
+			/* 213 */ imports.NewTable("TWVBrowserBase_OnBasicAuthenticationRequested", 0), // event OnBasicAuthenticationRequested
+			/* 214 */ imports.NewTable("TWVBrowserBase_OnContextMenuRequested", 0), // event OnContextMenuRequested
+			/* 215 */ imports.NewTable("TWVBrowserBase_OnStatusBarTextChanged", 0), // event OnStatusBarTextChanged
+			/* 216 */ imports.NewTable("TWVBrowserBase_OnServerCertificateErrorActionsCompleted", 0), // event OnServerCertificateErrorActionsCompleted
+			/* 217 */ imports.NewTable("TWVBrowserBase_OnServerCertificateErrorDetected", 0), // event OnServerCertificateErrorDetected
+			/* 218 */ imports.NewTable("TWVBrowserBase_OnFaviconChanged", 0), // event OnFaviconChanged
+			/* 219 */ imports.NewTable("TWVBrowserBase_OnGetFaviconCompleted", 0), // event OnGetFaviconCompleted
+			/* 220 */ imports.NewTable("TWVBrowserBase_OnPrintCompleted", 0), // event OnPrintCompleted
+			/* 221 */ imports.NewTable("TWVBrowserBase_OnPrintToPdfStreamCompleted", 0), // event OnPrintToPdfStreamCompleted
+			/* 222 */ imports.NewTable("TWVBrowserBase_OnAcceleratorKeyPressed", 0), // event OnAcceleratorKeyPressed
+			/* 223 */ imports.NewTable("TWVBrowserBase_OnGotFocus", 0), // event OnGotFocus
+			/* 224 */ imports.NewTable("TWVBrowserBase_OnLostFocus", 0), // event OnLostFocus
+			/* 225 */ imports.NewTable("TWVBrowserBase_OnMoveFocusRequested", 0), // event OnMoveFocusRequested
+			/* 226 */ imports.NewTable("TWVBrowserBase_OnZoomFactorChanged", 0), // event OnZoomFactorChanged
+			/* 227 */ imports.NewTable("TWVBrowserBase_OnRasterizationScaleChanged", 0), // event OnRasterizationScaleChanged
+			/* 228 */ imports.NewTable("TWVBrowserBase_OnCursorChanged", 0), // event OnCursorChanged
+			/* 229 */ imports.NewTable("TWVBrowserBase_OnBytesReceivedChanged", 0), // event OnBytesReceivedChanged
+			/* 230 */ imports.NewTable("TWVBrowserBase_OnEstimatedEndTimeChanged", 0), // event OnEstimatedEndTimeChanged
+			/* 231 */ imports.NewTable("TWVBrowserBase_OnDownloadStateChanged", 0), // event OnDownloadStateChanged
+			/* 232 */ imports.NewTable("TWVBrowserBase_OnFrameDestroyed", 0), // event OnFrameDestroyed
+			/* 233 */ imports.NewTable("TWVBrowserBase_OnFrameNameChanged", 0), // event OnFrameNameChanged
+			/* 234 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationStarting2", 0), // event OnFrameNavigationStarting2
+			/* 235 */ imports.NewTable("TWVBrowserBase_OnFrameNavigationCompleted2", 0), // event OnFrameNavigationCompleted2
+			/* 236 */ imports.NewTable("TWVBrowserBase_OnFrameContentLoading", 0), // event OnFrameContentLoading
+			/* 237 */ imports.NewTable("TWVBrowserBase_OnFrameDOMContentLoaded", 0), // event OnFrameDOMContentLoaded
+			/* 238 */ imports.NewTable("TWVBrowserBase_OnFrameWebMessageReceived", 0), // event OnFrameWebMessageReceived
+			/* 239 */ imports.NewTable("TWVBrowserBase_OnFramePermissionRequested", 0), // event OnFramePermissionRequested
+			/* 240 */ imports.NewTable("TWVBrowserBase_OnDevToolsProtocolEventReceived", 0), // event OnDevToolsProtocolEventReceived
+			/* 241 */ imports.NewTable("TWVBrowserBase_OnCustomItemSelected", 0), // event OnCustomItemSelected
+			/* 242 */ imports.NewTable("TWVBrowserBase_OnClearBrowsingDataCompleted", 0), // event OnClearBrowsingDataCompleted
+			/* 243 */ imports.NewTable("TWVBrowserBase_OnInitializationError", 0), // event OnInitializationError
+			/* 244 */ imports.NewTable("TWVBrowserBase_OnEnvironmentCompleted", 0), // event OnEnvironmentCompleted
+			/* 245 */ imports.NewTable("TWVBrowserBase_OnControllerCompleted", 0), // event OnControllerCompleted
+			/* 246 */ imports.NewTable("TWVBrowserBase_OnAfterCreated", 0), // event OnAfterCreated
+			/* 247 */ imports.NewTable("TWVBrowserBase_OnExecuteScriptCompleted", 0), // event OnExecuteScriptCompleted
+			/* 248 */ imports.NewTable("TWVBrowserBase_OnCapturePreviewCompleted", 0), // event OnCapturePreviewCompleted
+			/* 249 */ imports.NewTable("TWVBrowserBase_OnGetCookiesCompleted", 0), // event OnGetCookiesCompleted
+			/* 250 */ imports.NewTable("TWVBrowserBase_OnTrySuspendCompleted", 0), // event OnTrySuspendCompleted
+			/* 251 */ imports.NewTable("TWVBrowserBase_OnPrintToPdfCompleted", 0), // event OnPrintToPdfCompleted
+			/* 252 */ imports.NewTable("TWVBrowserBase_OnCompositionControllerCompleted", 0), // event OnCompositionControllerCompleted
+			/* 253 */ imports.NewTable("TWVBrowserBase_OnCallDevToolsProtocolMethodCompleted", 0), // event OnCallDevToolsProtocolMethodCompleted
+			/* 254 */ imports.NewTable("TWVBrowserBase_OnAddScriptToExecuteOnDocumentCreatedCompleted", 0), // event OnAddScriptToExecuteOnDocumentCreatedCompleted
+			/* 255 */ imports.NewTable("TWVBrowserBase_OnWebResourceResponseViewGetContentCompleted", 0), // event OnWebResourceResponseViewGetContentCompleted
+			/* 256 */ imports.NewTable("TWVBrowserBase_OnWidget0CompMsg", 0), // event OnWidget0CompMsg
+			/* 257 */ imports.NewTable("TWVBrowserBase_OnWidget1CompMsg", 0), // event OnWidget1CompMsg
+			/* 258 */ imports.NewTable("TWVBrowserBase_OnRenderCompMsg", 0), // event OnRenderCompMsg
+			/* 259 */ imports.NewTable("TWVBrowserBase_OnD3DWindowCompMsg", 0), // event OnD3DWindowCompMsg
+			/* 260 */ imports.NewTable("TWVBrowserBase_OnRetrieveHTMLCompleted", 0), // event OnRetrieveHTMLCompleted
+			/* 261 */ imports.NewTable("TWVBrowserBase_OnRetrieveTextCompleted", 0), // event OnRetrieveTextCompleted
+			/* 262 */ imports.NewTable("TWVBrowserBase_OnRetrieveMHTMLCompleted", 0), // event OnRetrieveMHTMLCompleted
+			/* 263 */ imports.NewTable("TWVBrowserBase_OnClearCacheCompleted", 0), // event OnClearCacheCompleted
+			/* 264 */ imports.NewTable("TWVBrowserBase_OnClearDataForOriginCompleted", 0), // event OnClearDataForOriginCompleted
+			/* 265 */ imports.NewTable("TWVBrowserBase_OnOfflineCompleted", 0), // event OnOfflineCompleted
+			/* 266 */ imports.NewTable("TWVBrowserBase_OnIgnoreCertificateErrorsCompleted", 0), // event OnIgnoreCertificateErrorsCompleted
+			/* 267 */ imports.NewTable("TWVBrowserBase_OnRefreshIgnoreCacheCompleted", 0), // event OnRefreshIgnoreCacheCompleted
+			/* 268 */ imports.NewTable("TWVBrowserBase_OnSimulateKeyEventCompleted", 0), // event OnSimulateKeyEventCompleted
+			/* 269 */ imports.NewTable("TWVBrowserBase_OnGetCustomSchemes", 0), // event OnGetCustomSchemes
+			/* 270 */ imports.NewTable("TWVBrowserBase_OnGetNonDefaultPermissionSettingsCompleted", 0), // event OnGetNonDefaultPermissionSettingsCompleted
+			/* 271 */ imports.NewTable("TWVBrowserBase_OnSetPermissionStateCompleted", 0), // event OnSetPermissionStateCompleted
+			/* 272 */ imports.NewTable("TWVBrowserBase_OnLaunchingExternalUriScheme", 0), // event OnLaunchingExternalUriScheme
+			/* 273 */ imports.NewTable("TWVBrowserBase_OnGetProcessExtendedInfosCompleted", 0), // event OnGetProcessExtendedInfosCompleted
+			/* 274 */ imports.NewTable("TWVBrowserBase_OnBrowserExtensionRemoveCompleted", 0), // event OnBrowserExtensionRemoveCompleted
+			/* 275 */ imports.NewTable("TWVBrowserBase_OnBrowserExtensionEnableCompleted", 0), // event OnBrowserExtensionEnableCompleted
+			/* 276 */ imports.NewTable("TWVBrowserBase_OnProfileAddBrowserExtensionCompleted", 0), // event OnProfileAddBrowserExtensionCompleted
+			/* 277 */ imports.NewTable("TWVBrowserBase_OnProfileGetBrowserExtensionsCompleted", 0), // event OnProfileGetBrowserExtensionsCompleted
+			/* 278 */ imports.NewTable("TWVBrowserBase_OnProfileDeleted", 0), // event OnProfileDeleted
+			/* 279 */ imports.NewTable("TWVBrowserBase_OnExecuteScriptWithResultCompleted", 0), // event OnExecuteScriptWithResultCompleted
+			/* 280 */ imports.NewTable("TWVBrowserBase_OnNonClientRegionChanged", 0), // event OnNonClientRegionChanged
+			/* 281 */ imports.NewTable("TWVBrowserBase_OnNotificationReceived", 0), // event OnNotificationReceived
+			/* 282 */ imports.NewTable("TWVBrowserBase_OnNotificationCloseRequested", 0), // event OnNotificationCloseRequested
+			/* 283 */ imports.NewTable("TWVBrowserBase_OnSaveAsUIShowing", 0), // event OnSaveAsUIShowing
+			/* 284 */ imports.NewTable("TWVBrowserBase_OnShowSaveAsUICompleted", 0), // event OnShowSaveAsUICompleted
+			/* 285 */ imports.NewTable("TWVBrowserBase_OnSaveFileSecurityCheckStarting", 0), // event OnSaveFileSecurityCheckStarting
+			/* 286 */ imports.NewTable("TWVBrowserBase_OnScreenCaptureStarting", 0), // event OnScreenCaptureStarting
+			/* 287 */ imports.NewTable("TWVBrowserBase_OnFrameScreenCaptureStarting", 0), // event OnFrameScreenCaptureStarting
 		}
 	})
 	return wVBrowserBaseImport

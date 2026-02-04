@@ -111,6 +111,20 @@ type ICoreWebView2CompositionController interface {
 	// BaseIntf
 	//  Returns the interface implemented by this class.
 	BaseIntf() ICoreWebView2CompositionController // property BaseIntf Getter
+	// RootVisualTarget
+	//  The RootVisualTarget is a visual in the hosting app's visual tree. This
+	//  visual is where the WebView will connect its visual tree. The app uses
+	//  this visual to position the WebView within the app. The app still needs
+	//  to use the Bounds property to size the WebView. The RootVisualTarget
+	//  property can be an IDCompositionVisual or a
+	//  Windows::UI::Composition::ContainerVisual. WebView will connect its visual
+	//  tree to the provided visual before returning from the property setter. The
+	//  app needs to commit on its device setting the RootVisualTarget property.
+	//  The RootVisualTarget property supports being set to nullptr to disconnect
+	//  the WebView from the app's visual tree.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2compositioncontroller#get_rootvisualtarget">See the ICoreWebView2CompositionController article.</see>
+	RootVisualTarget() lcl.IUnknown         // property RootVisualTarget Getter
+	SetRootVisualTarget(value lcl.IUnknown) // property RootVisualTarget Setter
 	// Cursor
 	//  The current cursor that WebView thinks it should be. The cursor should be
 	//  set in WM_SETCURSOR through \::SetCursor or set on the corresponding
@@ -131,6 +145,11 @@ type ICoreWebView2CompositionController interface {
 	//  MAKEINTRESOURCE must be called on it first.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2compositioncontroller#get_systemcursorid">See the ICoreWebView2CompositionController article.</see>
 	SystemCursorID() uint32 // property SystemCursorID Getter
+	// AutomationProvider
+	//  Returns the Automation Provider for the WebView. This object implements
+	//  IRawElementProviderSimple.
+	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2compositioncontroller2#get_automationprovider">See the ICoreWebView2CompositionController2 article.</see>
+	AutomationProvider() lcl.IUnknown // property AutomationProvider Getter
 }
 
 type TCoreWebView2CompositionController struct {
@@ -215,11 +234,28 @@ func (m *TCoreWebView2CompositionController) BaseIntf() (result ICoreWebView2Com
 	return
 }
 
+func (m *TCoreWebView2CompositionController) RootVisualTarget() (result lcl.IUnknown) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2CompositionControllerAPI().SysCallN(10, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&resultPtr)))
+	result = lcl.AsUnknown(resultPtr)
+	return
+}
+
+func (m *TCoreWebView2CompositionController) SetRootVisualTarget(value lcl.IUnknown) {
+	if !m.IsValid() {
+		return
+	}
+	coreWebView2CompositionControllerAPI().SysCallN(10, 1, m.Instance(), base.GetObjectUintptr(value))
+}
+
 func (m *TCoreWebView2CompositionController) Cursor() types.HCURSOR {
 	if !m.IsValid() {
 		return 0
 	}
-	r := coreWebView2CompositionControllerAPI().SysCallN(10, m.Instance())
+	r := coreWebView2CompositionControllerAPI().SysCallN(11, m.Instance())
 	return types.HCURSOR(r)
 }
 
@@ -227,8 +263,18 @@ func (m *TCoreWebView2CompositionController) SystemCursorID() uint32 {
 	if !m.IsValid() {
 		return 0
 	}
-	r := coreWebView2CompositionControllerAPI().SysCallN(11, m.Instance())
+	r := coreWebView2CompositionControllerAPI().SysCallN(12, m.Instance())
 	return uint32(r)
+}
+
+func (m *TCoreWebView2CompositionController) AutomationProvider() (result lcl.IUnknown) {
+	if !m.IsValid() {
+		return
+	}
+	var resultPtr uintptr
+	coreWebView2CompositionControllerAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&resultPtr)))
+	result = lcl.AsUnknown(resultPtr)
+	return
 }
 
 // NewCoreWebView2CompositionController class constructor
@@ -256,8 +302,10 @@ func coreWebView2CompositionControllerAPI() *imports.Imports {
 			/* 7 */ imports.NewTable("TCoreWebView2CompositionController_QueryNonClientRegion", 0), // function QueryNonClientRegion
 			/* 8 */ imports.NewTable("TCoreWebView2CompositionController_Initialized", 0), // property Initialized
 			/* 9 */ imports.NewTable("TCoreWebView2CompositionController_BaseIntf", 0), // property BaseIntf
-			/* 10 */ imports.NewTable("TCoreWebView2CompositionController_Cursor", 0), // property Cursor
-			/* 11 */ imports.NewTable("TCoreWebView2CompositionController_SystemCursorID", 0), // property SystemCursorID
+			/* 10 */ imports.NewTable("TCoreWebView2CompositionController_RootVisualTarget", 0), // property RootVisualTarget
+			/* 11 */ imports.NewTable("TCoreWebView2CompositionController_Cursor", 0), // property Cursor
+			/* 12 */ imports.NewTable("TCoreWebView2CompositionController_SystemCursorID", 0), // property SystemCursorID
+			/* 13 */ imports.NewTable("TCoreWebView2CompositionController_AutomationProvider", 0), // property AutomationProvider
 		}
 	})
 	return coreWebView2CompositionControllerImport
