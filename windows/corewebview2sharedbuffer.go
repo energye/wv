@@ -16,9 +16,9 @@ import (
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2SharedBuffer Parent: lcl.IObject
+// ICoreWebView2SharedBuffer Parent: IObject
 type ICoreWebView2SharedBuffer interface {
-	lcl.IObject
+	IObject
 	// Close
 	//  Release the backing shared memory. The application should call this API when no
 	//  access to the buffer is needed any more, to ensure that the underlying resources
@@ -73,7 +73,7 @@ type ICoreWebView2SharedBuffer interface {
 }
 
 type TCoreWebView2SharedBuffer struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2SharedBuffer) Close() bool {

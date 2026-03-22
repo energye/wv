@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ScreenCaptureStartingEventArgs Parent: lcl.IObject
+// ICoreWebView2ScreenCaptureStartingEventArgs Parent: IObject
 type ICoreWebView2ScreenCaptureStartingEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -58,7 +57,7 @@ type ICoreWebView2ScreenCaptureStartingEventArgs interface {
 }
 
 type TCoreWebView2ScreenCaptureStartingEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ScreenCaptureStartingEventArgs) Initialized() bool {

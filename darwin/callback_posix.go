@@ -8,8 +8,8 @@
 
 // :predefine:
 
-//go:build !windows && cgo
-// +build !windows,cgo
+//go:build darwin && cgo
+// +build darwin,cgo
 
 package darwin
 

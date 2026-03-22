@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ProcessFailedEventArgs Parent: lcl.IObject
+// ICoreWebView2ProcessFailedEventArgs Parent: IObject
 type ICoreWebView2ProcessFailedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -108,7 +107,7 @@ type ICoreWebView2ProcessFailedEventArgs interface {
 }
 
 type TCoreWebView2ProcessFailedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ProcessFailedEventArgs) Initialized() bool {

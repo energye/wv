@@ -16,9 +16,9 @@ import (
 	"github.com/energye/lcl/types"
 )
 
-// IWVWinControl Parent: lcl.IWinControl
+// IWVWinControl Parent: IWinControl
 type IWVWinControl interface {
-	lcl.IWinControl
+	IWinControl
 	// CreateHandle
 	//  Creates underlying screen object.
 	CreateHandle() // procedure
@@ -44,7 +44,7 @@ type IWVWinControl interface {
 }
 
 type TWVWinControl struct {
-	lcl.TWinControl
+	TWinControl
 }
 
 func (m *TWVWinControl) CreateHandle() {

@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkNavigationDelegate Parent: lcl.IObject
+// IWkNavigationDelegate Parent: IObject
 type IWkNavigationDelegate interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKNavigationDelegateProtocol // function
@@ -29,7 +28,7 @@ type IWkNavigationDelegate interface {
 }
 
 type TWkNavigationDelegate struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkNavigationDelegate) Data() wvTypes.WKNavigationDelegateProtocol {

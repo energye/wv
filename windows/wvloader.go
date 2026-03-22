@@ -17,9 +17,15 @@ import (
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// IWVLoader Parent: lcl.IComponent
+// IWVLoaderEvents Parent: IObject
+type IWVLoaderEvents interface {
+	IObject
+}
+
+// IWVLoader Parent: IWVLoaderEvents IComponent
 type IWVLoader interface {
-	lcl.IComponent
+	IWVLoaderEvents
+	IComponent
 	// StartWebView2
 	//  This function is used to initialize WebView2.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/webview2-idl#createcorewebview2environmentwithoptions">See the Globals article.</see>
@@ -521,7 +527,7 @@ type IWVLoader interface {
 }
 
 type TWVLoader struct {
-	lcl.TComponent
+	TComponent
 }
 
 func (m *TWVLoader) StartWebView2() bool {

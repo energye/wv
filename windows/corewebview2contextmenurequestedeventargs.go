@@ -12,13 +12,12 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2ContextMenuRequestedEventArgs Parent: lcl.IObject
+// ICoreWebView2ContextMenuRequestedEventArgs Parent: IObject
 type ICoreWebView2ContextMenuRequestedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -58,7 +57,7 @@ type ICoreWebView2ContextMenuRequestedEventArgs interface {
 }
 
 type TCoreWebView2ContextMenuRequestedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ContextMenuRequestedEventArgs) Initialized() bool {

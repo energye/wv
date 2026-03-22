@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// IWkNSURLAuthenticationChallenge Parent: lcl.IObject
+// IWkNSURLAuthenticationChallenge Parent: IObject
 type IWkNSURLAuthenticationChallenge interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() NSURLAuthenticationChallenge // function
@@ -27,7 +26,7 @@ type IWkNSURLAuthenticationChallenge interface {
 }
 
 type TWkNSURLAuthenticationChallenge struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkNSURLAuthenticationChallenge) Data() NSURLAuthenticationChallenge {

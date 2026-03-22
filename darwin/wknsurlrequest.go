@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// IWkNSURLRequest Parent: lcl.IObject
+// IWkNSURLRequest Parent: IObject
 type IWkNSURLRequest interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() NSURLRequest // function
@@ -54,7 +53,7 @@ type IWkNSURLRequest interface {
 }
 
 type TWkNSURLRequest struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkNSURLRequest) Data() NSURLRequest {

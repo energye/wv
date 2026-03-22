@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2BrowserProcessExitedEventArgs Parent: lcl.IObject
+// ICoreWebView2BrowserProcessExitedEventArgs Parent: IObject
 type ICoreWebView2BrowserProcessExitedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -37,7 +36,7 @@ type ICoreWebView2BrowserProcessExitedEventArgs interface {
 }
 
 type TCoreWebView2BrowserProcessExitedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2BrowserProcessExitedEventArgs) Initialized() bool {

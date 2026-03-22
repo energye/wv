@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkSettings Parent: lcl.IObject
+// IWkSettings Parent: IObject
 type IWkSettings interface {
-	lcl.IObject
+	IObject
 	GetEnableJavascript() bool                                                            // function
 	GetAutoLoadImages() bool                                                              // function
 	GetEnableHtml5LocalStorage() bool                                                     // function
@@ -131,7 +130,7 @@ type IWkSettings interface {
 }
 
 type TWkSettings struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkSettings) GetEnableJavascript() bool {

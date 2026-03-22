@@ -15,9 +15,9 @@ import (
 	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ObjectCollectionView Parent: lcl.IObject
+// ICoreWebView2ObjectCollectionView Parent: IObject
 type ICoreWebView2ObjectCollectionView interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -35,7 +35,7 @@ type ICoreWebView2ObjectCollectionView interface {
 }
 
 type TCoreWebView2ObjectCollectionView struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ObjectCollectionView) Initialized() bool {

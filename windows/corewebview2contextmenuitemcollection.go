@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ContextMenuItemCollection Parent: lcl.IObject
+// ICoreWebView2ContextMenuItemCollection Parent: IObject
 type ICoreWebView2ContextMenuItemCollection interface {
-	lcl.IObject
+	IObject
 	// RemoveValueAtIndex
 	//  Removes the `ContextMenuItem` at the specified index.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitemcollection#removevalueatindex">See the ICoreWebView2ContextMenuItemCollection article.</see>
@@ -39,11 +38,11 @@ type ICoreWebView2ContextMenuItemCollection interface {
 	//  <param name="aCommandId">The commandId value of the item that has to be removed.</param>
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitemcollection#removevalueatindex">See the ICoreWebView2ContextMenuItemCollection article.</see>
 	RemoveMenuItemWithInt(commandId int32) // procedure
-	// RemoveMenuItemWithString
+	// RemoveMenuItemWithStr
 	//  Removes the item with the label value specified in the paramaters.
 	//  <param name="aLabel">The label value of the item that has to be removed.</param>
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2contextmenuitemcollection#removevalueatindex">See the ICoreWebView2ContextMenuItemCollection article.</see>
-	RemoveMenuItemWithString(label string) // procedure
+	RemoveMenuItemWithStr(label string) // procedure
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -61,7 +60,7 @@ type ICoreWebView2ContextMenuItemCollection interface {
 }
 
 type TCoreWebView2ContextMenuItemCollection struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ContextMenuItemCollection) RemoveValueAtIndex(index uint32) bool {
@@ -102,7 +101,7 @@ func (m *TCoreWebView2ContextMenuItemCollection) RemoveMenuItemWithInt(commandId
 	coreWebView2ContextMenuItemCollectionAPI().SysCallN(5, m.Instance(), uintptr(commandId))
 }
 
-func (m *TCoreWebView2ContextMenuItemCollection) RemoveMenuItemWithString(label string) {
+func (m *TCoreWebView2ContextMenuItemCollection) RemoveMenuItemWithStr(label string) {
 	if !m.IsValid() {
 		return
 	}
@@ -166,7 +165,7 @@ func coreWebView2ContextMenuItemCollectionAPI() *imports.Imports {
 			/* 3 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_AppendValue", 0), // function AppendValue
 			/* 4 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_RemoveAllMenuItems", 0), // procedure RemoveAllMenuItems
 			/* 5 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_RemoveMenuItemWithInt", 0), // procedure RemoveMenuItemWithInt
-			/* 6 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_RemoveMenuItemWithString", 0), // procedure RemoveMenuItemWithString
+			/* 6 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_RemoveMenuItemWithStr", 0), // procedure RemoveMenuItemWithStr
 			/* 7 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_Initialized", 0), // property Initialized
 			/* 8 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_BaseIntf", 0), // property BaseIntf
 			/* 9 */ imports.NewTable("TCoreWebView2ContextMenuItemCollection_Count", 0), // property Count

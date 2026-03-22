@@ -37,6 +37,3 @@ type TScrolledWindow = uintptr
 
 // TGdkModifierType SET
 type TGdkModifierType = types.TSet
-
-// JSCCheckSyntaxMode ENUM
-type JSCCheckSyntaxMode = int32

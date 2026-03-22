@@ -12,20 +12,19 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkNavigationAction Parent: lcl.IObject
+// IWkNavigationAction Parent: IObject
 type IWkNavigationAction interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitNavigationAction // function
 	GetRequest() wvTypes.WebKitURIRequest // function
 }
 
 type TWkNavigationAction struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkNavigationAction) Data() wvTypes.WebKitNavigationAction {

@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// IWkNSURLCredential Parent: lcl.IObject
+// IWkNSURLCredential Parent: IObject
 type IWkNSURLCredential interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() NSURLCredential // function
@@ -30,7 +29,7 @@ type IWkNSURLCredential interface {
 }
 
 type TWkNSURLCredential struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkNSURLCredential) Data() NSURLCredential {

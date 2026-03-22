@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkCookie Parent: lcl.IObject
+// IWkCookie Parent: IObject
 type IWkCookie interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.PSoupCookie          // function
 	SetMaxAge(value int32)              // procedure
 	Name() string                       // property Name Getter
@@ -39,7 +38,7 @@ type IWkCookie interface {
 }
 
 type TWkCookie struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkCookie) Data() wvTypes.PSoupCookie {

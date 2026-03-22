@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkNavigationAction Parent: lcl.IObject
+// IWkNavigationAction Parent: IObject
 type IWkNavigationAction interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKNavigationAction // function
@@ -47,7 +46,7 @@ type IWkNavigationAction interface {
 }
 
 type TWkNavigationAction struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkNavigationAction) Data() wvTypes.WKNavigationAction {

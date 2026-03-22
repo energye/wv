@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2WebResourceResponseView Parent: lcl.IObject
+// ICoreWebView2WebResourceResponseView Parent: IObject
 type ICoreWebView2WebResourceResponseView interface {
-	lcl.IObject
+	IObject
 	// GetContent
 	//  Get the response content asynchronously. The handler will receive the
 	//  response content stream.
@@ -54,7 +53,7 @@ type ICoreWebView2WebResourceResponseView interface {
 }
 
 type TCoreWebView2WebResourceResponseView struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2WebResourceResponseView) GetContent(handler ICoreWebView2WebResourceResponseViewGetContentCompletedHandler) bool {

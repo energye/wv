@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2PermissionSetting Parent: lcl.IObject
+// ICoreWebView2PermissionSetting Parent: IObject
 type ICoreWebView2PermissionSetting interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -42,7 +41,7 @@ type ICoreWebView2PermissionSetting interface {
 }
 
 type TCoreWebView2PermissionSetting struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2PermissionSetting) Initialized() bool {

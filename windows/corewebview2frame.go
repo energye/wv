@@ -18,9 +18,9 @@ import (
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2Frame Parent: lcl.IObject
+// ICoreWebView2Frame Parent: IObject
 type ICoreWebView2Frame interface {
-	lcl.IObject
+	IObject
 	// AddAllBrowserEvents
 	//  Adds all the events of this class to an existing TWVBrowserBase instance.
 	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
@@ -165,7 +165,7 @@ type ICoreWebView2Frame interface {
 }
 
 type TCoreWebView2Frame struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2Frame) AddAllBrowserEvents(browserComponent lcl.IComponent) bool {

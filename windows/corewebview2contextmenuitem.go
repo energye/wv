@@ -17,9 +17,9 @@ import (
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ContextMenuItem Parent: lcl.IObject
+// ICoreWebView2ContextMenuItem Parent: IObject
 type ICoreWebView2ContextMenuItem interface {
-	lcl.IObject
+	IObject
 	// AddAllBrowserEvents
 	//  Adds all the events of this class to an existing TWVBrowserBase instance.
 	//  <param name="aBrowserComponent">The TWVBrowserBase instance.</param>
@@ -84,7 +84,7 @@ type ICoreWebView2ContextMenuItem interface {
 }
 
 type TCoreWebView2ContextMenuItem struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ContextMenuItem) AddAllBrowserEvents(browserComponent lcl.IComponent) bool {

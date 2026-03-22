@@ -18,9 +18,39 @@ import (
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkWebview Parent: lcl.IComponent
+// IReceiveScriptMessageDelegateEvent Parent: IObject
+type IReceiveScriptMessageDelegateEvent interface {
+	IObject
+}
+
+// IWKNavigationDelegateEvent Parent: IObject
+type IWKNavigationDelegateEvent interface {
+	IObject
+}
+
+// IWKURLSchemeHandlerDelegateEvent Parent: IObject
+type IWKURLSchemeHandlerDelegateEvent interface {
+	IObject
+}
+
+// IWKUIDelegateEvent Parent: IObject
+type IWKUIDelegateEvent interface {
+	IObject
+}
+
+// IWKDownloadDelegateEvent Parent: IObject
+type IWKDownloadDelegateEvent interface {
+	IObject
+}
+
+// IWkWebview Parent: IReceiveScriptMessageDelegateEvent IWKNavigationDelegateEvent IWKURLSchemeHandlerDelegateEvent IWKUIDelegateEvent IWKDownloadDelegateEvent IComponent
 type IWkWebview interface {
-	lcl.IComponent
+	IReceiveScriptMessageDelegateEvent
+	IWKNavigationDelegateEvent
+	IWKURLSchemeHandlerDelegateEvent
+	IWKUIDelegateEvent
+	IWKDownloadDelegateEvent
+	IComponent
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKWebView // function
@@ -182,7 +212,7 @@ type IWkWebview interface {
 }
 
 type TWkWebview struct {
-	lcl.TComponent
+	TComponent
 }
 
 func (m *TWkWebview) Data() wvTypes.WKWebView {

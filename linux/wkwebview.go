@@ -17,9 +17,21 @@ import (
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkWebview Parent: lcl.IComponent
+// IWkCookieManagerDelegateEvent Parent: IObject
+type IWkCookieManagerDelegateEvent interface {
+	IObject
+}
+
+// IWkSchemeRequestDelegateEvent Parent: IObject
+type IWkSchemeRequestDelegateEvent interface {
+	IObject
+}
+
+// IWkWebview Parent: IWkCookieManagerDelegateEvent IWkSchemeRequestDelegateEvent IComponent
 type IWkWebview interface {
-	lcl.IComponent
+	IWkCookieManagerDelegateEvent
+	IWkSchemeRequestDelegateEvent
+	IComponent
 	CanGoBack() bool                       // function
 	CanGoForward() bool                    // function
 	IsLoading() bool                       // function
@@ -72,7 +84,7 @@ type IWkWebview interface {
 }
 
 type TWkWebview struct {
-	lcl.TComponent
+	TComponent
 }
 
 func (m *TWkWebview) CanGoBack() bool {

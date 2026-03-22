@@ -15,9 +15,9 @@ import (
 	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2WebResourceResponse Parent: lcl.IObject
+// ICoreWebView2WebResourceResponse Parent: IObject
 type ICoreWebView2WebResourceResponse interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -61,7 +61,7 @@ type ICoreWebView2WebResourceResponse interface {
 }
 
 type TCoreWebView2WebResourceResponse struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2WebResourceResponse) Initialized() bool {

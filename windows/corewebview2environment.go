@@ -18,9 +18,9 @@ import (
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2Environment Parent: lcl.IObject
+// ICoreWebView2Environment Parent: IObject
 type ICoreWebView2Environment interface {
-	lcl.IObject
+	IObject
 	// AddAllLoaderEvents
 	//  Adds all the events of this class to an existing TWVLoader instance.
 	//  <param name="aLoaderComponent">The TWVLoader instance.</param>
@@ -347,7 +347,7 @@ type ICoreWebView2Environment interface {
 }
 
 type TCoreWebView2Environment struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2Environment) AddAllLoaderEvents(loaderComponent lcl.IComponent) bool {

@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2BasicAuthenticationResponse Parent: lcl.IObject
+// ICoreWebView2BasicAuthenticationResponse Parent: IObject
 type ICoreWebView2BasicAuthenticationResponse interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -38,7 +37,7 @@ type ICoreWebView2BasicAuthenticationResponse interface {
 }
 
 type TCoreWebView2BasicAuthenticationResponse struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2BasicAuthenticationResponse) Initialized() bool {

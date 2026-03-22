@@ -8,8 +8,8 @@
 
 // :predefine:
 
-//go:build !windows && cgo
-// +build !windows,cgo
+//go:build linux && cgo
+// +build linux,cgo
 
 package linux
 

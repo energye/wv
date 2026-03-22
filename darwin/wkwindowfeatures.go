@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkWindowFeatures Parent: lcl.IObject
+// IWkWindowFeatures Parent: IObject
 type IWkWindowFeatures interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKWindowFeatures // function
@@ -53,7 +52,7 @@ type IWkWindowFeatures interface {
 }
 
 type TWkWindowFeatures struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkWindowFeatures) Data() wvTypes.WKWindowFeatures {

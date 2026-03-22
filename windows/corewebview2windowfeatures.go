@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2WindowFeatures Parent: lcl.IObject
+// ICoreWebView2WindowFeatures Parent: IObject
 type ICoreWebView2WindowFeatures interface {
-	lcl.IObject
+	IObject
 	CopyToRecord(windowFeatures *TWVWindowFeatures) // procedure
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
@@ -72,7 +71,7 @@ type ICoreWebView2WindowFeatures interface {
 }
 
 type TCoreWebView2WindowFeatures struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2WindowFeatures) CopyToRecord(windowFeatures *TWVWindowFeatures) {

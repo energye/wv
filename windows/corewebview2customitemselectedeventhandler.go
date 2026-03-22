@@ -16,22 +16,17 @@ import (
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2CustomItemSelectedEventHandler0 Parent: lcl.IInterfacedObject
-type ICoreWebView2CustomItemSelectedEventHandler0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2CustomItemSelectedEventHandler Parent: IInterfacedObject
+type ICoreWebView2CustomItemSelectedEventHandler interface {
+	IInterfacedObject
 	// Invoke
 	//  Provides the event args for the corresponding event.
 	Invoke(sender ICoreWebView2ContextMenuItem, args lcl.IUnknown) types.HRESULT // function
-}
-
-// ICoreWebView2CustomItemSelectedEventHandler Parent: ICoreWebView2CustomItemSelectedEventHandler0
-type ICoreWebView2CustomItemSelectedEventHandler interface {
-	ICoreWebView2CustomItemSelectedEventHandler0
 	AsIntfCustomItemSelectedEventHandler() uintptr
 }
 
 type TCoreWebView2CustomItemSelectedEventHandler struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2CustomItemSelectedEventHandler) Invoke(sender ICoreWebView2ContextMenuItem, args lcl.IUnknown) types.HRESULT {

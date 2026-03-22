@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkPreferences Parent: lcl.IObject
+// IWkPreferences Parent: IObject
 type IWkPreferences interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKPreferences // function
@@ -86,7 +85,7 @@ type IWkPreferences interface {
 }
 
 type TWkPreferences struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkPreferences) Data() wvTypes.WKPreferences {

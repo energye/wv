@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ScriptDialogOpeningEventArgs Parent: lcl.IObject
+// ICoreWebView2ScriptDialogOpeningEventArgs Parent: IObject
 type ICoreWebView2ScriptDialogOpeningEventArgs interface {
-	lcl.IObject
+	IObject
 	// Accept
 	//  The host may run this to respond with **OK** to `confirm`, `prompt`, and
 	//  `beforeunload` dialogs. Do not run this method to indicate cancel.
@@ -71,7 +70,7 @@ type ICoreWebView2ScriptDialogOpeningEventArgs interface {
 }
 
 type TCoreWebView2ScriptDialogOpeningEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Accept() bool {

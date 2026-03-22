@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2FrameInfoCollectionIterator Parent: lcl.IObject
+// ICoreWebView2FrameInfoCollectionIterator Parent: IObject
 type ICoreWebView2FrameInfoCollectionIterator interface {
-	lcl.IObject
+	IObject
 	// MoveNext
 	//  Move the iterator to the next `FrameInfo` in the collection.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2frameinfocollectioniterator#movenext">See the ICoreWebView2FrameInfoCollectionIterator article.</see>
@@ -43,7 +42,7 @@ type ICoreWebView2FrameInfoCollectionIterator interface {
 }
 
 type TCoreWebView2FrameInfoCollectionIterator struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2FrameInfoCollectionIterator) MoveNext() bool {

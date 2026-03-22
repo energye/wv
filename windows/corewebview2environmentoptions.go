@@ -12,15 +12,216 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2EnvironmentOptions0 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2EnvironmentOptions2 Parent: IObject
+type ICoreWebView2EnvironmentOptions2 interface {
+	IObject
+
+	// GetExclusiveUserDataFolderAccess
+	//  Whether other processes can create WebView2 from WebView2Environment created with the
+	//  same user data folder and therefore sharing the same WebView browser process instance.
+	//  Default is FALSE.
+	GetExclusiveUserDataFolderAccess(outValue *int32) types.HRESULT // function
+	// SetExclusiveUserDataFolderAccess
+	//  Sets the `ExclusiveUserDataFolderAccess` property.
+	//  The `ExclusiveUserDataFolderAccess` property specifies that the WebView environment
+	//  obtains exclusive access to the user data folder.
+	//  If the user data folder is already being used by another WebView environment with a
+	//  different value for `ExclusiveUserDataFolderAccess` property, the creation of a WebView2Controller
+	//  using the environment object will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
+	//  When set as TRUE, no other WebView can be created from other processes using WebView2Environment
+	//  objects with the same UserDataFolder. This prevents other processes from creating WebViews
+	//  which share the same browser process instance, since sharing is performed among
+	//  WebViews that have the same UserDataFolder. When another process tries to create a
+	//  WebView2Controller from an WebView2Environment object created with the same user data folder,
+	//  it will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
+	SetExclusiveUserDataFolderAccess(value int32) types.HRESULT // function
+}
+
+// ICoreWebView2EnvironmentOptions3 Parent: IObject
+type ICoreWebView2EnvironmentOptions3 interface {
+	IObject
+
+	// GetIsCustomCrashReportingEnabled
+	//  When `IsCustomCrashReportingEnabled` is set to `TRUE`, Windows won't send crash data to Microsoft endpoint.
+	//  `IsCustomCrashReportingEnabled` is default to be `FALSE`, in this case, WebView will respect OS consent.
+	GetIsCustomCrashReportingEnabled(outValue *int32) types.HRESULT // function
+	// SetIsCustomCrashReportingEnabled
+	//  Sets the `IsCustomCrashReportingEnabled` property.
+	SetIsCustomCrashReportingEnabled(value int32) types.HRESULT // function
+}
+
+// ICoreWebView2EnvironmentOptions4 Parent: IObject
+type ICoreWebView2EnvironmentOptions4 interface {
+	IObject
+
+	// GetCustomSchemeRegistrations
+	//  Array of custom scheme registrations. The returned
+	//  ICoreWebView2CustomSchemeRegistration pointers must be released, and the
+	//  array itself must be deallocated with CoTaskMemFree.
+	//  * out schemeRegistrations: PPUserType3 --> out schemeRegistrations: PPCoreWebView2CustomSchemeRegistration ************** WEBVIEW4DELPHI ************** *
+	GetCustomSchemeRegistrations(outCount *uint32, outSchemeRegistrations *PPCoreWebView2CustomSchemeRegistration) types.HRESULT // function
+	// SetCustomSchemeRegistrations
+	//  Set the array of custom scheme registrations to be used.
+	//  \snippet AppWindow.cpp CoreWebView2CustomSchemeRegistration
+	//  * var schemeRegistrations: ICoreWebView2CustomSchemeRegistration --> schemeRegistrations: PPCoreWebView2CustomSchemeRegistration ************** WEBVIEW4DELPHI ************** *
+	SetCustomSchemeRegistrations(count uint32, schemeRegistrations PPCoreWebView2CustomSchemeRegistration) types.HRESULT // function
+}
+
+// ICoreWebView2EnvironmentOptions5 Parent: IObject
+type ICoreWebView2EnvironmentOptions5 interface {
+	IObject
+
+	// GetEnableTrackingPrevention
+	//  The `EnableTrackingPrevention` property is used to enable/disable tracking prevention
+	//  feature in WebView2. This property enable/disable tracking prevention for all the
+	//  WebView2's created in the same environment. By default this feature is enabled to block
+	//  potentially harmful trackers and trackers from sites that aren't visited before and set to
+	//  `COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED` or whatever value was last changed/persisted
+	//  on the profile.
+	//
+	//  You can set this property to false to disable the tracking prevention feature if the app only
+	//  renders content in the WebView2 that is known to be safe. Disabling this feature when creating
+	//  environment also improves runtime performance by skipping related code.
+	//
+	//  You shouldn't disable this property if WebView2 is being used as a "full browser" with arbitrary
+	//  navigation and should protect end user privacy.
+	//
+	//  There is `ICoreWebView2Profile3::PreferredTrackingPreventionLevel` property to control levels of
+	//  tracking prevention of the WebView2's associated with a same profile. However, you can also disable
+	//  tracking prevention later using `ICoreWebView2Profile3::PreferredTrackingPreventionLevel` property and
+	//  `COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE` value but that doesn't improves runtime performance.
+	//
+	//  See `ICoreWebView2Profile3::PreferredTrackingPreventionLevel` for more details.
+	//
+	//  Tracking prevention protects users from online tracking by restricting the ability of trackers to
+	//  access browser-based storage as well as the network. See [Tracking prevention](/microsoft-edge/web-platform/tracking-prevention).
+	GetEnableTrackingPrevention(outValue *int32) types.HRESULT // function
+	// SetEnableTrackingPrevention
+	//  Sets the `EnableTrackingPrevention` property.
+	SetEnableTrackingPrevention(value int32) types.HRESULT // function
+}
+
+// ICoreWebView2EnvironmentOptions6 Parent: IObject
+type ICoreWebView2EnvironmentOptions6 interface {
+	IObject
+
+	// GetAreBrowserExtensionsEnabled
+	//  When `AreBrowserExtensionsEnabled` is set to `TRUE`, new extensions can be added to user
+	//  profile and used. `AreBrowserExtensionsEnabled` is default to be `FALSE`, in this case,
+	//  new extensions can't be installed, and already installed extension won't be
+	//  available to use in user profile.
+	//  If connecting to an already running environment with a different value for `AreBrowserExtensionsEnabled`
+	//  property, it will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
+	//  See `ICoreWebView2BrowserExtension` for Extensions API details.
+	GetAreBrowserExtensionsEnabled(outValue *int32) types.HRESULT // function
+	// SetAreBrowserExtensionsEnabled
+	//  Sets the `AreBrowserExtensionsEnabled` property.
+	SetAreBrowserExtensionsEnabled(value int32) types.HRESULT // function
+}
+
+// ICoreWebView2EnvironmentOptions7 Parent: IObject
+type ICoreWebView2EnvironmentOptions7 interface {
+	IObject
+
+	// GetChannelSearchKind
+	//  Gets the `ChannelSearchKind` property.
+	GetChannelSearchKind(outValue *wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
+	// SetChannelSearchKind
+	//  The `ChannelSearchKind` property is `COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE`
+	//  by default; environment creation searches for a release channel on the machine
+	//  from most to least stable using the first channel found. The default search order is:
+	//  WebView2 Runtime -&gt; Beta -&gt; Dev -&gt; Canary. Set `ChannelSearchKind` to
+	//  `COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE` to reverse the search order
+	//  so that environment creation searches for a channel from least to most stable. If
+	//  `ReleaseChannels` has been provided, the loader will only search
+	//  for channels in the set. See `COREWEBVIEW2_RELEASE_CHANNELS` for more details
+	//  on channels.
+	//  This property can be overridden by the corresponding
+	//  registry key `ChannelSearchKind` or the environment variable
+	//  `WEBVIEW2_CHANNEL_SEARCH_KIND`. Set the value to `1` to set the search kind to
+	//  `COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE`. See
+	//  `CreateCoreWebView2EnvironmentWithOptions` for more details on overrides.
+	SetChannelSearchKind(value wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
+	// GetReleaseChannels
+	//  Gets the `ReleaseChannels` property.
+	GetReleaseChannels(outValue *wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
+	// SetReleaseChannels
+	//  Sets the `ReleaseChannels`, which is a mask of one or more
+	//  `COREWEBVIEW2_RELEASE_CHANNELS` indicating which channels environment
+	//  creation should search for. OR operation(s) can be applied to multiple
+	//  `COREWEBVIEW2_RELEASE_CHANNELS` to create a mask. The default value is a
+	//  a mask of all the channels. By default, environment creation searches for
+	//  channels from most to least stable, using the first channel found on the
+	//  device. When `ReleaseChannels` is provided, environment creation will only
+	//  search for the channels specified in the set. Set `ChannelSearchKind` to
+	//  `COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE` to reverse the search order
+	//  so environment creation searches for least stable build first. See
+	//  `COREWEBVIEW2_RELEASE_CHANNELS` for descriptions of each channel.
+	//  `CreateCoreWebView2EnvironmentWithOptions` fails with
+	//  `HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)` if environment creation is unable
+	//  to find any channel from the `ReleaseChannels` installed on the device.
+	//  Use `GetAvailableCoreWebView2BrowserVersionStringWithOptions` on
+	//  `ICoreWebView2Environment` to verify which channel is used when this option
+	//  is set.
+	//  Examples:
+	//  <code>
+	//  | ReleaseChannels | Channel Search Kind: Most Stable (default) | Channel Search Kind: Least Stable |
+	//  | --- | --- | --- |
+	//  |COREWEBVIEW2_RELEASE_CHANNELS_BETA \| COREWEBVIEW2_RELEASE_CHANNELS_STABLE| WebView2 Runtime -&gt; Beta | Beta -&gt; WebView2 Runtime|
+	//  |COREWEBVIEW2_RELEASE_CHANNELS_CANARY \| COREWEBVIEW2_RELEASE_CHANNELS_DEV \| COREWEBVIEW2_RELEASE_CHANNELS_BETA \| COREWEBVIEW2_RELEASE_CHANNELS_STABLE| WebView2 Runtime -&gt; Beta -&gt; Dev -&gt; Canary | Canary -&gt; Dev -&gt; Beta -&gt; WebView2 Runtime |
+	//  |COREWEBVIEW2_RELEASE_CHANNELS_CANARY| Canary | Canary |
+	//  |COREWEBVIEW2_RELEASE_CHANNELS_BETA \| COREWEBVIEW2_RELEASE_CHANNELS_CANARY \| COREWEBVIEW2_RELEASE_CHANNELS_STABLE | WebView2 Runtime -&gt; Beta -&gt; Canary | Canary -&gt; Beta -&gt; WebView2 Runtime |
+	//  </code>
+	//  If both `BrowserExecutableFolder` and `ReleaseChannels` are provided, the
+	//  `BrowserExecutableFolder` takes precedence, regardless of whether or not the
+	//  channel of `BrowserExecutableFolder` is included in the `ReleaseChannels`.
+	//  `ReleaseChannels` can be overridden by the corresponding registry override
+	//  `ReleaseChannels` or the environment variable `WEBVIEW2_RELEASE_CHANNELS`.
+	//  Set the value to a comma-separated string of integers, which map to the
+	//  following release channel values: Stable (0), Beta (1), Dev (2), and
+	//  Canary (3). For example, the values "0,2" and "2,0" indicate that environment
+	//  creation should only search for Dev channel and the WebView2 Runtime, using the
+	//  order indicated by `ChannelSearchKind`. Environment creation attempts to
+	//  interpret each integer and treats any invalid entry as Stable channel. See
+	//  `CreateCoreWebView2EnvironmentWithOptions` for more details on overrides.
+	SetReleaseChannels(value wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
+}
+
+// ICoreWebView2EnvironmentOptions8 Parent: IObject
+type ICoreWebView2EnvironmentOptions8 interface {
+	IObject
+
+	// GetScrollBarStyle
+	//  Gets the `ScrollBarStyle` property.
+	GetScrollBarStyle(outValue *wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
+	// SetScrollBarStyle
+	//  The ScrollBar style being set on the WebView2 Environment.
+	//  The default value is `COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT`
+	//  which specifies the default browser ScrollBar style.
+	//  The `color-scheme` CSS property needs to be set on the corresponding page
+	//  to allow ScrollBar to follow light or dark theme. Please see
+	//  [color-scheme](https://developer.mozilla.org/docs/Web/CSS/color-scheme#declaring_color_scheme_preferences)
+	//  for how `color-scheme` can be set.
+	//  CSS styles that modify the ScrollBar applied on top of native ScrollBar styling
+	//  that is selected with `ScrollBarStyle`.
+	SetScrollBarStyle(value wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
+}
+
+// ICoreWebView2EnvironmentOptions Parent: ICoreWebView2EnvironmentOptions2 ICoreWebView2EnvironmentOptions3 ICoreWebView2EnvironmentOptions4 ICoreWebView2EnvironmentOptions5 ICoreWebView2EnvironmentOptions6 ICoreWebView2EnvironmentOptions7 ICoreWebView2EnvironmentOptions8 IInterfacedObject
+type ICoreWebView2EnvironmentOptions interface {
+	ICoreWebView2EnvironmentOptions2
+	ICoreWebView2EnvironmentOptions3
+	ICoreWebView2EnvironmentOptions4
+	ICoreWebView2EnvironmentOptions5
+	ICoreWebView2EnvironmentOptions6
+	ICoreWebView2EnvironmentOptions7
+	ICoreWebView2EnvironmentOptions8
+	IInterfacedObject
 	// GetAdditionalBrowserArguments
 	//  Changes the behavior of the WebView. The arguments are passed to the
 	//  browser process as part of the command. For more information about
@@ -105,206 +306,6 @@ type ICoreWebView2EnvironmentOptions0 interface {
 	// SetAllowSingleSignOnUsingOSPrimaryAccount
 	//  Sets the `AllowSingleSignOnUsingOSPrimaryAccount` property.
 	SetAllowSingleSignOnUsingOSPrimaryAccount(allow int32) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions2 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions2 interface {
-	lcl.IInterfacedObject
-	// GetExclusiveUserDataFolderAccess
-	//  Whether other processes can create WebView2 from WebView2Environment created with the
-	//  same user data folder and therefore sharing the same WebView browser process instance.
-	//  Default is FALSE.
-	GetExclusiveUserDataFolderAccess(outValue *int32) types.HRESULT // function
-	// SetExclusiveUserDataFolderAccess
-	//  Sets the `ExclusiveUserDataFolderAccess` property.
-	//  The `ExclusiveUserDataFolderAccess` property specifies that the WebView environment
-	//  obtains exclusive access to the user data folder.
-	//  If the user data folder is already being used by another WebView environment with a
-	//  different value for `ExclusiveUserDataFolderAccess` property, the creation of a WebView2Controller
-	//  using the environment object will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
-	//  When set as TRUE, no other WebView can be created from other processes using WebView2Environment
-	//  objects with the same UserDataFolder. This prevents other processes from creating WebViews
-	//  which share the same browser process instance, since sharing is performed among
-	//  WebViews that have the same UserDataFolder. When another process tries to create a
-	//  WebView2Controller from an WebView2Environment object created with the same user data folder,
-	//  it will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
-	SetExclusiveUserDataFolderAccess(value int32) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions3 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions3 interface {
-	lcl.IInterfacedObject
-	// GetIsCustomCrashReportingEnabled
-	//  When `IsCustomCrashReportingEnabled` is set to `TRUE`, Windows won't send crash data to Microsoft endpoint.
-	//  `IsCustomCrashReportingEnabled` is default to be `FALSE`, in this case, WebView will respect OS consent.
-	GetIsCustomCrashReportingEnabled(outValue *int32) types.HRESULT // function
-	// SetIsCustomCrashReportingEnabled
-	//  Sets the `IsCustomCrashReportingEnabled` property.
-	SetIsCustomCrashReportingEnabled(value int32) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions4 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions4 interface {
-	lcl.IInterfacedObject
-	// GetCustomSchemeRegistrations
-	//  Array of custom scheme registrations. The returned
-	//  ICoreWebView2CustomSchemeRegistration pointers must be released, and the
-	//  array itself must be deallocated with CoTaskMemFree.
-	//  * out schemeRegistrations: PPUserType3 --> out schemeRegistrations: PPCoreWebView2CustomSchemeRegistration ************** WEBVIEW4DELPHI ************** *
-	GetCustomSchemeRegistrations(outCount *uint32, outSchemeRegistrations *PPCoreWebView2CustomSchemeRegistration) types.HRESULT // function
-	// SetCustomSchemeRegistrations
-	//  Set the array of custom scheme registrations to be used.
-	//  \snippet AppWindow.cpp CoreWebView2CustomSchemeRegistration
-	//  * var schemeRegistrations: ICoreWebView2CustomSchemeRegistration --> schemeRegistrations: PPCoreWebView2CustomSchemeRegistration ************** WEBVIEW4DELPHI ************** *
-	SetCustomSchemeRegistrations(count uint32, schemeRegistrations PPCoreWebView2CustomSchemeRegistration) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions5 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions5 interface {
-	lcl.IInterfacedObject
-	// GetEnableTrackingPrevention
-	//  The `EnableTrackingPrevention` property is used to enable/disable tracking prevention
-	//  feature in WebView2. This property enable/disable tracking prevention for all the
-	//  WebView2's created in the same environment. By default this feature is enabled to block
-	//  potentially harmful trackers and trackers from sites that aren't visited before and set to
-	//  `COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED` or whatever value was last changed/persisted
-	//  on the profile.
-	//
-	//  You can set this property to false to disable the tracking prevention feature if the app only
-	//  renders content in the WebView2 that is known to be safe. Disabling this feature when creating
-	//  environment also improves runtime performance by skipping related code.
-	//
-	//  You shouldn't disable this property if WebView2 is being used as a "full browser" with arbitrary
-	//  navigation and should protect end user privacy.
-	//
-	//  There is `ICoreWebView2Profile3::PreferredTrackingPreventionLevel` property to control levels of
-	//  tracking prevention of the WebView2's associated with a same profile. However, you can also disable
-	//  tracking prevention later using `ICoreWebView2Profile3::PreferredTrackingPreventionLevel` property and
-	//  `COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE` value but that doesn't improves runtime performance.
-	//
-	//  See `ICoreWebView2Profile3::PreferredTrackingPreventionLevel` for more details.
-	//
-	//  Tracking prevention protects users from online tracking by restricting the ability of trackers to
-	//  access browser-based storage as well as the network. See [Tracking prevention](/microsoft-edge/web-platform/tracking-prevention).
-	GetEnableTrackingPrevention(outValue *int32) types.HRESULT // function
-	// SetEnableTrackingPrevention
-	//  Sets the `EnableTrackingPrevention` property.
-	SetEnableTrackingPrevention(value int32) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions6 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions6 interface {
-	lcl.IInterfacedObject
-	// GetAreBrowserExtensionsEnabled
-	//  When `AreBrowserExtensionsEnabled` is set to `TRUE`, new extensions can be added to user
-	//  profile and used. `AreBrowserExtensionsEnabled` is default to be `FALSE`, in this case,
-	//  new extensions can't be installed, and already installed extension won't be
-	//  available to use in user profile.
-	//  If connecting to an already running environment with a different value for `AreBrowserExtensionsEnabled`
-	//  property, it will fail with `HRESULT_FROM_WIN32(ERROR_INVALID_STATE)`.
-	//  See `ICoreWebView2BrowserExtension` for Extensions API details.
-	GetAreBrowserExtensionsEnabled(outValue *int32) types.HRESULT // function
-	// SetAreBrowserExtensionsEnabled
-	//  Sets the `AreBrowserExtensionsEnabled` property.
-	SetAreBrowserExtensionsEnabled(value int32) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions7 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions7 interface {
-	lcl.IInterfacedObject
-	// GetChannelSearchKind
-	//  Gets the `ChannelSearchKind` property.
-	GetChannelSearchKind(outValue *wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
-	// SetChannelSearchKind
-	//  The `ChannelSearchKind` property is `COREWEBVIEW2_CHANNEL_SEARCH_KIND_MOST_STABLE`
-	//  by default; environment creation searches for a release channel on the machine
-	//  from most to least stable using the first channel found. The default search order is:
-	//  WebView2 Runtime -&gt; Beta -&gt; Dev -&gt; Canary. Set `ChannelSearchKind` to
-	//  `COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE` to reverse the search order
-	//  so that environment creation searches for a channel from least to most stable. If
-	//  `ReleaseChannels` has been provided, the loader will only search
-	//  for channels in the set. See `COREWEBVIEW2_RELEASE_CHANNELS` for more details
-	//  on channels.
-	//  This property can be overridden by the corresponding
-	//  registry key `ChannelSearchKind` or the environment variable
-	//  `WEBVIEW2_CHANNEL_SEARCH_KIND`. Set the value to `1` to set the search kind to
-	//  `COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE`. See
-	//  `CreateCoreWebView2EnvironmentWithOptions` for more details on overrides.
-	SetChannelSearchKind(value wvTypes.COREWEBVIEW2_CHANNEL_SEARCH_KIND) types.HRESULT // function
-	// GetReleaseChannels
-	//  Gets the `ReleaseChannels` property.
-	GetReleaseChannels(outValue *wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
-	// SetReleaseChannels
-	//  Sets the `ReleaseChannels`, which is a mask of one or more
-	//  `COREWEBVIEW2_RELEASE_CHANNELS` indicating which channels environment
-	//  creation should search for. OR operation(s) can be applied to multiple
-	//  `COREWEBVIEW2_RELEASE_CHANNELS` to create a mask. The default value is a
-	//  a mask of all the channels. By default, environment creation searches for
-	//  channels from most to least stable, using the first channel found on the
-	//  device. When `ReleaseChannels` is provided, environment creation will only
-	//  search for the channels specified in the set. Set `ChannelSearchKind` to
-	//  `COREWEBVIEW2_CHANNEL_SEARCH_KIND_LEAST_STABLE` to reverse the search order
-	//  so environment creation searches for least stable build first. See
-	//  `COREWEBVIEW2_RELEASE_CHANNELS` for descriptions of each channel.
-	//  `CreateCoreWebView2EnvironmentWithOptions` fails with
-	//  `HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)` if environment creation is unable
-	//  to find any channel from the `ReleaseChannels` installed on the device.
-	//  Use `GetAvailableCoreWebView2BrowserVersionStringWithOptions` on
-	//  `ICoreWebView2Environment` to verify which channel is used when this option
-	//  is set.
-	//  Examples:
-	//  <code>
-	//  | ReleaseChannels | Channel Search Kind: Most Stable (default) | Channel Search Kind: Least Stable |
-	//  | --- | --- | --- |
-	//  |COREWEBVIEW2_RELEASE_CHANNELS_BETA \| COREWEBVIEW2_RELEASE_CHANNELS_STABLE| WebView2 Runtime -&gt; Beta | Beta -&gt; WebView2 Runtime|
-	//  |COREWEBVIEW2_RELEASE_CHANNELS_CANARY \| COREWEBVIEW2_RELEASE_CHANNELS_DEV \| COREWEBVIEW2_RELEASE_CHANNELS_BETA \| COREWEBVIEW2_RELEASE_CHANNELS_STABLE| WebView2 Runtime -&gt; Beta -&gt; Dev -&gt; Canary | Canary -&gt; Dev -&gt; Beta -&gt; WebView2 Runtime |
-	//  |COREWEBVIEW2_RELEASE_CHANNELS_CANARY| Canary | Canary |
-	//  |COREWEBVIEW2_RELEASE_CHANNELS_BETA \| COREWEBVIEW2_RELEASE_CHANNELS_CANARY \| COREWEBVIEW2_RELEASE_CHANNELS_STABLE | WebView2 Runtime -&gt; Beta -&gt; Canary | Canary -&gt; Beta -&gt; WebView2 Runtime |
-	//  </code>
-	//  If both `BrowserExecutableFolder` and `ReleaseChannels` are provided, the
-	//  `BrowserExecutableFolder` takes precedence, regardless of whether or not the
-	//  channel of `BrowserExecutableFolder` is included in the `ReleaseChannels`.
-	//  `ReleaseChannels` can be overridden by the corresponding registry override
-	//  `ReleaseChannels` or the environment variable `WEBVIEW2_RELEASE_CHANNELS`.
-	//  Set the value to a comma-separated string of integers, which map to the
-	//  following release channel values: Stable (0), Beta (1), Dev (2), and
-	//  Canary (3). For example, the values "0,2" and "2,0" indicate that environment
-	//  creation should only search for Dev channel and the WebView2 Runtime, using the
-	//  order indicated by `ChannelSearchKind`. Environment creation attempts to
-	//  interpret each integer and treats any invalid entry as Stable channel. See
-	//  `CreateCoreWebView2EnvironmentWithOptions` for more details on overrides.
-	SetReleaseChannels(value wvTypes.COREWEBVIEW2_RELEASE_CHANNELS) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions8 Parent: lcl.IInterfacedObject
-type ICoreWebView2EnvironmentOptions8 interface {
-	lcl.IInterfacedObject
-	// GetScrollBarStyle
-	//  Gets the `ScrollBarStyle` property.
-	GetScrollBarStyle(outValue *wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
-	// SetScrollBarStyle
-	//  The ScrollBar style being set on the WebView2 Environment.
-	//  The default value is `COREWEBVIEW2_SCROLLBAR_STYLE_DEFAULT`
-	//  which specifies the default browser ScrollBar style.
-	//  The `color-scheme` CSS property needs to be set on the corresponding page
-	//  to allow ScrollBar to follow light or dark theme. Please see
-	//  [color-scheme](https://developer.mozilla.org/docs/Web/CSS/color-scheme#declaring_color_scheme_preferences)
-	//  for how `color-scheme` can be set.
-	//  CSS styles that modify the ScrollBar applied on top of native ScrollBar styling
-	//  that is selected with `ScrollBarStyle`.
-	SetScrollBarStyle(value wvTypes.COREWEBVIEW2_SCROLLBAR_STYLE) types.HRESULT // function
-}
-
-// ICoreWebView2EnvironmentOptions Parent: ICoreWebView2EnvironmentOptions0 ICoreWebView2EnvironmentOptions2 ICoreWebView2EnvironmentOptions3 ICoreWebView2EnvironmentOptions4 ICoreWebView2EnvironmentOptions5 ICoreWebView2EnvironmentOptions6 ICoreWebView2EnvironmentOptions7 ICoreWebView2EnvironmentOptions8
-type ICoreWebView2EnvironmentOptions interface {
-	ICoreWebView2EnvironmentOptions0
-	ICoreWebView2EnvironmentOptions2
-	ICoreWebView2EnvironmentOptions3
-	ICoreWebView2EnvironmentOptions4
-	ICoreWebView2EnvironmentOptions5
-	ICoreWebView2EnvironmentOptions6
-	ICoreWebView2EnvironmentOptions7
-	ICoreWebView2EnvironmentOptions8
 	AsIntfEnvironmentOptions() uintptr
 	AsIntfEnvironmentOptions2() uintptr
 	AsIntfEnvironmentOptions3() uintptr
@@ -316,7 +317,7 @@ type ICoreWebView2EnvironmentOptions interface {
 }
 
 type TCoreWebView2EnvironmentOptions struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2EnvironmentOptions) GetAdditionalBrowserArguments(outValue *string) types.HRESULT {

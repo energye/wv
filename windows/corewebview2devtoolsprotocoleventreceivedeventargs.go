@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2DevToolsProtocolEventReceivedEventArgs Parent: lcl.IObject
+// ICoreWebView2DevToolsProtocolEventReceivedEventArgs Parent: IObject
 type ICoreWebView2DevToolsProtocolEventReceivedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -38,7 +37,7 @@ type ICoreWebView2DevToolsProtocolEventReceivedEventArgs interface {
 }
 
 type TCoreWebView2DevToolsProtocolEventReceivedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) Initialized() bool {

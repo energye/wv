@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ScriptException Parent: lcl.IObject
+// ICoreWebView2ScriptException Parent: IObject
 type ICoreWebView2ScriptException interface {
-	lcl.IObject
+	IObject
 	// ToJson
 	//  This will return all details of the exception as a JSON string.
 	//  In the case that script has thrown a non-Error object such as `throw "abc";`
@@ -54,7 +53,7 @@ type ICoreWebView2ScriptException interface {
 }
 
 type TCoreWebView2ScriptException struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ScriptException) ToJson() string {

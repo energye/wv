@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkUIDelegate Parent: lcl.IObject
+// IWkUIDelegate Parent: IObject
 type IWkUIDelegate interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKUIDelegateProtocol // function
@@ -29,7 +28,7 @@ type IWkUIDelegate interface {
 }
 
 type TWkUIDelegate struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkUIDelegate) Data() wvTypes.WKUIDelegateProtocol {

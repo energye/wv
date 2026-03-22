@@ -12,13 +12,12 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// IWVCustomSchemeInfoArrayWrap Parent: lcl.IObject
+// IWVCustomSchemeInfoArrayWrap Parent: IObject
 type IWVCustomSchemeInfoArrayWrap interface {
-	lcl.IObject
+	IObject
 	WVCustomSchemeInfoArrayData() types.PWVCustomSchemeInfoArray // function
 	Size() int32                                                 // function
 	GetValue(index int32) TWVCustomSchemeInfo                    // function
@@ -27,7 +26,7 @@ type IWVCustomSchemeInfoArrayWrap interface {
 }
 
 type TWVCustomSchemeInfoArrayWrap struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWVCustomSchemeInfoArrayWrap) WVCustomSchemeInfoArrayData() types.PWVCustomSchemeInfoArray {

@@ -15,9 +15,9 @@ import (
 	"github.com/energye/lcl/lcl"
 )
 
-// IWkLoader Parent: lcl.IComponent
+// IWkLoader Parent: IComponent
 type IWkLoader interface {
-	lcl.IComponent
+	IComponent
 	StartWebKit2() bool                          // function
 	LoaderWebKit2DllPath() string                // property LoaderWebKit2DllPath Getter
 	SetLoaderWebKit2DllPath(value string)        // property LoaderWebKit2DllPath Setter
@@ -28,7 +28,7 @@ type IWkLoader interface {
 }
 
 type TWkLoader struct {
-	lcl.TComponent
+	TComponent
 }
 
 func (m *TWkLoader) StartWebKit2() bool {

@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkURLSchemeTask Parent: lcl.IObject
+// IWkURLSchemeTask Parent: IObject
 type IWkURLSchemeTask interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKURLSchemeTask // function
@@ -44,7 +43,7 @@ type IWkURLSchemeTask interface {
 }
 
 type TWkURLSchemeTask struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkURLSchemeTask) Data() wvTypes.WKURLSchemeTask {

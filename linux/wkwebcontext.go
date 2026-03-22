@@ -17,9 +17,9 @@ import (
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkWebContext Parent: lcl.IObject
+// IWkWebContext Parent: IObject
 type IWkWebContext interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitWebContext                       // function
 	GetCookieManager() wvTypes.WebKitCookieManager        // function
 	RegisterURIScheme(scheme string, delegate IWkWebview) // procedure
@@ -29,7 +29,7 @@ type IWkWebContext interface {
 }
 
 type TWkWebContext struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkWebContext) Data() wvTypes.WebKitWebContext {

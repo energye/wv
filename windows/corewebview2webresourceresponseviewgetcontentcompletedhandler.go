@@ -16,22 +16,17 @@ import (
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0 Parent: lcl.IInterfacedObject
-type ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2WebResourceResponseViewGetContentCompletedHandler Parent: IInterfacedObject
+type ICoreWebView2WebResourceResponseViewGetContentCompletedHandler interface {
+	IInterfacedObject
 	// Invoke
 	//  Provides the result of the corresponding asynchronous method.
 	Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT // function
-}
-
-// ICoreWebView2WebResourceResponseViewGetContentCompletedHandler Parent: ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0
-type ICoreWebView2WebResourceResponseViewGetContentCompletedHandler interface {
-	ICoreWebView2WebResourceResponseViewGetContentCompletedHandler0
 	AsIntfWebResourceResponseViewGetContentCompletedHandler() uintptr
 }
 
 type TCoreWebView2WebResourceResponseViewGetContentCompletedHandler struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2WebResourceResponseViewGetContentCompletedHandler) Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT {

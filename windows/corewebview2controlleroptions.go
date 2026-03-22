@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ControllerOptions Parent: lcl.IObject
+// ICoreWebView2ControllerOptions Parent: IObject
 type ICoreWebView2ControllerOptions interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -68,7 +67,7 @@ type ICoreWebView2ControllerOptions interface {
 }
 
 type TCoreWebView2ControllerOptions struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ControllerOptions) Initialized() bool {

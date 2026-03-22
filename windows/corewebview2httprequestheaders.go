@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2HttpRequestHeaders Parent: lcl.IObject
+// ICoreWebView2HttpRequestHeaders Parent: IObject
 type ICoreWebView2HttpRequestHeaders interface {
-	lcl.IObject
+	IObject
 	// SetHeader
 	//  Adds or updates header that matches the name.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httprequestheaders#setheader">See the ICoreWebView2HttpRequestHeaders article.</see>
@@ -51,7 +50,7 @@ type ICoreWebView2HttpRequestHeaders interface {
 }
 
 type TCoreWebView2HttpRequestHeaders struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2HttpRequestHeaders) SetHeader(name string, value string) bool {

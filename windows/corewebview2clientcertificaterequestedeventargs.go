@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ClientCertificateRequestedEventArgs Parent: lcl.IObject
+// ICoreWebView2ClientCertificateRequestedEventArgs Parent: IObject
 type ICoreWebView2ClientCertificateRequestedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -83,7 +82,7 @@ type ICoreWebView2ClientCertificateRequestedEventArgs interface {
 }
 
 type TCoreWebView2ClientCertificateRequestedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ClientCertificateRequestedEventArgs) Initialized() bool {

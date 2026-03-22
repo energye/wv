@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkCookieManager Parent: lcl.IObject
+// IWkCookieManager Parent: IObject
 type IWkCookieManager interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitCookieManager                                                   // function
 	SetPersistentStorage(filename string, storage wvTypes.WebKitCookiePersistentStorage) // procedure
 	SetAcceptPolicy(policy wvTypes.WebKitCookieAcceptPolicy)                             // procedure
@@ -55,7 +54,7 @@ type IWkCookieManager interface {
 }
 
 type TWkCookieManager struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkCookieManager) Data() wvTypes.WebKitCookieManager {

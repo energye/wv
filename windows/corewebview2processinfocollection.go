@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ProcessInfoCollection Parent: lcl.IObject
+// ICoreWebView2ProcessInfoCollection Parent: IObject
 type ICoreWebView2ProcessInfoCollection interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -35,7 +34,7 @@ type ICoreWebView2ProcessInfoCollection interface {
 }
 
 type TCoreWebView2ProcessInfoCollection struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ProcessInfoCollection) Initialized() bool {

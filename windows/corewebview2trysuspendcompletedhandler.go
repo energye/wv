@@ -12,26 +12,20 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2TrySuspendCompletedHandler0 Parent: lcl.IInterfacedObject
-type ICoreWebView2TrySuspendCompletedHandler0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2TrySuspendCompletedHandler Parent: IInterfacedObject
+type ICoreWebView2TrySuspendCompletedHandler interface {
+	IInterfacedObject
 	// Invoke
 	//  Provides the result of the corresponding asynchronous method.
 	Invoke(errorCode types.HRESULT, result int32) types.HRESULT // function
-}
-
-// ICoreWebView2TrySuspendCompletedHandler Parent: ICoreWebView2TrySuspendCompletedHandler0
-type ICoreWebView2TrySuspendCompletedHandler interface {
-	ICoreWebView2TrySuspendCompletedHandler0
 	AsIntfTrySuspendCompletedHandler() uintptr
 }
 
 type TCoreWebView2TrySuspendCompletedHandler struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2TrySuspendCompletedHandler) Invoke(errorCode types.HRESULT, result int32) types.HRESULT {

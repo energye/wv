@@ -12,13 +12,12 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2CustomSchemeRegistration0 Parent: lcl.IInterfacedObject
-type ICoreWebView2CustomSchemeRegistration0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2CustomSchemeRegistration Parent: IInterfacedObject
+type ICoreWebView2CustomSchemeRegistration interface {
+	IInterfacedObject
 	// GetSchemeName
 	//  The name of the custom scheme to register.
 	GetSchemeName(outSchemeName *string) types.HRESULT // function
@@ -111,16 +110,11 @@ type ICoreWebView2CustomSchemeRegistration0 interface {
 	// SetHasAuthorityComponent
 	//  Get has authority component.
 	SetHasAuthorityComponent(hasAuthorityComponent int32) types.HRESULT // function
-}
-
-// ICoreWebView2CustomSchemeRegistration Parent: ICoreWebView2CustomSchemeRegistration0
-type ICoreWebView2CustomSchemeRegistration interface {
-	ICoreWebView2CustomSchemeRegistration0
 	AsIntfCustomSchemeRegistration() uintptr
 }
 
 type TCoreWebView2CustomSchemeRegistration struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2CustomSchemeRegistration) GetSchemeName(outSchemeName *string) types.HRESULT {
@@ -206,8 +200,8 @@ func NewCoreWebView2CustomSchemeRegistration(customSchemeInfo TWVCustomSchemeInf
 	return ret
 }
 
-// NewCoreWebView2CustomSchemeRegistrationWithStringX2BoolX2 class constructor
-func NewCoreWebView2CustomSchemeRegistrationWithStringX2BoolX2(schemeName string, allowedDomains string, treatAsSecure bool, hasAuthorityComponent bool) ICoreWebView2CustomSchemeRegistration {
+// NewCoreWebView2CustomSchemeRegistrationWithStrX2BoolX2 class constructor
+func NewCoreWebView2CustomSchemeRegistrationWithStrX2BoolX2(schemeName string, allowedDomains string, treatAsSecure bool, hasAuthorityComponent bool) ICoreWebView2CustomSchemeRegistration {
 	var customSchemeRegistrationPtr uintptr // ICoreWebView2CustomSchemeRegistration
 	r := coreWebView2CustomSchemeRegistrationAPI().SysCallN(1, api.PasStr(schemeName), api.PasStr(allowedDomains), api.PasBool(treatAsSecure), api.PasBool(hasAuthorityComponent), uintptr(base.UnsafePointer(&customSchemeRegistrationPtr)))
 	ret := AsCoreWebView2CustomSchemeRegistration(r)
@@ -228,7 +222,7 @@ func coreWebView2CustomSchemeRegistrationAPI() *imports.Imports {
 		coreWebView2CustomSchemeRegistrationImport = api.NewDefaultImports()
 		coreWebView2CustomSchemeRegistrationImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Create", 0), // constructor NewCoreWebView2CustomSchemeRegistration
-			/* 1 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_CreateWithStringX2BoolX2", 0), // constructor NewCoreWebView2CustomSchemeRegistrationWithStringX2BoolX2
+			/* 1 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_CreateWithStrX2BoolX2", 0), // constructor NewCoreWebView2CustomSchemeRegistrationWithStrX2BoolX2
 			/* 2 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_SchemeName", 0), // function GetSchemeName
 			/* 3 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Get_TreatAsSecure", 0), // function GetTreatAsSecure
 			/* 4 */ imports.NewTable("TCoreWebView2CustomSchemeRegistration_Set_TreatAsSecure", 0), // function SetTreatAsSecure

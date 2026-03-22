@@ -8,6 +8,9 @@
 
 package linux
 
+// JSCCheckSyntaxMode ENUM
+type JSCCheckSyntaxMode = int32
+
 const (
 	JSC_CHECK_SYNTAX_MODE_SCRIPT JSCCheckSyntaxMode = iota
 	JSC_CHECK_SYNTAX_MODE_MODULE
@@ -47,37 +50,34 @@ const (
 type JSCValuePropertyFlags = int32
 
 const (
-	JSC_VALUE_PROPERTY_CONFIGURABLE = 1 << 0
-	JSC_VALUE_PROPERTY_ENUMERABLE   = 1 << 1
-	JSC_VALUE_PROPERTY_WRITABLE     = 1 << 2
+	JSC_VALUE_PROPERTY_CONFIGURABLE JSCValuePropertyFlags = 1 << 0
+	JSC_VALUE_PROPERTY_ENUMERABLE                         = 1 << 1
+	JSC_VALUE_PROPERTY_WRITABLE                           = 1 << 2
 )
 
 // JSType ENUM
 type JSType = int32
 
 const (
-	JtInvalid JSType = iota
-	JtNotSupported
-	JtUndefined
-	JtNull
-	JtString
-	JtNumber
-	JtInteger
-	JtBoolean
-	JtException
+	KJSTypeUndefined JSType = iota
+	KJSTypeNull
+	KJSTypeBoolean
+	KJSTypeNumber
+	KJSTypeString
+	KJSTypeObject
 )
 
 // TSoupDateFormat ENUM
 type TSoupDateFormat = int32
 
 const (
-	SOUP_DATE_HTTP            = 1
-	SOUP_DATE_COOKIE          = 2
-	SOUP_DATE_RFC2822         = 3
-	SOUP_DATE_ISO8601_COMPACT = 4
-	SOUP_DATE_ISO8601_FULL    = 5
-	SOUP_DATE_ISO8601         = 5
-	SOUP_DATE_ISO8601_XMLRPC  = 6
+	SOUP_DATE_HTTP            TSoupDateFormat = 1
+	SOUP_DATE_COOKIE                          = 2
+	SOUP_DATE_RFC2822                         = 3
+	SOUP_DATE_ISO8601_COMPACT                 = 4
+	SOUP_DATE_ISO8601_FULL                    = 5
+	SOUP_DATE_ISO8601                         = 5
+	SOUP_DATE_ISO8601_XMLRPC                  = 6
 )
 
 // TSoupMessageHeadersType ENUM
@@ -95,6 +95,21 @@ type TWkProcessId = int32
 const (
 	WkPID_BROWSER TWkProcessId = iota
 	WkPID_RENDER
+)
+
+// JSType ENUM Rename: uWkJSValue.JSType
+type UWJSValueJSType = int32
+
+const (
+	JtInvalid UWJSValueJSType = iota
+	JtNotSupported
+	JtUndefined
+	JtNull
+	JtString
+	JtNumber
+	JtInteger
+	JtBoolean
+	JtException
 )
 
 // WebKitAutoplayPolicy ENUM

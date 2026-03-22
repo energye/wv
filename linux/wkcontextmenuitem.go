@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkContextMenuItem Parent: lcl.IObject
+// IWkContextMenuItem Parent: IObject
 type IWkContextMenuItem interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitContextMenuItem             // function
 	GetSubmenu() wvTypes.WebKitContextMenu           // function
 	GetAction() wvTypes.PWkAction                    // function
@@ -29,7 +28,7 @@ type IWkContextMenuItem interface {
 }
 
 type TWkContextMenuItem struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkContextMenuItem) Data() wvTypes.WebKitContextMenuItem {

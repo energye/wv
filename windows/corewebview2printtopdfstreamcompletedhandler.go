@@ -16,22 +16,17 @@ import (
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2PrintToPdfStreamCompletedHandler0 Parent: lcl.IInterfacedObject
-type ICoreWebView2PrintToPdfStreamCompletedHandler0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2PrintToPdfStreamCompletedHandler Parent: IInterfacedObject
+type ICoreWebView2PrintToPdfStreamCompletedHandler interface {
+	IInterfacedObject
 	// Invoke
 	//  Provides the result of the corresponding asynchronous method.
 	Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT // function
-}
-
-// ICoreWebView2PrintToPdfStreamCompletedHandler Parent: ICoreWebView2PrintToPdfStreamCompletedHandler0
-type ICoreWebView2PrintToPdfStreamCompletedHandler interface {
-	ICoreWebView2PrintToPdfStreamCompletedHandler0
 	AsIntfPrintToPdfStreamCompletedHandler() uintptr
 }
 
 type TCoreWebView2PrintToPdfStreamCompletedHandler struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2PrintToPdfStreamCompletedHandler) Invoke(errorCode types.HRESULT, result lcl.IStreamAdapter) types.HRESULT {

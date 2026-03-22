@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkDownload Parent: lcl.IObject
+// IWkDownload Parent: IObject
 type IWkDownload interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKDownload // function
@@ -42,7 +41,7 @@ type IWkDownload interface {
 }
 
 type TWkDownload struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkDownload) Data() wvTypes.WKDownload {

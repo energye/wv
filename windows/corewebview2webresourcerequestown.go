@@ -16,9 +16,10 @@ import (
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2WebResourceRequest Parent: lcl.IInterfacedObject
+// ICoreWebView2WebResourceRequest Parent: IObject
 type ICoreWebView2WebResourceRequest interface {
-	lcl.IInterfacedObject
+	IObject
+
 	// GetUri
 	//  The request URI.
 	//
@@ -54,14 +55,15 @@ type ICoreWebView2WebResourceRequest interface {
 	GetHeaders(outHeaders *ICoreWebView2HttpRequestHeaders) types.HRESULT // function
 }
 
-// ICoreWebView2WebResourceRequestOwn Parent: ICoreWebView2WebResourceRequest
+// ICoreWebView2WebResourceRequestOwn Parent: ICoreWebView2WebResourceRequest IInterfacedObject
 type ICoreWebView2WebResourceRequestOwn interface {
 	ICoreWebView2WebResourceRequest
+	IInterfacedObject
 	AsIntfWebResourceRequest() uintptr
 }
 
 type TCoreWebView2WebResourceRequestOwn struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2WebResourceRequestOwn) GetUri(outUri *string) types.HRESULT {

@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2ServerCertificateErrorDetectedEventArgs Parent: lcl.IObject
+// ICoreWebView2ServerCertificateErrorDetectedEventArgs Parent: IObject
 type ICoreWebView2ServerCertificateErrorDetectedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -52,7 +51,7 @@ type ICoreWebView2ServerCertificateErrorDetectedEventArgs interface {
 }
 
 type TCoreWebView2ServerCertificateErrorDetectedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ServerCertificateErrorDetectedEventArgs) Initialized() bool {

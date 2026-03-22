@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2ExecuteScriptResult Parent: lcl.IObject
+// ICoreWebView2ExecuteScriptResult Parent: IObject
 type ICoreWebView2ExecuteScriptResult interface {
-	lcl.IObject
+	IObject
 	// TryGetResultAsString
 	//  If Succeeded is true and the result of script execution is a string, this method provides the value of the string result,
 	//  and we will get the `FALSE` var value when the js result is not string type.
@@ -58,7 +57,7 @@ type ICoreWebView2ExecuteScriptResult interface {
 }
 
 type TCoreWebView2ExecuteScriptResult struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2ExecuteScriptResult) TryGetResultAsString(stringResult *string, value *bool) bool {

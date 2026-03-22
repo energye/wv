@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2HttpResponseHeaders Parent: lcl.IObject
+// ICoreWebView2HttpResponseHeaders Parent: IObject
 type ICoreWebView2HttpResponseHeaders interface {
-	lcl.IObject
+	IObject
 	// GetHeader
 	//  Gets the first header value in the collection matching the name.
 	//  <see href="https://learn.microsoft.com/en-us/microsoft-edge/webview2/reference/win32/icorewebview2httpresponseheaders#getheader">See the ICoreWebView2HttpResponseHeaders article.</see>
@@ -47,7 +46,7 @@ type ICoreWebView2HttpResponseHeaders interface {
 }
 
 type TCoreWebView2HttpResponseHeaders struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2HttpResponseHeaders) GetHeader(name string) string {

@@ -17,9 +17,9 @@ import (
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkWebviewParent Parent: lcl.ICustomPanel
+// IWkWebviewParent Parent: ICustomPanel
 type IWkWebviewParent interface {
-	lcl.ICustomPanel
+	ICustomPanel
 	UpdateSize(width int32, height int32)            // procedure
 	SetWebview(value IWkWebview)                     // procedure
 	FreeChild()                                      // procedure
@@ -28,7 +28,7 @@ type IWkWebviewParent interface {
 }
 
 type TWkWebviewParent struct {
-	lcl.TCustomPanel
+	TCustomPanel
 }
 
 func (m *TWkWebviewParent) UpdateSize(width int32, height int32) {

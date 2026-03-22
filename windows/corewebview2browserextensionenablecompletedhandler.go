@@ -12,26 +12,20 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2BrowserExtensionEnableCompletedHandler0 Parent: lcl.IInterfacedObject
-type ICoreWebView2BrowserExtensionEnableCompletedHandler0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2BrowserExtensionEnableCompletedHandler Parent: IInterfacedObject
+type ICoreWebView2BrowserExtensionEnableCompletedHandler interface {
+	IInterfacedObject
 	// Invoke
 	//  Provides the result of the corresponding asynchronous method.
 	Invoke(errorCode types.HRESULT) types.HRESULT // function
-}
-
-// ICoreWebView2BrowserExtensionEnableCompletedHandler Parent: ICoreWebView2BrowserExtensionEnableCompletedHandler0
-type ICoreWebView2BrowserExtensionEnableCompletedHandler interface {
-	ICoreWebView2BrowserExtensionEnableCompletedHandler0
 	AsIntfBrowserExtensionEnableCompletedHandler() uintptr
 }
 
 type TCoreWebView2BrowserExtensionEnableCompletedHandler struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2BrowserExtensionEnableCompletedHandler) Invoke(errorCode types.HRESULT) types.HRESULT {

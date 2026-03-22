@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkPolicyDecision Parent: lcl.IObject
+// IWkPolicyDecision Parent: IObject
 type IWkPolicyDecision interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitPolicyDecision                     // function
 	Use()                                                   // procedure
 	UseWithPolicies(policies wvTypes.WebKitWebsitePolicies) // procedure
@@ -28,7 +27,7 @@ type IWkPolicyDecision interface {
 }
 
 type TWkPolicyDecision struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkPolicyDecision) Data() wvTypes.WebKitPolicyDecision {

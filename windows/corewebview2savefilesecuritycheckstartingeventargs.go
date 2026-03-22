@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2SaveFileSecurityCheckStartingEventArgs Parent: lcl.IObject
+// ICoreWebView2SaveFileSecurityCheckStartingEventArgs Parent: IObject
 type ICoreWebView2SaveFileSecurityCheckStartingEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -64,7 +63,7 @@ type ICoreWebView2SaveFileSecurityCheckStartingEventArgs interface {
 }
 
 type TCoreWebView2SaveFileSecurityCheckStartingEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) Initialized() bool {

@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2Deferral Parent: lcl.IObject
+// ICoreWebView2Deferral Parent: IObject
 type ICoreWebView2Deferral interface {
-	lcl.IObject
+	IObject
 	// Complete
 	//  Completes the associated deferred event. Complete should only be run
 	//  once for each deferral taken.
@@ -32,7 +31,7 @@ type ICoreWebView2Deferral interface {
 }
 
 type TCoreWebView2Deferral struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2Deferral) Complete() bool {

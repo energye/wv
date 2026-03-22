@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2File Parent: lcl.IObject
+// ICoreWebView2File Parent: IObject
 type ICoreWebView2File interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -32,7 +31,7 @@ type ICoreWebView2File interface {
 }
 
 type TCoreWebView2File struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2File) Initialized() bool {

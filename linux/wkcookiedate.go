@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkCookieDate Parent: lcl.IObject
+// IWkCookieDate Parent: IObject
 type IWkCookieDate interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.PSoupDate                            // function
 	Year() int32                                        // function
 	Month() int32                                       // function
@@ -34,7 +33,7 @@ type IWkCookieDate interface {
 }
 
 type TWkCookieDate struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkCookieDate) Data() wvTypes.PSoupDate {

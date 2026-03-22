@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2AcceleratorKeyPressedEventArgs Parent: lcl.IObject
+// ICoreWebView2AcceleratorKeyPressedEventArgs Parent: IObject
 type ICoreWebView2AcceleratorKeyPressedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -139,7 +138,7 @@ type ICoreWebView2AcceleratorKeyPressedEventArgs interface {
 }
 
 type TCoreWebView2AcceleratorKeyPressedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2AcceleratorKeyPressedEventArgs) Initialized() bool {

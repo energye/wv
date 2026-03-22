@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2CookieList Parent: lcl.IObject
+// ICoreWebView2CookieList Parent: IObject
 type ICoreWebView2CookieList interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -35,7 +34,7 @@ type ICoreWebView2CookieList interface {
 }
 
 type TCoreWebView2CookieList struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2CookieList) Initialized() bool {

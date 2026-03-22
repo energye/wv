@@ -12,26 +12,20 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2SetPermissionStateCompletedHandler0 Parent: lcl.IInterfacedObject
-type ICoreWebView2SetPermissionStateCompletedHandler0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2SetPermissionStateCompletedHandler Parent: IInterfacedObject
+type ICoreWebView2SetPermissionStateCompletedHandler interface {
+	IInterfacedObject
 	// Invoke
 	//  Provides the result of the corresponding asynchronous method.
 	Invoke(errorCode types.HRESULT) types.HRESULT // function
-}
-
-// ICoreWebView2SetPermissionStateCompletedHandler Parent: ICoreWebView2SetPermissionStateCompletedHandler0
-type ICoreWebView2SetPermissionStateCompletedHandler interface {
-	ICoreWebView2SetPermissionStateCompletedHandler0
 	AsIntfSetPermissionStateCompletedHandler() uintptr
 }
 
 type TCoreWebView2SetPermissionStateCompletedHandler struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2SetPermissionStateCompletedHandler) Invoke(errorCode types.HRESULT) types.HRESULT {

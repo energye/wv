@@ -17,9 +17,9 @@ import (
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkHeaders Parent: lcl.IObject
+// IWkHeaders Parent: IObject
 type IWkHeaders interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.PSoupMessageHeaders // function
 	List() lcl.IStrings                // function
 	Append(name string, value string)  // procedure
@@ -29,7 +29,7 @@ type IWkHeaders interface {
 }
 
 type TWkHeaders struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkHeaders) Data() wvTypes.PSoupMessageHeaders {

@@ -12,21 +12,20 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkInputStream Parent: lcl.IObject
+// IWkInputStream Parent: IObject
 type IWkInputStream interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.PInputStream                                          // function
 	Read(buf uintptr, bufSize int32, readCount *int32, errorMsg *string) // procedure
 	Close()                                                              // procedure
 }
 
 type TWkInputStream struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkInputStream) Data() wvTypes.PInputStream {

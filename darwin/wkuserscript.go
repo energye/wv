@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkUserScript Parent: lcl.IObject
+// IWkUserScript Parent: IObject
 type IWkUserScript interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKUserScript // function
@@ -38,7 +37,7 @@ type IWkUserScript interface {
 }
 
 type TWkUserScript struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkUserScript) Data() wvTypes.WKUserScript {

@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2FrameInfo Parent: lcl.IObject
+// ICoreWebView2FrameInfo Parent: IObject
 type ICoreWebView2FrameInfo interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -76,7 +75,7 @@ type ICoreWebView2FrameInfo interface {
 }
 
 type TCoreWebView2FrameInfo struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2FrameInfo) Initialized() bool {

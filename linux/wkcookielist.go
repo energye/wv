@@ -12,21 +12,20 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkCookieList Parent: lcl.IObject
+// IWkCookieList Parent: IObject
 type IWkCookieList interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.PList                       // function
 	Length() int32                             // function
 	GetCookie(index int32) wvTypes.PSoupCookie // function
 }
 
 type TWkCookieList struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkCookieList) Data() wvTypes.PList {

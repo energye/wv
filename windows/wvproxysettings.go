@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// IWVProxySettings Parent: lcl.IObject
+// IWVProxySettings Parent: IObject
 type IWVProxySettings interface {
-	lcl.IObject
+	IObject
 	NoProxyServer() bool         // property NoProxyServer Getter
 	SetNoProxyServer(value bool) // property NoProxyServer Setter
 	AutoDetect() bool            // property AutoDetect Getter
@@ -31,7 +30,7 @@ type IWVProxySettings interface {
 }
 
 type TWVProxySettings struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWVProxySettings) NoProxyServer() bool {

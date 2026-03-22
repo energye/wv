@@ -17,9 +17,9 @@ import (
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkUserContentController Parent: lcl.IObject
+// IWkUserContentController Parent: IObject
 type IWkUserContentController interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKUserContentController // function
@@ -44,7 +44,7 @@ type IWkUserContentController interface {
 }
 
 type TWkUserContentController struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkUserContentController) Data() wvTypes.WKUserContentController {

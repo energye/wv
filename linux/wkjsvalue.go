@@ -12,24 +12,23 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkJSValue Parent: lcl.IObject
+// IWkJSValue Parent: IObject
 type IWkJSValue interface {
-	lcl.IObject
-	StringValue() string       // function
-	NumberValue() float64      // function
-	IntegerValue() int32       // function
-	BooleanValue() bool        // function
-	ExceptionMessage() string  // function
-	ValueType() wvTypes.JSType // property ValueType Getter
+	IObject
+	StringValue() string                // function
+	NumberValue() float64               // function
+	IntegerValue() int32                // function
+	BooleanValue() bool                 // function
+	ExceptionMessage() string           // function
+	ValueType() wvTypes.UWJSValueJSType // property ValueType Getter
 }
 
 type TWkJSValue struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkJSValue) StringValue() string {
@@ -72,12 +71,12 @@ func (m *TWkJSValue) ExceptionMessage() string {
 	return api.GoStr(r)
 }
 
-func (m *TWkJSValue) ValueType() wvTypes.JSType {
+func (m *TWkJSValue) ValueType() wvTypes.UWJSValueJSType {
 	if !m.IsValid() {
 		return 0
 	}
 	r := wkJSValueAPI().SysCallN(7, m.Instance())
-	return wvTypes.JSType(r)
+	return wvTypes.UWJSValueJSType(r)
 }
 
 // NewJSValue class constructor

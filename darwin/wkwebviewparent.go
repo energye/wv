@@ -17,15 +17,15 @@ import (
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkWebviewParent Parent: lcl.ICustomControl
+// IWkWebviewParent Parent: ICustomControl
 type IWkWebviewParent interface {
-	lcl.ICustomControl
+	ICustomControl
 	Resize()                              // procedure
 	SetWebview(webview wvTypes.WKWebView) // procedure
 }
 
 type TWkWebviewParent struct {
-	lcl.TCustomControl
+	TCustomControl
 }
 
 func (m *TWkWebviewParent) Resize() {

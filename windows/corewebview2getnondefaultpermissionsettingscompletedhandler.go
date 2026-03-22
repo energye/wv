@@ -12,26 +12,20 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0 Parent: lcl.IInterfacedObject
-type ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0 interface {
-	lcl.IInterfacedObject
+// ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler Parent: IInterfacedObject
+type ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler interface {
+	IInterfacedObject
 	// Invoke
 	//  Provides the result of the corresponding asynchronous method.
 	Invoke(errorCode types.HRESULT, result ICoreWebView2PermissionSettingCollectionView) types.HRESULT // function
-}
-
-// ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler Parent: ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0
-type ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler interface {
-	ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler0
 	AsIntfGetNonDefaultPermissionSettingsCompletedHandler() uintptr
 }
 
 type TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler struct {
-	lcl.TInterfacedObject
+	TInterfacedObject
 }
 
 func (m *TCoreWebView2GetNonDefaultPermissionSettingsCompletedHandler) Invoke(errorCode types.HRESULT, result ICoreWebView2PermissionSettingCollectionView) types.HRESULT {

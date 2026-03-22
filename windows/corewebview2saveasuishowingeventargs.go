@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// ICoreWebView2SaveAsUIShowingEventArgs Parent: lcl.IObject
+// ICoreWebView2SaveAsUIShowingEventArgs Parent: IObject
 type ICoreWebView2SaveAsUIShowingEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -87,7 +86,7 @@ type ICoreWebView2SaveAsUIShowingEventArgs interface {
 }
 
 type TCoreWebView2SaveAsUIShowingEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2SaveAsUIShowingEventArgs) Initialized() bool {

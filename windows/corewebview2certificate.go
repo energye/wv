@@ -12,13 +12,12 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 	"github.com/energye/lcl/types"
 )
 
-// ICoreWebView2Certificate Parent: lcl.IObject
+// ICoreWebView2Certificate Parent: IObject
 type ICoreWebView2Certificate interface {
-	lcl.IObject
+	IObject
 	// ToPemEncoding
 	//  PEM encoded data for the certificate.
 	//  Returns Base64 encoding of DER encoded certificate.
@@ -71,7 +70,7 @@ type ICoreWebView2Certificate interface {
 }
 
 type TCoreWebView2Certificate struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2Certificate) ToPemEncoding() string {

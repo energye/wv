@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2CookieManager Parent: lcl.IObject
+// ICoreWebView2CookieManager Parent: IObject
 type ICoreWebView2CookieManager interface {
-	lcl.IObject
+	IObject
 	// CreateCookie
 	//  Create a cookie object with a specified name, value, domain, and path.
 	//  One can set other optional properties after cookie creation.
@@ -72,7 +71,7 @@ type ICoreWebView2CookieManager interface {
 }
 
 type TCoreWebView2CookieManager struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2CookieManager) CreateCookie(name string, value string, domain string, path string) (result ICoreWebView2Cookie) {

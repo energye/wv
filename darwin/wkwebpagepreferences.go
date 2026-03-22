@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/darwin"
 )
 
-// IWkWebpagePreferences Parent: lcl.IObject
+// IWkWebpagePreferences Parent: IObject
 type IWkWebpagePreferences interface {
-	lcl.IObject
+	IObject
 	// Data
 	//  Returns the object implemented by this class.
 	Data() wvTypes.WKWebpagePreferences // function
@@ -41,7 +40,7 @@ type IWkWebpagePreferences interface {
 }
 
 type TWkWebpagePreferences struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkWebpagePreferences) Data() wvTypes.WKWebpagePreferences {

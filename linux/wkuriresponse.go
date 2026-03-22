@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkURIResponse Parent: lcl.IObject
+// IWkURIResponse Parent: IObject
 type IWkURIResponse interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitURIResponse      // function
 	Headers() wvTypes.PSoupMessageHeaders // function
 	GetStatusCode() int32                 // function
@@ -30,7 +29,7 @@ type IWkURIResponse interface {
 }
 
 type TWkURIResponse struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkURIResponse) Data() wvTypes.WebKitURIResponse {

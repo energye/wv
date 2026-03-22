@@ -12,20 +12,19 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkWebsitePolicies Parent: lcl.IObject
+// IWkWebsitePolicies Parent: IObject
 type IWkWebsitePolicies interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitWebsitePolicies             // function
 	GetAutoplayPolicy() wvTypes.WebKitAutoplayPolicy // function
 }
 
 type TWkWebsitePolicies struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkWebsitePolicies) Data() wvTypes.WebKitWebsitePolicies {
@@ -50,8 +49,8 @@ func NewWebsitePolicies() IWkWebsitePolicies {
 	return AsWkWebsitePolicies(r)
 }
 
-// NewWebsitePoliciesWithString class constructor
-func NewWebsitePoliciesWithString(firstPolicyName string) IWkWebsitePolicies {
+// NewWebsitePoliciesWithStr class constructor
+func NewWebsitePoliciesWithStr(firstPolicyName string) IWkWebsitePolicies {
 	r := wkWebsitePoliciesAPI().SysCallN(1, api.PasStr(firstPolicyName))
 	return AsWkWebsitePolicies(r)
 }
@@ -66,7 +65,7 @@ func wkWebsitePoliciesAPI() *imports.Imports {
 		wkWebsitePoliciesImport = api.NewDefaultImports()
 		wkWebsitePoliciesImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TWkWebsitePolicies_Create", 0), // constructor NewWebsitePolicies
-			/* 1 */ imports.NewTable("TWkWebsitePolicies_CreateWithString", 0), // constructor NewWebsitePoliciesWithString
+			/* 1 */ imports.NewTable("TWkWebsitePolicies_CreateWithStr", 0), // constructor NewWebsitePoliciesWithStr
 			/* 2 */ imports.NewTable("TWkWebsitePolicies_Data", 0), // function Data
 			/* 3 */ imports.NewTable("TWkWebsitePolicies_GetAutoplayPolicy", 0), // function GetAutoplayPolicy
 		}

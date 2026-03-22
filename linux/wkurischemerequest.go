@@ -12,14 +12,13 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 
 	wvTypes "github.com/energye/wv/types/linux"
 )
 
-// IWkURISchemeRequest Parent: lcl.IObject
+// IWkURISchemeRequest Parent: IObject
 type IWkURISchemeRequest interface {
-	lcl.IObject
+	IObject
 	Data() wvTypes.WebKitURISchemeRequest                                       // function
 	Scheme() string                                                             // function
 	Uri() string                                                                // function
@@ -34,7 +33,7 @@ type IWkURISchemeRequest interface {
 }
 
 type TWkURISchemeRequest struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TWkURISchemeRequest) Data() wvTypes.WebKitURISchemeRequest {

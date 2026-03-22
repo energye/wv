@@ -18,9 +18,15 @@ import (
 	wvTypes "github.com/energye/wv/types/windows"
 )
 
-// IWVBrowserBase Parent: lcl.IComponent
+// IWVBrowserEvents Parent: IObject
+type IWVBrowserEvents interface {
+	IObject
+}
+
+// IWVBrowserBase Parent: IWVBrowserEvents IComponent
 type IWVBrowserBase interface {
-	lcl.IComponent
+	IWVBrowserEvents
+	IComponent
 	// CreateBrowserWithHandleBool
 	//  Used to create the browser using the global environment by default.
 	//  The browser will be fully initialized when the TWVBrowserBase.OnAfterCreated
@@ -2030,7 +2036,7 @@ type IWVBrowserBase interface {
 }
 
 type TWVBrowserBase struct {
-	lcl.TComponent
+	TComponent
 }
 
 func (m *TWVBrowserBase) CreateBrowserWithHandleBool(handle types.THandle, useDefaultEnvironment bool) bool {

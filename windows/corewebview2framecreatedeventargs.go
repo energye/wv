@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2FrameCreatedEventArgs Parent: lcl.IObject
+// ICoreWebView2FrameCreatedEventArgs Parent: IObject
 type ICoreWebView2FrameCreatedEventArgs interface {
-	lcl.IObject
+	IObject
 	// Initialized
 	//  Returns true when the interface implemented by this class is fully initialized.
 	Initialized() bool // property Initialized Getter
@@ -31,7 +30,7 @@ type ICoreWebView2FrameCreatedEventArgs interface {
 }
 
 type TCoreWebView2FrameCreatedEventArgs struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2FrameCreatedEventArgs) Initialized() bool {

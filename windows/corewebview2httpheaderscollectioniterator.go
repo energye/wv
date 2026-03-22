@@ -12,12 +12,11 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2HttpHeadersCollectionIterator Parent: lcl.IObject
+// ICoreWebView2HttpHeadersCollectionIterator Parent: IObject
 type ICoreWebView2HttpHeadersCollectionIterator interface {
-	lcl.IObject
+	IObject
 	// GetCurrentHeader
 	//  Get the name and value of the current HTTP header of the iterator. If
 	//  the previous `MoveNext` operation set the `hasNext` parameter to `FALSE`,
@@ -45,7 +44,7 @@ type ICoreWebView2HttpHeadersCollectionIterator interface {
 }
 
 type TCoreWebView2HttpHeadersCollectionIterator struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2HttpHeadersCollectionIterator) GetCurrentHeader(name *string, value *string) bool {

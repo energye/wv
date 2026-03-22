@@ -15,9 +15,9 @@ import (
 	"github.com/energye/lcl/lcl"
 )
 
-// ICoreWebView2BrowserExtension Parent: lcl.IObject
+// ICoreWebView2BrowserExtension Parent: IObject
 type ICoreWebView2BrowserExtension interface {
-	lcl.IObject
+	IObject
 	// Remove
 	//  Removes this browser extension from its WebView2 Profile. The browser extension is removed
 	//  immediately including from all currently running HTML documents associated with this
@@ -62,7 +62,7 @@ type ICoreWebView2BrowserExtension interface {
 }
 
 type TCoreWebView2BrowserExtension struct {
-	lcl.TObject
+	TObject
 }
 
 func (m *TCoreWebView2BrowserExtension) Remove(browserComponent lcl.IComponent) bool {
