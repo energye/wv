@@ -10,14 +10,15 @@
 
 // debug build
 
-//go:build !linux && cgo
-// +build !linux,cgo
+//go:build darwin && !cgo
 
-package linux
+package darwin
 
-import "C"
+import (
+	"github.com/energye/lcl/api/imports"
+)
 
 var (
-	eventCallback       = uintptr(0)
-	removeEventCallback = uintptr(0)
+	eventCallback       = imports.NewCallback(eventCallbackProc)
+	removeEventCallback = imports.NewCallback(removeEventCallbackProc)
 )
