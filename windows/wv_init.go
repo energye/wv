@@ -12,13 +12,17 @@ package windows
 
 import (
 	"github.com/energye/lcl/api"
+	"sync"
 )
+
+var initOnce sync.Once
 
 // Init Webview2
 func Init() {
-	// 注册 Webview2 对象事件回调
-	api.SetEventCallback(eventCallback, api.EctWV)
-	// 注册 Webview2 对象事件回调移除
-	api.SetEventCallback(removeEventCallback, api.EctWVRemove)
-
+	initOnce.Do(func() {
+		// 注册 Webview2 对象事件回调
+		api.SetEventCallback(eventCallback, api.EctWV)
+		// 注册 Webview2 对象事件回调移除
+		api.SetEventCallback(removeEventCallback, api.EctWVRemove)
+	})
 }
