@@ -8,6 +8,8 @@
 
 // :predefine:
 
+//go:build windows
+
 package windows
 
 import (
