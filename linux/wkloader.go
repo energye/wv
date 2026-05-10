@@ -18,7 +18,9 @@ import (
 // IWkLoader Parent: IComponent
 type IWkLoader interface {
 	IComponent
-	StartWebKit2() bool                          // function
+	StartWebKit2() bool // function
+	Webkit2Version() string
+	SetWebkit2Version(value string)
 	LoaderWebKit2DllPath() string                // property LoaderWebKit2DllPath Getter
 	SetLoaderWebKit2DllPath(value string)        // property LoaderWebKit2DllPath Setter
 	LoaderJavascriptCoreDllPath() string         // property LoaderJavascriptCoreDllPath Getter
@@ -39,7 +41,7 @@ func (m *TWkLoader) StartWebKit2() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkLoader) LoaderWebKit2DllPath() string {
+func (m *TWkLoader) Webkit2Version() string {
 	if !m.IsValid() {
 		return ""
 	}
@@ -47,14 +49,14 @@ func (m *TWkLoader) LoaderWebKit2DllPath() string {
 	return api.GoStr(r)
 }
 
-func (m *TWkLoader) SetLoaderWebKit2DllPath(value string) {
+func (m *TWkLoader) SetWebkit2Version(value string) {
 	if !m.IsValid() {
 		return
 	}
 	wkLoaderAPI().SysCallN(2, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWkLoader) LoaderJavascriptCoreDllPath() string {
+func (m *TWkLoader) LoaderWebKit2DllPath() string {
 	if !m.IsValid() {
 		return ""
 	}
@@ -62,14 +64,14 @@ func (m *TWkLoader) LoaderJavascriptCoreDllPath() string {
 	return api.GoStr(r)
 }
 
-func (m *TWkLoader) SetLoaderJavascriptCoreDllPath(value string) {
+func (m *TWkLoader) SetLoaderWebKit2DllPath(value string) {
 	if !m.IsValid() {
 		return
 	}
 	wkLoaderAPI().SysCallN(3, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWkLoader) LoaderSoupDllPath() string {
+func (m *TWkLoader) LoaderJavascriptCoreDllPath() string {
 	if !m.IsValid() {
 		return ""
 	}
@@ -77,11 +79,26 @@ func (m *TWkLoader) LoaderSoupDllPath() string {
 	return api.GoStr(r)
 }
 
-func (m *TWkLoader) SetLoaderSoupDllPath(value string) {
+func (m *TWkLoader) SetLoaderJavascriptCoreDllPath(value string) {
 	if !m.IsValid() {
 		return
 	}
 	wkLoaderAPI().SysCallN(4, 1, m.Instance(), api.PasStr(value))
+}
+
+func (m *TWkLoader) LoaderSoupDllPath() string {
+	if !m.IsValid() {
+		return ""
+	}
+	r := wkLoaderAPI().SysCallN(5, 0, m.Instance())
+	return api.GoStr(r)
+}
+
+func (m *TWkLoader) SetLoaderSoupDllPath(value string) {
+	if !m.IsValid() {
+		return
+	}
+	wkLoaderAPI().SysCallN(5, 1, m.Instance(), api.PasStr(value))
 }
 
 // NewLoader class constructor
@@ -101,9 +118,10 @@ func wkLoaderAPI() *imports.Imports {
 		wkLoaderImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TWkLoader_Create", 0), // constructor NewLoader
 			/* 1 */ imports.NewTable("TWkLoader_StartWebKit2", 0), // function StartWebKit2
-			/* 2 */ imports.NewTable("TWkLoader_LoaderWebKit2DllPath", 0), // property LoaderWebKit2DllPath
-			/* 3 */ imports.NewTable("TWkLoader_LoaderJavascriptCoreDllPath", 0), // property LoaderJavascriptCoreDllPath
-			/* 4 */ imports.NewTable("TWkLoader_LoaderSoupDllPath", 0), // property LoaderSoupDllPath
+			/* 2 */ imports.NewTable("TWkLoader_Webkit2Version", 0), // function Webkit2Version
+			/* 3 */ imports.NewTable("TWkLoader_LoaderWebKit2DllPath", 0), // property LoaderWebKit2DllPath
+			/* 4 */ imports.NewTable("TWkLoader_LoaderJavascriptCoreDllPath", 0), // property LoaderJavascriptCoreDllPath
+			/* 5 */ imports.NewTable("TWkLoader_LoaderSoupDllPath", 0), // property LoaderSoupDllPath
 		}
 	})
 	return wkLoaderImport
