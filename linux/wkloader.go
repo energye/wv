@@ -13,14 +13,15 @@ import (
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
 	"github.com/energye/lcl/lcl"
+	wvTypes "github.com/energye/wv/types/linux"
 )
 
 // IWkLoader Parent: IComponent
 type IWkLoader interface {
 	IComponent
 	StartWebKit2() bool // function
-	Webkit2Version() string
-	SetWebkit2Version(value string)
+	Webkit2Version() wvTypes.Webkit2Version
+	SetWebkit2Version(value wvTypes.Webkit2Version)
 	LoaderWebKit2DllPath() string                // property LoaderWebKit2DllPath Getter
 	SetLoaderWebKit2DllPath(value string)        // property LoaderWebKit2DllPath Setter
 	LoaderJavascriptCoreDllPath() string         // property LoaderJavascriptCoreDllPath Getter
@@ -41,19 +42,19 @@ func (m *TWkLoader) StartWebKit2() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkLoader) Webkit2Version() string {
+func (m *TWkLoader) Webkit2Version() wvTypes.Webkit2Version {
 	if !m.IsValid() {
-		return ""
+		return 0
 	}
 	r := wkLoaderAPI().SysCallN(2, 0, m.Instance())
-	return api.GoStr(r)
+	return wvTypes.Webkit2Version(r)
 }
 
-func (m *TWkLoader) SetWebkit2Version(value string) {
+func (m *TWkLoader) SetWebkit2Version(value wvTypes.Webkit2Version) {
 	if !m.IsValid() {
 		return
 	}
-	wkLoaderAPI().SysCallN(2, 1, m.Instance(), api.PasStr(value))
+	wkLoaderAPI().SysCallN(2, 1, m.Instance(), uintptr(value))
 }
 
 func (m *TWkLoader) LoaderWebKit2DllPath() string {
