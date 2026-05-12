@@ -282,3 +282,10 @@ const (
 	WEBKIT_WEB_PROCESS_EXCEEDED_MEMORY_LIMIT
 	WEBKIT_WEB_PROCESS_TERMINATED_BY_API
 )
+
+type Webkit2Version = int32
+
+const (
+	Wkv4_0 Webkit2Version = iota
+	Wkv4_1
+)
