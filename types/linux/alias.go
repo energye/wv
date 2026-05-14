@@ -28,6 +28,10 @@ type WebKitWebContext uintptr
 type WebKitCookieManager uintptr
 type PWkAction uintptr
 type PSoupDate uintptr
+
+// PWkDateTime 2.4: PSoupDate, 3.0: PGDateTime
+type PWkDateTime uintptr
+
 type PSoupMessageHeaders uintptr
 type PInputStream uintptr
 type PSoupCookie uintptr
