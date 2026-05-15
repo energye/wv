@@ -21,8 +21,9 @@ import (
 type IWkWebviewParent interface {
 	ICustomPanel
 	UpdateSize(width int32, height int32)            // procedure
-	SetWebview(value IWkWebview)                     // procedure
 	FreeChild()                                      // procedure
+	Webview() IWkWebview                             // property Webview Getter
+	SetWebview(value IWkWebview)                     // property Webview Setter
 	ScrolledWindow() wvTypes.TScrolledWindow         // property ScrolledWindow Getter
 	SetScrolledWindow(value wvTypes.TScrolledWindow) // property ScrolledWindow Setter
 }
@@ -38,18 +39,26 @@ func (m *TWkWebviewParent) UpdateSize(width int32, height int32) {
 	wkWebviewParentAPI().SysCallN(1, m.Instance(), uintptr(width), uintptr(height))
 }
 
-func (m *TWkWebviewParent) SetWebview(value IWkWebview) {
-	if !m.IsValid() {
-		return
-	}
-	wkWebviewParentAPI().SysCallN(2, m.Instance(), base.GetObjectUintptr(value))
-}
-
 func (m *TWkWebviewParent) FreeChild() {
 	if !m.IsValid() {
 		return
 	}
 	wkWebviewParentAPI().SysCallN(3, m.Instance())
+}
+
+func (m *TWkWebviewParent) Webview() IWkWebview {
+	if !m.IsValid() {
+		return nil
+	}
+	r := wkWebviewParentAPI().SysCallN(2, 0, m.Instance())
+	return AsWkWebview(r)
+}
+
+func (m *TWkWebviewParent) SetWebview(value IWkWebview) {
+	if !m.IsValid() {
+		return
+	}
+	wkWebviewParentAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
 func (m *TWkWebviewParent) ScrolledWindow() wvTypes.TScrolledWindow {
@@ -84,7 +93,7 @@ func wkWebviewParentAPI() *imports.Imports {
 		wkWebviewParentImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TWkWebviewParent_Create", 0), // constructor NewWebviewParent
 			/* 1 */ imports.NewTable("TWkWebviewParent_UpdateSize", 0), // procedure UpdateSize
-			/* 2 */ imports.NewTable("TWkWebviewParent_SetWebview", 0), // procedure SetWebview
+			/* 2 */ imports.NewTable("TWkWebviewParent_Webview", 0), // procedure SetWebview
 			/* 3 */ imports.NewTable("TWkWebviewParent_FreeChild", 0), // procedure FreeChild
 			/* 4 */ imports.NewTable("TWkWebviewParent_ScrolledWindow", 0), // property ScrolledWindow
 		}
