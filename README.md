@@ -24,13 +24,13 @@
 > 是 Go 基于
 > [LCL](https://www.lazarus-ide.org/)、
 > [Windows-Webview2](https://learn.microsoft.com/en-us/microsoft-edge/webview2)
-> [Linux-Webkit2](https://www.webkitgtk.org)
+> [Linux-Webkit2GTK](https://www.webkitgtk.org)
 > [MacOS-Webkit2](https://developer.apple.com/documentation/webkit)
 > 开发的框架
 >
 >> LCL - 基础库, 图形用户界面(GUI)组件库, 提供了非常丰富的系统原生控件
 >> 
->> Windows-Webview2 - 浏览器组件库 [WebView4Delphi](https://github.com/salvadordf/WebView4Delphi), 在LCL基础上封装的Webview2库
+>> Windows-Webview2 - 浏览器组件库 WebView4Delphi, 在LCL基础上封装的Webview2库
 >> 
 >> Linux-Webkit2 - 浏览器组件库 Webkit2GTK, 在LCL基础上封装的Webkit2库
 >> 
@@ -47,11 +47,14 @@
 >> LCL + Webview 混合使用, 开发原生图形用户界面(GUI)和浏览器应用. 轻量级, 全量webview2 API, 轻量级 Webkit2 API
 
 
+### NO CGO
+
+> 可选纯 `Go` 开发, 无需 `CGO` 编译
 
 ### 特点
 
 > - 依赖 `microsoft-edge` 运行时环境
-> - 具有完整的 Webview2 API 轻量级 Webkit2 API 和 LCL 系统原生控件
+> - 具有完整的 Webview2 API, 轻量级 Webkit2(GTK) API 和 LCL 系统原生控件
 > - 开发环境简单, 编译速度快, 仅需Go和Webview2所需的动态链接库
 > - 前端技术: 支持主流前端框架。例如：Vue、React、Angular 和 原生HTML+CSS+JS等
 > - 事件驱动: 高性能事件驱动, 基于IPC通信，实现Go和Web端快速调用及数据交互
@@ -61,59 +64,35 @@
 
 - [![LCL](https://img.shields.io/badge/LCL-green)](https://github.com/energye/lcl)
 - [![WebView4Delphi](https://img.shields.io/badge/Windows-Webview2%20-green)](https://github.com/salvadordf/WebView4Delphi)
-- [![Linux-Webkit2](https://img.shields.io/badge/Linux-Webkit2%20-green)](https://www.webkitgtk.org)
+- [![Linux-Webkit2GTK](https://img.shields.io/badge/Linux-Webkit2GTK%20-green)](https://www.webkitgtk.org)
 - [![MacOS-Webkit2](https://img.shields.io/badge/MacOS-Webkit2%20-green)](https://developer.apple.com/documentation/webkit)
 
 #### 基本需求
 
 > - Golang >= 1.20
 > - 动态链接库 
->> - Windows: `WebView2Loader.dll` `liblcl`
->> - MacOS Linux: `liblcl
+>> - Windows: `WebView2Loader.dll` `libenergy`
+>> - MacOS Linux: `libenergy
 
 #### [示例](https://github.com/energye/examples/tree/main/wv)
 
 #### 开发环境
 
 1. 安装 [Golang](https://golang.google.cn/dl/)
-2. 下载 `Webview2` 和 `LCL` 控件库动态链接库, Windows 两个动态链接库必须同时使用, MacOS, Linux 只需要 liblcl
-3. Windows 将两个动态链接库配置到环境变量 `ENERGY_HOME` 目录下, 或放置到和执行文件 `exe` 同一目录
-4. 创建Go项目开始使用构建桌面应用, 参考示例 [Webview2 examples](https://github.com/energye/examples/tree/main/wv)
+2. 从 [Energy Designer](https://github.com/energye/designer) [Releases](https://github.com/energye/designer/releases) 创建项目
 
-##### Windows
-
-- LCL+Webview2
-
-  - [Windows32](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wv2_binary_windows32.zip/download)
-  - [Windows64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wv2_binary_windows64.zip/download)
-
-- WebView2Loader 1.0.2277.86
-
-  - [Windows32](https://sourceforge.net/projects/liblcl/files/v3.0.0/WebView2Loader_32_1.0.2277.86.zip/download)
-  - [Windows64](https://sourceforge.net/projects/liblcl/files/v3.0.0/WebView2Loader_64_1.0.2277.86.zip/download)
-
-##### MacOS LCL + Webkit2
-
-  - [MacOSx64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_macosx64.zip/download)
-  - [MacOSARM64](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_macosarm64.zip/download)
 
 ##### Linux LCL + Webkit2 GTK3
-Build Debian 11
-  - [Linux32 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linux64.zip/download)
-  - [Linux64 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linux64.zip/download)
-  - [LinuxARM32 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linuxarm32.zip/download)
-  - [LinuxARM64 GTK3](https://sourceforge.net/projects/liblcl/files/v3.0.0/lcl_wk2_binary_linuxarm64.zip/download)
- 
+
   `GTK >= 3.24.24 and Glib2.0 >= 2.66`
 
-##### Linux LCL + Webkit1 GTK2
-Build Ubuntu 18.04
- - To be added
 
 ### 相关项目
-* [Go LCL](https://github.com/energye/lcl)
-* [Go Webview](https://github.com/energye/wv)
-* [Go CEF](https://github.com/energye/cef)
+* [Energy Designer](https://github.com/energye/designer)
+* [Energy](https://github.com/energye/energy)
+* [LCL](https://github.com/energye/lcl)
+* [Webview](https://github.com/energye/wv)
+* [CEF](https://github.com/energye/cef)
 * [WebView4Delphi](https://github.com/salvadordf/WebView4Delphi)
 * [CEF](https://github.com/chromiumembedded/cef)
 * [CEF4Delphi](https://github.com/salvadordf/CEF4Delphi)
@@ -136,22 +115,6 @@ Build Ubuntu 18.04
 </p>
 
 ---
-
-### 鸣谢 Jetbrains
-
-<p align="center">
-    <a href="https://www.jetbrains.com?from=energy">
-        <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo.">
-    </a>
-</p>
-
----
-
-### 项目截图
-##### Windows-10
-<img src="https://assets.yanghy.cn/webview2-simple.png">
-
-----
 
 ### 开源协议
 
