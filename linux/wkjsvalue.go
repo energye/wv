@@ -12,8 +12,8 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
-
 	wvTypes "github.com/energye/wv/types/linux"
+	"unsafe"
 )
 
 // IWkJSValue Parent: IObject
@@ -35,8 +35,14 @@ func (m *TWkJSValue) StringValue() string {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkJSValueAPI().SysCallN(2, m.Instance())
-	return api.GoStr(r)
+	var (
+		data uintptr
+		size uintptr
+	)
+	wkJSValueAPI().SysCallN(2, m.Instance(), uintptr(unsafe.Pointer(&data)), uintptr(unsafe.Pointer(&size)))
+	strBuf := api.NewStringBuffer(data, size)
+	defer strBuf.Release()
+	return strBuf.String()
 }
 
 func (m *TWkJSValue) NumberValue() (result float64) {
@@ -108,6 +114,7 @@ func wkJSValueAPI() *imports.Imports {
 			/* 5 */ imports.NewTable("TWkJSValue_BooleanValue", 0), // function BooleanValue
 			/* 6 */ imports.NewTable("TWkJSValue_ExceptionMessage", 0), // function ExceptionMessage
 			/* 7 */ imports.NewTable("TWkJSValue_ValueType", 0), // property ValueType
+			/* 7 */ imports.NewTable("TWkJSValue_BufferRelease", 0), // property ValueType
 		}
 	})
 	return wkJSValueImport
