@@ -77,12 +77,15 @@ func (m *TCoreWebView2NotificationReceivedEventArgs) BaseIntf() (result ICoreWeb
 	return
 }
 
-func (m *TCoreWebView2NotificationReceivedEventArgs) SenderOrigin() string {
+func (m *TCoreWebView2NotificationReceivedEventArgs) SenderOrigin() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationReceivedEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationReceivedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2NotificationReceivedEventArgs) Notification() (result ICoreWebView2Notification) {

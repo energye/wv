@@ -96,12 +96,15 @@ func (m *TCoreWebView2NavigationStartingEventArgs) BaseIntf() (result ICoreWebVi
 	return
 }
 
-func (m *TCoreWebView2NavigationStartingEventArgs) URI() string {
+func (m *TCoreWebView2NavigationStartingEventArgs) URI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NavigationStartingEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2NavigationStartingEventArgs) IsUserInitiated() bool {
@@ -153,12 +156,15 @@ func (m *TCoreWebView2NavigationStartingEventArgs) RequestHeaders() (result ICor
 	return
 }
 
-func (m *TCoreWebView2NavigationStartingEventArgs) AdditionalAllowedFrameAncestors() string {
+func (m *TCoreWebView2NavigationStartingEventArgs) AdditionalAllowedFrameAncestors() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NavigationStartingEventArgsAPI().SysCallN(9, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NavigationStartingEventArgsAPI().SysCallN(9, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2NavigationStartingEventArgs) SetAdditionalAllowedFrameAncestors(value string) {

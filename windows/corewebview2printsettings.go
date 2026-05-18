@@ -346,12 +346,15 @@ func (m *TCoreWebView2PrintSettings) SetShouldPrintHeaderAndFooter(value bool) {
 	coreWebView2PrintSettingsAPI().SysCallN(13, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TCoreWebView2PrintSettings) HeaderTitle() string {
+func (m *TCoreWebView2PrintSettings) HeaderTitle() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2PrintSettingsAPI().SysCallN(14, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2PrintSettingsAPI().SysCallN(14, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2PrintSettings) SetHeaderTitle(value string) {
@@ -361,12 +364,15 @@ func (m *TCoreWebView2PrintSettings) SetHeaderTitle(value string) {
 	coreWebView2PrintSettingsAPI().SysCallN(14, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TCoreWebView2PrintSettings) FooterUri() string {
+func (m *TCoreWebView2PrintSettings) FooterUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2PrintSettingsAPI().SysCallN(15, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2PrintSettingsAPI().SysCallN(15, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2PrintSettings) SetFooterUri(value string) {
@@ -376,12 +382,15 @@ func (m *TCoreWebView2PrintSettings) SetFooterUri(value string) {
 	coreWebView2PrintSettingsAPI().SysCallN(15, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TCoreWebView2PrintSettings) PageRanges() string {
+func (m *TCoreWebView2PrintSettings) PageRanges() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2PrintSettingsAPI().SysCallN(16, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2PrintSettingsAPI().SysCallN(16, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2PrintSettings) SetPageRanges(value string) {
@@ -481,12 +490,15 @@ func (m *TCoreWebView2PrintSettings) SetMediaSize(value wvTypes.TWVPrintMediaSiz
 	coreWebView2PrintSettingsAPI().SysCallN(22, 1, m.Instance(), uintptr(value))
 }
 
-func (m *TCoreWebView2PrintSettings) PrinterName() string {
+func (m *TCoreWebView2PrintSettings) PrinterName() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2PrintSettingsAPI().SysCallN(23, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2PrintSettingsAPI().SysCallN(23, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2PrintSettings) SetPrinterName(value string) {

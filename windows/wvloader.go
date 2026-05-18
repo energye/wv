@@ -580,28 +580,37 @@ func (m *TWVLoader) Status() wvTypes.TWV2LoaderStatus {
 	return wvTypes.TWV2LoaderStatus(r)
 }
 
-func (m *TWVLoader) AvailableBrowserVersion() string {
+func (m *TWVLoader) AvailableBrowserVersion() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWVLoader) AvailableBrowserVersionWithOptions() string {
+func (m *TWVLoader) AvailableBrowserVersionWithOptions() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(8, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWVLoader) ErrorMessage() string {
+func (m *TWVLoader) ErrorMessage() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) ErrorCode() (result int64) {
@@ -688,12 +697,15 @@ func (m *TWVLoader) SetInitCOMLibrary(value bool) {
 	wVLoaderAPI().SysCallN(16, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVLoader) CustomCommandLineSwitches() string {
+func (m *TWVLoader) CustomCommandLineSwitches() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(17, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(17, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) DeviceScaleFactor() (result float32) {
@@ -719,20 +731,26 @@ func (m *TWVLoader) SetReRaiseExceptions(value bool) {
 	wVLoaderAPI().SysCallN(19, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVLoader) InstalledRuntimeVersion() string {
+func (m *TWVLoader) InstalledRuntimeVersion() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(20, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(20, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWVLoader) LoaderDllPath() string {
+func (m *TWVLoader) LoaderDllPath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(21, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(21, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetLoaderDllPath(value string) {
@@ -772,12 +790,15 @@ func (m *TWVLoader) SetAllowOldRuntime(value bool) {
 	wVLoaderAPI().SysCallN(23, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVLoader) BrowserExecPath() string {
+func (m *TWVLoader) BrowserExecPath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(24, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(24, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetBrowserExecPath(value string) {
@@ -787,12 +808,15 @@ func (m *TWVLoader) SetBrowserExecPath(value string) {
 	wVLoaderAPI().SysCallN(24, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) UserDataFolder() string {
+func (m *TWVLoader) UserDataFolder() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(25, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(25, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetUserDataFolder(value string) {
@@ -802,12 +826,15 @@ func (m *TWVLoader) SetUserDataFolder(value string) {
 	wVLoaderAPI().SysCallN(25, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) AdditionalBrowserArguments() string {
+func (m *TWVLoader) AdditionalBrowserArguments() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(26, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(26, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetAdditionalBrowserArguments(value string) {
@@ -817,12 +844,15 @@ func (m *TWVLoader) SetAdditionalBrowserArguments(value string) {
 	wVLoaderAPI().SysCallN(26, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) Language() string {
+func (m *TWVLoader) Language() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(27, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(27, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetLanguage(value string) {
@@ -832,12 +862,15 @@ func (m *TWVLoader) SetLanguage(value string) {
 	wVLoaderAPI().SysCallN(27, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) TargetCompatibleBrowserVersion() string {
+func (m *TWVLoader) TargetCompatibleBrowserVersion() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(28, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(28, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetTargetCompatibleBrowserVersion(value string) {
@@ -982,12 +1015,15 @@ func (m *TWVLoader) SetEnableGPU(value bool) {
 	wVLoaderAPI().SysCallN(37, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVLoader) EnableFeatures() string {
+func (m *TWVLoader) EnableFeatures() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(38, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(38, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetEnableFeatures(value string) {
@@ -997,12 +1033,15 @@ func (m *TWVLoader) SetEnableFeatures(value string) {
 	wVLoaderAPI().SysCallN(38, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) DisableFeatures() string {
+func (m *TWVLoader) DisableFeatures() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(39, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(39, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetDisableFeatures(value string) {
@@ -1012,12 +1051,15 @@ func (m *TWVLoader) SetDisableFeatures(value string) {
 	wVLoaderAPI().SysCallN(39, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) EnableBlinkFeatures() string {
+func (m *TWVLoader) EnableBlinkFeatures() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(40, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(40, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetEnableBlinkFeatures(value string) {
@@ -1027,12 +1069,15 @@ func (m *TWVLoader) SetEnableBlinkFeatures(value string) {
 	wVLoaderAPI().SysCallN(40, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) DisableBlinkFeatures() string {
+func (m *TWVLoader) DisableBlinkFeatures() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(41, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(41, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetDisableBlinkFeatures(value string) {
@@ -1042,12 +1087,15 @@ func (m *TWVLoader) SetDisableBlinkFeatures(value string) {
 	wVLoaderAPI().SysCallN(41, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) BlinkSettings() string {
+func (m *TWVLoader) BlinkSettings() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(42, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(42, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetBlinkSettings(value string) {
@@ -1057,12 +1105,15 @@ func (m *TWVLoader) SetBlinkSettings(value string) {
 	wVLoaderAPI().SysCallN(42, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) ForceFieldTrials() string {
+func (m *TWVLoader) ForceFieldTrials() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(43, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(43, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetForceFieldTrials(value string) {
@@ -1072,12 +1123,15 @@ func (m *TWVLoader) SetForceFieldTrials(value string) {
 	wVLoaderAPI().SysCallN(43, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVLoader) ForceFieldTrialParams() string {
+func (m *TWVLoader) ForceFieldTrialParams() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(44, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(44, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetForceFieldTrialParams(value string) {
@@ -1192,12 +1246,15 @@ func (m *TWVLoader) SetMuteAudio(value bool) {
 	wVLoaderAPI().SysCallN(51, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVLoader) DefaultEncoding() string {
+func (m *TWVLoader) DefaultEncoding() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(52, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(52, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetDefaultEncoding(value string) {
@@ -1305,12 +1362,15 @@ func (m *TWVLoader) SetRemoteDebuggingPort(value int32) {
 	wVLoaderAPI().SysCallN(59, 1, m.Instance(), uintptr(value))
 }
 
-func (m *TWVLoader) RemoteAllowOrigins() string {
+func (m *TWVLoader) RemoteAllowOrigins() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(60, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(60, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetRemoteAllowOrigins(value string) {
@@ -1350,12 +1410,15 @@ func (m *TWVLoader) SetDebugLogLevel(value wvTypes.TWV2DebugLogLevel) {
 	wVLoaderAPI().SysCallN(62, 1, m.Instance(), uintptr(value))
 }
 
-func (m *TWVLoader) JavaScriptFlags() string {
+func (m *TWVLoader) JavaScriptFlags() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(63, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(63, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetJavaScriptFlags(value string) {
@@ -1380,12 +1443,15 @@ func (m *TWVLoader) SetDisableEdgePitchNotification(value bool) {
 	wVLoaderAPI().SysCallN(64, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVLoader) TreatInsecureOriginAsSecure() string {
+func (m *TWVLoader) TreatInsecureOriginAsSecure() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(65, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(65, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetTreatInsecureOriginAsSecure(value string) {
@@ -1440,12 +1506,15 @@ func (m *TWVLoader) SetTLS13HybridizedKyberSupport(value wvTypes.TWVState) {
 	wVLoaderAPI().SysCallN(68, 1, m.Instance(), uintptr(value))
 }
 
-func (m *TWVLoader) UserAgent() string {
+func (m *TWVLoader) UserAgent() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(69, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(69, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetUserAgent(value string) {
@@ -1496,12 +1565,15 @@ func (m *TWVLoader) SupportsControllerOptions() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWVLoader) FailureReportFolderPath() string {
+func (m *TWVLoader) FailureReportFolderPath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVLoaderAPI().SysCallN(74, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVLoaderAPI().SysCallN(74, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVLoader) SetOnEnvironmentCreated(fn TLoaderNotifyEvent) {

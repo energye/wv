@@ -2863,12 +2863,15 @@ func (m *TWVBrowserBase) Profile() ICoreWebView2Profile {
 	return AsCoreWebView2Profile(r)
 }
 
-func (m *TWVBrowserBase) DefaultURL() string {
+func (m *TWVBrowserBase) DefaultURL() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(103, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(103, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetDefaultURL(value string) {
@@ -2986,12 +2989,15 @@ func (m *TWVBrowserBase) SetIgnoreCertificateErrors(value bool) {
 	wVBrowserBaseAPI().SysCallN(113, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVBrowserBase) BrowserExecPath() string {
+func (m *TWVBrowserBase) BrowserExecPath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(114, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(114, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetBrowserExecPath(value string) {
@@ -3001,12 +3007,15 @@ func (m *TWVBrowserBase) SetBrowserExecPath(value string) {
 	wVBrowserBaseAPI().SysCallN(114, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVBrowserBase) UserDataFolder() string {
+func (m *TWVBrowserBase) UserDataFolder() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(115, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(115, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetUserDataFolder(value string) {
@@ -3016,12 +3025,15 @@ func (m *TWVBrowserBase) SetUserDataFolder(value string) {
 	wVBrowserBaseAPI().SysCallN(115, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVBrowserBase) AdditionalBrowserArguments() string {
+func (m *TWVBrowserBase) AdditionalBrowserArguments() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(116, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(116, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetAdditionalBrowserArguments(value string) {
@@ -3031,12 +3043,15 @@ func (m *TWVBrowserBase) SetAdditionalBrowserArguments(value string) {
 	wVBrowserBaseAPI().SysCallN(116, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVBrowserBase) Language() string {
+func (m *TWVBrowserBase) Language() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(117, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(117, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetLanguage(value string) {
@@ -3046,12 +3061,15 @@ func (m *TWVBrowserBase) SetLanguage(value string) {
 	wVBrowserBaseAPI().SysCallN(117, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVBrowserBase) TargetCompatibleBrowserVersion() string {
+func (m *TWVBrowserBase) TargetCompatibleBrowserVersion() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(118, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(118, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetTargetCompatibleBrowserVersion(value string) {
@@ -3181,12 +3199,15 @@ func (m *TWVBrowserBase) SetScrollBarStyle(value wvTypes.TWVScrollBarStyle) {
 	wVBrowserBaseAPI().SysCallN(126, 1, m.Instance(), uintptr(value))
 }
 
-func (m *TWVBrowserBase) BrowserVersionInfo() string {
+func (m *TWVBrowserBase) BrowserVersionInfo() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(127, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(127, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) BrowserProcessID() uint32 {
@@ -3221,20 +3242,26 @@ func (m *TWVBrowserBase) ContainsFullScreenElement() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWVBrowserBase) DocumentTitle() string {
+func (m *TWVBrowserBase) DocumentTitle() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(132, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(132, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWVBrowserBase) Source() string {
+func (m *TWVBrowserBase) Source() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(133, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(133, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) CookieManager() (result ICoreWebView2CookieManager) {
@@ -3316,20 +3343,26 @@ func (m *TWVBrowserBase) IsDefaultDownloadDialogOpen() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWVBrowserBase) StatusBarText() string {
+func (m *TWVBrowserBase) StatusBarText() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(141, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(141, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWVBrowserBase) FaviconURI() string {
+func (m *TWVBrowserBase) FaviconURI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(142, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(142, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) MemoryUsageTargetLevel() wvTypes.TWVMemoryUsageTargetLevel {
@@ -3617,12 +3650,15 @@ func (m *TWVBrowserBase) SetZoomControlEnabled(value bool) {
 	wVBrowserBaseAPI().SysCallN(161, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVBrowserBase) UserAgent() string {
+func (m *TWVBrowserBase) UserAgent() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(162, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(162, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetUserAgent(value string) {
@@ -3805,12 +3841,15 @@ func (m *TWVBrowserBase) ProcessInfos() (result ICoreWebView2ProcessInfoCollecti
 	return
 }
 
-func (m *TWVBrowserBase) ProfileName() string {
+func (m *TWVBrowserBase) ProfileName() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(176, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(176, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetProfileName(value string) {
@@ -3835,12 +3874,15 @@ func (m *TWVBrowserBase) SetIsInPrivateModeEnabled(value bool) {
 	wVBrowserBaseAPI().SysCallN(177, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVBrowserBase) ScriptLocale() string {
+func (m *TWVBrowserBase) ScriptLocale() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(178, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(178, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetScriptLocale(value string) {
@@ -3850,20 +3892,26 @@ func (m *TWVBrowserBase) SetScriptLocale(value string) {
 	wVBrowserBaseAPI().SysCallN(178, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVBrowserBase) ProfilePath() string {
+func (m *TWVBrowserBase) ProfilePath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(179, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(179, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWVBrowserBase) DefaultDownloadFolderPath() string {
+func (m *TWVBrowserBase) DefaultDownloadFolderPath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVBrowserBaseAPI().SysCallN(180, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVBrowserBaseAPI().SysCallN(180, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVBrowserBase) SetDefaultDownloadFolderPath(value string) {

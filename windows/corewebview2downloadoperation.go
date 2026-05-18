@@ -169,28 +169,37 @@ func (m *TCoreWebView2DownloadOperation) DownloadID() int32 {
 	return int32(r)
 }
 
-func (m *TCoreWebView2DownloadOperation) URI() string {
+func (m *TCoreWebView2DownloadOperation) URI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2DownloadOperationAPI().SysCallN(8, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2DownloadOperationAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2DownloadOperation) ContentDisposition() string {
+func (m *TCoreWebView2DownloadOperation) ContentDisposition() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2DownloadOperationAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2DownloadOperationAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2DownloadOperation) MimeType() string {
+func (m *TCoreWebView2DownloadOperation) MimeType() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2DownloadOperationAPI().SysCallN(10, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2DownloadOperationAPI().SysCallN(10, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2DownloadOperation) TotalBytesToReceive() (result int64) {
@@ -217,12 +226,15 @@ func (m *TCoreWebView2DownloadOperation) EstimatedEndTime() (result types.TDateT
 	return
 }
 
-func (m *TCoreWebView2DownloadOperation) ResultFilePath() string {
+func (m *TCoreWebView2DownloadOperation) ResultFilePath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2DownloadOperationAPI().SysCallN(14, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2DownloadOperationAPI().SysCallN(14, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2DownloadOperation) State() wvTypes.TWVDownloadState {

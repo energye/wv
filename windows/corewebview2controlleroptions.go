@@ -95,12 +95,15 @@ func (m *TCoreWebView2ControllerOptions) SetBaseIntf(value ICoreWebView2Controll
 	coreWebView2ControllerOptionsAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2ControllerOptions) ProfileName() string {
+func (m *TCoreWebView2ControllerOptions) ProfileName() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ControllerOptionsAPI().SysCallN(3, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ControllerOptionsAPI().SysCallN(3, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ControllerOptions) SetProfileName(value string) {
@@ -125,12 +128,15 @@ func (m *TCoreWebView2ControllerOptions) SetIsInPrivateModeEnabled(value bool) {
 	coreWebView2ControllerOptionsAPI().SysCallN(4, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TCoreWebView2ControllerOptions) ScriptLocale() string {
+func (m *TCoreWebView2ControllerOptions) ScriptLocale() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ControllerOptionsAPI().SysCallN(5, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ControllerOptionsAPI().SysCallN(5, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ControllerOptions) SetScriptLocale(value string) {

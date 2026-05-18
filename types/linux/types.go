@@ -89,6 +89,14 @@ const (
 	SOUP_MESSAGE_HEADERS_MULTIPART
 )
 
+// TWebkit2Version ENUM
+type TWebkit2Version = int32
+
+const (
+	Wkv4_0 TWebkit2Version = iota
+	Wkv4_1
+)
+
 // TWkProcessId ENUM
 type TWkProcessId = int32
 
@@ -281,11 +289,4 @@ const (
 	WEBKIT_WEB_PROCESS_CRASHED WebKitWebProcessTerminationReason = iota
 	WEBKIT_WEB_PROCESS_EXCEEDED_MEMORY_LIMIT
 	WEBKIT_WEB_PROCESS_TERMINATED_BY_API
-)
-
-type Webkit2Version = int32
-
-const (
-	Wkv4_0 Webkit2Version = iota
-	Wkv4_1
 )

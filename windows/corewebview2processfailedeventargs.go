@@ -152,12 +152,15 @@ func (m *TCoreWebView2ProcessFailedEventArgs) ExtiCode() int32 {
 	return int32(r)
 }
 
-func (m *TCoreWebView2ProcessFailedEventArgs) ProcessDescription() string {
+func (m *TCoreWebView2ProcessFailedEventArgs) ProcessDescription() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ProcessFailedEventArgsAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ProcessFailedEventArgs) FrameInfosForFailedProcess() (result ICoreWebView2FrameInfoCollection) {
@@ -170,12 +173,15 @@ func (m *TCoreWebView2ProcessFailedEventArgs) FrameInfosForFailedProcess() (resu
 	return
 }
 
-func (m *TCoreWebView2ProcessFailedEventArgs) FailureSourceModulePath() string {
+func (m *TCoreWebView2ProcessFailedEventArgs) FailureSourceModulePath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ProcessFailedEventArgsAPI().SysCallN(8, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ProcessFailedEventArgsAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2ProcessFailedEventArgs class constructor

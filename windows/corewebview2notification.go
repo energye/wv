@@ -215,12 +215,15 @@ func (m *TCoreWebView2Notification) SetBaseIntf(value ICoreWebView2Notification)
 	coreWebView2NotificationAPI().SysCallN(6, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2Notification) Body() string {
+func (m *TCoreWebView2Notification) Body() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Notification) Direction() wvTypes.TWVTextDirectionKind {
@@ -231,52 +234,70 @@ func (m *TCoreWebView2Notification) Direction() wvTypes.TWVTextDirectionKind {
 	return wvTypes.TWVTextDirectionKind(r)
 }
 
-func (m *TCoreWebView2Notification) Language() string {
+func (m *TCoreWebView2Notification) Language() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Notification) Tag() string {
+func (m *TCoreWebView2Notification) Tag() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationAPI().SysCallN(10, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationAPI().SysCallN(10, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Notification) IconUri() string {
+func (m *TCoreWebView2Notification) IconUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationAPI().SysCallN(11, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationAPI().SysCallN(11, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Notification) Title() string {
+func (m *TCoreWebView2Notification) Title() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationAPI().SysCallN(12, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationAPI().SysCallN(12, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Notification) BadgeUri() string {
+func (m *TCoreWebView2Notification) BadgeUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationAPI().SysCallN(13, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Notification) BodyImageUri() string {
+func (m *TCoreWebView2Notification) BodyImageUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NotificationAPI().SysCallN(14, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NotificationAPI().SysCallN(14, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Notification) ShouldRenotify() bool {

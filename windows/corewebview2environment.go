@@ -546,12 +546,15 @@ func (m *TCoreWebView2Environment) BaseIntf() (result ICoreWebView2Environment) 
 	return
 }
 
-func (m *TCoreWebView2Environment) BrowserVersionInfo() string {
+func (m *TCoreWebView2Environment) BrowserVersionInfo() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(21, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2EnvironmentAPI().SysCallN(21, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Environment) SupportsCompositionController() bool {
@@ -570,12 +573,15 @@ func (m *TCoreWebView2Environment) SupportsControllerOptions() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2Environment) UserDataFolder() string {
+func (m *TCoreWebView2Environment) UserDataFolder() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(24, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2EnvironmentAPI().SysCallN(24, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Environment) ProcessInfos() (result ICoreWebView2ProcessInfoCollection) {
@@ -588,12 +594,15 @@ func (m *TCoreWebView2Environment) ProcessInfos() (result ICoreWebView2ProcessIn
 	return
 }
 
-func (m *TCoreWebView2Environment) FailureReportFolderPath() string {
+func (m *TCoreWebView2Environment) FailureReportFolderPath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2EnvironmentAPI().SysCallN(26, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2EnvironmentAPI().SysCallN(26, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2Environment class constructor

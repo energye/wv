@@ -90,12 +90,15 @@ func (m *TWkWebViewConfiguration) SuppressesIncrementalRendering() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkWebViewConfiguration) ApplicationNameForUserAgent() string {
+func (m *TWkWebViewConfiguration) ApplicationNameForUserAgent() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkWebViewConfigurationAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkWebViewConfigurationAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkWebViewConfiguration) Release() {

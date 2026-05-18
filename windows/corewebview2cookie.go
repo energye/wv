@@ -116,20 +116,26 @@ func (m *TCoreWebView2Cookie) SetBaseIntf(value ICoreWebView2Cookie) {
 	coreWebView2CookieAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2Cookie) Name() string {
+func (m *TCoreWebView2Cookie) Name() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CookieAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CookieAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Cookie) Value() string {
+func (m *TCoreWebView2Cookie) Value() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CookieAPI().SysCallN(4, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CookieAPI().SysCallN(4, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Cookie) SetValue(value string) {
@@ -139,20 +145,26 @@ func (m *TCoreWebView2Cookie) SetValue(value string) {
 	coreWebView2CookieAPI().SysCallN(4, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TCoreWebView2Cookie) Domain() string {
+func (m *TCoreWebView2Cookie) Domain() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CookieAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CookieAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Cookie) Path() string {
+func (m *TCoreWebView2Cookie) Path() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CookieAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CookieAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Cookie) Expires() (result float64) {

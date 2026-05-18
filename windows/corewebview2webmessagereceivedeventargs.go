@@ -74,28 +74,37 @@ func (m *TCoreWebView2WebMessageReceivedEventArgs) BaseIntf() (result ICoreWebVi
 	return
 }
 
-func (m *TCoreWebView2WebMessageReceivedEventArgs) Source() string {
+func (m *TCoreWebView2WebMessageReceivedEventArgs) Source() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2WebMessageReceivedEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2WebMessageReceivedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2WebMessageReceivedEventArgs) WebMessageAsJson() string {
+func (m *TCoreWebView2WebMessageReceivedEventArgs) WebMessageAsJson() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2WebMessageReceivedEventArgsAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2WebMessageReceivedEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2WebMessageReceivedEventArgs) WebMessageAsString() string {
+func (m *TCoreWebView2WebMessageReceivedEventArgs) WebMessageAsString() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2WebMessageReceivedEventArgsAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2WebMessageReceivedEventArgsAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2WebMessageReceivedEventArgs) AdditionalObjects() (result ICoreWebView2ObjectCollectionView) {

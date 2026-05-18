@@ -111,20 +111,26 @@ func (m *TWkWebview) IsLoading() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkWebview) GetTitle() string {
+func (m *TWkWebview) GetTitle() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkWebviewAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkWebviewAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkWebview) GetURI() string {
+func (m *TWkWebview) GetURI() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkWebviewAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkWebviewAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkWebview) CookieManager() IWkCookieManager {

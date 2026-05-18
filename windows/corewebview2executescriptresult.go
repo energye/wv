@@ -96,12 +96,15 @@ func (m *TCoreWebView2ExecuteScriptResult) Succeeded() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ExecuteScriptResult) ResultAsJson() string {
+func (m *TCoreWebView2ExecuteScriptResult) ResultAsJson() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ExecuteScriptResultAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ExecuteScriptResultAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ExecuteScriptResult) Exception() (result ICoreWebView2ScriptException) {

@@ -126,20 +126,26 @@ func (m *TCoreWebView2ContextMenuTarget) IsRequestedForMainFrame() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuTarget) PageUri() string {
+func (m *TCoreWebView2ContextMenuTarget) PageUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuTargetAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuTargetAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2ContextMenuTarget) FrameUri() string {
+func (m *TCoreWebView2ContextMenuTarget) FrameUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuTargetAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuTargetAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasLinkUri() bool {
@@ -150,12 +156,15 @@ func (m *TCoreWebView2ContextMenuTarget) HasLinkUri() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuTarget) LinkUri() string {
+func (m *TCoreWebView2ContextMenuTarget) LinkUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuTargetAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuTargetAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasLinkText() bool {
@@ -166,12 +175,15 @@ func (m *TCoreWebView2ContextMenuTarget) HasLinkText() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuTarget) LinkText() string {
+func (m *TCoreWebView2ContextMenuTarget) LinkText() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuTargetAPI().SysCallN(11, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuTargetAPI().SysCallN(11, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasSourceUri() bool {
@@ -182,12 +194,15 @@ func (m *TCoreWebView2ContextMenuTarget) HasSourceUri() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuTarget) SourceUri() string {
+func (m *TCoreWebView2ContextMenuTarget) SourceUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuTargetAPI().SysCallN(13, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuTargetAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ContextMenuTarget) HasSelection() bool {
@@ -198,12 +213,15 @@ func (m *TCoreWebView2ContextMenuTarget) HasSelection() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2ContextMenuTarget) SelectionText() string {
+func (m *TCoreWebView2ContextMenuTarget) SelectionText() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuTargetAPI().SysCallN(15, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuTargetAPI().SysCallN(15, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2ContextMenuTarget class constructor

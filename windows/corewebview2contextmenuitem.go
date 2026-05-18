@@ -120,20 +120,26 @@ func (m *TCoreWebView2ContextMenuItem) SetBaseIntf(value ICoreWebView2ContextMen
 	coreWebView2ContextMenuItemAPI().SysCallN(3, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2ContextMenuItem) Name() string {
+func (m *TCoreWebView2ContextMenuItem) Name() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuItemAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuItemAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2ContextMenuItem) Label() string {
+func (m *TCoreWebView2ContextMenuItem) Label() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuItemAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuItemAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ContextMenuItem) CommandId() int32 {
@@ -144,12 +150,15 @@ func (m *TCoreWebView2ContextMenuItem) CommandId() int32 {
 	return int32(r)
 }
 
-func (m *TCoreWebView2ContextMenuItem) ShortcutKeyDescription() string {
+func (m *TCoreWebView2ContextMenuItem) ShortcutKeyDescription() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ContextMenuItemAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ContextMenuItemAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ContextMenuItem) Icon() lcl.IStreamAdapter {

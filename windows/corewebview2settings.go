@@ -452,12 +452,15 @@ func (m *TCoreWebView2Settings) SetAreHostObjectsAllowed(value bool) {
 	coreWebView2SettingsAPI().SysCallN(11, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TCoreWebView2Settings) UserAgent() string {
+func (m *TCoreWebView2Settings) UserAgent() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2SettingsAPI().SysCallN(12, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2SettingsAPI().SysCallN(12, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Settings) SetUserAgent(value string) {

@@ -65,12 +65,15 @@ func (m *TCoreWebView2BasicAuthenticationResponse) SetBaseIntf(value ICoreWebVie
 	coreWebView2BasicAuthenticationResponseAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2BasicAuthenticationResponse) UserName() string {
+func (m *TCoreWebView2BasicAuthenticationResponse) UserName() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2BasicAuthenticationResponseAPI().SysCallN(3, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2BasicAuthenticationResponseAPI().SysCallN(3, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2BasicAuthenticationResponse) SetUserName(value string) {
@@ -80,12 +83,15 @@ func (m *TCoreWebView2BasicAuthenticationResponse) SetUserName(value string) {
 	coreWebView2BasicAuthenticationResponseAPI().SysCallN(3, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TCoreWebView2BasicAuthenticationResponse) Password() string {
+func (m *TCoreWebView2BasicAuthenticationResponse) Password() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2BasicAuthenticationResponseAPI().SysCallN(4, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2BasicAuthenticationResponseAPI().SysCallN(4, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2BasicAuthenticationResponse) SetPassword(value string) {

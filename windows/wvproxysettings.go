@@ -63,12 +63,15 @@ func (m *TWVProxySettings) SetAutoDetect(value bool) {
 	wVProxySettingsAPI().SysCallN(2, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWVProxySettings) ByPassList() string {
+func (m *TWVProxySettings) ByPassList() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVProxySettingsAPI().SysCallN(3, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVProxySettingsAPI().SysCallN(3, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVProxySettings) SetByPassList(value string) {
@@ -78,12 +81,15 @@ func (m *TWVProxySettings) SetByPassList(value string) {
 	wVProxySettingsAPI().SysCallN(3, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVProxySettings) PacUrl() string {
+func (m *TWVProxySettings) PacUrl() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVProxySettingsAPI().SysCallN(4, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVProxySettingsAPI().SysCallN(4, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVProxySettings) SetPacUrl(value string) {
@@ -93,12 +99,15 @@ func (m *TWVProxySettings) SetPacUrl(value string) {
 	wVProxySettingsAPI().SysCallN(4, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWVProxySettings) Server() string {
+func (m *TWVProxySettings) Server() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wVProxySettingsAPI().SysCallN(5, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wVProxySettingsAPI().SysCallN(5, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWVProxySettings) SetServer(value string) {

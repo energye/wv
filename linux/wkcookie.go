@@ -19,22 +19,22 @@ import (
 // IWkCookie Parent: IObject
 type IWkCookie interface {
 	IObject
-	Data() wvTypes.PSoupCookie          // function
-	SetMaxAge(value int32)              // procedure
-	Name() string                       // property Name Getter
-	SetName(value string)               // property Name Setter
-	Value() string                      // property Value Getter
-	SetValue(value string)              // property Value Setter
-	Domain() string                     // property Domain Getter
-	SetDomain(value string)             // property Domain Setter
-	Path() string                       // property Path Getter
-	SetPath(value string)               // property Path Setter
-	HttpOnly() bool                     // property HttpOnly Getter
-	SetHttpOnly(value bool)             // property HttpOnly Setter
-	Secure() bool                       // property Secure Getter
-	SetSecure(value bool)               // property Secure Setter
-	Expires() wvTypes.PSoupDate         // property Expires Getter
-	SetExpires(value wvTypes.PSoupDate) // property Expires Setter
+	Data() wvTypes.PSoupCookie            // function
+	SetMaxAge(value int32)                // procedure
+	Name() string                         // property Name Getter
+	SetName(value string)                 // property Name Setter
+	Value() string                        // property Value Getter
+	SetValue(value string)                // property Value Setter
+	Domain() string                       // property Domain Getter
+	SetDomain(value string)               // property Domain Setter
+	Path() string                         // property Path Getter
+	SetPath(value string)                 // property Path Setter
+	HttpOnly() bool                       // property HttpOnly Getter
+	SetHttpOnly(value bool)               // property HttpOnly Setter
+	Secure() bool                         // property Secure Getter
+	SetSecure(value bool)                 // property Secure Setter
+	Expires() wvTypes.PWkDateTime         // property Expires Getter
+	SetExpires(value wvTypes.PWkDateTime) // property Expires Setter
 }
 
 type TWkCookie struct {
@@ -56,12 +56,15 @@ func (m *TWkCookie) SetMaxAge(value int32) {
 	wkCookieAPI().SysCallN(3, m.Instance(), uintptr(value))
 }
 
-func (m *TWkCookie) Name() string {
+func (m *TWkCookie) Name() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wkCookieAPI().SysCallN(4, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkCookieAPI().SysCallN(4, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkCookie) SetName(value string) {
@@ -71,12 +74,15 @@ func (m *TWkCookie) SetName(value string) {
 	wkCookieAPI().SysCallN(4, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWkCookie) Value() string {
+func (m *TWkCookie) Value() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wkCookieAPI().SysCallN(5, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkCookieAPI().SysCallN(5, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkCookie) SetValue(value string) {
@@ -86,12 +92,15 @@ func (m *TWkCookie) SetValue(value string) {
 	wkCookieAPI().SysCallN(5, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWkCookie) Domain() string {
+func (m *TWkCookie) Domain() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wkCookieAPI().SysCallN(6, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkCookieAPI().SysCallN(6, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkCookie) SetDomain(value string) {
@@ -101,12 +110,15 @@ func (m *TWkCookie) SetDomain(value string) {
 	wkCookieAPI().SysCallN(6, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TWkCookie) Path() string {
+func (m *TWkCookie) Path() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wkCookieAPI().SysCallN(7, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkCookieAPI().SysCallN(7, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkCookie) SetPath(value string) {
@@ -146,15 +158,15 @@ func (m *TWkCookie) SetSecure(value bool) {
 	wkCookieAPI().SysCallN(9, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TWkCookie) Expires() wvTypes.PSoupDate {
+func (m *TWkCookie) Expires() wvTypes.PWkDateTime {
 	if !m.IsValid() {
 		return 0
 	}
 	r := wkCookieAPI().SysCallN(10, 0, m.Instance())
-	return wvTypes.PSoupDate(r)
+	return wvTypes.PWkDateTime(r)
 }
 
-func (m *TWkCookie) SetExpires(value wvTypes.PSoupDate) {
+func (m *TWkCookie) SetExpires(value wvTypes.PWkDateTime) {
 	if !m.IsValid() {
 		return
 	}

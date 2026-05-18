@@ -125,20 +125,26 @@ func (m *TWkNSProgress) CompletedUnitCount() (result int64) {
 	return
 }
 
-func (m *TWkNSProgress) LocalizedDescription() string {
+func (m *TWkNSProgress) LocalizedDescription() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSProgressAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSProgressAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSProgress) LocalizedAdditionalDescription() string {
+func (m *TWkNSProgress) LocalizedAdditionalDescription() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSProgressAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSProgressAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSProgress) IsCancellable() bool {

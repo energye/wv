@@ -59,12 +59,15 @@ func (m *TCoreWebView2File) SetBaseIntf(value ICoreWebView2File) {
 	coreWebView2FileAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2File) Path() string {
+func (m *TCoreWebView2File) Path() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2FileAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2FileAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2File class constructor

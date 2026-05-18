@@ -103,20 +103,26 @@ func (m *TCoreWebView2FrameInfo) SetBaseIntf(value ICoreWebView2FrameInfo) {
 	coreWebView2FrameInfoAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2FrameInfo) Name() string {
+func (m *TCoreWebView2FrameInfo) Name() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2FrameInfoAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2FrameInfoAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2FrameInfo) Source() string {
+func (m *TCoreWebView2FrameInfo) Source() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2FrameInfoAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2FrameInfoAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2FrameInfo) ParentFrameInfo() (result ICoreWebView2FrameInfo) {
@@ -145,12 +151,15 @@ func (m *TCoreWebView2FrameInfo) FrameKind() wvTypes.TWVFrameKind {
 	return wvTypes.TWVFrameKind(r)
 }
 
-func (m *TCoreWebView2FrameInfo) FrameKindStr() string {
+func (m *TCoreWebView2FrameInfo) FrameKindStr() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2FrameInfoAPI().SysCallN(8, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2FrameInfoAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2FrameInfo class constructor

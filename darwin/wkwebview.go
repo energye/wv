@@ -239,12 +239,15 @@ func (m *TWkWebview) LoadRequest(request NSURLRequest) wvTypes.WKNavigation {
 	return wvTypes.WKNavigation(r)
 }
 
-func (m *TWkWebview) Title() string {
+func (m *TWkWebview) Title() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkWebviewAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkWebviewAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkWebview) URL() NSURL {

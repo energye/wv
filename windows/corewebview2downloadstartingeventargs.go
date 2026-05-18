@@ -105,12 +105,15 @@ func (m *TCoreWebView2DownloadStartingEventArgs) SetCancel(value bool) {
 	coreWebView2DownloadStartingEventArgsAPI().SysCallN(4, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TCoreWebView2DownloadStartingEventArgs) ResultFilePath() string {
+func (m *TCoreWebView2DownloadStartingEventArgs) ResultFilePath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2DownloadStartingEventArgsAPI().SysCallN(5, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2DownloadStartingEventArgsAPI().SysCallN(5, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2DownloadStartingEventArgs) SetResultFilePath(value string) {

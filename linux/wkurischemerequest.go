@@ -44,28 +44,37 @@ func (m *TWkURISchemeRequest) Data() wvTypes.WebKitURISchemeRequest {
 	return wvTypes.WebKitURISchemeRequest(r)
 }
 
-func (m *TWkURISchemeRequest) Scheme() string {
+func (m *TWkURISchemeRequest) Scheme() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkURISchemeRequestAPI().SysCallN(2, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkURISchemeRequestAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkURISchemeRequest) Uri() string {
+func (m *TWkURISchemeRequest) Uri() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkURISchemeRequestAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkURISchemeRequestAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkURISchemeRequest) Path() string {
+func (m *TWkURISchemeRequest) Path() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkURISchemeRequestAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkURISchemeRequestAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkURISchemeRequest) WebView() wvTypes.WebKitWebView {
@@ -76,12 +85,15 @@ func (m *TWkURISchemeRequest) WebView() wvTypes.WebKitWebView {
 	return wvTypes.WebKitWebView(r)
 }
 
-func (m *TWkURISchemeRequest) Method() string {
+func (m *TWkURISchemeRequest) Method() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkURISchemeRequestAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkURISchemeRequestAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkURISchemeRequest) Headers() wvTypes.PSoupMessageHeaders {

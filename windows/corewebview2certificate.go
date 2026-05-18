@@ -73,12 +73,15 @@ type TCoreWebView2Certificate struct {
 	TObject
 }
 
-func (m *TCoreWebView2Certificate) ToPemEncoding() string {
+func (m *TCoreWebView2Certificate) ToPemEncoding() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := coreWebView2CertificateAPI().SysCallN(1, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CertificateAPI().SysCallN(1, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Certificate) Initialized() bool {
@@ -106,20 +109,26 @@ func (m *TCoreWebView2Certificate) SetBaseIntf(value ICoreWebView2Certificate) {
 	coreWebView2CertificateAPI().SysCallN(3, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2Certificate) Subject() string {
+func (m *TCoreWebView2Certificate) Subject() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CertificateAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CertificateAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Certificate) Issuer() string {
+func (m *TCoreWebView2Certificate) Issuer() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CertificateAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CertificateAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Certificate) ValidFrom() (result types.TDateTime) {
@@ -138,20 +147,26 @@ func (m *TCoreWebView2Certificate) ValidTo() (result types.TDateTime) {
 	return
 }
 
-func (m *TCoreWebView2Certificate) DerEncodedSerialNumber() string {
+func (m *TCoreWebView2Certificate) DerEncodedSerialNumber() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CertificateAPI().SysCallN(8, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CertificateAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Certificate) DisplayName() string {
+func (m *TCoreWebView2Certificate) DisplayName() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2CertificateAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2CertificateAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Certificate) PemEncodedIssuerCertificateChain() (result ICoreWebView2StringCollection) {

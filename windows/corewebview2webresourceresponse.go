@@ -97,12 +97,15 @@ func (m *TCoreWebView2WebResourceResponse) SetStatusCode(value int32) {
 	coreWebView2WebResourceResponseAPI().SysCallN(3, 1, m.Instance(), uintptr(value))
 }
 
-func (m *TCoreWebView2WebResourceResponse) ReasonPhrase() string {
+func (m *TCoreWebView2WebResourceResponse) ReasonPhrase() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2WebResourceResponseAPI().SysCallN(4, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2WebResourceResponseAPI().SysCallN(4, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2WebResourceResponse) SetReasonPhrase(value string) {

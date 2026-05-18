@@ -12,8 +12,8 @@ import (
 	"github.com/energye/lcl/api"
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
+
 	wvTypes "github.com/energye/wv/types/linux"
-	"unsafe"
 )
 
 // IWkJSValue Parent: IObject
@@ -31,18 +31,15 @@ type TWkJSValue struct {
 	TObject
 }
 
-func (m *TWkJSValue) StringValue() string {
+func (m *TWkJSValue) StringValue() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	var (
-		data uintptr
-		size uintptr
-	)
-	wkJSValueAPI().SysCallN(2, m.Instance(), uintptr(unsafe.Pointer(&data)), uintptr(unsafe.Pointer(&size)))
-	strBuf := api.NewStringBuffer(data, size)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkJSValueAPI().SysCallN(2, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
 	defer strBuf.Release()
-	return strBuf.String()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkJSValue) NumberValue() (result float64) {
@@ -69,12 +66,15 @@ func (m *TWkJSValue) BooleanValue() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkJSValue) ExceptionMessage() string {
+func (m *TWkJSValue) ExceptionMessage() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkJSValueAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkJSValueAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkJSValue) ValueType() wvTypes.UWJSValueJSType {
@@ -114,7 +114,6 @@ func wkJSValueAPI() *imports.Imports {
 			/* 5 */ imports.NewTable("TWkJSValue_BooleanValue", 0), // function BooleanValue
 			/* 6 */ imports.NewTable("TWkJSValue_ExceptionMessage", 0), // function ExceptionMessage
 			/* 7 */ imports.NewTable("TWkJSValue_ValueType", 0), // property ValueType
-			/* 7 */ imports.NewTable("TWkJSValue_BufferRelease", 0), // property ValueType
 		}
 	})
 	return wkJSValueImport

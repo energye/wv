@@ -181,60 +181,81 @@ func (m *TWkSettings) GetEnableHyperlinkAuditing() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkSettings) GetDefaultFontFamily() string {
+func (m *TWkSettings) GetDefaultFontFamily() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(8, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkSettings) GetMonospaceFontFamily() string {
+func (m *TWkSettings) GetMonospaceFontFamily() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkSettings) GetSerifFontFamily() string {
+func (m *TWkSettings) GetSerifFontFamily() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(10, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(10, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkSettings) GetSansSerifFontFamily() string {
+func (m *TWkSettings) GetSansSerifFontFamily() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(11, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(11, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkSettings) GetCursiveFontFamily() string {
+func (m *TWkSettings) GetCursiveFontFamily() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(12, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(12, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkSettings) GetFantasyFontFamily() string {
+func (m *TWkSettings) GetFantasyFontFamily() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(13, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkSettings) GetPictographFontFamily() string {
+func (m *TWkSettings) GetPictographFontFamily() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(14, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(14, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkSettings) GetDefaultFontSize() int32 {
@@ -261,12 +282,15 @@ func (m *TWkSettings) GetMinimumFontSize() int32 {
 	return int32(r)
 }
 
-func (m *TWkSettings) GetDefaultCharset() string {
+func (m *TWkSettings) GetDefaultCharset() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(18, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(18, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkSettings) GetEnableDeveloperExtras() bool {
@@ -397,12 +421,15 @@ func (m *TWkSettings) GetEnablePageCache() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkSettings) GetUserAgent() string {
+func (m *TWkSettings) GetUserAgent() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(35, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(35, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkSettings) GetEnableSmoothScrolling() bool {
@@ -533,12 +560,15 @@ func (m *TWkSettings) GetEnableMedia() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkSettings) GetMediaContentTypesRequiringHardwareSupport() string {
+func (m *TWkSettings) GetMediaContentTypesRequiringHardwareSupport() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkSettingsAPI().SysCallN(52, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkSettingsAPI().SysCallN(52, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkSettings) GetEnableWebrtc() bool {

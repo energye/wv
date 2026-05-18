@@ -43,14 +43,14 @@ func (m *TWkWebviewParent) FreeChild() {
 	if !m.IsValid() {
 		return
 	}
-	wkWebviewParentAPI().SysCallN(3, m.Instance())
+	wkWebviewParentAPI().SysCallN(2, m.Instance())
 }
 
 func (m *TWkWebviewParent) Webview() IWkWebview {
 	if !m.IsValid() {
 		return nil
 	}
-	r := wkWebviewParentAPI().SysCallN(2, 0, m.Instance())
+	r := wkWebviewParentAPI().SysCallN(3, 0, m.Instance())
 	return AsWkWebview(r)
 }
 
@@ -58,7 +58,7 @@ func (m *TWkWebviewParent) SetWebview(value IWkWebview) {
 	if !m.IsValid() {
 		return
 	}
-	wkWebviewParentAPI().SysCallN(2, 1, m.Instance(), base.GetObjectUintptr(value))
+	wkWebviewParentAPI().SysCallN(3, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
 func (m *TWkWebviewParent) ScrolledWindow() wvTypes.TScrolledWindow {
@@ -93,8 +93,8 @@ func wkWebviewParentAPI() *imports.Imports {
 		wkWebviewParentImport.Table = []*imports.Table{
 			/* 0 */ imports.NewTable("TWkWebviewParent_Create", 0), // constructor NewWebviewParent
 			/* 1 */ imports.NewTable("TWkWebviewParent_UpdateSize", 0), // procedure UpdateSize
-			/* 2 */ imports.NewTable("TWkWebviewParent_Webview", 0), // procedure SetWebview
-			/* 3 */ imports.NewTable("TWkWebviewParent_FreeChild", 0), // procedure FreeChild
+			/* 2 */ imports.NewTable("TWkWebviewParent_FreeChild", 0), // procedure FreeChild
+			/* 3 */ imports.NewTable("TWkWebviewParent_Webview", 0), // property Webview
 			/* 4 */ imports.NewTable("TWkWebviewParent_ScrolledWindow", 0), // property ScrolledWindow
 		}
 	})

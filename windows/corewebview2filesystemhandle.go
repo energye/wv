@@ -69,12 +69,15 @@ func (m *TCoreWebView2FileSystemHandle) Kind() wvTypes.TWVFileSystemHandleKind {
 	return wvTypes.TWVFileSystemHandleKind(r)
 }
 
-func (m *TCoreWebView2FileSystemHandle) Path() string {
+func (m *TCoreWebView2FileSystemHandle) Path() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2FileSystemHandleAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2FileSystemHandleAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2FileSystemHandle) Permission() wvTypes.TWVFileSystemHandlePermission {

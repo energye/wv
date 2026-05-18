@@ -99,28 +99,37 @@ func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) SetCancelSave(valu
 	coreWebView2SaveFileSecurityCheckStartingEventArgsAPI().SysCallN(3, 1, m.Instance(), api.PasBool(value))
 }
 
-func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) DocumentOriginUri() string {
+func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) DocumentOriginUri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2SaveFileSecurityCheckStartingEventArgsAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2SaveFileSecurityCheckStartingEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) FileExtension() string {
+func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) FileExtension() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2SaveFileSecurityCheckStartingEventArgsAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2SaveFileSecurityCheckStartingEventArgsAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) FilePath() string {
+func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) FilePath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2SaveFileSecurityCheckStartingEventArgsAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2SaveFileSecurityCheckStartingEventArgsAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2SaveFileSecurityCheckStartingEventArgs) SuppressDefaultPolicy() bool {

@@ -61,12 +61,15 @@ func (m *TCoreWebView2HttpRequestHeaders) SetHeader(name string, value string) b
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2HttpRequestHeaders) GetHeader(name string) string {
+func (m *TCoreWebView2HttpRequestHeaders) GetHeader(name string) (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := coreWebView2HttpRequestHeadersAPI().SysCallN(2, m.Instance(), api.PasStr(name))
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2HttpRequestHeadersAPI().SysCallN(2, m.Instance(), api.PasStr(name), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2HttpRequestHeaders) GetHeaders(name string, value *ICoreWebView2HttpHeadersCollectionIterator) bool {

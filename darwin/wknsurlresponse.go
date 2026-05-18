@@ -71,12 +71,15 @@ func (m *TWkNSURLResponse) URL() NSURL {
 	return NSURL(r)
 }
 
-func (m *TWkNSURLResponse) MIMEType() string {
+func (m *TWkNSURLResponse) MIMEType() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLResponseAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLResponseAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSURLResponse) ExpectedContentLength() (result int64) {
@@ -87,20 +90,26 @@ func (m *TWkNSURLResponse) ExpectedContentLength() (result int64) {
 	return
 }
 
-func (m *TWkNSURLResponse) TextEncodingName() string {
+func (m *TWkNSURLResponse) TextEncodingName() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLResponseAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLResponseAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURLResponse) SuggestedFilename() string {
+func (m *TWkNSURLResponse) SuggestedFilename() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLResponseAPI().SysCallN(8, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLResponseAPI().SysCallN(8, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSURLResponse) Release() {

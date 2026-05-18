@@ -99,12 +99,15 @@ func (m *TCoreWebView2ScriptDialogOpeningEventArgs) BaseIntf() (result ICoreWebV
 	return
 }
 
-func (m *TCoreWebView2ScriptDialogOpeningEventArgs) URI() string {
+func (m *TCoreWebView2ScriptDialogOpeningEventArgs) URI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Kind() wvTypes.TWVScriptDialogKind {
@@ -115,28 +118,37 @@ func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Kind() wvTypes.TWVScriptDial
 	return wvTypes.TWVScriptDialogKind(r)
 }
 
-func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Message() string {
+func (m *TCoreWebView2ScriptDialogOpeningEventArgs) Message() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2ScriptDialogOpeningEventArgs) DefaultText() string {
+func (m *TCoreWebView2ScriptDialogOpeningEventArgs) DefaultText() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2ScriptDialogOpeningEventArgs) ResultText() string {
+func (m *TCoreWebView2ScriptDialogOpeningEventArgs) ResultText() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(8, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ScriptDialogOpeningEventArgsAPI().SysCallN(8, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ScriptDialogOpeningEventArgs) SetResultText(value string) {

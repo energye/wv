@@ -48,12 +48,15 @@ func (m *TWkUserScript) Data() wvTypes.WKUserScript {
 	return wvTypes.WKUserScript(r)
 }
 
-func (m *TWkUserScript) Source() string {
+func (m *TWkUserScript) Source() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkUserScriptAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkUserScriptAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkUserScript) InjectionTime() (result int64) {

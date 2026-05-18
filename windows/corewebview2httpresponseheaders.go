@@ -49,12 +49,15 @@ type TCoreWebView2HttpResponseHeaders struct {
 	TObject
 }
 
-func (m *TCoreWebView2HttpResponseHeaders) GetHeader(name string) string {
+func (m *TCoreWebView2HttpResponseHeaders) GetHeader(name string) (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := coreWebView2HttpResponseHeadersAPI().SysCallN(1, m.Instance(), api.PasStr(name))
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2HttpResponseHeadersAPI().SysCallN(1, m.Instance(), api.PasStr(name), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2HttpResponseHeaders) GetHeaders(name string, iterator *ICoreWebView2HttpHeadersCollectionIterator) bool {

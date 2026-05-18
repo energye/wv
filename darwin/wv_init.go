@@ -11,8 +11,9 @@
 package darwin
 
 import (
-	"github.com/energye/lcl/api"
 	"sync"
+
+	"github.com/energye/lcl/api"
 )
 
 var initOnce sync.Once

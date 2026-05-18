@@ -19,7 +19,7 @@ import (
 // IWkCookieDate Parent: IObject
 type IWkCookieDate interface {
 	IObject
-	Data() wvTypes.PSoupDate                            // function
+	Data() wvTypes.PWkDateTime                          // function
 	Year() int32                                        // function
 	Month() int32                                       // function
 	Day() int32                                         // function
@@ -36,12 +36,12 @@ type TWkCookieDate struct {
 	TObject
 }
 
-func (m *TWkCookieDate) Data() wvTypes.PSoupDate {
+func (m *TWkCookieDate) Data() wvTypes.PWkDateTime {
 	if !m.IsValid() {
 		return 0
 	}
 	r := wkCookieDateAPI().SysCallN(1, m.Instance())
-	return wvTypes.PSoupDate(r)
+	return wvTypes.PWkDateTime(r)
 }
 
 func (m *TWkCookieDate) Year() int32 {
@@ -108,12 +108,15 @@ func (m *TWkCookieDate) Offset() int32 {
 	return int32(r)
 }
 
-func (m *TWkCookieDate) ToStringTime(format wvTypes.TSoupDateFormat) string {
+func (m *TWkCookieDate) ToStringTime(format wvTypes.TSoupDateFormat) (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkCookieDateAPI().SysCallN(10, m.Instance(), uintptr(format))
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkCookieDateAPI().SysCallN(10, m.Instance(), uintptr(format), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkCookieDate) ToLongTime() (result int64) {
@@ -141,7 +144,7 @@ func (_CookieDateClass) NewCookieDate() IWkCookieDate {
 }
 
 // NewCookieDate class constructor
-func NewCookieDate(date wvTypes.PSoupDate) IWkCookieDate {
+func NewCookieDate(date wvTypes.PWkDateTime) IWkCookieDate {
 	r := wkCookieDateAPI().SysCallN(0, uintptr(date))
 	return AsWkCookieDate(r)
 }

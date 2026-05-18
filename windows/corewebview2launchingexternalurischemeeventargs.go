@@ -87,20 +87,26 @@ func (m *TCoreWebView2LaunchingExternalUriSchemeEventArgs) BaseIntf() (result IC
 	return
 }
 
-func (m *TCoreWebView2LaunchingExternalUriSchemeEventArgs) Uri() string {
+func (m *TCoreWebView2LaunchingExternalUriSchemeEventArgs) Uri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2LaunchingExternalUriSchemeEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2LaunchingExternalUriSchemeEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2LaunchingExternalUriSchemeEventArgs) InitiatingOrigin() string {
+func (m *TCoreWebView2LaunchingExternalUriSchemeEventArgs) InitiatingOrigin() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2LaunchingExternalUriSchemeEventArgsAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2LaunchingExternalUriSchemeEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2LaunchingExternalUriSchemeEventArgs) IsUserInitiated() bool {

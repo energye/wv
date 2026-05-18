@@ -106,12 +106,15 @@ func (m *TCoreWebView2NewWindowRequestedEventArgs) BaseIntf() (result ICoreWebVi
 	return
 }
 
-func (m *TCoreWebView2NewWindowRequestedEventArgs) URI() string {
+func (m *TCoreWebView2NewWindowRequestedEventArgs) URI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NewWindowRequestedEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NewWindowRequestedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2NewWindowRequestedEventArgs) NewWindow() (result ICoreWebView2) {
@@ -174,12 +177,15 @@ func (m *TCoreWebView2NewWindowRequestedEventArgs) WindowFeatures() (result ICor
 	return
 }
 
-func (m *TCoreWebView2NewWindowRequestedEventArgs) Name() string {
+func (m *TCoreWebView2NewWindowRequestedEventArgs) Name() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2NewWindowRequestedEventArgsAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2NewWindowRequestedEventArgsAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2NewWindowRequestedEventArgs) OriginalSourceFrameInfo() (result ICoreWebView2FrameInfo) {

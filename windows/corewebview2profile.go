@@ -354,12 +354,15 @@ func (m *TCoreWebView2Profile) SetBaseIntf(value ICoreWebView2Profile) {
 	coreWebView2ProfileAPI().SysCallN(11, 1, m.Instance(), base.GetObjectUintptr(value))
 }
 
-func (m *TCoreWebView2Profile) ProfileName() string {
+func (m *TCoreWebView2Profile) ProfileName() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ProfileAPI().SysCallN(12, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ProfileAPI().SysCallN(12, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Profile) IsInPrivateModeEnabled() bool {
@@ -370,20 +373,26 @@ func (m *TCoreWebView2Profile) IsInPrivateModeEnabled() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2Profile) ProfilePath() string {
+func (m *TCoreWebView2Profile) ProfilePath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ProfileAPI().SysCallN(14, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ProfileAPI().SysCallN(14, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2Profile) DefaultDownloadFolderPath() string {
+func (m *TCoreWebView2Profile) DefaultDownloadFolderPath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ProfileAPI().SysCallN(15, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ProfileAPI().SysCallN(15, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Profile) SetDefaultDownloadFolderPath(value string) {

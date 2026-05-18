@@ -64,28 +64,37 @@ func (m *TWkURIResponse) GetContentLength() (result uint64) {
 	return
 }
 
-func (m *TWkURIResponse) GetMimeType() string {
+func (m *TWkURIResponse) GetMimeType() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkURIResponseAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkURIResponseAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkURIResponse) GetSuggestedFilename() string {
+func (m *TWkURIResponse) GetSuggestedFilename() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkURIResponseAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkURIResponseAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkURIResponse) URI() string {
+func (m *TWkURIResponse) URI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := wkURIResponseAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkURIResponseAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewURIResponse class constructor

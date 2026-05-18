@@ -77,12 +77,15 @@ func (m *TCoreWebView2ProcessInfo) Kind() wvTypes.TWVProcessKind {
 	return wvTypes.TWVProcessKind(r)
 }
 
-func (m *TCoreWebView2ProcessInfo) KindStr() string {
+func (m *TCoreWebView2ProcessInfo) KindStr() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ProcessInfoAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ProcessInfoAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ProcessInfo) ProcessId() int32 {

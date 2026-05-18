@@ -252,12 +252,15 @@ func (m *TCoreWebView2Frame) FrameID() uint32 {
 	return uint32(r)
 }
 
-func (m *TCoreWebView2Frame) Name() string {
+func (m *TCoreWebView2Frame) Name() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2FrameAPI().SysCallN(11, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2FrameAPI().SysCallN(11, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2Frame) IsDestroyed() bool {

@@ -102,12 +102,15 @@ func (m *TCoreWebView2PermissionRequestedEventArgs) BaseIntf() (result ICoreWebV
 	return
 }
 
-func (m *TCoreWebView2PermissionRequestedEventArgs) URI() string {
+func (m *TCoreWebView2PermissionRequestedEventArgs) URI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2PermissionRequestedEventArgsAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2PermissionRequestedEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2PermissionRequestedEventArgs) State() wvTypes.TWVPermissionState {

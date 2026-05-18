@@ -107,12 +107,15 @@ func (m *TCoreWebView2SaveAsUIShowingEventArgs) BaseIntf() (result ICoreWebView2
 	return
 }
 
-func (m *TCoreWebView2SaveAsUIShowingEventArgs) ContentMimeType() string {
+func (m *TCoreWebView2SaveAsUIShowingEventArgs) ContentMimeType() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2SaveAsUIShowingEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2SaveAsUIShowingEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2SaveAsUIShowingEventArgs) Cancel() bool {
@@ -155,12 +158,15 @@ func (m *TCoreWebView2SaveAsUIShowingEventArgs) Deferral() (result ICoreWebView2
 	return
 }
 
-func (m *TCoreWebView2SaveAsUIShowingEventArgs) SaveAsFilePath() string {
+func (m *TCoreWebView2SaveAsUIShowingEventArgs) SaveAsFilePath() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2SaveAsUIShowingEventArgsAPI().SysCallN(7, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2SaveAsUIShowingEventArgsAPI().SysCallN(7, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2SaveAsUIShowingEventArgs) SetSaveAsFilePath(value string) {

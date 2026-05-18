@@ -1253,20 +1253,26 @@ func (m *TCoreWebView2) ContainsFullScreenElement() bool {
 	return api.GoBool(r)
 }
 
-func (m *TCoreWebView2) DocumentTitle() string {
+func (m *TCoreWebView2) DocumentTitle() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2API().SysCallN(50, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2API().SysCallN(50, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2) Source() string {
+func (m *TCoreWebView2) Source() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2API().SysCallN(51, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2API().SysCallN(51, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2) CookieManager() (result ICoreWebView2CookieManager) {
@@ -1358,12 +1364,15 @@ func (m *TCoreWebView2) SetDefaultDownloadDialogMargin(value types.TPoint) {
 	coreWebView2API().SysCallN(59, 1, m.Instance(), uintptr(base.UnsafePointer(&value)))
 }
 
-func (m *TCoreWebView2) StatusBarText() string {
+func (m *TCoreWebView2) StatusBarText() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2API().SysCallN(60, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2API().SysCallN(60, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2) Profile() (result ICoreWebView2Profile) {
@@ -1376,12 +1385,15 @@ func (m *TCoreWebView2) Profile() (result ICoreWebView2Profile) {
 	return
 }
 
-func (m *TCoreWebView2) FaviconURI() string {
+func (m *TCoreWebView2) FaviconURI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2API().SysCallN(62, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2API().SysCallN(62, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2) MemoryUsageTargetLevel() wvTypes.TWVMemoryUsageTargetLevel {

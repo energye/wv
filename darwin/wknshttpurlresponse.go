@@ -51,12 +51,15 @@ func (m *TWkNSHTTPURLResponse) StatusCode() int32 {
 	return int32(r)
 }
 
-func (m *TWkNSHTTPURLResponse) AllHeaderFields() string {
+func (m *TWkNSHTTPURLResponse) AllHeaderFields() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSHTTPURLResponseAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSHTTPURLResponseAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSHTTPURLResponse) Release() {

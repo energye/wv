@@ -112,28 +112,37 @@ func (m *TWkNSURLRequest) AllowsCellularAccess() bool {
 	return api.GoBool(r)
 }
 
-func (m *TWkNSURLRequest) HTTPMethod() string {
+func (m *TWkNSURLRequest) HTTPMethod() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLRequestAPI().SysCallN(12, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLRequestAPI().SysCallN(12, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURLRequest) AllHTTPHeaderFields() string {
+func (m *TWkNSURLRequest) AllHTTPHeaderFields() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLRequestAPI().SysCallN(13, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLRequestAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURLRequest) ValueForHTTPHeaderField(field string) string {
+func (m *TWkNSURLRequest) ValueForHTTPHeaderField(field string) (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLRequestAPI().SysCallN(14, m.Instance(), api.PasStr(field))
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLRequestAPI().SysCallN(14, m.Instance(), api.PasStr(field), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSURLRequest) Release() {

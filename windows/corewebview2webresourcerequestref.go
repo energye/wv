@@ -73,12 +73,15 @@ func (m *TCoreWebView2WebResourceRequestRef) BaseIntf() (result ICoreWebView2Web
 	return
 }
 
-func (m *TCoreWebView2WebResourceRequestRef) URI() string {
+func (m *TCoreWebView2WebResourceRequestRef) URI() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2WebResourceRequestRefAPI().SysCallN(3, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2WebResourceRequestRefAPI().SysCallN(3, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2WebResourceRequestRef) SetURI(value string) {
@@ -88,12 +91,15 @@ func (m *TCoreWebView2WebResourceRequestRef) SetURI(value string) {
 	coreWebView2WebResourceRequestRefAPI().SysCallN(3, 1, m.Instance(), api.PasStr(value))
 }
 
-func (m *TCoreWebView2WebResourceRequestRef) Method() string {
+func (m *TCoreWebView2WebResourceRequestRef) Method() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2WebResourceRequestRefAPI().SysCallN(4, 0, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2WebResourceRequestRefAPI().SysCallN(4, 0, m.Instance(), 0, uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2WebResourceRequestRef) SetMethod(value string) {

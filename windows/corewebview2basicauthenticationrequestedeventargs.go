@@ -72,20 +72,26 @@ func (m *TCoreWebView2BasicAuthenticationRequestedEventArgs) BaseIntf() (result 
 	return
 }
 
-func (m *TCoreWebView2BasicAuthenticationRequestedEventArgs) Uri() string {
+func (m *TCoreWebView2BasicAuthenticationRequestedEventArgs) Uri() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2BasicAuthenticationRequestedEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2BasicAuthenticationRequestedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2BasicAuthenticationRequestedEventArgs) Challenge() string {
+func (m *TCoreWebView2BasicAuthenticationRequestedEventArgs) Challenge() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2BasicAuthenticationRequestedEventArgsAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2BasicAuthenticationRequestedEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2BasicAuthenticationRequestedEventArgs) Response() (result ICoreWebView2BasicAuthenticationResponse) {

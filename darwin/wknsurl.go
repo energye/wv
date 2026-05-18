@@ -77,20 +77,26 @@ func (m *TWkNSURL) Data() NSURL {
 	return NSURL(r)
 }
 
-func (m *TWkNSURL) AbsoluteString() string {
+func (m *TWkNSURL) AbsoluteString() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(5, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(5, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURL) RelativeString() string {
+func (m *TWkNSURL) RelativeString() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSURL) BaseURL() IWkNSURL {
@@ -109,20 +115,26 @@ func (m *TWkNSURL) AbsoluteURL() IWkNSURL {
 	return AsWkNSURL(r)
 }
 
-func (m *TWkNSURL) Scheme() string {
+func (m *TWkNSURL) Scheme() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(9, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(9, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURL) Host() string {
+func (m *TWkNSURL) Host() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(10, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(10, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSURL) Port() int32 {
@@ -133,52 +145,70 @@ func (m *TWkNSURL) Port() int32 {
 	return int32(r)
 }
 
-func (m *TWkNSURL) User() string {
+func (m *TWkNSURL) User() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(12, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(12, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURL) Password() string {
+func (m *TWkNSURL) Password() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(13, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(13, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURL) Path() string {
+func (m *TWkNSURL) Path() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(14, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(14, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURL) Fragment() string {
+func (m *TWkNSURL) Fragment() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(15, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(15, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURL) ParameterString() string {
+func (m *TWkNSURL) ParameterString() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(16, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(16, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TWkNSURL) Query() string {
+func (m *TWkNSURL) Query() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := wkNSURLAPI().SysCallN(17, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	wkNSURLAPI().SysCallN(17, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TWkNSURL) Release() {

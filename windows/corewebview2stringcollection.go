@@ -63,12 +63,15 @@ func (m *TCoreWebView2StringCollection) Count() uint32 {
 	return uint32(r)
 }
 
-func (m *TCoreWebView2StringCollection) Items(idx uint32) string {
+func (m *TCoreWebView2StringCollection) Items(idx uint32) (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2StringCollectionAPI().SysCallN(4, m.Instance(), uintptr(idx))
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2StringCollectionAPI().SysCallN(4, m.Instance(), uintptr(idx), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2StringCollection class constructor

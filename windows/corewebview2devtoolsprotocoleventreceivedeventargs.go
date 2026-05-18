@@ -58,20 +58,26 @@ func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) BaseIntf() (result
 	return
 }
 
-func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) ParameterObjectAsJson() string {
+func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) ParameterObjectAsJson() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(3, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(3, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) SessionId() string {
+func (m *TCoreWebView2DevToolsProtocolEventReceivedEventArgs) SessionId() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(4, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2DevToolsProtocolEventReceivedEventArgsAPI().SysCallN(4, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2DevToolsProtocolEventReceivedEventArgs class constructor

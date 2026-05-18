@@ -56,12 +56,15 @@ type TCoreWebView2ScriptException struct {
 	TObject
 }
 
-func (m *TCoreWebView2ScriptException) ToJson() string {
+func (m *TCoreWebView2ScriptException) ToJson() (result string) {
 	if !m.IsValid() {
 		return ""
 	}
-	r := coreWebView2ScriptExceptionAPI().SysCallN(1, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ScriptExceptionAPI().SysCallN(1, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 func (m *TCoreWebView2ScriptException) Initialized() bool {
@@ -98,20 +101,26 @@ func (m *TCoreWebView2ScriptException) ColumnNumber() uint32 {
 	return uint32(r)
 }
 
-func (m *TCoreWebView2ScriptException) Name() string {
+func (m *TCoreWebView2ScriptException) Name() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ScriptExceptionAPI().SysCallN(6, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ScriptExceptionAPI().SysCallN(6, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
-func (m *TCoreWebView2ScriptException) Message() string {
+func (m *TCoreWebView2ScriptException) Message() (result string) {
 	if !m.IsValid() {
-		return ""
+		return
 	}
-	r := coreWebView2ScriptExceptionAPI().SysCallN(7, m.Instance())
-	return api.GoStr(r)
+	strBuf := api.NewStringBuffer(0, 0)
+	coreWebView2ScriptExceptionAPI().SysCallN(7, m.Instance(), uintptr(base.UnsafePointer(&strBuf.Data)), uintptr(base.UnsafePointer(&strBuf.Size)))
+	defer strBuf.Release()
+	result = strBuf.String()
+	return
 }
 
 // NewCoreWebView2ScriptException class constructor
