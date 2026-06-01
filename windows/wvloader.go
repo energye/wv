@@ -13,6 +13,7 @@ import (
 	"github.com/energye/lcl/api/imports"
 	"github.com/energye/lcl/base"
 	"github.com/energye/lcl/lcl"
+	"github.com/energye/lcl/types"
 
 	wvTypes "github.com/energye/wv/types/windows"
 )
@@ -523,6 +524,7 @@ type IWVLoader interface {
 	SetOnNewBrowserVersionAvailable(fn TLoaderNewBrowserVersionAvailableEvent) // property event
 	SetOnBrowserProcessExited(fn TLoaderBrowserProcessExitedEvent)             // property event
 	SetOnProcessInfosChanged(fn TLoaderProcessInfosChangedEvent)               // property event
+	SetExternalLoaderDllHandle(libHandle types.THandle)
 	AsIntfWVLoaderEvents() uintptr
 }
 
@@ -1624,6 +1626,13 @@ func (m *TWVLoader) SetOnProcessInfosChanged(fn TLoaderProcessInfosChangedEvent)
 	base.SetEvent(m, 80, wVLoaderAPI(), api.MakeEventDataPtr(cb))
 }
 
+func (m *TWVLoader) SetExternalLoaderDllHandle(libHandle types.THandle) {
+	if !m.IsValid() {
+		return
+	}
+	wVLoaderAPI().SysCallN(81, m.Instance(), uintptr(libHandle))
+}
+
 func (m *TWVLoader) AsIntfWVLoaderEvents() uintptr {
 	return m.GetIntfPointer(0)
 }
@@ -1730,6 +1739,7 @@ func wVLoaderAPI() *imports.Imports {
 			/* 78 */ imports.NewTable("TWVLoader_OnNewBrowserVersionAvailable", 0), // event OnNewBrowserVersionAvailable
 			/* 79 */ imports.NewTable("TWVLoader_OnBrowserProcessExited", 0), // event OnBrowserProcessExited
 			/* 80 */ imports.NewTable("TWVLoader_OnProcessInfosChanged", 0), // event OnProcessInfosChanged
+			/* 81 */ imports.NewTable("TWVLoader_SetExternalLoaderDllHandle", 0), // event SetExternalLoaderDllHandle
 		}
 	})
 	return wVLoaderImport
